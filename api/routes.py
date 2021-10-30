@@ -16,12 +16,12 @@ def create_routes(api):
     api.add_resource(Auth, '/auth')
     api.add_resource(Products,'/products/<string:product_id>', '/products')
     api.add_resource(ProductsList, '/productslist')
-    api.add_resource(ProductsType,'/products/type/<string:type>')
+    """ api.add_resource(ProductsType,'/products/type/<string:type>') """
     api.add_resource(ProductsCategory,'/products/category/<string:category>')
     api.add_resource(Carts,'/carts/<string:carts_id>' , '/carts' )
     api.add_resource(ProductsProducer,'/products/producer/<string:id_producer>')
     api.add_resource(ProductsCategoryProducer,'/products/<string:id_producer>/<string:category>' )
-    api.add_resource(ProductsTypeProducer,'/products/<string:id_producer>/Category/<string:type>' )
+    """ api.add_resource(ProductsTypeProducer,'/products/<string:id_producer>/Category/<string:type>' ) """
     api.add_resource(Favorites,'/favorites/<string:id_client>' , '/favorites' )
     api.add_resource(Admin, '/admin')
     api.add_resource(Producer, '/producer', '/producer/<string:producer_id>')

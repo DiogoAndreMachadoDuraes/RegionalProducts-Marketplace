@@ -43,23 +43,21 @@ class Products(Resource):
         product = ProductsModel.find_by_product_id(product_id)
 
         if product is None:
-            product = ProductsModel(data['name'],data['type'], data['quantity'], data['validity'],
-                            data['harvest'], data['category'],data['acidity'], data['alcohol_content'],data['price'],data['photo'],data['stock'],data['id_producer'],data['logo_producer'],data['name_producer'])
+            product = ProductsModel(data['name'], data['quantity'], data['validity'],
+                            data['harvest_date'], data['category'],data['price'],data['photo'],data['stock'],data['id_producer'],data['logo_producer'],data['name_producer'],data['email_producer'])
         else:
             product.name = data['name']
-            product.type = data['type']
             product.quantity = data['quantity']
             product.validity = data['validity']
-            product.harvest = data['harvest']
+            product.harvest_date = data['harvest_date']
             product.category = data['category']
-            product.alcohol_content = data['alcohol_content']
-            product.acidity = data['acidity']
             product.price = data['price']
             product.photo = data['photo']
             product.stock = data['stock']
             product.id_producer= data['id_producer']
             product.logo_producer = data['logo_producer']
             product.name_producer = data['name_producer']
+            product.email_producer = data['email_producer']
 
         product.update_to_db()
 
@@ -78,11 +76,11 @@ class ProductsCategory(Resource):   # Classe para definir get para filtar por ca
     def get(self, category):
         return {'products': ProductsModel.find_all_products_by_category(category)} 
 
-class ProductsType(Resource):    # Classe para definir get para filtar por tipo
+""" class ProductsType(Resource):    # Classe para definir get para filtar por tipo
 
     #@jwt_required() 
     def get(self, type):
-        return {'products': ProductsModel.find_all_products_by_type(type)}  
+        return {'products': ProductsModel.find_all_products_by_type(type)}   """
 
 
 class ProductsProducer(Resource):    # Classe para definir get para filtar por produtor
@@ -97,8 +95,8 @@ class ProductsCategoryProducer(Resource):    # Classe para definir get para filt
     def get(self, id_producer,category):
         return {'products': ProductsModel.find_all_products_by_producer_and_category(id_producer,category)} 
 
-class ProductsTypeProducer(Resource):    # Classe para definir get para filtar por produtor e tipo
+""" class ProductsTypeProducer(Resource):    # Classe para definir get para filtar por produtor e tipo
 
     #@jwt_required() 
     def get(self, id_producer,type):
-        return {'products': ProductsModel.find_all_products_by_producer_and_type(id_producer,type)} 
+        return {'products': ProductsModel.find_all_products_by_producer_and_type(id_producer,type)}  """
