@@ -11,37 +11,33 @@ class ProductsModel():
     def __init__(self, product):
         self.id = str(product['_id'])
         self.name = product['name']
-        self.type = product['type']
         self.quantity = product['quantity']
         self.validity = product['validity']
-        self.harvest = product['harvest']
+        self.harvest_date = product['harvest_date']
         self.category = product['category']
-        self.alcohol_content = product['alcohol_content']
-        self.acidity = product['acidity']
         self.price = product['price']
         self.photo = product['photo']
         self.stock = product['stock']
         self.id_producer = product['id_producer']
         self.logo_producer = product['logo_producer']
         self.name_producer = product['name_producer']
+        self.email_producer = product['email_producer']
 
     def json(self):
         return {
             '_id': self.id,
             'name': self.name,
-            'type': self.type,
             'quantity': self.quantity,
             'validity': self.validity,
-            'harvest': self.harvest,
+            'harvest_date': self.harvest_date,
             'category': self.category,
-            'alcohol_content': self.alcohol_content,
-            'acidity':self.acidity,
             'price':self.price,
             'photo': self.photo,
             'stock': self.stock,
             'id_producer':self.id_producer,
             'logo_producer':self.id_producer,
-            'name_producer': self.name_producer
+            'name_producer': self.name_producer,
+            'email_producer': self.email_producer
              }
 
     @classmethod
@@ -57,10 +53,6 @@ class ProductsModel():
         products = cls.products.find({'category' : category}) 
         return json.loads(dumps(products)) if products else None 
 
-    @classmethod                                             # Procurar todos os produtos por tipo
-    def find_all_products_by_type(cls, type):
-        products = cls.products.find({'type' : type}) 
-        return json.loads(dumps(products)) if products else None
 
     @classmethod                                             # Procurar todos os produtos por produtor
     def find_all_products_by_producer(cls, id_producer):
@@ -72,12 +64,6 @@ class ProductsModel():
         products = cls.products.find({'id_producer' : id_producer, 'category' : category}) 
         return json.loads(dumps(products)) if products else None
 
-    @classmethod                                             # Procurar todos os produtos por produtor e tipo
-    def find_all_products_by_producer_and_type(cls, id_producer,type):
-        products = cls.products.find({'id_producer' : id_producer, 'type' : type}) 
-        return json.loads(dumps(products)) if products else None
-
-
 
     @classmethod
     def find_all_products(cls):               # Procurar todos os produtos 
@@ -87,19 +73,17 @@ class ProductsModel():
 
     def insert_to_db(self):  # inserting data
         self.products.insert({'name': self.name,
-                            'type': self.type,
                             'quantity': self.quantity,
                             'validity': self.validity,
-                            'harvest': self.harvest,
+                            'harvest_date': self.harvest_date,
                             'category': self.category,
-                            'alcohol_content': self.alcohol_content,
-                            'acidity':self.acidity,
                             'price':self.price,
                             'photo': self.photo,
                             'stock': self.stock,
                             'id_producer':self.id_producer,
                             'logo_producer':self.id_producer,
-                            'name_producer': self.name_producer
+                            'name_producer': self.name_producer,
+                            'email_producer': self.email_producer
                             })
 
 
@@ -107,18 +91,17 @@ class ProductsModel():
         myquery = { "_id": ObjectId(self.id) }
         newvalues = { "$set": {
                             'name': self.name,
-                            'type': self.type,
                             'quantity': self.quantity,
                             'validity': self.validity,
-                            'harvest': self.harvest,
+                            'harvest_date': self.harvest_date,
                             'category': self.category,
-                            'alcohol_content': self.alcohol_content,
                             'price':self.price,
                             'photo': self.photo,
                             'stock': self.stock,
                             'id_producer':self.id_producer,
                             'logo_producer':self.id_producer,
-                            'name_producer': self.name_producer }}
+                            'name_producer': self.name_producer,
+                            'email_producer': self.email_producer}}
 
         self.products.update_one(myquery, newvalues)
 
