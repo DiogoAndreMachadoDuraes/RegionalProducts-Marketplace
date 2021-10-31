@@ -46,26 +46,28 @@ class Shop(Resource):
         shop = ShopModel.find_by_shop_id(shop_id)
 
         if shop is None:
-            shop = ShopModel(data['country_client'], data['date'], data['doc_invoice'],data['hour'],data['id_client'], data['id_producer'],
-            data['locality_client'],data['name_client'],data['postal_code_client'],data['price'],data['quantity'],data['street_client',data['tax'],data['tin_client'],data['vat'],data['rate'],data['products']])
+            shop = ShopModel(data['country_client'], data['address_client'], data['date'], data['pdf_invoice'],data['hour'],data['id_client'], data['telephone_client'], data['id_product'],
+            data['location_client'],data['name_product'],data['postal_code'],data['price_final'],data['quantity_final'],data['photo_product'],data['tax'],data['tin_client'],data['vat'],data['avaliantion'],data['email_client'])
         else:
             shop.country_client = data['country_client']
+            shop.address_client = data['address_client']
             shop.date = data['date']
-            shop.doc_invoice = data['doc_invoice']
+            shop.pdf_invoice = data['pdf_invoice']
             shop.hour = data['hour']
             shop.id_client = data['id_client']
-            shop.id_producer = data['id_producer']
-            shop.locality_client = data['locality_client']
-            shop.name_client = data['name_client']
-            shop.postal_code_client = data['postal_code_client']
-            shop.price = data['price']
-            shop.quantity = data['quantity']
-            shop.street_client = data['street_client']
+            shop.telephone_client = data['telephone_client']
+            shop.id_product = data['id_product']
+            shop.location_client = data['location_client']
+            shop.name_product = data['name_product']
+            shop.postal_code = data['postal_code']
+            shop.price_final = data['price_final']
+            shop.quantity_final = data['quantity_final']
+            shop.photo_product = data['photo_product']
             shop.tax = data['tax']
             shop.tin_client = data['tin_client']
             shop.vat = data['vat']
-            shop.rate = data ['rate']
-            shop.products = data ['products']
+            shop.avaliation = data ['avaliation']
+            shop.email_client = data ['email_client']
 
         shop.update_to_db()
 
@@ -91,9 +93,9 @@ class ShopClient(Resource):
         return {'shops': ShopModel.find_all_shop_by_client(id_client)}
 
 class ShopRate(Resource):
-    def get (self, rate):
-        return {'shops': ShopModel.find_all_shop_by_rate(rate)}
+    def get (self, avaliation):
+        return {'shops': ShopModel.find_all_shop_by_rate(avaliation)}
        
 class ShopProducer(Resource):
-    def get (self, id_producer):
-        return {'shops': ShopModel.find_all_shop_by_id_producer(id_producer)}
+    def get (self, id_product):
+        return {'shops': ShopModel.find_all_shop_by_id_producer(id_product)}
