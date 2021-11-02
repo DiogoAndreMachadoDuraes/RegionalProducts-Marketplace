@@ -5,7 +5,7 @@ from bson import ObjectId
 from flask_jwt_extended import jwt_required
 # local packages
 from schemas.cart import CartSchema, cartsschema
-from models.carts import CartsModel
+from models.shop_cart import Shop_CartModel
 
 class Carts(Resource):
 
@@ -15,7 +15,7 @@ class Carts(Resource):
     def post(self):
         data = request.get_json(force=True)
         data['_id'] = 0
-        cart = CartsModel(data)
+        cart = Shop_CartModel(data)
 
         try:
             cart.insert()
@@ -26,7 +26,7 @@ class Carts(Resource):
 
     @jwt_required() #apaga um carrinho da bd
     def delete(self, carts_id):                            # Apaga um cart sendo passado o id
-        cart = CartsModel.find_by_cart_id(carts_id)
+        cart = Shop_CartModel.find_by_cart_id(carts_id)
         if cart:
             cart.delete_from_db()
 
@@ -36,14 +36,14 @@ class Carts(Resource):
     def put(self, carts_id):                                # Atualiza um cart sendo passado o id
         # Create or Update 
         data = request.get_json(force=True)
-        cart = CartsModel.find_by_cart_id(carts_id)
+        cart = Shop_CartModel.find_by_cart_id(carts_id)
 
         if cart is None:
-            cart = CartsModel(data['id_client'], data['email_client'], data['products']) 
+            cart = Shop_CartModel(data['id_client'], data['email_client'], data['id_product']) 
         else:
             cart.id_client = data['id_client']
             cart.email_client = data['email_client']
-            cart.products = data['products']
+            cart.id_product = data['id_product']
          
         cart.update()
 
@@ -54,7 +54,7 @@ class Carts(Resource):
 
     @jwt_required() 
     def get(self,carts_id):                                 
-       cart = CartsModel.find_by_cart_id(carts_id)
+       cart = Shop_CartModel.find_by_cart_id(carts_id)
        if cart:
             return cartsschema.dump(cart)
        return {'message': 'Cart not found'}, 404
@@ -65,7 +65,7 @@ class CartClient(Resource):
 
     @jwt_required() 
     def get(self, id_client):                                 
-       cart = CartsModel.find_all_cart_by_client( id_client)
+       cart = Shop_CartModel.find_all_cart_by_client( id_client)
        if cart:
             return cartsschema.dump(cart)
        return {'message': 'Cart not found'}, 404
@@ -75,13 +75,13 @@ class CartClient(Resource):
     def put(self, id_client):                                # Atualiza um cart pelo id do client
         # Create or Update 
         data = request.get_json(force=True)
-        cart = CartsModel.find_all_cart_by_client(id_client)
+        cart = Shop_CartModel.find_all_cart_by_client(id_client)
 
         if cart is None:
-            cart = CartsModel(data['products'],data['id_client'])
+            cart = Shop_CartModel(data['id_product'],data['id_client'])
         else:
             cart.id_client = data['id_client']
-            cart.products = data['products']
+            cart.id_product = data['id_product']
          
         cart.update()
 
@@ -90,7 +90,7 @@ class CartClient(Resource):
 
     @jwt_required() #apaga um carrinho da bd 
     def delete(self, id_client):                            # Apaga um cart sendo passado o id do client
-        cart = CartsModel.find_all_cart_by_client(id_client)
+        cart = Shop_CartModel.find_all_cart_by_client(id_client)
         if cart:
             cart.delete_from_db()
 
