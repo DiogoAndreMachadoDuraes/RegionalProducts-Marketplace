@@ -10,7 +10,7 @@ from api.routes import create_routes
 def get_flask_app() -> app.Flask:
     app = Flask(__name__)
     """ app.config.from_envvar('ENV_FILE_LOCATION') """
-    app.secret_key = 'wineolivemarketplace'
+    app.secret_key = 'produtosregionais'
 
     # init api and routes
     api = Api(app)

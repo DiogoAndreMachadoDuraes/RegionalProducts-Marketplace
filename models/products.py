@@ -5,8 +5,8 @@ from flask_jwt_extended import jwt_required
 # local packages
 from core.db import mongodb
 
-class ProductModel():
-    product = mongodb['product']
+class ProductsModel():
+    products = mongodb['product']
 
     def __init__(self, product):
         self.id = str(product['_id'])
@@ -42,37 +42,37 @@ class ProductModel():
 
     @classmethod
     def find_by_product_id(cls, id):                           # Procurar produto pelo id
-        product = cls.product.find_one({'_id' : ObjectId(id)}) 
+        product = cls.products.find_one({'_id' : ObjectId(id)}) 
         if product:
-            return ProductModel(product)
+            return ProductsModel(product)
         else:
             return None
 
     @classmethod
     def find_all_product_by_category(cls, category):         # Procurar todos os produtos por uma categoria
-        product = cls.product.find({'category' : category}) 
+        product = cls.products.find({'category' : category}) 
         return json.loads(dumps(product)) if product else None 
 
 
     @classmethod                                             # Procurar todos os produtos por produtor
     def find_all_product_by_producer(cls, id_producer):
-        product = cls.product.find({'id_producer' : id_producer}) 
+        product = cls.products.find({'id_producer' : id_producer}) 
         return json.loads(dumps(product)) if product else None
 
     @classmethod                                             # Procurar todos os produtos por produtor e categoria
     def find_all_product_by_producer_and_category(cls, id_producer,category):
-        product = cls.product.find({'id_producer' : id_producer, 'category' : category}) 
+        product = cls.products.find({'id_producer' : id_producer, 'category' : category}) 
         return json.loads(dumps(product)) if product else None
 
 
     @classmethod
     def find_all_product(cls):               # Procurar todos os produtos 
-        product = cls.product.find()
+        product = cls.products.find()
         return json.loads(dumps(product)) if product else None
 
 
     def insert_to_db(self):  # inserting data
-        self.product.insert({'name': self.name,
+        self.products.insert({'name': self.name,
                             'quantity': self.quantity,
                             'validity': self.validity,
                             'harvest_date': self.harvest_date,
@@ -103,8 +103,8 @@ class ProductModel():
                             'name_producer': self.name_producer,
                             'email_producer': self.email_producer}}
 
-        self.product.update_one(myquery, newvalues)
+        self.products.update_one(myquery, newvalues)
 
 
     def delete_from_db(self):
-        self.product.delete_one({ "_id": ObjectId(self.id) })
+        self.products.delete_one({ "_id": ObjectId(self.id) })

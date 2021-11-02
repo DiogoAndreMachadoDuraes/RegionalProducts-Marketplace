@@ -5,7 +5,7 @@ from core.db import mongodb
 
 class ClientModel():
   
-    client = mongodb['client']
+    clients = mongodb['client']
 
     def __init__(self, client):
         self._id =  client['_id']
@@ -76,14 +76,14 @@ class ClientModel():
         }
         newvalues = { "$set": objectJson }
 
-        self.client.update(myquery, newvalues)
+        self.clients.update(myquery, newvalues)
 
     def delete(self):
-        self.client.delete_one({ "_id": ObjectId(self._id) })
+        self.clients.delete_one({ "_id": ObjectId(self._id) })
     
     @classmethod
     def find_by_id(cls, _id):
-        client = cls.client.find_one({'_id': ObjectId(_id)})
+        client = cls.clients.find_one({'_id': ObjectId(_id)})
 
         if client:
             return ClientModel(client)
@@ -92,7 +92,7 @@ class ClientModel():
 
     @classmethod
     def find_by_name(cls, name):
-        client = cls.client.find_one({'name': name})
+        client = cls.clients.find_one({'name': name})
 
         if client:
             return ClientModel(client)
@@ -101,7 +101,7 @@ class ClientModel():
     
     @classmethod
     def find_by_email(cls, email):
-        client = cls.client.find_one({'email': email})
+        client = cls.clients.find_one({'email': email})
 
         if client:
             return ClientModel(client)
@@ -110,5 +110,5 @@ class ClientModel():
     
     @classmethod
     def find_all(cls):
-        client = cls.client.find()
+        client = cls.clients.find()
         return json.loads(dumps(client)) if client else None
