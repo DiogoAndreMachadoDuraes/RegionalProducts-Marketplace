@@ -5,7 +5,7 @@ from core.db import mongodb
 
 class ClientModel():
   
-    clients = mongodb['client']
+    client = mongodb['client']
 
     def __init__(self, client):
         self._id =  client['_id']
@@ -13,13 +13,14 @@ class ClientModel():
         self.name = client['name']
         self.birthday = client['birthday']
         self.telephone = client['telephone']
-        self.street = client['street']
-        self.locality = client['locality']
+        self.address = client['address']
+        self.location = client['location']
         self.country = client['country']
         self.postal_code = client['postal_code']
         self.email = client['email']
         self.password = client['password']
         self.state = client['state']
+        self.photo = client['photo']
 
     def json(self):
         objectJson = {
@@ -28,13 +29,14 @@ class ClientModel():
             'name': self.name,
             'birthday': self.birthday,
             'telephone': self.telephone,
-            'street': self.street,
-            'locality': self.locality,
+            'address': self.address,
+            'location': self.location,
             'country': self.country,
             'postal_code': self.postal_code,
             'password': self.password,
             'email': self.email,
-            'state': self.state  
+            'state': self.state,
+            'photo': self.photo  
         }
         return json.loads(dumps(objectJson))
 
@@ -44,16 +46,17 @@ class ClientModel():
             'name': self.name,
             'birthday': self.birthday,
             'telephone': self.telephone,
-            'street': self.street,
-            'locality': self.locality,
+            'address': self.address,
+            'location': self.location,
             'country': self.country,
             'postal_code': self.postal_code,
             'email': self.email,
             'password': self.password,
-            'state': self.state
+            'state': self.state,
+            'photo': self.photo
         }
 
-        self.clients.insert(objectJson)
+        self.client.insert(objectJson)
 
     def update(self):
         myquery = { "_id": ObjectId(self._id) }
@@ -62,24 +65,25 @@ class ClientModel():
             'name': self.name,
             'birthday': self.birthday,
             'telephone': self.telephone,
-            'street': self.street,
-            'locality': self.locality,
+            'address': self.address,
+            'location': self.location,
             'country': self.country,
             'postal_code': self.postal_code,
             'email': self.email,
             'password': self.password,
-            'state': self.state
+            'state': self.state,
+            'photo': self.photo
         }
         newvalues = { "$set": objectJson }
 
-        self.clients.update(myquery, newvalues)
+        self.client.update(myquery, newvalues)
 
     def delete(self):
-        self.clients.delete_one({ "_id": ObjectId(self._id) })
+        self.client.delete_one({ "_id": ObjectId(self._id) })
     
     @classmethod
     def find_by_id(cls, _id):
-        client = cls.clients.find_one({'_id': ObjectId(_id)})
+        client = cls.client.find_one({'_id': ObjectId(_id)})
 
         if client:
             return ClientModel(client)
@@ -88,7 +92,7 @@ class ClientModel():
 
     @classmethod
     def find_by_name(cls, name):
-        client = cls.clients.find_one({'name': name})
+        client = cls.client.find_one({'name': name})
 
         if client:
             return ClientModel(client)
@@ -97,7 +101,7 @@ class ClientModel():
     
     @classmethod
     def find_by_email(cls, email):
-        client = cls.clients.find_one({'email': email})
+        client = cls.client.find_one({'email': email})
 
         if client:
             return ClientModel(client)
@@ -106,5 +110,5 @@ class ClientModel():
     
     @classmethod
     def find_all(cls):
-        clients = cls.clients.find()
-        return json.loads(dumps(clients)) if clients else None
+        client = cls.client.find()
+        return json.loads(dumps(client)) if client else None

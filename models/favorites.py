@@ -13,16 +13,26 @@ class FavoritesModel():
     def __init__(self, favorite):
         self.id = str(favorite['_id'])
         self.date = favorite['date']
+        self.hour = favorite['hour']
         self.id_client = favorite ['id_client']
-        self.products = favorite['products']
+        self.id_product = favorite ['id_product']
+        self.name_product = favorite['name_product']
+        self.photo_product = favorite['photo_product']
+        self.price_product = favorite['price_product']
+        self.quantity_product = favorite['quantity_product']
       
 
     def json(self):
         return {
             '_id': self.id,
             'date': self.date,
+            'hour': self.hour,
             'id_client': self.id_client,
-            'products' : self.products
+            'id_product': self.id_product,
+            'name_product' : self.name_product,
+            'photo_product' : self.photo_product,
+            'price_product' : self.price_product,
+            'quantity_product' : self.quantity_product
              }
 
     @classmethod
@@ -45,16 +55,18 @@ class FavoritesModel():
         myquery = { "_id": ObjectId(self.id) }
         newvalues = { "$set": {
                             'date': self.date,
+                            'hour': self.hour,
                             'id_client': self.id_client,
-                            'products': self.products,
+                            'id_product': self.id_product,
                              }}
 
         self.favorites.update(myquery, newvalues)
 
     def insert_to_db(self):  # inserting data
         self.favorites.insert({'date': self.date,
+                            'hour': self.hour,
                             'id_client': self.id_client,
-                            'products': self.products,
+                            'id_product': self.id_product,
                             })
 
     def delete_from_db(self):

@@ -9,27 +9,42 @@ class AdminModel():
 
     def __init__(self, admin):
         self._id =  admin['_id']
+        self.address = admin['address']
+        self.country = admin['country']
         self.email = admin['email']
+        self.location = admin['location']
         self.password = admin['password']
+        self.postal_code = admin['postal_code']
         self.name = admin['name']
         self.telephone = admin['telephone']
+        self.tin = admin['tin']
 
     def json(self):
         objectJson = {
             '_id': self._id,
+            'address': self.address,
+            'country': self.country,
+            'location': self.location,
             'password': self.password,
+            'postal_code': self.postal_code,
             'email': self.email,
             'name': self.name,
-            'telephone': self.telephone 
+            'telephone': self.telephone,
+            'tin': self.tin 
         }
         return json.loads(dumps(objectJson))
 
     def insert(self):
         objectJson = {
+            'address': self.address,
+            'country': self.country,
+            'location': self.location,
+            'password': self.password,
+            'postal_code': self.postal_code,
+            'email': self.email,
             'name': self.name,
             'telephone': self.telephone,
-            'email': self.email,
-            'password': self.password,
+            'tin': self.tin, 
         }
 
         self.admin.insert(objectJson)
@@ -37,10 +52,15 @@ class AdminModel():
     def update(self):
         myquery = { "_id": ObjectId(self._id) }
         objectJson = {
-            'email': self.email,
+            'address': self.address,
+            'country': self.country,
+            'location': self.location,
             'password': self.password,
+            'postal_code': self.postal_code,
+            'email': self.email,
+            'name': self.name,
             'telephone': self.telephone,
-            'name': self.name
+            'tin': self.tin, 
         }
         newvalues = { "$set": objectJson }
 

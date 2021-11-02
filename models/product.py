@@ -5,8 +5,8 @@ from flask_jwt_extended import jwt_required
 # local packages
 from core.db import mongodb
 
-class ProductsModel():
-    products = mongodb['product']
+class ProductModel():
+    product = mongodb['product']
 
     def __init__(self, product):
         self.id = str(product['_id'])
@@ -42,37 +42,37 @@ class ProductsModel():
 
     @classmethod
     def find_by_product_id(cls, id):                           # Procurar produto pelo id
-        product = cls.products.find_one({'_id' : ObjectId(id)}) 
+        product = cls.product.find_one({'_id' : ObjectId(id)}) 
         if product:
-            return ProductsModel(product)
+            return ProductModel(product)
         else:
             return None
 
     @classmethod
-    def find_all_products_by_category(cls, category):         # Procurar todos os produtos por uma categoria
-        products = cls.products.find({'category' : category}) 
-        return json.loads(dumps(products)) if products else None 
+    def find_all_product_by_category(cls, category):         # Procurar todos os produtos por uma categoria
+        product = cls.product.find({'category' : category}) 
+        return json.loads(dumps(product)) if product else None 
 
 
     @classmethod                                             # Procurar todos os produtos por produtor
-    def find_all_products_by_producer(cls, id_producer):
-        products = cls.products.find({'id_producer' : id_producer}) 
-        return json.loads(dumps(products)) if products else None
+    def find_all_product_by_producer(cls, id_producer):
+        product = cls.product.find({'id_producer' : id_producer}) 
+        return json.loads(dumps(product)) if product else None
 
     @classmethod                                             # Procurar todos os produtos por produtor e categoria
-    def find_all_products_by_producer_and_category(cls, id_producer,category):
-        products = cls.products.find({'id_producer' : id_producer, 'category' : category}) 
-        return json.loads(dumps(products)) if products else None
+    def find_all_product_by_producer_and_category(cls, id_producer,category):
+        product = cls.product.find({'id_producer' : id_producer, 'category' : category}) 
+        return json.loads(dumps(product)) if product else None
 
 
     @classmethod
-    def find_all_products(cls):               # Procurar todos os produtos 
-        products = cls.products.find()
-        return json.loads(dumps(products)) if products else None
+    def find_all_product(cls):               # Procurar todos os produtos 
+        product = cls.product.find()
+        return json.loads(dumps(product)) if product else None
 
 
     def insert_to_db(self):  # inserting data
-        self.products.insert({'name': self.name,
+        self.product.insert({'name': self.name,
                             'quantity': self.quantity,
                             'validity': self.validity,
                             'harvest_date': self.harvest_date,
@@ -103,8 +103,8 @@ class ProductsModel():
                             'name_producer': self.name_producer,
                             'email_producer': self.email_producer}}
 
-        self.products.update_one(myquery, newvalues)
+        self.product.update_one(myquery, newvalues)
 
 
     def delete_from_db(self):
-        self.products.delete_one({ "_id": ObjectId(self.id) })
+        self.product.delete_one({ "_id": ObjectId(self.id) })

@@ -14,12 +14,13 @@ class ProducerModel():
         self.tin = producer['tin']
         self.password = producer['password']
         self.country= producer['country']
-        self.locality = producer['locality']
+        self.location = producer['location']
         self.name = producer['name']
         self.postal_code = producer['postal_code']
-        self.social = producer['social']
+        self.region = producer['region']
+        self.social_network = producer['social_network']
         self.state = producer['state']
-        self.street = producer['street']
+        self.address = producer['address']
         self.telephone = producer['telephone']
 
     def json(self):
@@ -29,12 +30,13 @@ class ProducerModel():
             'logo' : self.logo,
             'password': self.password,
             'country': self.country,
-            'locality': self.locality,
+            'location': self.location,
             'name': self.name,
             'postal_code': self.postal_code,
-            'social': self.social,
+            'region': self.region,
+            'social_network': self.social_network,
             'state': self.state,
-            'street': self.street,
+            'address': self.address,
             'telephone': self.telephone,
             'tin' : self.tin
         }
@@ -46,12 +48,13 @@ class ProducerModel():
             'logo' : self.logo,
             'password': self.password,
             'country': self.country,
-            'locality': self.locality,
+            'location': self.location,
             'name': self.name,
             'postal_code': self.postal_code,
-            'social': self.social,
+            'region': self.region,
+            'social_network': self.social_network,
             'state': self.state,
-            'street': self.street,
+            'address': self.address,
             'telephone': self.telephone,
             'tin' : self.tin
         }
@@ -65,12 +68,13 @@ class ProducerModel():
             'logo' : self.logo,
             'password': self.password,
             'country': self.country,
-            'locality': self.locality,
+            'location': self.location,
             'name': self.name,
             'postal_code': self.postal_code,
-            'social': self.social,
+            'region': self.region,
+            'social_network': self.social_network,
             'state': self.state,
-            'street': self.street,
+            'address': self.address,
             'telephone': self.telephone,
             'tin' : self.tin
         }

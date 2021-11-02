@@ -4,4 +4,4 @@ import config
 global mongodb
 
 client = MongoClient(config.mongodbConfig)
-mongodb=client.wineolive
+mongodb=client.produtosregionais
