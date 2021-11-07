@@ -1,0 +1,22 @@
+.inline-errormsg {
+  color: red;
+  font-size: 12px;
+}
+#inputGroupAppend{
+  background-color: white;
+}
+.hidden {
+  display: none;
+}
+#full {
+  height: 20%;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 20%;
+  background-image: url('../../assets/menu.jpg');
+  justify-content: center;
+  opacity: 0.92;
+  align-items: center;
+  text-align: center;
+}

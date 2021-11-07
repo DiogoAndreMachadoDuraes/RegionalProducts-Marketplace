@@ -1,0 +1,9 @@
+input[type=radio]{
+    transform:scale(2);
+ 
+  }
+  
+.nav-up{
+    background-color: #AAAA74;
+    height: 7em;
+}

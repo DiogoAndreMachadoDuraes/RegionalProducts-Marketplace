@@ -1,0 +1,7 @@
+.fixed{
+    height: 50px;
+    width: 300px;
+    position: fixed;
+    bottom: 60px;
+    right: 32px;
+   }

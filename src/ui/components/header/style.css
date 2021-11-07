@@ -1,0 +1,22 @@
+.header .nav-up {
+  background-color: #aaaa74;
+  height: 7em;
+}
+.nav-down {
+  background-color: #444903;
+  border-radius: 0px 0px 20px 20px;
+}
+#collasible-nav-dropdown {
+  color: white;
+}
+#language-dropdown {
+  color: black;
+}
+#row {
+  justify-content: center;
+  align-items: center;
+}
+#search {
+  background-color: #aaaa74;
+  color: white;
+}

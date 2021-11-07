@@ -1,0 +1,12 @@
+.full {
+    height: 100%;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    background-image: url('../../assets/wineBackground.jpg');
+    justify-content: center;
+    opacity: 0.92;
+    align-items: center;
+    text-align: center;
+}

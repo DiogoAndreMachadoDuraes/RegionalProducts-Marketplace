@@ -1,0 +1,13 @@
+.reserve{
+    position: absolute;
+    width: 480px;
+    height: 90px;
+    left: 758px;
+    top: 480px;
+
+    background: #B7B7A4;
+    border: 3px solid #FFFEFE;
+    box-sizing: border-box;
+    border-radius: 20px;
+    text-align: center;
+}
