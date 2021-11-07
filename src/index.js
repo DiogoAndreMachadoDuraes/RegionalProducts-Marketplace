@@ -8,44 +8,44 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Cart from "./pages/cart/index";
-import Checkout from "./pages/checkout/index";
-import InitialPage from "./pages/initialPage/index";
-import ProductDetail from "./pages/productDetail/index";
-import ClientList from "./pages/clientList/index";
+import Cart from "./ui/screens/cart/index";
+import Checkout from "./ui/screens/checkout/index";
+import InitialPage from "./ui/screens/initialPage/index";
+import ProductDetail from "./ui/screens/productDetail/index";
+import ClientList from "./ui/screens/clientList/index";
 import reportWebVitals from "./reportWebVitals";
-import Header from "./components/header";
-import { Footer } from "./components";
-import Login from "./pages/login/index";
-import Invoice from "./pages/invoice/index";
-import DashboardProducer from "./pages/dashboardProducer/index";
-import DashboardAdmin from "./pages/dashboardAdmin/index";
-import ProducerList from "./pages/producerList/index";
-import ProducerOrder from "./pages/producerOrder/index";
-import FrequentTask from "./pages/frequentTask/index";
-import ForgetPassword from "./pages/forgetPassword/index";
-import Register from "./pages/register/register";
-import ProducerRegister from "./pages/producerRegister/producerregister";
-import Home from "./pages/home/index";
-import Client from "./pages/client/client";
-import Favorites from "./pages/favorites/favorites";
-import Payment from "./pages/payment/payment";
-import ProductListProducer from "./pages/productListProducer/productlistproducer";
-import ProductList from "./pages/productList/productlist";
-import Terms from "./pages/terms/terms";
-import Politics from "./pages/politics/politics";
-import Product from "./pages/product/product";
-import Order from "./pages/order/order";
-import Confirmation from "./pages/confirmation/index";
-import EditProducer from "./pages/editProducer/index";
-import EditClient from "./pages/editClient/index";
-import Ship from "./pages/ship/index";
-import Producer from "./pages/producer/index";
-import AboutUs from "./pages/aboutUs/index";
-import CreateProduct from "./pages/createProduct/createproduct";
-import Rate from "./pages/rate/index";
-import NotFoundPage from "./pages/notFoundPage/index";
-import NoPermissions from "./pages/noPermissions/index";
+import Header from "./ui/components/header";
+import { Footer } from "./ui/components/footer";
+import Login from "./ui/screens/login/index";
+import Invoice from "./ui/screens/invoice/index";
+import DashboardProducer from "./ui/screens/dashboardProducer/index";
+import DashboardAdmin from "./ui/screens/dashboardAdmin/index";
+import ProducerList from "./ui/screens/producerList/index";
+import ProducerOrder from "./ui/screens/producerOrder/index";
+import FrequentTask from "./ui/screens/frequentTask/index";
+import ForgetPassword from "./ui/screens/forgetPassword/index";
+import Register from "./ui/screens/register/index";
+import ProducerRegister from "./ui/screens/producerRegister/index";
+import Home from "./ui/screens/home/index";
+import Client from "./ui/screens/client/index";
+import Favorites from "./ui/screens/favorites/index";
+import Payment from "./ui/screens/payment/index";
+import ProductListProducer from "./ui/screens/productListProducer/index";
+import ProductList from "./ui/screens/productList/index";
+import Terms from "./ui/screens/terms/index";
+import Politics from "./ui/screens/politics/index";
+import Product from "./ui/screens/product/index";
+import Order from "./ui/screens/order/index";
+import Confirmation from "./ui/screens/confirmation/index";
+import EditProducer from "./ui/screens/editProducer/index";
+import EditClient from "./ui/screens/editClient/index";
+import Ship from "./ui/screens/ship/index";
+import Producer from "./ui/screens/producer/index";
+import AboutUs from "./ui/screens/aboutUs/index";
+import CreateProduct from "./ui/screens/createProduct/index";
+import Avaliation from "./ui/screens/avaliation/index";
+import NotFoundPage from "./ui/screens/notFoundPage/index";
+import NoPermissions from "./ui/screens/noPermissions/index";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -62,7 +62,7 @@ ReactDOM.render(
           <Header />
           <Route path="/about" component={AboutUs} />
           <Route path="/cart" component={Cart} />
-          <Route path="/rate" component={Rate} />
+          <Route path="/avaliation" component={Avaliation} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/productdetail" component={ProductDetail} />
           <Route path="/clientlist" component={ClientList} />
