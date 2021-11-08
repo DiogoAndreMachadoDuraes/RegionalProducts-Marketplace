@@ -11,7 +11,7 @@ import {
   Button,
   Image,
 } from "react-bootstrap";
-import logo from "../../assets/logoExpand.jpg";
+import logo from "../../../assets/logo.jpg";
 import axios from "axios";
 
 class Ship extends React.Component {

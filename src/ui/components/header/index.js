@@ -18,7 +18,7 @@ import {
 import { TiShoppingCart } from "react-icons/ti";
 import { GiExitDoor } from "react-icons/gi";
 import { MdLanguage } from "react-icons/md";
-import logo from "../../assets/logoExpand.jpg";
+import logo from "../../../assets/logo.jpg";
 import { AiOutlineSearch } from "react-icons/ai";
 
 class Header extends Component {

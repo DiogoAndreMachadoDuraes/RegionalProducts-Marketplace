@@ -1,7 +1,7 @@
 import React from "react";
 import Pdf from "react-to-pdf";
 import { Image, Row, Col } from "react-bootstrap";
-import medusa from "../../assets/medusa.jpg";
+import mel from "../../../assets/mel.jpg";
 import { FaFileInvoice } from "react-icons/fa";
 
 const ref = React.createRef();
@@ -155,7 +155,7 @@ const PDF = (props) => {
         <Row id="row" style={{ marginTop: 40, textAlign: "center" }}>
           <Col sm={1} />
           <Col sm={4}>
-            <Image src={medusa} style={{ width: 150, height: 160 }} />
+            <Image src={mel} style={{ width: 150, height: 160 }} />
           </Col>
           <Col sm={3}>
             <h5

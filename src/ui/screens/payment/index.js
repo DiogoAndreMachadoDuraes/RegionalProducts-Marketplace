@@ -10,7 +10,7 @@ import {
   Button,
   Image,
 } from "react-bootstrap";
-import logo from "../../assets/logoExpand.jpg";
+import logo from "../../../assets/logo.jpg";
 
 class CheckoutPayment extends React.Component {
   render() {

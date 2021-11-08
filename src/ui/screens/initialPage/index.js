@@ -4,7 +4,7 @@ import { Image, Container, Row, Button, Card, Col } from "react-bootstrap";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { Footer } from "../../components";
-import vine from "../../assets/vine.jpg";
+import morango from "../../../assets/morango.jpeg";
 
 class InitialPage extends React.Component {
   render() {
@@ -160,7 +160,7 @@ class InitialPage extends React.Component {
             <Row id="row" style={{ marginTop: 50 }}>
               <Col sm={2} />
               <Col sm={5}>
-                <Image src={vine} id="img-rounded" fluid />
+                <Image src={morango} id="img-rounded" fluid />
               </Col>
               <Col sm={4}>
                 <h5 style={{ color: "#AAAA74" }}>

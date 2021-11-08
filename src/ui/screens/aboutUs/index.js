@@ -2,7 +2,7 @@ import React from "react";
 import { Image, Container, Row, Col } from "react-bootstrap";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
-import wine from "../../assets/wineBackground.jpg";
+import tea from "../../../assets/tea.jpg";
 
 class AboutUs extends React.Component {
   render() {
@@ -16,7 +16,7 @@ class AboutUs extends React.Component {
             <Row id="row" style={{ marginTop: 69 }}>
               <Col sm={1} />
               <Col sm={4}>
-                <Image src={wine} id="img-rounded" fluid />
+                <Image src={tea} id="img-rounded" fluid />
               </Col>
               <Col sm={2} />
               <Col sm={5}>

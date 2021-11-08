@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import { Button, Card, Spinner } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-import thanks from "../../assets/thanks.jpg";
+import mix from "../../../assets/mix.jpg";
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class Checkout extends React.Component {
     return (
       <div>
         <Card className="text-center text-white">
-          <Card.Img src={thanks} alt="Card image" />
+          <Card.Img src={mix} alt="Card image" />
           <Card.ImgOverlay style={{ marginTop: 180 }}>
             <Card.Title
               style={{ fontSize: 80, marginBottom: 200, color: "white" }}
