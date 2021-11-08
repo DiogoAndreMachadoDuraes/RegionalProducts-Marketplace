@@ -1,4 +1,4 @@
-mongodb = {'host': 'cluster0.qmppi.mongodb.net/produtosregionais',
+mongodb = {'host': 'cluster0.qmppi.mongodb.net/RegionalProducts',
          'user': 'andreiadiogo',
          'password': 'andreiadiogo'}
 
