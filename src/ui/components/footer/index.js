@@ -3,10 +3,10 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import { FaFacebook, FaTwitter, FaPhoneAlt } from "react-icons/fa";
 import { TiInfoLargeOutline } from "react-icons/ti";
 import { SiInstagram } from "react-icons/si";
-import logo from "../../assets/logoExpand.jpg";
+import logo from "../../../assets/logo.jpg";
 import mb from "../../assets/mb.png";
-import paypal from "../../assets/paypal.png";
-import mbway from "../../assets/mbway.png";
+import paypal from "../../../assets/paypal.png";
+import mbway from "../../../assets/mbway.png";
 import { IoIosMail } from "react-icons/io";
 
 export const Footer = () => {

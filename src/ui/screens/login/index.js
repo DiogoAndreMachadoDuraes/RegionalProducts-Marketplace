@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
-import logo from "../../assets/logo.jpg";
-import menu from "../../assets/menu.jpg";
+import logo from "../../../assets/logo.jpg";
+import enchidos from "../../../assets/enchidos.jpg";
 import {
   BsFillEyeSlashFill,
   BsFillEyeFill,
@@ -332,7 +332,7 @@ class Login extends React.Component {
             </Form>
           </Col>
           <Col sm={6}>
-            <Image src={menu} width="768" height="721" />
+            <Image src={enchidos} width="768" height="721" />
           </Col>
         </Row>
       </Container>

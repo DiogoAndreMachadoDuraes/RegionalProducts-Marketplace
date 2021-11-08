@@ -2,9 +2,9 @@ import React from "react";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import gallo from "../../assets/gallo.jpg";
-import mateus from "../../assets/mateus.jpg";
-import compota from "../../assets/compota.jpg";
+import amora from "../../../assets/amora.jpg";
+import cheese from "../../../assets/cheese.jpg";
+import compota from "../../../assets/compota.jpg";
 import Navbar from "react-bootstrap/Navbar";
 import { AiOutlineDropbox } from "react-icons/ai";
 import Card from "react-bootstrap/Card";
@@ -77,7 +77,7 @@ class ProducerOrder extends React.Component {
                 <div className="col-md-4">
                   <Col>
                     <Image
-                      src={gallo}
+                      src={amora}
                       thumbnail
                       style={{ marginTop: 10, width: 130, height: 120 }}
                     />
@@ -174,7 +174,7 @@ class ProducerOrder extends React.Component {
                 <div className="col-md-4">
                   <Col>
                     <Image
-                      src={compota}
+                      src={cheese}
                       thumbnail
                       style={{ marginTop: 10, width: 130, height: 120 }}
                     />
@@ -271,7 +271,7 @@ class ProducerOrder extends React.Component {
                 <div className="col-md-4">
                   <Col>
                     <Image
-                      src={mateus}
+                      src={compota}
                       thumbnail
                       style={{ marginTop: 10, width: 130, height: 120 }}
                     />
