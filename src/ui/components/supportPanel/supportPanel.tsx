@@ -17,7 +17,7 @@ export const SupportPanel: React.FC<SupportPanelProps> = ({
 	const history = useHistory();
 
 	return (
-		<div style={{ marginTop: 100, display: 'flex', flexDirection: 'column', justifyContent: 'left' }}>
+		<div style={{ marginTop: 100, display: 'flex', flexDirection: 'column', justifyContent: 'left', fontFamily:'Artifika' }}>
 			<p style={{ marginTop: 15, marginLeft: 50, fontSize: '25px', fontWeight: 'bold' }}>Suporte</p>
 
 			{onPrivacityPolitics ? (
