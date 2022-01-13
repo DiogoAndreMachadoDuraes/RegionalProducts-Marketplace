@@ -25,222 +25,218 @@ export const list = [
 	{ name: 'Bangladeche' },
 	{ name: 'Barbados' },
 	{ name: 'Barém' },
+	{ name: 'Bélgica' },
+	{ name: 'Belize' },
+	{ name: 'Benim' },
+	{ name: 'Bermudas' },
+	{ name: 'Bielorrússia' },
+	{ name: 'Birmânia' },
+	{ name: 'Bolívia' },
+	{ name: 'Bósnia e Herzegovina' },
+	{ name: 'Botsuana' },
+	{ name: 'Brasil' },
+	{ name: 'Brunei' },
+	{ name: 'Bulgária' },
+	{ name: 'Burúndi' },
+	{ name: 'Butão' },
+	{ name: 'Cabo Verde' },
+	{ name: 'Camarões' },
+	{ name: 'Camboja' },
+	{ name: 'Canadá' },
+	{ name: 'Catar' },
+	{ name: 'Cazaquistão' },
+	{ name: 'Chade' },
+	{ name: 'Chile' },
+	{ name: 'China' },
+	{ name: 'Chipre' },
+	{ name: 'Clipperton Island' },
+	{ name: 'Colômbia' },
+	{ name: 'Comores' },
+	{ name: 'Congo-Brazzaville' },
+	{ name: 'Congo-Kinshasa' },
+	{ name: 'Coral Sea Islands' },
+	{ name: 'Coreia do Norte' },
+	{ name: 'Coreia do Sul' },
+	{ name: 'Costa do Marfim' },
+	{ name: 'Costa Rica' },
+	{ name: 'Croácia' },
+	{ name: 'Cuba' },
+	{ name: 'Curacao' },
+	{ name: 'Dhekelia' },
+	{ name: 'Dinamarca' },
+	{ name: 'Domínica' },
+	{ name: 'Egipto' },
+	{ name: 'Emiratos Árabes Unidos' },
+	{ name: 'Equador' },
+	{ name: 'Eritreia' },
+	{ name: 'Eslováquia' },
+	{ name: 'Eslovénia' },
+	{ name: 'Espanha' },
+	{ name: 'Estados Unidos' },
+	{ name: 'Estónia' },
+	{ name: 'Etiópia' },
+	{ name: 'Faroé' },
+	{ name: 'Fiji' },
+	{ name: 'Filipinas' },
+	{ name: 'Finlândia' },
+	{ name: 'França' },
+	{ name: 'Gabão' },
+	{ name: 'Gâmbia' },
+	{ name: 'Gana' },
+	{ name: 'Gaza Strip' },
+	{ name: 'Geórgia' },
+	{ name: 'Geórgia do Sul e Sandwich do Sul' },
+	{ name: 'Gibraltar' },
+	{ name: 'Granada' },
+	{ name: 'Grécia' },
+	{ name: 'Gronelândia' },
+	{ name: 'Guame' },
+	{ name: 'Guatemala' },
+	{ name: 'Guernsey' },
+	{ name: 'Guiana' },
+	{ name: 'Guiné' },
+	{ name: 'Guiné Equatorial' },
+	{ name: 'Guiné-Bissau' },
+	{ name: 'Haiti' },
+	{ name: 'Honduras' },
+	{ name: 'Hong Kong' },
+	{ name: 'Hungria' },
+	{ name: 'Iémen' },
+	{ name: 'Ilha Bouvet' },
+	{ name: 'Ilha do Natal' },
+	{ name: 'Ilha Norfolk' },
+	{ name: 'Ilhas Caimão' },
+	{ name: 'Ilhas Cook' },
+	{ name: 'Ilhas dos Cocos' },
+	{ name: 'Ilhas Falkland' },
+	{ name: 'Ilhas Heard e McDonald' },
+	{ name: 'Ilhas Marshall' },
+	{ name: 'Ilhas Salomão' },
+	{ name: 'Ilhas Turcas e Caicos' },
+	{ name: 'Ilhas Virgens Americanas' },
+	{ name: 'Ilhas Virgens Britânicas' },
+	{ name: 'Índia' },
+	{ name: 'Indian Ocean' },
+	{ name: 'Indonésia' },
+	{ name: 'Irão' },
+	{ name: 'Iraque' },
+	{ name: 'Irlanda' },
+	{ name: 'Islândia' },
+	{ name: 'Israel' },
+	{ name: 'Itália' },
+	{ name: 'Jamaica' },
+	{ name: 'Jan Mayen' },
+	{ name: 'Japão' },
+	{ name: 'Jersey' },
+	{ name: 'Jibuti' },
+	{ name: 'Jordânia' },
+	{ name: 'Kosovo' },
+	{ name: 'Kuwait' },
+	{ name: 'Laos' },
+	{ name: 'Lesoto' },
+	{ name: 'Letónia' },
+	{ name: 'Líbano' },
+	{ name: 'Libéria' },
+	{ name: 'Líbia' },
+	{ name: 'Listenstaine' },
+	{ name: 'Lituânia' },
+	{ name: 'Luxemburgo' },
+	{ name: 'Macau' },
+	{ name: 'Macedónia' },
+	{ name: 'Madagáscar' },
+	{ name: 'Malásia' },
+	{ name: 'Malávi' },
+	{ name: 'Maldivas' },
+	{ name: 'Mali' },
+	{ name: 'Malta' },
+	{ name: 'Marianas do Norte' },
+	{ name: 'Marrocos' },
+	{ name: 'Maurícia' },
+	{ name: 'Mauritânia' },
+	{ name: 'México' },
+	{ name: 'Micronésia' },
+	{ name: 'Moçambique' },
+	{ name: 'Moldávia' },
+	{ name: 'Mónaco' },
+	{ name: 'Mongólia' },
+	{ name: 'Monserrate' },
+	{ name: 'Montenegro' },
+	{ name: 'Namíbia' },
+	{ name: 'Nauru' },
+	{ name: 'Navassa Island' },
+	{ name: 'Nepal' },
+	{ name: 'Nicarágua' },
+	{ name: 'Níger' },
+	{ name: 'Niue' },
+	{ name: 'Noruega' },
+	{ name: 'Nova Caledónia' },
+	{ name: 'Nova Zelândia' },
+	{ name: 'Omã' },
+	{ name: 'Pacific Ocean' },
+	{ name: 'Países Baixos' },
+	{ name: 'Palau' },
+	{ name: 'Panamá' },
+	{ name: 'Papua-Nova Guiné' },
+	{ name: 'Paquistão' },
+	{ name: 'Paracel Islands' },
+	{ name: 'Paraguai' },
+	{ name: 'Peru' },
+	{ name: 'Pitcairn' },
+	{ name: 'Polinésia Francesa' },
+	{ name: 'Polónia' },
+	{ name: 'Porto Rico' },
+	{ name: 'Portugal' },
+	{ name: 'Quénia' },
+	{ name: 'Quirguizistão' },
+	{ name: 'Quiribáti' },
+	{ name: 'Reino Unido' },
+	{ name: 'República Centro-Africana' },
+	{ name: 'República Dominicana' },
+	{ name: 'Roménia' },
+	{ name: 'Ruanda' },
+	{ name: 'Rússia' },
+	{ name: 'Salvador' },
+	{ name: 'São Tomé e Príncipe' },
+	{ name: 'São Vicente e Granadinas' },
+	{ name: 'Sara Ocidental' },
+	{ name: 'Seicheles' },
+	{ name: 'Senegal' },
+	{ name: 'Serra Leoa' },
+	{ name: 'Sérvia' },
+	{ name: 'Singapura' },
+	{ name: 'Sint Maarten' },
+	{ name: 'Síria' },
+	{ name: 'Somália' },
+	{ name: 'Southern Ocean' },
+	{ name: 'Spratly Islands' },
+	{ name: 'Sri Lanca' },
+	{ name: 'Suazilândia' },
+	{ name: 'Sudão' },
+	{ name: 'Sudão do Sul' },
+	{ name: 'Suécia' },
+	{ name: 'Suíça' },
+	{ name: 'Suriname' },
+	{ name: 'Svalbard e Jan Mayen' },
+	{ name: 'Tailândia' },
+	{ name: 'Taiwan' },
+	{ name: 'Tajiquistão' },
+	{ name: 'Tanzânia' },
+	{ name: 'Território Britânico do Oceano Índico' },
+	{ name: 'Territórios Austrais Franceses' },
+	{ name: 'Timor Leste' },
+	{ name: 'Togo' },
+	{ name: 'Tokelau' },
+	{ name: 'Tonga' },
+	{ name: 'Trindade e Tobago' },
+	{ name: 'Tunísia' },
+	{ name: 'Turquemenistão' },
+	{ name: 'Turquia' },
+	{ name: 'Tuvalu' },
+	{ name: 'Ucrânia' },
+	{ name: 'Uruguai' },
+	{ name: 'Usbequistão' },
+	{ name: 'Vaticano' },
+	{ name: 'Venezuela' },
+	{ name: 'Vietname' },
 
-	//need to change to add all countrys of list
 ];
-/* 								,Bélgica
-								,Belize
-								,Benim
-								,Bermudas
-								,Bielorrússia
-								,Birmânia
-								,Bolívia
-								,Bósnia e Herzegovina
-								,Botsuana
-								,Brasil
-								,Brunei
-								,Bulgária
-								,Burquina Faso
-								,Burúndi
-								,Butão
-								,Cabo Verde
-								,Camarões
-								,Camboja
-								,Canadá
-								,Catar
-								,Cazaquistão
-								,Chade
-								,Chile
-								,China
-								,Chipre
-								,Clipperton Island
-								,Colômbia
-								,Comores
-								,Congo-Brazzaville
-								,Congo-Kinshasa
-								,Coral Sea Islands
-								,Coreia do Norte
-								,Coreia do Sul
-								,Costa do Marfim
-								,Costa Rica
-								,Croácia
-								,Cuba
-								,Curacao
-								,Dhekelia
-								,Dinamarca
-								,Domínica
-								,Egipto
-								,Emiratos Árabes Unidos
-								,Equador
-								,Eritreia
-								,Eslováquia
-								,Eslovénia
-								,Espanha
-								,Estados Unidos
-								,Estónia
-								,Etiópia
-								,Faroé
-								,Fiji
-								,Filipinas
-								,Finlândia
-								,França
-								,Gabão
-								,Gâmbia
-								,Gana
-								,Gaza Strip
-								,Geórgia
-								,Geórgia do Sul e Sandwich do Sul
-								,Gibraltar
-								,Granada
-								,Grécia
-								,Gronelândia
-								,Guame
-								,Guatemala
-								,Guernsey
-								,Guiana
-								,Guiné
-								,Guiné Equatorial
-								,Guiné-Bissau
-								,Haiti
-								,Honduras
-								,Hong Kong
-								,Hungria
-								,Iémen
-								,Ilha Bouvet
-								,Ilha do Natal
-								,Ilha Norfolk
-								,Ilhas Caimão
-								,Ilhas Cook
-								,Ilhas dos Cocos
-								,Ilhas Falkland
-								,Ilhas Heard e McDonald
-								,Ilhas Marshall
-								,Ilhas Salomão
-								,Ilhas Turcas e Caicos
-								,Ilhas Virgens Americanas
-								,Ilhas Virgens Britânicas
-								,Índia
-								,Indian Ocean
-								,Indonésia
-								,Irão
-								,Iraque
-								,Irlanda
-								,Islândia
-								,Israel
-								,Itália
-								,Jamaica
-								,Jan Mayen
-								,Japão
-								,Jersey
-								,Jibuti
-								,Jordânia
-								,Kosovo
-								,Kuwait
-								,Laos
-								,Lesoto
-								,Letónia
-								,Líbano
-								,Libéria
-								,Líbia
-								,Listenstaine
-								,Lituânia
-								,Luxemburgo
-								,Macau
-								,Macedónia
-								,Madagáscar
-								,Malásia
-								,Malávi
-								,Maldivas
-								,Mali
-								,Malta
-								,Man, Isle of
-								,Marianas do Norte
-								,Marrocos
-								,Maurícia
-								,Mauritânia
-								,México
-								,Micronésia
-								,Moçambique
-								,Moldávia
-								,Mónaco
-								,Mongólia
-								,Monserrate
-								,Montenegro
-								,Namíbia
-								,Nauru
-								,Navassa Island
-								,Nepal
-								,Nicarágua
-								,Níger
-								,Nigéria
-								,Niue
-								,Noruega
-								,Nova Caledónia
-								,Nova Zelândia
-								,Omã
-								,Pacific Ocean
-								,Países Baixos
-								,Palau
-								,Panamá
-								,Papua-Nova Guiné
-								,Paquistão
-								,Paracel Islands
-								,Paraguai
-								,Peru
-								,Pitcairn
-								,Polinésia Francesa
-								,Polónia
-								,Porto Rico
-								,Portugal
-								,Quénia
-								,Quirguizistão
-								,Quiribáti
-								,Reino Unido
-								,República Centro-Africana
-								,República Dominicana
-								,Roménia
-								,Ruanda
-								,Rússia
-								,Salvador
-								,São Tomé e Príncipe
-								,São Vicente e Granadinas
-								,Sara Ocidental
-								,Seicheles
-								,Senegal
-								,Serra Leoa
-								,Sérvia
-								,Singapura
-								,Sint Maarten
-								,Síria
-								,Somália
-								,Southern Ocean
-								,Spratly Islands
-								,Sri Lanca
-								,Suazilândia
-								,Sudão
-								,Sudão do Sul
-								,Suécia
-								,Suíça
-								,Suriname
-								,Svalbard e Jan Mayen
-								,Tailândia
-								,Taiwan
-								,Tajiquistão
-								,Tanzânia
-								,"Território Britânico do Oceano Índico"
-								,"Territórios Austrais Franceses"
-								,"Timor Leste"
-								,"Togo"
-								,"Tokelau"
-								,"Tonga"
-								,"Trindade e Tobago"
-								,"Tunísia"
-								,"Turquemenistão"
-								,"Turquia"
-								,"Tuvalu"
-								,"Ucrânia"
-								,"Uruguai"
-								,"Usbequistão"
-								,"Vaticano"
-								,"Venezuela"
-								,"Vietname" */
