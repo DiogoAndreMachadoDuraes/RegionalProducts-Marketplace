@@ -1,0 +1,4 @@
+export const ModalTypes = {
+	HIDE_LOGIN_MODAL: 'HIDE_LOGIN_MODAL',
+	SHOW_LOGIN_MODAL: 'SHOW_LOGIN_MODAL',
+};

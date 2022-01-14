@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { StoreState } from 'store';
+import { useSelector } from 'react-redux';
 
 export interface HeaderOutput {
 	isLogged: boolean;
@@ -7,27 +8,9 @@ export interface HeaderOutput {
 }
 
 export const useHeaderHelper = (): HeaderOutput => {
-	const [name, setName] = useState('');
-	const [type, setType] = useState('');
-	const [isLoading, setIsLoading] = useState(false);
-	const [isLogged, setIsLogged] = useState(false);
-
-	useEffect(() => {
-		try {
-			let nameStoraged = localStorage.getItem('name');
-			let typeStoraged = localStorage.getItem('type');
-
-			if (nameStoraged !== null && typeStoraged != null) {
-				setIsLogged(true);
-				setIsLoading(true);
-				setName(nameStoraged);
-				setType(typeStoraged);
-			}
-		} catch (e) {
-			console.log('Error rending data: ' + e);
-			setIsLoading(true);
-		}
-	}, [name, isLoading, type]);
+	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
+	const name = useSelector((state: StoreState) => state.common.user.name);
+	const type = useSelector((state: StoreState) => state.common.user.type);
 
 	return { isLogged, name, type };
 };

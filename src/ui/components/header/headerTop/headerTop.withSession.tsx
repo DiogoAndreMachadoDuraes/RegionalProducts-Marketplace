@@ -1,27 +1,25 @@
 import React from 'react';
 import { Nav, Row, Col } from 'react-bootstrap';
 import { GiExitDoor } from 'react-icons/gi';
+import { useHistory } from 'react-router-dom';
 
 interface HeaderTopProps {
-	isLogged: boolean;
 	name: string;
-	type: string;
 }
 
-export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ isLogged, name, type }) => {
-	const logout = () => {
-		localStorage.removeItem('name');
-		localStorage.removeItem('type');
-		localStorage.removeItem('token');
-	};
+export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ name }) => {
+	const history = useHistory();
 
-	const url = '/' + type + '';
+	const handleAccount = () => {
+		history.push('/profile');
+	};
 
 	return (
 		<Row>
+			<Col sm={4} />
 			<Col sm={6}>
 				<Nav className="mr-auto">
-					<Nav.Link href={url}>
+					<Nav.Link onClick={handleAccount}>
 						<h3 style={{ fontSize: 14, color: 'black' }}>
 							Bem vindo,
 							<h3
@@ -38,28 +36,16 @@ export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ isLogged, name,
 					</Nav.Link>
 				</Nav>
 			</Col>
-			<Col sm={6}>
+			<Col sm={1}>
 				<Nav className="mr-auto">
-					<Nav.Link href="/home" onClick={logout} eventKey={2}>
+					<Nav.Link href="/" eventKey={2}>
 						<Row>
-							<Col sm={7}>
-								<h3
-									style={{
-										fontSize: 14,
-										color: 'black',
-										textAlign: 'center',
-									}}
-								>
-									Sair da conta
-								</h3>
-							</Col>
-							<Col sm={5}>
-								<GiExitDoor size="30" />
-							</Col>
+							<GiExitDoor size="30" />
 						</Row>
 					</Nav.Link>
 				</Nav>
 			</Col>
+			<Col sm={1} />
 		</Row>
 	);
 };

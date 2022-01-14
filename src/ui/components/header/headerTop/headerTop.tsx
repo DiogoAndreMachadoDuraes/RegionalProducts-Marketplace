@@ -85,13 +85,7 @@ export const HeaderTop: React.FC<HeaderTopProps> = ({ isLogged, name, type }) =>
 							</InputGroup>
 						</Form>
 					</Col>
-					<Col sm={4}>
-						{isLogged ? (
-							<HeaderTopWithSession isLogged={isLogged} name={name} type={type} />
-						) : (
-							<HeaderTopWithoutSession />
-						)}
-					</Col>
+					<Col sm={4}>{isLogged ? <HeaderTopWithSession name={name} /> : <HeaderTopWithoutSession />}</Col>
 				</Row>
 			</Container>
 		</Navbar>

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { images } from 'assets';
-/* import axios from 'axios'; */
+import axios from 'axios';
 import { Image, Container, Row, Col, Modal, Button } from 'react-bootstrap';
 import { AiOutlineUser, AiFillPhone, AiFillCreditCard, AiOutlineMail } from 'react-icons/ai';
 import { BsFillPinMapFill } from 'react-icons/bs';
 import { MdDateRange } from 'react-icons/md';
 import { IoLocationOutline } from 'react-icons/io5';
 import { FaMapSigns } from 'react-icons/fa';
+import { StoreState } from 'store';
+import { useSelector } from 'react-redux';
 
 interface Client {
 	name: string;
@@ -21,7 +23,7 @@ interface Client {
 }
 
 export const ClientProfile: React.FC = () => {
-	const [client /* , setClient */] = useState<Client>({
+	const [client, setClient] = useState<Client>({
 		name: 'Diogo Durães',
 		tin: 242245435,
 		street: 'Rua da Cerca Nova, porta 532',
@@ -46,6 +48,38 @@ export const ClientProfile: React.FC = () => {
 		handleDelete();
 		handleCloseDelete();
 	};
+
+	const token = useSelector((state: StoreState) => state.common.user.isLogged);
+	const userId = useSelector((state: StoreState) => state.common.user.name);
+
+	useEffect(() => {
+		async function fetchClient() {
+			try {
+				const config = {
+					headers: { Authorization: `Bearer ${token}` },
+				};
+
+				await axios.get(`http://127.0.0.1:5000/client/${userId}`, config).then((res) => {
+					const client = res.data;
+					setClient({
+						name: client.name,
+						tin: client.tin,
+						street: client.street,
+						locality: client.locality,
+						country: client.country,
+						birthday: client.birthday,
+						postal_code: client.postal_code,
+						telephone: client.telephone,
+						email: client.email,
+					});
+				});
+			} catch (e) {
+				console.log('Error to get Client: ' + e);
+			}
+		}
+
+		fetchClient();
+	}, [client, token, userId]);
 
 	const modalDelete = () => {
 		return (

@@ -2,16 +2,22 @@ import React, { useState } from 'react';
 import { images } from 'assets';
 import { BsFillEyeSlashFill, BsFillEyeFill, BsEnvelopeOpen } from 'react-icons/bs';
 import { InputGroup, Image, Row, Col, Button, Form, Navbar, Modal } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { newUser } from 'store';
 
-export const Login: React.FC = () => {
-	const [show, setShow] = useState(true);
+interface LoginProps {
+	show: boolean;
+	onHide: () => void;
+}
+
+export const Login: React.FC<LoginProps> = ({ show, onHide }) => {
 	const [email, setEmail] = useState<string | undefined>(undefined);
 	const [password, setPassword] = useState<string | undefined>(undefined);
 	const [isValidEmail, setIsValidEmail] = useState(true);
 	const [isValidPassword, setIsValidPassword] = useState(true);
 	const [isShowedPassword, setIsShowedPassword] = useState(false);
-
-	const handleClose = () => setShow(false);
+	const history = useHistory();
 
 	const handleCheckEmail = (email: string) => {
 		setEmail(email);
@@ -39,6 +45,8 @@ export const Login: React.FC = () => {
 		setIsShowedPassword(!isShowedPassword);
 	};
 
+	const dispatch = useDispatch();
+
 	const login = async () => {
 		try {
 			let response = await fetch('http://127.0.0.1:5000/auth', {
@@ -53,46 +61,23 @@ export const Login: React.FC = () => {
 				}),
 			});
 			let json = await response.json();
-			const name: string = json.name;
 			const type: string = json.type;
-			const token: string = json.token;
-			const userId: string = json.id;
 			if (type === 'client') {
-				/* this.props.history.push('/home', {
-					token: token,
-					name: name,
-					type: type,
-				}); */
-				localStorage.setItem('token', token);
-				localStorage.setItem('name', name);
-				localStorage.setItem('type', type);
-				localStorage.setItem('userId', userId);
+				dispatch(newUser(json));
+				onHide();
+				history.push('/');
 			} else {
 				if (type === 'admin') {
-					/* this.props.history.push('/dashboardadmin', {
-						token: token,
-						name: name,
-						type: type,
-					}); */
-					localStorage.setItem('token', token);
-					localStorage.setItem('name', name);
-					localStorage.setItem('type', type);
-					localStorage.setItem('userId', userId);
+					dispatch(newUser(json));
+					onHide();
+					history.push('/');
 				} else {
 					if (type === 'producer') {
-						/* this.props.history.push('/dashboardproducer', {
-							token: token,
-							name: name,
-							type: type,
-						}); */
-						localStorage.setItem('token', token);
-						localStorage.setItem('name', name);
-						localStorage.setItem('type', type);
-						localStorage.setItem('userId', userId);
+						dispatch(newUser(json));
+						onHide();
+						history.push('/');
 					} else {
 						alert('O email e/ou palavra-passe estão incorretos!');
-						localStorage.clear();
-						return;
 					}
 				}
 			}
@@ -102,7 +87,7 @@ export const Login: React.FC = () => {
 	};
 
 	return (
-		<Modal size="lg" show={show} onHide={handleClose} centered={true}>
+		<Modal size="lg" show={show} onHide={onHide} centered={true}>
 			<Modal.Body>
 				<div style={{ padding: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
 					<div
