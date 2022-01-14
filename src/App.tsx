@@ -21,6 +21,7 @@ import {
 	ProductDetail,
 	Register,
 	ClientList,
+	ProducerList,
 } from 'ui';
 
 import Cart from './ui/screens/cart/index';
@@ -29,8 +30,8 @@ import Cart from './ui/screens/cart/index';
  */import Invoice from './ui/screens/invoice/index';
 import DashboardProducer from './ui/screens/dashboardProducer/index';
 import DashboardAdmin from './ui/screens/dashboardAdmin/index';
-import ProducerList from './ui/screens/producerList/index';
-import ProducerOrder from './ui/screens/producerOrder/index';
+/* import ProducerList from './ui/screens/producerList/producerList';
+ */import ProducerOrder from './ui/screens/producerOrder/index';
 /* import Register from './ui/screens/register/index'; */
 import ProducerRegister from './ui/screens/producerRegister/index';
 import Home from './ui/screens/home/index';
@@ -69,12 +70,12 @@ export const App: React.FC = () => {
 							<Route exact path="/productDetail" component={ProductDetail} />
 							<Route exact path="/register" component={Register} />
 							<Route exact path="/clientlist" component={ClientList} />
+							<Route exact path="/producerlist" component={ProducerList} />
 
 							<Route exact path="/cart" component={Cart} />
 							<Route exact path="/dashboardproducer" component={DashboardProducer} />
 							<Route exact path="/dashboardadmin" component={DashboardAdmin} />
 							<Route exact path="/invoice" component={Invoice} />
-							<Route exact path="/producerlist" component={ProducerList} />
 							<Route exact path="/producerorder" component={ProducerOrder} />
 							<Route exact path="/producerRegister" component={ProducerRegister} />
 							<Route exact path="/favorites" component={Favorites} />
