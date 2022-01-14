@@ -68,9 +68,9 @@ export const App: React.FC = () => {
 							<Route exact path="/frequentTask" component={FrequentTask} />
 							<Route exact path="/productDetail" component={ProductDetail} />
 							<Route exact path="/register" component={Register} />
+							<Route exact path="/clientlist" component={ClientList} />
 
 							<Route exact path="/cart" component={Cart} />
-							<Route exact path="/clientlist" component={ClientList} />
 							<Route exact path="/dashboardproducer" component={DashboardProducer} />
 							<Route exact path="/dashboardadmin" component={DashboardAdmin} />
 							<Route exact path="/invoice" component={Invoice} />
