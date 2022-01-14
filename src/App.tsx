@@ -20,12 +20,13 @@ import {
 	FrequentTask,
 	ProductDetail,
 	Register,
+	ClientList,
 } from 'ui';
 
 import Cart from './ui/screens/cart/index';
 /* import ProductDetail from './ui/screens/productDetail/index'; */
-import ClientList from './ui/screens/clientList/index';
-import Invoice from './ui/screens/invoice/index';
+/* import ClientList from './ui/screens/clientList/index';
+ */import Invoice from './ui/screens/invoice/index';
 import DashboardProducer from './ui/screens/dashboardProducer/index';
 import DashboardAdmin from './ui/screens/dashboardAdmin/index';
 import ProducerList from './ui/screens/producerList/index';
