@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-interface Order {
+interface OrderList {
 	_id: {$oid: string},
 	country_client: string,
 	date: string,
@@ -33,7 +33,7 @@ export const Order: React.FC = () => {
 
 	const history = useHistory();
 	
-	const [shops, setShops] = useState<Order[]>();
+	const [shops, setShops] = useState<OrderList[]>();
 	const [id_shop, setId_shop ] = useState('');
 	const [country_client, setCountry_client ] = useState('');
 	const [date, setDate ] = useState('');
@@ -53,7 +53,7 @@ export const Order: React.FC = () => {
 	const [products, setProducts ] = useState('');
 
 
-	const handlegotoinvoice = (shops : Order) => {
+	const handlegotoinvoice = (shops : OrderList) => {
 		setId_shop (shops._id.$oid)
 		setCountry_client (shops.country_client)
 		setDate (shops.date)
