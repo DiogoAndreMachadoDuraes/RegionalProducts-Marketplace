@@ -12,6 +12,7 @@ import { useHistory } from 'react-router';
 import { Loader } from 'ui';
 import { images } from 'assets';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 export const ProductDetail: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -177,13 +178,9 @@ export const ProductDetail: React.FC = () => {
 								textAlign: 'center',
 							}}
 						>
-							<a href="/favorites">
-								<RiBookmark3Line
-									onClick={addFavorites}
-									size="30"
-									style={{ marginTop: 10, marginRight: 20, color: 'black' }}
-								/>
-							</a>
+							<Link to="/favorites" onClick={addFavorites}>
+								<RiBookmark3Line size="30" style={{ marginTop: 10, marginRight: 20, color: 'black' }} />
+							</Link>
 							<h1 style={{ color: 'black' }}>{name}</h1>
 							<FacebookShareButton
 								url={

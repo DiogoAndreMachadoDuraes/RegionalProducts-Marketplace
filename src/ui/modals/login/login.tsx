@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { images } from 'assets';
 import { BsFillEyeSlashFill, BsFillEyeFill, BsEnvelopeOpen } from 'react-icons/bs';
-import { InputGroup, Image, Row, Col, Button, Form, Navbar, Modal } from 'react-bootstrap';
+import { InputGroup, Image, Row, Col, Button, Form, Navbar, Modal, ModalProps } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { userInfo, userLogin } from 'store/User';
+import { ResetPassword } from '..';
 import axios from 'axios';
 
-interface LoginProps {
-	show: boolean;
-	onHide: () => void;
-}
-
-export const Login: React.FC<LoginProps> = ({ show, onHide }) => {
+export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 	const [email, setEmail] = useState<string | undefined>(undefined);
 	const [password, setPassword] = useState<string | undefined>(undefined);
 	const [isValidEmail, setIsValidEmail] = useState(true);
 	const [isValidPassword, setIsValidPassword] = useState(true);
 	const [isShowedPassword, setIsShowedPassword] = useState(false);
+	const [forgetPasswordShow, setForgetPasswordShow] = useState(false);
 	const history = useHistory();
 
 	const handleCheckEmail = (email: string) => {
@@ -44,6 +41,11 @@ export const Login: React.FC<LoginProps> = ({ show, onHide }) => {
 
 	const changeShowedPassword = () => {
 		setIsShowedPassword(!isShowedPassword);
+	};
+
+	const handleForgetPassword = () => {
+		setForgetPasswordShow(!forgetPasswordShow);
+		console.log(forgetPasswordShow);
 	};
 
 	const dispatch = useDispatch();
@@ -225,20 +227,33 @@ export const Login: React.FC<LoginProps> = ({ show, onHide }) => {
 							<Col sm={1} />
 							<Col sm={10}>
 								<Navbar.Text>
-									<a style={{ color: 'black', fontFamily: 'artifika' }} href="forgetPassword">
+									<button
+										onClick={handleForgetPassword}
+										style={{
+											color: 'black',
+											fontFamily: 'artifika',
+											backgroundColor: 'transparent',
+											border: 0,
+										}}
+									>
 										Esqueceu-se da palavra-passe?
-									</a>
+									</button>
 								</Navbar.Text>
+								<ResetPassword show={forgetPasswordShow} />
 							</Col>
 							<Col sm={1} />
 						</Row>
-						<Row id="row" style={{ marginTop: -10, marginLeft: 40 }}>
+						<Row id="row" style={{ marginTop: -10, marginLeft: 45 }}>
 							<Col sm={1} />
 							<Col sm={10}>
 								<Navbar.Text>
-									<a style={{ color: 'black', fontFamily: 'artifika' }} href="producerRegister">
+									<Link
+										onClick={() => onHide()}
+										to="producerRegister"
+										style={{ color: 'black', fontFamily: 'artifika' }}
+									>
 										É produtor? <span style={{ fontWeight: 'bold' }}>Clique aqui!</span>
-									</a>
+									</Link>
 								</Navbar.Text>
 							</Col>
 							<Col sm={1} />

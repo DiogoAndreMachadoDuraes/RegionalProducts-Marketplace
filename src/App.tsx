@@ -43,30 +43,6 @@ import {
 	Home,
 } from 'ui';
 
-/* import Cart from './ui/screens/cart/index'; */
-/* import ProductDetail from './ui/screens/productDetail/index'; */
-/* import ClientList from './ui/screens/clientList/index';
- */ /* import Invoice from './ui/screens/invoice/index'; */
-/* import DashboardProducer from './ui/screens/dashboardProducer/index'; */
-/* import DashboardAdmin from './ui/screens/dashboardAdmin/index'; */
-/* import ProducerList from './ui/screens/producerList/producerList';
- */ /* import ProducerOrder from './ui/screens/producerOrder/index'; */
-/* import Register from './ui/screens/register/index'; */
-/* import ProducerRegister from './ui/screens/producerRegister/index'; */
-/* import Home from './ui/screens/home/index'; */
-/* import Favorites from './ui/screens/favorites/index'; */
-/* import Payment from './ui/screens/payment/index'; */
-/* import ProductListProducer from './ui/screens/productListProducer/index'; */
-/* import ProductList from './ui/screens/productList/index'; */
-/* import Product from './ui/screens/product/index'; */
-/* import Order from './ui/screens/order/index'; */
-/* import Confirmation from './ui/screens/confirmation/index'; */
-/* import EditProducer from './ui/screens/editProducer/index';
- */ /* import EditClient from './ui/screens/editClient/index'; */
-/* import Ship from './ui/screens/ship/index';
- */ /* import Producer from './ui/screens/producer/index'; */
-/* import CreateProduct from './ui/screens/createProduct/index'; */
-
 export const App: React.FC = () => {
 	return (
 		<Provider store={store}>
@@ -100,7 +76,6 @@ export const App: React.FC = () => {
 							<Route exact path="/confirmationOrder" component={ConfirmationOrder} />
 							<Route exact path="/editclient" component={EditClient} />
 							<Route exact path="/editproducer" component={EditProducer} />
-							<Route component={NotFoundPage} />
 							<Route exact path="/producer" component={Producer} />
 							<Route exact path="/cart" component={Cart} />
 							<Route exact path="/invoice" component={Invoice} />
@@ -109,6 +84,7 @@ export const App: React.FC = () => {
 							<Route exact path="/createproduct" component={CreateProduct} />
 							<Route exact path="/productListProducer" component={ProductListProducer} />
 							<Route exact path="/favorites" component={Favorites} />
+							<Route component={NotFoundPage} />
 						</Switch>
 					</div>
 					<Footer />

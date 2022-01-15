@@ -37,39 +37,36 @@ export const HeaderTop: React.FC<HeaderTopProps> = ({ isLogged, name, type }) =>
 					</Col>
 					<Col sm={1}>
 						<Nav className="mr-auto">
-							<Nav.Link>
-								<Row>
-									<h3 style={{ fontWeight: 700, fontSize: 16, color: 'black' }}>Idioma:</h3>
-									<NavDropdown
-										title={<span style={{ fontWeight: 500, color: 'black' }}>{language}</span>}
-										id="language-dropdown"
-										style={{ fontSize: 14, marginLeft: 2, marginTop: -8, color: 'black' }}
-									>
-										<Dropdown.Header>
-											<span style={{ fontWeight: 'bold', color: 'black' }}>Linguagem:</span>
-											<Form.Group style={{ width: 70 }}>
-												<Form.Control
-													as="select"
-													value={language}
-													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-														setLanguage(e.target.value)
-													}
-												>
-													<option value="PT">PT</option>
-													<option value="EN">EN</option>
-												</Form.Control>
-											</Form.Group>
-										</Dropdown.Header>
-										<Dropdown.Divider />
-										<Dropdown.Header>
-											<p>
-												<span style={{ fontWeight: 'bold', color: 'black' }}>Moeda: </span>Euro
-												(€)
-											</p>
-										</Dropdown.Header>
-									</NavDropdown>
-								</Row>
-							</Nav.Link>
+							<Row>
+								<h3 style={{ fontWeight: 700, fontSize: 16, color: 'black' }}>Idioma:</h3>
+								<NavDropdown
+									title={<span style={{ fontWeight: 500, color: 'black' }}>{language}</span>}
+									id="language-dropdown"
+									style={{ fontSize: 14, marginLeft: 2, marginTop: -8, color: 'black' }}
+								>
+									<Dropdown.Header>
+										<span style={{ fontWeight: 'bold', color: 'black' }}>Linguagem:</span>
+										<Form.Group style={{ width: 70 }}>
+											<Form.Control
+												as="select"
+												value={language}
+												onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+													setLanguage(e.target.value)
+												}
+											>
+												<option value="PT">PT</option>
+												<option value="EN">EN</option>
+											</Form.Control>
+										</Form.Group>
+									</Dropdown.Header>
+									<Dropdown.Divider />
+									<Dropdown.Header>
+										<p>
+											<span style={{ fontWeight: 'bold', color: 'black' }}>Moeda: </span>Euro (€)
+										</p>
+									</Dropdown.Header>
+								</NavDropdown>
+							</Row>
 						</Nav>
 					</Col>
 					<Col sm={1} />

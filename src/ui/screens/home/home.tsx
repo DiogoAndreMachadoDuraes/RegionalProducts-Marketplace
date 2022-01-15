@@ -309,9 +309,9 @@ export const Home: React.FC = () => {
 					</Carousel.Item>
 				</Carousel>
 				<h1 style={{ color: '#9B3939', textAlign: 'center', marginTop: 60 }}>Top Vendas Mensais</h1>
-				{categories?.map((category) => {
+				{categories?.map((category, index) => {
 					return (
-						<>
+						<div key={index}>
 							<h1 style={{ color: '#9B3939' }}>{category}</h1>
 							<br />
 							<Row style={{ marginBottom: 40 }}>
@@ -375,7 +375,7 @@ export const Home: React.FC = () => {
 										);
 									})}
 							</Row>
-						</>
+						</div>
 					);
 				})}
 			</Container>

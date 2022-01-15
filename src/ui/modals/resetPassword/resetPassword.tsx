@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Modal, Row, Col, Button, Form } from 'react-bootstrap';
+import { Modal, Row, Col, Button, Form, ModalProps } from 'react-bootstrap';
 import { GiUnlocking } from 'react-icons/gi';
 
-export const ResetPassword: React.FC = () => {
-	const [show, setShow] = useState(true);
+export const ResetPassword: React.FC<ModalProps> = ({ show }) => {
 	const [email, setEmail] = useState<string | undefined>(undefined);
 	const [isValidEmail, setIsValidEmail] = useState(true);
-
-	const handleClose = () => setShow(false);
+	const [showModal, setShowModal] = useState(show);
 
 	const handleCheckEmail = (email: string) => {
 		setEmail(email);
@@ -41,7 +39,7 @@ export const ResetPassword: React.FC = () => {
 	};
 
 	return (
-		<Modal size="lg" show={show} onHide={handleClose} centered={true}>
+		<Modal size="lg" show={show} onHide={() => setShowModal(false)} centered={true}>
 			<Modal.Body>
 				<div style={{ padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 					<Row id="row">

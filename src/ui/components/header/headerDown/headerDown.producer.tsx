@@ -1,19 +1,22 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 export const HeaderProducer: React.FC = () => {
+	const history = useHistory();
+
 	return (
 		<>
-			<Nav.Link href="/dashboardadmin" style={{ color: 'white', marginLeft: 20 }}>
+			<Nav.Link onClick={() => history.push('/dashboardadmin')} style={{ color: 'white', marginLeft: 20 }}>
 				Home
 			</Nav.Link>
-			<Nav.Link href="/producerlist" style={{ color: 'white' }}>
+			<Nav.Link onClick={() => history.push('/producerlist')} style={{ color: 'white' }}>
 				Produtores
 			</Nav.Link>
-			<Nav.Link href="/productlist" style={{ color: 'white' }}>
+			<Nav.Link onClick={() => history.push('/productlist')} style={{ color: 'white' }}>
 				Produtos
 			</Nav.Link>
-			<Nav.Link href="/clientlist" style={{ color: 'white' }}>
+			<Nav.Link onClick={() => history.push('/clientlist')} style={{ color: 'white' }}>
 				Clientes
 			</Nav.Link>
 		</>

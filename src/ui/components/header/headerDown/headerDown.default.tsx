@@ -1,10 +1,13 @@
 import React from 'react';
 import { Nav, Navbar, Dropdown, NavDropdown } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 export const HeaderDefault: React.FC = () => {
+	const history = useHistory();
+
 	return (
 		<>
-			<Nav.Link href="/" style={{ color: 'white', marginLeft: 20 }}>
+			<Nav.Link onClick={() => history.push('/')} style={{ color: 'white', marginLeft: 20 }}>
 				Home
 			</Nav.Link>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
