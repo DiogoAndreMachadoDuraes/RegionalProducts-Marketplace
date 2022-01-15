@@ -6,6 +6,7 @@ import axios from 'axios';
 import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
 import { list } from './list';
+import { Link } from 'react-router-dom';
 
 export const Register: React.FC = () => {
 	const history = useHistory();
@@ -148,7 +149,11 @@ export const Register: React.FC = () => {
 				</Modal.Header>
 				<Modal.Body>Cliente registado com sucesso!!!</Modal.Body>
 				<Modal.Footer>
-					<Button variant="secondary" href="/" style={{ color: 'white', backgroundColor: '#AAAA74' }}>
+					<Button
+						variant="secondary"
+						onClick={() => history.push('/')}
+						style={{ color: 'white', backgroundColor: '#AAAA74' }}
+					>
 						Continuar
 					</Button>
 				</Modal.Footer>
@@ -177,9 +182,9 @@ export const Register: React.FC = () => {
 					</Col>
 
 					<Col md={{ span: 11, offset: 11 }}>
-						<a href="/producerregister" style={{ color: '#444903', fontWeight: 'bold' }}>
+						<Link to="/producerregister" style={{ color: '#444903', fontWeight: 'bold' }}>
 							É Produtor?
-						</a>
+						</Link>
 					</Col>
 				</Row>
 				<form onSubmit={handleSubmit}>
@@ -269,8 +274,8 @@ export const Register: React.FC = () => {
 						<Col>
 							<Form.Label>País </Form.Label>
 							<Form.Control as="select" required onChange={handleCountry}>
-								{list.map((i) => (
-									<option>{i.name}</option>
+								{list.map((i, index) => (
+									<option key={index}>{i.name}</option>
 								))}
 							</Form.Control>
 						</Col>
@@ -391,7 +396,11 @@ export const Register: React.FC = () => {
 						</Col>
 
 						<Col md={2}>
-							<Button href="/" variant="dark" style={{ color: 'white', backgroundColor: '#8E8E8E' }}>
+							<Button
+								onClick={() => history.push('/')}
+								variant="dark"
+								style={{ color: 'white', backgroundColor: '#8E8E8E' }}
+							>
 								Voltar
 							</Button>
 						</Col>
