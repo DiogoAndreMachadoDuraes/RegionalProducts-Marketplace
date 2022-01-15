@@ -264,17 +264,17 @@ export const CreateProduct: React.FC = () => {
 							<Col sm={2} />
 							<Col style={{ marginTop: 30, fontFamily: 'artifika' }}>
 								<Card>
-									<Card.Header style={{ backgroundColor: '#AAAA74' }}>
+									<Card.Header style={{ backgroundColor: '#9B3939' }}>
 										<Accordion.Toggle
 											as={Button}
 											variant="link"
 											eventKey="0"
-											style={{ color: 'black' }}
+											style={{ color: 'white' }}
 										>
 											<h2>Adicionar Vinho</h2>
 										</Accordion.Toggle>
 									</Card.Header>
-									<Accordion.Collapse eventKey="0" style={{ color: 'black' }}>
+									<Accordion.Collapse eventKey="0" style={{ color: 'black', fontFamily: 'artifika' }}>
 										<Card.Body>
 											<Container>
 												<Row>
@@ -437,12 +437,12 @@ export const CreateProduct: React.FC = () => {
 									</Accordion.Collapse>
 								</Card>
 								<Card>
-									<Card.Header style={{ backgroundColor: '#AAAA74' }}>
+									<Card.Header style={{ backgroundColor: 'white' }}>
 										<Accordion.Toggle
 											as={Button}
 											variant="link"
 											eventKey="1"
-											style={{ color: 'black' }}
+											style={{ color: '#9B3939' }}
 										>
 											<h2>Adicionar Azeite</h2>
 										</Accordion.Toggle>
@@ -605,12 +605,12 @@ export const CreateProduct: React.FC = () => {
 									</Accordion.Collapse>
 								</Card>
 								<Card>
-									<Card.Header style={{ backgroundColor: '#AAAA74' }}>
+									<Card.Header style={{ backgroundColor: '#9B3939' }}>
 										<Accordion.Toggle
 											as={Button}
 											variant="link"
 											eventKey="2"
-											style={{ color: 'black' }}
+											style={{ color: 'white' }}
 										>
 											<h2>Adicionar Aguardente</h2>
 										</Accordion.Toggle>
@@ -775,12 +775,12 @@ export const CreateProduct: React.FC = () => {
 									</Accordion.Collapse>
 								</Card>
 								<Card>
-									<Card.Header style={{ backgroundColor: '#AAAA74' }}>
+									<Card.Header style={{ backgroundColor: 'white' }}>
 										<Accordion.Toggle
 											as={Button}
 											variant="link"
 											eventKey="3"
-											style={{ color: 'black' }}
+											style={{ color: '#9B3939' }}
 										>
 											<h2>Adicionar Licor</h2>
 										</Accordion.Toggle>
