@@ -4,4 +4,4 @@ import config
 global mongodb
 
 client = MongoClient(config.mongodbConfig)
-mongodb=client.produtosregionais
+mongodb=client.RegionalProducts

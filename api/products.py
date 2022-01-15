@@ -67,7 +67,8 @@ class ProductsList(Resource):       # Classe para definir get em relacao a uma l
 
     #@jwt_required() 
     def get(self):
-        return  ProductsModel.find_all_products()
+        products = ProductsModel.find_all_product()
+        return  products
 
 
 class ProductsCategory(Resource):   # Classe para definir get para filtar por categoria
