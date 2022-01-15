@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./style.css";
-import {Tab, Row, Col, Table, Modal, Button, Form, FormControl, InputGroup, Toast, Spinner} from "react-bootstrap";
+import {Tab, Row, Col, Table, Modal, Button, Form, FormControl, InputGroup, Toast, Spinner, Card} from "react-bootstrap";
 import { AiOutlineSearch, AiFillEdit, AiFillDelete, AiOutlineUnorderedList} from "react-icons/ai";
 import { Redirect } from "react-router-dom";
 
@@ -365,38 +365,23 @@ export const ClientList: React.FC = () => {
     </Tab.Container>
   )}
   <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-    <Row id="row" style={{ marginTop: 50, marginBottom: 15 }}>
-      <Col sm={1} />
-      <Col sm={5}>
-        <Row>
-          <Col sm={1}>
-            <AiOutlineUnorderedList
-              size="30"
-              style={{ color: "#444903" }}
-            />
-          </Col>
-          <Col sm={11}>
-            <h4 style={{ color: "#AAAA74" }}>Lista de Clientes</h4>
-          </Col>
-        </Row>
-      </Col>
-      <Col sm={2} />
-      <Col sm={3}>
-        <Form inline>
-          <InputGroup className="mb-3">
-            <FormControl
-              type="text"
-              value={searchTerm}
-              onChange={editSearch}
-              placeholder="Procurar Cliente"
-            />
-            <InputGroup.Append>
-              <InputGroup.Text id="search">
-                <AiOutlineSearch />
-              </InputGroup.Text>
-            </InputGroup.Append>
-          </InputGroup>
-        </Form>
+  <Row id="row"> 
+  <Col sm={1} />
+            <Col sm={5} style={{ marginTop: 35 }}>
+              <h1 style={{ color:'#8A3535', fontFamily:'Artifika' }}>Clientes</h1>
+            </Col>
+            <Col sm={2} />
+            <Col sm={3} style={{ marginTop: 35 }}>
+            <Form className="mr-auto">
+                <InputGroup className="mb-2">
+                    <FormControl type="text" placeholder="Pesquisar" />
+                    <InputGroup.Append>
+                        <InputGroup.Text style={{ backgroundColor: '#9b3939', color: 'white' }}>
+                            <AiOutlineSearch />
+                        </InputGroup.Text>
+                    </InputGroup.Append>
+                </InputGroup>
+            </Form>
       </Col>
       <Col sm={1} />
     </Row>
@@ -405,22 +390,31 @@ export const ClientList: React.FC = () => {
     <Row id="row" style={{ marginBottom: 80 }}>
       <Col sm={1} />
       <Col sm={10}>
+      <Card
+                style={{
+                  color: "#9B3939",
+                  fontFamily: "artifika",
+                  marginTop: 40,
+                }}
+              >
         <Table
-          size="20"
-          style={{
-            marginTop: 26,
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-          }}
+            style={{
+              color: "black",
+              fontFamily: "artifika",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+        }}
         >
           <thead style={{ width: 10 }}>
             <tr>
-              <th>Nif</th>
               <th>Nome</th>
-              <th>Telefone</th>
+              <th>Nif</th>
+              <th>Data de Nascimento</th>
               <th>Morada</th>
-              <th>Código Postal</th>
+              <th>Código-Postal</th>
+              <th>Localidade</th>
+              <th>Telemóvel</th>
               <th>Email</th>
               <th>Estado</th>
               <th></th>
@@ -430,7 +424,7 @@ export const ClientList: React.FC = () => {
           <tbody>
             {(client === undefined || client === null) && (
               <tr>
-                <td colSpan={9}>Não existem dados para mostrar</td>
+                <td colSpan={9}>Não existem clientes para mostrar</td>
               </tr>
             )}
             {(searchTerm === "" &&  (client !== undefined || client !== null))
@@ -450,7 +444,7 @@ export const ClientList: React.FC = () => {
                         <AiFillEdit
                           size="25"
                           onClick={() => handleShowEdit(item)}
-                          color="#AAAA74"
+                          color="#9B3939"
                         />
                         {showModalEdit ? modalEdit() : false}
                       </td>
@@ -458,7 +452,7 @@ export const ClientList: React.FC = () => {
                         <AiFillDelete
                           size="25"
                           onClick={() => handleShowDelete(item)}
-                          color="#444903"
+                          color="#9B3939"
                         />
                         {showModalDelete ? modalDelete() : false}
                       </td>
@@ -468,6 +462,7 @@ export const ClientList: React.FC = () => {
               : search()}
           </tbody>
         </Table>
+        </Card>
       </Col>
       <Col sm={1} />
     </Row>

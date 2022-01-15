@@ -1,7 +1,7 @@
 import React,  { useState } from "react";
 import "./style.css";
 import {Tab, Row, Col, Card, Form, Modal, InputGroup, FormControl, Table, Button, Spinner} from "react-bootstrap";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiOutlineSearch } from "react-icons/ai";
 import { Redirect } from "react-router-dom";
 
 interface ProducerList {
@@ -18,7 +18,7 @@ interface ProducerList {
   street: string,
   telephone: string,
   tin: string,
- }
+}
  
  export const ProducerList: React.FC = () => {
    const [producer, setProducer] = useState<ProducerList[]>();
@@ -287,13 +287,21 @@ interface ProducerList {
           <Row id="row">
             <Col sm={1} />
             <Col sm={5} style={{ marginTop: 35 }}>
-              <h4 style={{ color: "#AAAA74", fontFamily: "artifika" }}>
-                Produtores
-              </h4>
+              <h1 style={{ color:'#8A3535', fontFamily:'Artifika' }}>Produtores</h1>
             </Col>
             <Col sm={2} />
             <Col sm={3} style={{ marginTop: 35 }}>
-              <Form inline>
+            <Form className="mr-auto">
+                <InputGroup className="mb-2">
+                    <FormControl type="text" placeholder="Pesquisar" />
+                    <InputGroup.Append>
+                        <InputGroup.Text style={{ backgroundColor: '#9b3939', color: 'white' }}>
+                            <AiOutlineSearch />
+                        </InputGroup.Text>
+                    </InputGroup.Append>
+                </InputGroup>
+            </Form>
+              {/* <Form inline>
                 <InputGroup className="mb-3">
                   <FormControl
                     type="text"
@@ -301,9 +309,9 @@ interface ProducerList {
                     onChange={editSearch}
                     placeholder="Pesquisar Produtor"
                   />
-                  {/* <Button variant="outline-secondary">Pesquisar</Button> */}
+                   <Button variant="outline-secondary">Pesquisar</Button> 
                  </InputGroup>
-              </Form>
+              </Form> */}
             </Col>
             <Col sm={1} />
           </Row>
@@ -314,13 +322,12 @@ interface ProducerList {
             <Col sm={10}>
               <Card
                 style={{
-                  color: "black",
+                  color: "#9B3939",
                   fontFamily: "artifika",
                   marginTop: 40,
                 }}
               >
                 <Table
-                  size="20"
                   style={{
                     color: "black",
                     fontFamily: "artifika",
@@ -329,7 +336,7 @@ interface ProducerList {
                     textAlign: "center",
                   }}
                 >
-                  <thead style={{ width: 10 }}>
+                  <thead style={{ /* width: 10 */ }}>
                     <tr>
                       <th>Nome</th>
                       <th>Rua</th>
@@ -347,7 +354,7 @@ interface ProducerList {
                   <tbody>
                     {producer == null ? (
                       <tr>
-                        <td colSpan={9}>Não existem dados para mostrar</td>
+                        <td colSpan={9}>Não existem produtores para mostrar</td>
                       </tr>
                     ) : (
                       false /* data(searchTerm) */

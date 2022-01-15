@@ -1,9 +1,91 @@
+import React, {useState} from "react";
 import { Row, Col, Breadcrumb, Container, Spinner } from "react-bootstrap";
 import PDF from "./PDF";
-import React from "react";
 import { Redirect } from "react-router-dom";
 
-class Invoice extends React.Component {
+
+export const Invoice: React.FC = () => {
+	const Spacer = require('react-spacer')
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [invoice, setInvoice] = useState('');
+  const [email, setEmail] = useState('et@sapo.pt');
+	const [locality, setLocality] = useState('Alentejo');
+	const [name, setName] = useState('Júlia Martins');
+	const [postalCode, setPostalCode] = useState('5600-000');
+	const [id, setId] = useState('1');
+	const [street, setStreet] = useState('Rua do Baixo Alentejo');
+	const [telephone, setTelephone] = useState('+351666666789');
+	const [tin, setTin] = useState('111111111');
+  const [price, setPrice] = useState('5.67');
+  const [quantity, setQuantity] = useState('1');
+  const [date, setDate] = useState('15/01/2022');
+
+  /* const checkPermissions = () => {
+    if ((isLogged === false || type !== "client") && isLoading === true) {
+      return <Redirect to="/nopermissions" />;
+    }
+  } */
+
+const load = () => {
+    if (isLoading === false) {
+      return (
+        <Spinner
+          animation="border"
+          variant="success"
+          style={{
+            marginTop: 25,
+            marginBottom: 108,
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+          }}
+        />
+      );
+    }
+  };
+
+  return (
+    <>
+    <div>
+        <div>
+          <Breadcrumb style={{ marginTop: 20, marginLeft: 28 }} id="breadcrumb">
+            <Breadcrumb.Item href="/home">Home </Breadcrumb.Item>
+            <Breadcrumb.Item href="/order">Encomendas </Breadcrumb.Item>
+            <Breadcrumb.Item active style={{ color: "#AAAA74" }}>
+              {" "}
+              Faturas{" "}
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+        <Container>
+          <Row>
+            <Col sm={1} />
+            <Col sm={10}>
+              <PDF
+                name={name}
+                id={id}
+                tin={tin}
+                date={date}
+                telephone={telephone}
+                email={email}
+                street={street}
+                postalCode={postalCode}
+                locality={locality}
+                quantity={quantity}
+                price={price}
+              />
+            </Col>
+            <Col sm={1} />
+          </Row>
+        </Container>
+        <div className="mt-5"> </div>
+      </div>
+    </>
+  )
+};  
+
+/* class Invoice extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -165,3 +247,4 @@ class Invoice extends React.Component {
   }
 }
 export default Invoice;
+ */

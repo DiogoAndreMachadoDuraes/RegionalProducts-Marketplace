@@ -12,8 +12,10 @@ import {
   Container,
   InputGroup,
   FormControl,
+  Card,
 } from "react-bootstrap";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiOutlineSearch } from "react-icons/ai";
+
 /*import { Redirect } from "react-router-dom";*/
 
 interface ProductList {
@@ -1106,83 +1108,39 @@ const handleShowEdit = (item : ProductList) => {
     <>
         <div>
         <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row style={{ marginTop: 35 }}>
-            <Col sm={1}></Col>
-            <Col sm={6}>
-              {" "}
-              <h1 style={{ color:'#8A3535', fontFamily:'Artifika' }}>Produtos Regionais</h1>
+  <Row id="row"> 
+  <Col sm={1} />
+            <Col sm={5} style={{ marginTop: 35 }}>
+              <h1 style={{ color:'#8A3535', fontFamily:'Artifika' }}>Produtos</h1>
             </Col>
-            <Col sm={4}>
-              <InputGroup>
-                <FormControl
-                  type="text"
-                  value={searchTerm}
-                  onChange={editSearch}
-                  placeholder="Pesquisar"
-                  style={{fontFamily:'Artifika'}}
-                />
-              </InputGroup>
-              <br></br>
-              {/* <Form.Label>Filtar por Categoria </Form.Label>
-              <Form.Control
-                style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
-                size="sm"
-                required
-                onChange={handleCategoryFilter}
-                onClick={() => getByCategory(categoryfilter)}
-                as="select"
-              >
-                <option
-                  style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
-                >
-                  Todos os Produtos
-                </option>
-                <option
-                  style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
-                >
-                  Todos os Vinhos
-                </option>
-                <option>Vinho Branco</option>
-                <option>Vinho Tinto</option>
-                <option>Vinho Rose</option>
-                <option>Vinho Espumante</option>
-                <option
-                  style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
-                >
-                  Todos os Azeites
-                </option>
-                <option>Azeite Virgem</option>
-                <option>Azeite Extra-Virgem</option>
-                <option>Azeite Aromatizado</option>
-                <option
-                  style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
-                >
-                  Todos os Licores
-                </option>
-                <option>Licor de Limoncello</option>
-                <option>Licor de Cafe</option>
-                <option>Licor de Amendoas</option>
-                <option>Licor de Chocolate</option>
-                <option
-                  style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
-                >
-                  Todas as Aguardentes
-                </option>
-                <option>Aguardente de Medronho</option>
-                <option>Aguardente de Cereais</option>
-                <option>Aguardente de Cana de Madeira</option>
-                <option>Aguardente de Pera</option>
-              </Form.Control> */}
-            </Col>
-          </Row>
-        </Tab.Container>
-        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row id="row">
+            <Col sm={2} />
+            <Col sm={3} style={{ marginTop: 35 }}>
+            <Form className="mr-auto">
+                <InputGroup className="mb-2">
+                    <FormControl type="text" placeholder="Pesquisar" />
+                    <InputGroup.Append>
+                        <InputGroup.Text style={{ backgroundColor: '#9b3939', color: 'white' }}>
+                            <AiOutlineSearch />
+                        </InputGroup.Text>
+                    </InputGroup.Append>
+                </InputGroup>
+            </Form>
+      </Col>
+      <Col sm={1} />
+    </Row>
+  </Tab.Container>
+     <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+      <Row id="row" style={{ marginBottom: 80 }}>
             <Col sm={1} />
             <Col sm={10}>
+            <Card
+                style={{
+                  color: "#9B3939",
+                  fontFamily: "artifika",
+                  marginTop: 40,
+                }}
+              >
               <Table
-                hover
-                responsive="sm"
                 style={{
                   marginTop: 26,
                   alignItems: "center",
@@ -1192,7 +1150,7 @@ const handleShowEdit = (item : ProductList) => {
                   fontFamily:'Artifika'
                 }}
               >
-                <thead style={{ width: 10 }}>
+                <thead style={{  width: 10  }}>
                   <tr>
                     <th>Nome</th>
                     <th>Categoria</th>
@@ -1207,7 +1165,7 @@ const handleShowEdit = (item : ProductList) => {
                 <tbody>
                   {products?.length === 0 && (
                     <tr>
-                      <td colSpan={9}>Não existem produtos </td>
+                      <td colSpan={9}>Não existem produtos para mostrar </td>
                     </tr>
                   )}
                   {searchTerm === ""
@@ -1236,7 +1194,7 @@ const handleShowEdit = (item : ProductList) => {
                               <AiFillEdit
                                 onClick={() => handleShowEdit(item)}
                                 size="25"
-                                style={{ color: "#444903" }}
+                                style={{ color: "#9B3939" }}
                               />
                               {showModalEditAguardente
                                 ? modalEditAguardente()
@@ -1253,7 +1211,7 @@ const handleShowEdit = (item : ProductList) => {
                               <AiFillDelete
                                 onClick={() => handleShowDelete(item)}
                                 size="25"
-                                style={{ color: "#444903" }}
+                                style={{ color: "#9B3939" }}
                               />
                               {showModalDelete ? modalDelete() : false}
                             </td>
@@ -1263,16 +1221,11 @@ const handleShowEdit = (item : ProductList) => {
                     : /* search() */ false}
                 </tbody>
               </Table>
+            </Card>
             </Col>
             <Col sm={1} />
-          </Row>
-        </Tab.Container>
-        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row id="row" style={{ marginBottom: 80 }}>
-            <Col sm={1} />
-
-            <Col sm={1} />
-          </Row>
+            </Row>
+         
         </Tab.Container>
         </div> 
   </>
