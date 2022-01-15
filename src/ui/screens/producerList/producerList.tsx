@@ -18,7 +18,7 @@ interface ProducerList {
   street: string,
   telephone: string,
   tin: string,
- }
+}
  
  export const ProducerList: React.FC = () => {
    const [producer, setProducer] = useState<ProducerList[]>();

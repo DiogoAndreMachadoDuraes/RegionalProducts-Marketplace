@@ -24,14 +24,17 @@ import {
 	ProducerList,
 	ProductList,
 	Product,
+	Order,
+	DashboardAdmin,
+	DashboardProducer,
 } from 'ui';
 
 import Cart from './ui/screens/cart/index';
 /* import ProductDetail from './ui/screens/productDetail/index'; */
 /* import ClientList from './ui/screens/clientList/index';
  */import Invoice from './ui/screens/invoice/index';
-import DashboardProducer from './ui/screens/dashboardProducer/index';
-import DashboardAdmin from './ui/screens/dashboardAdmin/index';
+/* import DashboardProducer from './ui/screens/dashboardProducer/index'; */
+/* import DashboardAdmin from './ui/screens/dashboardAdmin/index'; */
 /* import ProducerList from './ui/screens/producerList/producerList';
  */import ProducerOrder from './ui/screens/producerOrder/index';
 /* import Register from './ui/screens/register/index'; */
@@ -42,7 +45,7 @@ import Payment from './ui/screens/payment/index';
 import ProductListProducer from './ui/screens/productListProducer/index';
 /* import ProductList from './ui/screens/productList/index'; */
 /* import Product from './ui/screens/product/index'; */
-import Order from './ui/screens/order/index';
+/* import Order from './ui/screens/order/index'; */
 import Confirmation from './ui/screens/confirmation/index';
 import EditProducer from './ui/screens/editProducer/index';
 import EditClient from './ui/screens/editClient/index';
@@ -75,16 +78,16 @@ export const App: React.FC = () => {
 							<Route exact path="/producerlist" component={ProducerList} />
 							<Route exact path="/productlist" component={ProductList} />
 							<Route exact path="/product" component={Product} />
+							<Route exact path="/order" component={Order} />
+							<Route exact path="/dashboardadmin" component={DashboardAdmin} />
+							<Route exact path="/dashboardproducer" component={DashboardProducer} />
 
 							<Route exact path="/cart" component={Cart} />
-							<Route exact path="/dashboardproducer" component={DashboardProducer} />
-							<Route exact path="/dashboardadmin" component={DashboardAdmin} />
 							<Route exact path="/invoice" component={Invoice} />
 							<Route exact path="/producerorder" component={ProducerOrder} />
 							<Route exact path="/producerRegister" component={ProducerRegister} />
 							<Route exact path="/favorites" component={Favorites} />
 							<Route exact path="/productlistproducer" component={ProductListProducer} />
-							<Route exact path="/order" component={Order} />
 							<Route exact path="/editproducer" component={EditProducer} />
 							<Route exact path="/editclient" component={EditClient} />
 							<Route exact path="/producer" component={Producer} />
