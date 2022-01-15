@@ -7,6 +7,8 @@ import Table from 'react-bootstrap/Table';
 import { useHistory } from 'react-router';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { AiOutlineStar, AiOutlineRight } from "react-icons/ai";
+import { Card } from 'react-bootstrap';
 
 interface OrderList {
 	_id: {$oid: string},
@@ -81,7 +83,7 @@ export const Order: React.FC = () => {
 			<div>
 				<div>
 					<Breadcrumb style={{ marginTop: 20, marginLeft: 28, fontFamily: "artifika", color: "#9B3939" }} id="breadcrumb">
-						<Col md={2}>
+						{/* <Col md={2}>
 							<NavDropdown.Item href="/client" class="menulateral" eventKey="4.1">
 								A minha Conta
 							</NavDropdown.Item>
@@ -93,13 +95,30 @@ export const Order: React.FC = () => {
 							<NavDropdown.Item href="/favorites" eventKey="4.4">
 								Os meus Favoritos
 							</NavDropdown.Item>
-						</Col>
+						</Col> */}
 						<Col md={1}></Col>
 						<Col md={9}>
-							<h3 style={{ color: '#AAAA74' }}>
-								As minhas Encomendas 
-								<br />
-							</h3>
+						<Breadcrumb
+           /*  width="300"
+            height="300" */
+            style={{ marginTop: 20/* , boxShadow:'rgba(117,0,0,0.5)' */ }}
+            id="breadcrumb"
+          >
+
+            <Card style={{backgroundColor: "#9B3939", /* boxShadow:'rgba(117,0,0,0.4)' */}}>
+              <Breadcrumb.Item style={{fontFamily: "artifika" }} href="/home">Home</Breadcrumb.Item>
+            </Card>
+            <Spacer width='12px'/>
+            <div style={{color: "#9B3939"}}><AiOutlineRight /></div>
+            <Spacer width='12px'/>
+            <Breadcrumb.Item active style={{ color: "#9B3939", fontFamily: "artifika" }}>
+			 Encomendas
+            </Breadcrumb.Item>
+          </Breadcrumb>
+		  <br />
+       
+          <h1 style={{fontFamily: "artifika", color: "#9B3939" }} /* class="text-left" */> As Minhas Encomendas </h1>
+          <br />
 							<Spacer height='12px'/>
 							<div>
 								<Table hover responsive="sm">

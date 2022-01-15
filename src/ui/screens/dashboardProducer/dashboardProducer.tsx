@@ -13,57 +13,51 @@ import { Tab, Row, Col, Table, Card } from "react-bootstrap";
 
 const data = [
   {
+    name: "Out.",
+    Compotas: 10,
+    EnchidoseCarne: 30,
+    Frutossecos: 8,
+    /* amt: 0, */
+  },
+  {
+    name: "Nov.",
+    Compotas: 20,
+    EnchidoseCarne: 50,
+    Frutossecos: 18,
+    /* amt: 0, */
+  },
+  {
+    name: "Dez.",
+    Compotas: 40,
+    EnchidoseCarne: 90,
+    Frutossecos: 0,
+    /* amt: 0, */
+  },
+  {
     name: "Jan.",
-    VinhoTinto: 30,
-    VinhoBranco: 25,
-    Azeite: 15,
+    Compotas: 30,
+    EnchidoseCarne: 25,
+    Frutossecos: 15,
     /* amt: 5, */
   },
   {
     name: "Fev.",
-    VinhoTinto: 33,
-    VinhoBranco: 13,
-    Azeite: 10,
+    Compotas: 33,
+    EnchidoseCarne: 13,
+    Frutossecos: 10,
     /* amt: 5, */
   },
-  {
-    name: "Mar.",
-    VinhoTinto: 40,
-    VinhoBranco: 30,
-    Azeite: 18,
-    /* amt: 0, */
-  },
-  {
-    name: "Abr.",
-    VinhoTinto: 50,
-    VinhoBranco: 39,
-    Azeite: 24,
-    /* amt: 0, */
-  },
-  {
-    name: "Mai.",
-    VinhoTinto: 40,
-    VinhoBranco: 48,
-    Azeite: 28,
-    /* amt: 0, */
-  },
-  {
-    name: "Jun.",
-    VinhoTinto: 43,
-    VinhoBranco: 40,
-    Azeite: 20,
-    /* amt: 0, */
-  },
+ 
 ];
 
 export const DashboardProducer: React.FC = () => {
-
+  const Spacer = require('react-spacer')
   return ( 
     <>
       <div>
       <Row id="row" style={{ color: "black", marginTop: 60 }}>
           <Col sm={1} />
-          <Col sm={9} style={{ color: "444903", fontFamily: "artifika" }}>
+          <Col sm={9} style={{ color: "8A3535", fontFamily: "artifika" }}>
             <BsBarChartFill size="40" style={{ color: "black" }} />
           </Col>
           <Col sm={2} />
@@ -71,22 +65,26 @@ export const DashboardProducer: React.FC = () => {
         <Row
           id="row"
           style={{
-            color: "#AAAA74",
+            color: "#8A3535",
             fontFamily: "artifika",
             marginTop: -30,
             marginLeft: -50,
           }}
         >
           <Col sm={2} />
-          <Col sm={9} style={{ color: "#AAAA74", fontFamily: "artifika" }}>
-            <h3> Wine and Olive - Vendas mensais </h3>
+          <Col sm={9} style={{ color:'#8A3535', fontFamily:'Artifika' }}>
+            <h3> Produtos Regionais - Vendas mensais </h3>
           </Col>
           <Col sm={1} />
         </Row>
         <Row style={{ fontFamily: "artifika", marginTop: 30 }}>
           <Col sm={1} />
           <Col sm={10}>
-            <LineChart
+
+              <h4 style={{ alignItems:'center', justifyItems:'center', display:'flex', alignContent:'center', marginLeft:300, marginTop:20, color:'#8A3535', fontFamily:'Artifika' }}>
+                Vendas - Compotas, Enchidos e Carne, Frutos secos				
+              </h4>
+            <LineChart  style={{ alignItems:'center', justifyItems:'center', display:'flex', alignContent:'center'}}
               width={800}
               height={600}
               data={data}
@@ -97,27 +95,27 @@ export const DashboardProducer: React.FC = () => {
                 bottom: 150,
               }}
             >
-              <CartesianGrid strokeDasharray="2 2" />
+              <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
               <Legend />
               <Line
                 type="monotone"
-                dataKey="VinhoTinto"
-                stroke="#f44336"
+                dataKey="Compotas"
+                stroke="#F3AAAA"
                 activeDot={{ r: 6 }}
               />
               <Line
                 type="monotone"
-                dataKey="VinhoBranco"
-                stroke="#388e3c"
+                dataKey="EnchidoseCarne"
+                stroke="#F4C10B"
                 activeDot={{ r: 6 }}
               />
               <Line
                 type="monotone"
-                dataKey="Azeite"
-                stroke="#fbc02d"
+                dataKey="Frutossecos"
+                stroke="#ACB9FF"
                 activeDot={{ r: 6 }}
               />
             </LineChart>
@@ -135,6 +133,10 @@ export const DashboardProducer: React.FC = () => {
           >
             <Col sm={1} />
             <Col sm={10}>
+              <h5 style={{ marginTop: 10, fontFamily:'Artifika'  }}>
+                <br />
+                  Compras mensais mais recentes					
+            </h5>
               <Card
                 style={{
                   color: "black",
@@ -152,10 +154,11 @@ export const DashboardProducer: React.FC = () => {
                     textAlign: "center",
                   }}
                 >
+                  
                   <thead style={{ width: 10 }}>
                     <tr>
                       <th>Ordem</th>
-                      <th>Quantidade</th>
+                      <th>Quantidades</th>
                       <th>Produto mais vendido</th>
                       <th>Última Compra</th>
                       <th></th>
