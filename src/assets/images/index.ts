@@ -27,6 +27,7 @@ import queijoBrasileiro from './queijos-brasileiros.jpg';
 import shop from './shop.jpg';
 import table from './table.jpg';
 import tea from './tea.jpg';
+import imageProfileDefault from './imageProfileDefault.png';
 
 export const images = {
 	alheira,
@@ -58,4 +59,5 @@ export const images = {
 	shop,
 	table,
 	tea,
+	imageProfileDefault,
 };

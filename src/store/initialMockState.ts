@@ -1,8 +1,8 @@
-import { StoreState } from '.';
-import { modalInitialState } from './Modal';
+import { StoreState } from './index';
 import { userInitialState } from './User';
+import { productInitialState } from './Product';
 
 export const mockState: StoreState = {
 	common: userInitialState,
-	modal: modalInitialState,
+	products: productInitialState,
 };

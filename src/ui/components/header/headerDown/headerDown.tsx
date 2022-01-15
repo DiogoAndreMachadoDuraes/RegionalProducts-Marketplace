@@ -6,8 +6,8 @@ import { HeaderDefault } from './headerDown.default';
 import { HeaderProducer } from './headerDown.producer';
 
 interface HeaderDownProps {
-	isLogged: boolean;
-	type: string;
+	isLogged?: boolean;
+	type?: string;
 }
 
 export const HeaderDown: React.FC<HeaderDownProps> = ({ isLogged, type }) => {

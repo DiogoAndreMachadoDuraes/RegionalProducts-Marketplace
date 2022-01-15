@@ -18,9 +18,9 @@ import { HeaderTopWithSession } from './headerTop.withSession';
 import { HeaderTopWithoutSession } from './headerTop.withoutSession';
 
 export interface HeaderTopProps {
-	isLogged: boolean;
-	name: string;
-	type: string;
+	isLogged?: boolean;
+	name?: string;
+	type?: string;
 }
 
 export const HeaderTop: React.FC<HeaderTopProps> = ({ isLogged, name, type }) => {

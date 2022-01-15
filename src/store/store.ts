@@ -1,17 +1,16 @@
 import { combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { ModalReducer, ModalState } from './Modal';
 import { UserState, userReducer } from './User';
+import { ProductState, productReducer } from './Product';
 
-/** Store Type */
 export interface StoreState {
 	common: UserState;
-	modal: ModalState;
+	products: ProductState;
 }
 
 const appReducers = combineReducers({
 	common: userReducer,
-	modal: ModalReducer,
+	products: productReducer,
 });
 
 export const store = createStore(appReducers, composeWithDevTools());

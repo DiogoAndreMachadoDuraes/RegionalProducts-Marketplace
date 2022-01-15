@@ -5,6 +5,7 @@ import { TiInfoLargeOutline } from 'react-icons/ti';
 import { SiInstagram } from 'react-icons/si';
 import { images } from 'assets';
 import { IoIosMail } from 'react-icons/io';
+import { Link } from 'react-router-dom';
 
 export const Footer: React.FC = () => {
 	return (
@@ -31,15 +32,20 @@ export const Footer: React.FC = () => {
 					<h5 style={{ color: 'white' }}>Quem Somos</h5>
 					<Row style={{ marginTop: 20, marginLeft: 4 }}>
 						<TiInfoLargeOutline size="25" color="white" />
-						<a href="/about" style={{ color: 'white' }}>
+						<Link
+							to="/about"
+							onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+							style={{ color: 'white' }}
+						>
 							Sobre nós
-						</a>
+						</Link>
 					</Row>
 					<h5 style={{ color: 'white', marginTop: 40 }}>Contactos</h5>
 					<Row style={{ marginTop: 20, marginLeft: 4 }}>
 						<IoIosMail size="25" color="white" />
 						<a
 							href="mailto:perguntas@produtosregionais.pt"
+							onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
 							style={{
 								color: 'white',
 								marginLeft: 9,
@@ -54,6 +60,7 @@ export const Footer: React.FC = () => {
 						<FaPhoneAlt size="21" color="white" style={{ marginLeft: 3 }} />
 						<a
 							href="tel:+351913157290"
+							onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
 							style={{
 								color: 'white',
 								marginLeft: 8,
@@ -101,30 +108,51 @@ export const Footer: React.FC = () => {
 				>
 					<h5 style={{ color: 'white', marginLeft: 0 }}>Suporte</h5>
 					<Row style={{ marginTop: 20, marginLeft: 4 }}>
-						<a href="/cookies" style={{ color: 'white' }}>
-							Cookies
-						</a>
+						<Link
+							to="/cookiesPolitics"
+							onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+							style={{ color: 'white' }}
+						>
+							Política de Cookies
+						</Link>
 					</Row>
 					<Row style={{ marginTop: 7, marginLeft: 4 }}>
-						<a href="/tasks" style={{ color: 'white' }}>
+						<Link
+							to="/frequentTask"
+							onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+							style={{ color: 'white' }}
+						>
 							Perguntas Frequentes
-						</a>
+						</Link>
 					</Row>
 					<Row style={{ marginTop: 7, marginLeft: 4 }}>
-						<a href="/terms" style={{ color: 'white' }}>
+						<Link
+							to="/termsConditions"
+							onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+							style={{ color: 'white' }}
+						>
 							Termos e Condições
-						</a>
+						</Link>
 					</Row>
 					<Row style={{ marginTop: 7, marginLeft: 4 }}>
-						<a href="/politics" style={{ color: 'white' }}>
+						<Link
+							to="/privacityPolitics"
+							onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+							style={{ color: 'white' }}
+						>
 							Políticas de Privacidade
-						</a>
+						</Link>
 					</Row>
 				</Col>
 				<Col lg="2" style={{ top: 120 }}>
 					<Row>
 						<Col sm={4}>
-							<a href="https://www.facebook.com/">
+							<a
+								href="https://www.facebook.com/"
+								target="_blank"
+								rel="noreferrer"
+								onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+							>
 								<FaFacebook
 									color="blue"
 									size="30"
@@ -133,12 +161,22 @@ export const Footer: React.FC = () => {
 							</a>
 						</Col>
 						<Col sm={4}>
-							<a href="https://www.twitter.com/">
+							<a
+								href="https://www.twitter.com/"
+								target="_blank"
+								rel="noreferrer"
+								onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+							>
 								<FaTwitter color="#4267B2" size="30" />
 							</a>
 						</Col>
 						<Col sm={4}>
-							<a href="https://www.instagram.com/">
+							<a
+								href="https://www.instagram.com/"
+								target="_blank"
+								rel="noreferrer"
+								onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+							>
 								<SiInstagram color="#eb5757" size="30" />
 							</a>
 						</Col>

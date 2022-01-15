@@ -4,7 +4,8 @@ import { BsFillEyeSlashFill, BsFillEyeFill, BsEnvelopeOpen } from 'react-icons/b
 import { InputGroup, Image, Row, Col, Button, Form, Navbar, Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { newUser } from 'store';
+import { userInfo, userLogin } from 'store/User';
+import axios from 'axios';
 
 interface LoginProps {
 	show: boolean;
@@ -62,18 +63,34 @@ export const Login: React.FC<LoginProps> = ({ show, onHide }) => {
 			});
 			let json = await response.json();
 			const type: string = json.type;
+			const token: string = json.token;
+			const userId: string = json.id;
+
+			try {
+				const config = {
+					headers: { Authorization: `Bearer ${token}` },
+				};
+
+				await axios.get(`http://127.0.0.1:5000/client/${userId}`, config).then((res) => {
+					const client = res.data;
+					dispatch(userInfo(client));
+				});
+			} catch (e) {
+				console.log('Error to get Client: ' + e);
+			}
+
 			if (type === 'client') {
-				dispatch(newUser(json));
+				dispatch(userLogin(json));
 				onHide();
 				history.push('/');
 			} else {
 				if (type === 'admin') {
-					dispatch(newUser(json));
+					dispatch(userLogin(json));
 					onHide();
 					history.push('/');
 				} else {
 					if (type === 'producer') {
-						dispatch(newUser(json));
+						dispatch(userLogin(json));
 						onHide();
 						history.push('/');
 					} else {

@@ -2,9 +2,9 @@ import { StoreState } from 'store';
 import { useSelector } from 'react-redux';
 
 export interface HeaderOutput {
-	isLogged: boolean;
-	name: string;
-	type: string;
+	isLogged?: boolean;
+	name?: string;
+	type?: string;
 }
 
 export const useHeaderHelper = (): HeaderOutput => {

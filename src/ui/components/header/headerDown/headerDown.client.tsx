@@ -1,69 +1,59 @@
 import React from 'react';
 import { Nav, Navbar, Dropdown, NavDropdown } from 'react-bootstrap';
 import { TiShoppingCart } from 'react-icons/ti';
+import { useHistory, Link } from 'react-router-dom';
 
 export const HeaderClient: React.FC = () => {
+	const history = useHistory();
+
 	return (
 		<>
-			<Nav.Link href="/" style={{ color: 'white', marginLeft: 20 }}>
+			<Nav.Link onClick={() => history.push('/')} style={{ color: 'white', marginLeft: 20 }}>
 				Home
 			</Nav.Link>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto">
-					<NavDropdown title="Produtos" id="collasible-nav-dropdown" style={{ color: 'white' }}>
+					<NavDropdown
+						title={<span style={{ color: 'white' }}>Produtos</span>}
+						id="collasible-nav-dropdown"
+						style={{ color: 'white' }}
+					>
 						{/* {
-                                            data.map((item, index) => {
-                                                return(
-                                                        <Dropdown.Header>{item.category}</Dropdown.Header>
-                                                        <Dropdown.Item href="/product/:categoryolive/virgin" eventKey="1">{item.type}</Dropdown.Item>
-                                                        <Dropdown.Item href="/product/olive/extravirgin" eventKey="2">{item.type}</Dropdown.Item>
-                                                        <Dropdown.Item href="/product/olive/flavor" eventKey="3">{item.type}</Dropdown.Item>
-                                                        <Dropdown.Divider />
-                                                    );
-                                                })
-                                        } */}
+							data.map((item, index) => {
+								return(
+										<Dropdown.Header>{item.category}</Dropdown.Header>
+										<Dropdown.Item href="/product/:categoryolive/virgin" eventKey="1">{item.type}</Dropdown.Item>
+										<Dropdown.Item href="/product/olive/extravirgin" eventKey="2">{item.type}</Dropdown.Item>
+										<Dropdown.Item href="/product/olive/flavor" eventKey="3">{item.type}</Dropdown.Item>
+										<Dropdown.Divider />
+									);
+								})
+						} */}
 
-						<Dropdown.Header>Azeites</Dropdown.Header>
-						<Dropdown.Item href="/product/:categoryolive/virgin" eventKey="1">
-							Azeite Virgem
+						<Dropdown.Item onClick={() => history.push('/product/olive/virgin')} eventKey="1">
+							Mel
 						</Dropdown.Item>
 						<Dropdown.Item href="/product/olive/extravirgin" eventKey="2">
-							Azeite Extra-Virgem
+							Compotas
 						</Dropdown.Item>
 						<Dropdown.Item href="/product/olive/flavor" eventKey="3">
-							Azeite Aromatizado
+							Frutos Secos
 						</Dropdown.Item>
-						<Dropdown.Divider />
-
-						<Dropdown.Header>Vinhos</Dropdown.Header>
-						<Dropdown.Item href="/product/wine/tinto" eventKey="1">
-							Vinho Tinto
-						</Dropdown.Item>
-						<Dropdown.Item href="/product/wine/branco" eventKey="2">
-							Vinho Branco
-						</Dropdown.Item>
-						<Dropdown.Item href="/product/wine/rose" eventKey="3">
-							Vinho Rosé
-						</Dropdown.Item>
-						<Dropdown.Item href="/product/wine/espumante" eventKey="4">
-							Espumante
-						</Dropdown.Item>
-						<Dropdown.Divider />
 					</NavDropdown>
-					<Nav.Link href="/favorites" style={{ color: 'white' }}>
+					<Nav.Link onClick={() => history.push('/favorites')} style={{ color: 'white' }}>
 						Favoritos
 					</Nav.Link>
-					<Nav.Link href="/order" style={{ color: 'white' }}>
+					<Nav.Link onClick={() => history.push('/order')} style={{ color: 'white' }}>
 						Encomendas
 					</Nav.Link>
 				</Nav>
 			</Navbar.Collapse>
 			<Nav>
-				<Nav.Link eventKey={2} href="/cart">
-					<a href="/cart" style={{ color: 'white' }}>
+				<Nav.Link eventKey={2} onClick={() => history.push('/cart')}>
+					<Link to="/cart" style={{ color: 'white', marginRight: 8 }}>
 						Carrinho
-					</a>
+					</Link>
 					<TiShoppingCart size="25" style={{ color: 'white', marginRight: 20 }} />
 				</Nav.Link>
 			</Nav>
