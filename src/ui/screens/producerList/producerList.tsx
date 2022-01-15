@@ -107,24 +107,28 @@ export const ProducerList: React.FC = () => {
 		return (
 			<Modal show={showModalEdit} onHide={handleCloseEdit} animation={false}>
 				<Modal.Header closeButton>
-					<Modal.Title>Editar estado do produtor</Modal.Title>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Editar estado do produtor
+					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Nome do Produtor: {producerName}</Modal.Body>
+				{/* <Modal.Body>Nome do Produtor: {producerName}</Modal.Body> */}
 				<Modal.Body>
 					<Form>
 						<Form.Group controlId="formBasicRange">
-							<Form.Label>Estado da conta</Form.Label>
+							<Form.Label style={{ fontFamily: 'Artifika' }}>
+								Estado da conta do produtor {producerName}
+							</Form.Label>
 							<Form.Control required onChange={handleType} as="select" defaultValue={producerState}>
-								<option>Pendente</option>
-								<option>Rejeitado</option>
-								<option>Aceite</option>
+								<option>Conta Pendente</option>
+								<option>Conta Rejeitada</option>
+								<option>Conta Confirmada</option>
 							</Form.Control>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleCloseEdit}>
-						Fechar
+						Cancelar
 					</Button>
 					<Button
 						variant="primary"
@@ -141,9 +145,13 @@ export const ProducerList: React.FC = () => {
 		return (
 			<Modal show={showModalDelete} onHide={handleCloseDelete} animation={false}>
 				<Modal.Header closeButton>
-					<Modal.Title>Eliminar o produtor</Modal.Title>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Eliminar o produtor
+					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Pretende eliminar o produtor {producerName}?</Modal.Body>
+				<Modal.Body style={{ fontFamily: 'Artifika' }}>
+					Pretende eliminar o utilizador {producerName}?
+				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleCloseDelete}>
 						Fechar
@@ -247,7 +255,7 @@ export const ProducerList: React.FC = () => {
 									<AiFillEdit
 										size="25"
 										onClick={() => handleShowEdit(item)}
-										style={{ color: '444903' }}
+										style={{ color: '#9B3939' }}
 									/>
 									{showModalEdit ? modalEdit() : false}
 								</td>
@@ -255,7 +263,7 @@ export const ProducerList: React.FC = () => {
 									<AiFillDelete
 										size="25"
 										onClick={() => handleShowDelete(item)}
-										style={{ color: '444903' }}
+										style={{ color: '#9B3939' }}
 									/>
 									{showModalDelete ? modalDelete() : false}
 								</td>

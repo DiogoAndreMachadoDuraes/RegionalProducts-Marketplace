@@ -147,8 +147,9 @@ export const EditProducer: React.FC = () => {
 				{/* <Form onSubmit={handleSubmit}> */}
 				<Row>
 					<Col md={30}>
-						<h5 style={{ marginTop: 25 }}>
-							<AiOutlineUser size="20" color="#000000" />
+						<Spacer horizontal="10px" />
+						<h5 style={{ fontFamily: 'Artifika' }}>
+							<AiOutlineUser size="24" color="#8A3535" />
 							Informação Pessoal
 						</h5>
 					</Col>
@@ -157,12 +158,12 @@ export const EditProducer: React.FC = () => {
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Nome Completo </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Nome Completo </Form.Label>
 						<Form.Control onChange={handleName} defaultValue={name} />
 					</Col>
 
 					<Col>
-						<Form.Label>País </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>País </Form.Label>
 						<Form.Control required onChange={handleCountry} as="select" defaultValue={country}>
 							<option>País</option>
 							<option>Portugal</option>
@@ -173,33 +174,33 @@ export const EditProducer: React.FC = () => {
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Morada </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Morada </Form.Label>
 						<Form.Control onChange={handleStreet} defaultValue={street} />
 					</Col>
 					<Col>
-						<Form.Label>Código Postal </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Código Postal </Form.Label>
 						<Form.Control onChange={handlePostal_code} defaultValue={postal_Code} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Contacto </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Contacto </Form.Label>
 						<Form.Control onChange={handleTelephone} defaultValue={telephone} />
 					</Col>
 					<Col>
-						<Form.Label>Localidade </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Localidade </Form.Label>
 						<Form.Control onChange={handleLocality} defaultValue={locality} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col md={6}>
-						<Form.Label>Número de Contribuinte </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Número de Contribuinte </Form.Label>
 						<Form.Control onChange={handleTin} defaultValue={tin} />
 					</Col>
 					<Col>
-						<Form.Label>Rede Social </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Rede Social </Form.Label>
 						<Form.Control onChange={handleSocial} defaultValue={social} />
 					</Col>
 				</Row>
@@ -210,8 +211,8 @@ export const EditProducer: React.FC = () => {
 				<br />
 				<Row>
 					<Col md={3}>
-						<h5 style={{ marginTop: 30 }}>
-							<AiTwotoneLock size="20" color="#000000" />
+						<h5 style={{ marginTop: 20, fontFamily: 'Artifika' }}>
+							<AiTwotoneLock size="20" color="#8A3535" />
 							Informação de Login
 						</h5>
 					</Col>
@@ -226,7 +227,7 @@ export const EditProducer: React.FC = () => {
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Palavra-Passe </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Palavra-Passe </Form.Label>
 						<Form.Control
 							onChange={handlePassword}
 							defaultValue={password}
@@ -240,20 +241,20 @@ export const EditProducer: React.FC = () => {
 									<BsFillEyeFill
 										onClick={togglePasswordVisiblity}
 										size="20"
-										style={{ color: 'black' }}
+										style={{ color: 'white' }}
 									/>
 								) : (
 									<BsFillEyeSlashFill
 										onClick={togglePasswordVisiblity}
 										size="20"
-										style={{ color: 'black' }}
+										style={{ color: 'white' }}
 									/>
 								)}
 							</InputGroup.Text>
 						</InputGroup.Append>
 					</Col>
 					<Col>
-						<Form.Label>Confirmar Palavra-Passe</Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Confirmar Palavra-Passe</Form.Label>
 						<Form.Control
 							onChange={handlePassword}
 							defaultValue={password}
@@ -267,13 +268,13 @@ export const EditProducer: React.FC = () => {
 									<BsFillEyeFill
 										onClick={togglePasswordVisiblity}
 										size="20"
-										style={{ color: 'black' }}
+										style={{ color: 'white' }}
 									/>
 								) : (
 									<BsFillEyeSlashFill
 										onClick={togglePasswordVisiblity}
 										size="20"
-										style={{ color: 'black' }}
+										style={{ color: 'white' }}
 									/>
 								)}
 							</InputGroup.Text>
@@ -286,7 +287,11 @@ export const EditProducer: React.FC = () => {
 				</Row>
 				<Row>
 					<Col md={50}>
-						<Button type="submit" variant="dark" style={{ color: 'white', backgroundColor: '#444903' }}>
+						<Button
+							type="submit"
+							variant="dark"
+							style={{ backgroundColor: '#8A3535' /* backgroundColor: 'color="#8A3535"' */ }}
+						>
 							Submeter alterações
 						</Button>
 					</Col>
@@ -295,7 +300,7 @@ export const EditProducer: React.FC = () => {
 						<Button
 							href="/producerprofile"
 							variant="dark"
-							style={{ color: 'white', backgroundColor: '#AAAA74' }}
+							style={{ color: '#8A3535', backgroundColor: '#FFFFFF' }}
 						>
 							Voltar
 						</Button>
