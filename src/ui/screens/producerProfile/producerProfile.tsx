@@ -26,6 +26,11 @@ interface Producer {
 export const ProducerProfile: React.FC = () => {
 	const [producer, setProducer] = useState<Producer[]>();
 	const [showModalDelete, setShowModalDelete] = useState(false);
+	const [producerName, setProducerName] = useState('');
+	const [producerLocation, setProducerLocation] = useState('');
+	const [producerAddress, setProducerAddress] = useState('');
+	const [producerTelephone, setProducerTelephone] = useState('');
+	const [producerlocation, setProducerlocation] = useState('');
 
 	const token = useSelector((state: StoreState) => state.common.user.token);
 
@@ -43,7 +48,7 @@ export const ProducerProfile: React.FC = () => {
 				<Modal.Header closeButton>
 					<Modal.Title>Eliminar produtor</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Pretende eliminar a sua conta produtor de {/* {producer.name} */}?</Modal.Body>
+				<Modal.Body>Pretende eliminar a sua conta produtor de {producerName}?</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleCloseDelete}>
 						Fechar
@@ -86,6 +91,8 @@ export const ProducerProfile: React.FC = () => {
 									fontSize: 30,
 									marginTop: 30,
 									marginLeft: 0,
+									color: '#8A3535',
+									fontFamily: 'Artifika',
 									fontWeight: 'bold',
 								}}
 							>
@@ -108,53 +115,56 @@ export const ProducerProfile: React.FC = () => {
 									marginTop: 30,
 									marginLeft: 40,
 									fontWeight: 'bold',
+									fontFamily: 'Artifika',
 									//fontSize: 20,
 								}}
 							>
 								Nome do Produtor:
 							</h3>
-							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/* {producer.name} */}</h4>
+							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{producerName}</h4>
 							<h3
 								style={{
 									fontSize: 18,
 									marginTop: 40,
 									marginLeft: 40,
 									fontWeight: 'bold',
+									fontFamily: 'Artifika',
 								}}
 							>
 								Rua:
 							</h3>
-							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/* {producer.street} */}</h4>
+							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}> {producerAddress}</h4>
 							<h3
 								style={{
 									fontSize: 18,
 									marginTop: 40,
 									marginLeft: 40,
 									fontWeight: 'bold',
+									fontFamily: 'Artifika',
 								}}
 							>
 								Morada:
 							</h3>
-							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/* {producer.locality} */}</h4>
+							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}> {producerLocation}</h4>
 							<h3
 								style={{
 									fontSize: 18,
 									marginTop: 40,
 									marginLeft: 40,
 									fontWeight: 'bold',
+									fontFamily: 'Artifika',
 								}}
 							>
 								Contacto:
 							</h3>
-							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>
-								{/* {producer.telephone} */}
-							</h4>
+							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{producerTelephone}</h4>
 							<h3
 								style={{
 									fontSize: 18,
 									marginLeft: 600,
 									marginTop: -70,
 									fontWeight: 'bold',
+									fontFamily: 'Artifika',
 								}}
 							>
 								Redes Sociais:
@@ -178,7 +188,7 @@ export const ProducerProfile: React.FC = () => {
 									variant="dark"
 									href="/editclient"
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#AAAA74' }}
+									style={{ color: 'white', backgroundColor: '#8A3535' }}
 								>
 									Editar
 								</Button>
@@ -189,7 +199,7 @@ export const ProducerProfile: React.FC = () => {
 									variant="dark"
 									onClick={handleShowDelete}
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#444903' }}
+									style={{ color: '#8A3535', backgroundColor: 'white' }}
 								>
 									Eliminar
 								</Button>
