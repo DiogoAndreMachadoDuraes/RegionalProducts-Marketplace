@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,7 +10,7 @@ import Card from 'react-bootstrap/Card';
 interface ProducerList {}
 
 export const ProducerOrder: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 
 	const [producer, setProducer] = useState<ProducerList[]>();
 
@@ -131,7 +131,6 @@ export const ProducerOrder: React.FC = () => {
 												marginTop: 0,
 											}}
 										>
-										
 											{/* <medium className="text"> 10/03/2021 </medium>*/}
 										</p>
 									</div>
@@ -228,7 +227,6 @@ export const ProducerOrder: React.FC = () => {
 												marginTop: 0,
 											}}
 										>
-										
 											{/* <medium className="text"> 03/03/2021 </medium> */}
 										</p>
 									</div>
@@ -241,7 +239,7 @@ export const ProducerOrder: React.FC = () => {
 								<div className="col-md-4">
 									<Col>
 										<Image
-									/* 		src={images.mateus} */
+											/* 		src={images.mateus} */
 											thumbnail
 											style={{ marginTop: 10, width: 130, height: 120 }}
 										/>
@@ -325,7 +323,6 @@ export const ProducerOrder: React.FC = () => {
 												marginTop: 0,
 											}}
 										>
-											
 											{/* <medium className="text"> 18/03/2021 </medium> */}
 										</p>
 									</div>
@@ -336,10 +333,9 @@ export const ProducerOrder: React.FC = () => {
 					<Col sm={3} />
 				</Row>
 				<div className="mt-5"> </div>
-			 </div>
+			</div>
 		</>
-	)
-
+	);
 };
 
 /* class ProducerOrder extends React.Component {
@@ -350,12 +346,12 @@ export const ProducerOrder: React.FC = () => {
 		};
 	} */
 
-	/* async componentDidMount() {
+/* async componentDidMount() {
 		console.log('Mounting screen Producer Order...');
 		let token = */
 /* 			'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMzY5MDM4MiwianRpIjoiMTdlMDM5NjAtNjNlZS00ODNjLTgyOTEtZjczZTQwN2RlMjhmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjYwYWU4ODkxMzBkZDA4ZTFhMWQyODQ4YSIsIm5iZiI6MTYyMzY5MDM4MiwiZXhwIjoxNjI0MTIyMzgyfQ.d-1g1y8-d8i686vxFIoiNZkC3iuvcvZ-ifuQnW_ASKE';
- */		/* let token= localStorage.getItem("token"); */
-		/* try {
+ */ /* let token= localStorage.getItem("token"); */
+/* try {
 			let response = await fetch('http://127.0.0.1:5000/producers', {
 				headers: {
 					Authorization: 'Bearer ' + token,
@@ -373,9 +369,9 @@ export const ProducerOrder: React.FC = () => {
 		}
 	} */
 
-	/* render() { */
-		/*   const { order} = this.state; */
-		/* return (
+/* render() { */
+/*   const { order} = this.state; */
+/* return (
 			<div>
 				<Row id="row">
 					<Col sm={2} />
@@ -696,7 +692,8 @@ export const ProducerOrder: React.FC = () => {
 					<Col sm={3} />
 				</Row>
 				<div className="mt-5"> </div> */
-				{/* <Table  size="20" style={{color:"black", fontFamily:'artifika', alignItems:"center", justifyContent:"center", textAlign:"center" }}>
+{
+	/* <Table  size="20" style={{color:"black", fontFamily:'artifika', alignItems:"center", justifyContent:"center", textAlign:"center" }}>
                     <thead style={{ width:10 }}>
                         <tr>
                             <th>Nome</th>
@@ -712,8 +709,9 @@ export const ProducerOrder: React.FC = () => {
                             <th></th>    
                         </tr>
                     </thead>
-                </Table> */}
-			/* </div>
+                </Table> */
+}
+/* </div>
 		);
 	}
 }

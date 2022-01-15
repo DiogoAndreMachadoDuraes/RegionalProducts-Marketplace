@@ -4,11 +4,11 @@ import { Col, Container, Row, Navbar, Form, Nav, Button, Image } from 'react-boo
 import { images } from 'assets';
 
 export const Payment: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 	return (
 		<>
 			<div>
-			<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
+				<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
 					<Container fluid color="black">
 						<Row id="row">
 							<Col sm={3}>
@@ -206,7 +206,7 @@ export const Payment: React.FC = () => {
 				</Container>
 			</div>
 		</>
-	)
+	);
 };
 /* class CheckoutPayment extends React.Component {
 	render() {

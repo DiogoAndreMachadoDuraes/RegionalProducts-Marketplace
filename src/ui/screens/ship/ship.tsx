@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 import {
 	Image,
 	Tab,
@@ -15,23 +15,21 @@ import {
 	Nav,
 	Card,
 	Navbar,
-  } from "react-bootstrap";
+} from 'react-bootstrap';
 import { images } from 'assets';
-
 
 interface ClientList {}
 
 export const Ship: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 
 	const [client, setClient] = useState<ClientList[]>();
 	const [showModalDelete, setShowModalDelete] = useState(false);
-	
 
-	return ( 
+	return (
 		<>
 			<div>
-			<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
+				<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
 					<Container fluid color="black">
 						<Row id="row">
 							<Col sm={3}>
@@ -146,9 +144,7 @@ export const Ship: React.FC = () => {
 										<th>
 											<h4 style={{ fontSize: 16, fontWeight: 'bold' }}>Endereço atual:</h4>
 										</th>
-										<td>
-										{/* 	{client.street} - {client.locality} */}
-										</td>
+										<td>{/* 	{client.street} - {client.locality} */}</td>
 										<td>
 											<Button
 												href="/editclient"
@@ -254,8 +250,8 @@ export const Ship: React.FC = () => {
 					</Tab.Container>
 				</Container>
 			</div>
-  </>
-)   
+		</>
+	);
 };
 
 /* class Ship extends React.Component {

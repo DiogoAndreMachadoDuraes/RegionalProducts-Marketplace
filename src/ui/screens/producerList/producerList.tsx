@@ -1,307 +1,318 @@
-import React,  { useState } from "react";
-import "./style.css";
-import {Tab, Row, Col, Card, Form, Modal, InputGroup, FormControl, Table, Button, Spinner} from "react-bootstrap";
-import { AiFillEdit, AiFillDelete, AiOutlineSearch } from "react-icons/ai";
-import { Redirect } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import './style.css';
+import { Tab, Row, Col, Card, Form, Modal, InputGroup, FormControl, Table, Button, Spinner } from 'react-bootstrap';
+import { AiFillEdit, AiFillDelete, AiOutlineSearch } from 'react-icons/ai';
+import { Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'store';
 
-interface ProducerList {
-  _id: {$oid: string},
-  logo: string,
-  email: string,
-  password: string,
-  country: string,
-  locality: string,
-  name: string,
-  postal_code: string,
-  social: string,
-  state: string,
-  street: string,
-  telephone: string,
-  tin: string,
+interface Producer {
+	_id: { $oid: string };
+	logo: string;
+	email: string;
+	password: string;
+	country: string;
+	location: string;
+	name: string;
+	postal_code: string;
+	social: string;
+	state: string;
+	address: string;
+	telephone: string;
+	tin: string;
 }
- 
- export const ProducerList: React.FC = () => {
-   const [producer, setProducer] = useState<ProducerList[]>();
-   const [showModalEdit, setShowModalEdit] = useState(false);
-   const [showModalDelete, setShowModalDelete] = useState(false);
-   const [searched, setSearched] = useState(false);
-   const [isLoading, setIsLoading] = useState(false);
-   const [searchTerm, setSearchTerm] = useState('');
-   const [producerId, setProducerId ] = useState('');
-   const [producerState, setProducerState ] = useState('');
-   const [producerName, setProducerName ] = useState('');
-   const [producerEmail, setProducerEmail ] = useState('');
-   const [producerPassword, setProducerPassword ] = useState('');
-   const [producerCountry , setProducerCountry ] = useState('');
-   const [producerLocality , setProducerLocality ] = useState('');
-   const [producerPostalCode, setProducerPostalCode ] = useState('');
-   const [producerSocial, setProducerSocial ] = useState('');
-   const [producerLogo, setProducerLogo ] = useState('');
-   const [producerStreet, setProducerStreet ] = useState('');
-   const [producerTin, setProducerTin ] = useState('');
-   const [producerTelephone, setProducerTelephone ] = useState('');
-   
-  const handleCloseEdit = () => {
-    setShowModalEdit(false);
-  };
 
-  const handleShowEdit = (item : ProducerList) => {
-    setProducerId (item._id.$oid)
-    setProducerState (item.state)
-    setProducerName (item.name)
-    setProducerEmail (item.email)
-    setProducerPassword (item.password)
-    setProducerCountry (item.country)
-    setProducerLocality (item.locality)
-    setProducerPostalCode (item.postal_code)
-    setProducerSocial (item.social)
-    setProducerLogo (item.logo)
-    setProducerStreet (item.street)
-    setProducerTin (item.tin)
-    setProducerTelephone (item.telephone)
-    setShowModalEdit (true)
+export const ProducerList: React.FC = () => {
+	const [producer, setProducer] = useState<Producer[]>();
+	const [showModalEdit, setShowModalEdit] = useState(false);
+	const [showModalDelete, setShowModalDelete] = useState(false);
+	const [searched, setSearched] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [searchTerm, setSearchTerm] = useState('');
+	const [producerId, setProducerId] = useState('');
+	const [producerState, setProducerState] = useState('');
+	const [producerName, setProducerName] = useState('');
+	const [producerEmail, setProducerEmail] = useState('');
+	const [producerPassword, setProducerPassword] = useState('');
+	const [producerCountry, setProducerCountry] = useState('');
+	const [producerlocation, setProducerlocation] = useState('');
+	const [producerPostalCode, setProducerPostalCode] = useState('');
+	const [producerSocial, setProducerSocial] = useState('');
+	const [producerLogo, setProducerLogo] = useState('');
+	const [produceraddress, setProduceraddress] = useState('');
+	const [producerTin, setProducerTin] = useState('');
+	const [producerTelephone, setProducerTelephone] = useState('');
 
-  };
+	const token = useSelector((state: StoreState) => state.common.user.token);
 
-  const handleCloseDelete = () => {
-    setShowModalDelete(false );
-  };
+	useEffect(() => {
+		const fetchApi = async () => {
+			if (producer === undefined) {
+				try {
+					let response = await fetch('http://127.0.0.1:5000/producers', {
+						headers: {
+							Authorization: 'Bearer ' + token,
+							Accept: 'application/json',
+							'Content-Type': 'application/json',
+						},
+					});
+					let json = await response.json();
+					setProducer(json);
+					setIsLoading(true);
+					console.log(json);
+				} catch (e) {
+					console.log('Error to get data: ' + e);
+				}
+			}
+		};
+		fetchApi();
+	});
 
-  const handleShowDelete = (item: ProducerList) => {
-    setProducerId ( item._id.$oid)
-    setProducerName (item.name)
-    setShowModalDelete (true)
-  };
+	const handleCloseEdit = () => {
+		setShowModalEdit(false);
+	};
 
-  const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProducerState( e.target.value );
-  };
+	const handleShowEdit = (item: Producer) => {
+		setProducerId(item._id.$oid);
+		setProducerState(item.state);
+		setProducerName(item.name);
+		setProducerEmail(item.email);
+		setProducerPassword(item.password);
+		setProducerCountry(item.country);
+		setProducerlocation(item.location);
+		setProducerPostalCode(item.postal_code);
+		setProducerSocial(item.social);
+		setProducerLogo(item.logo);
+		setProduceraddress(item.address);
+		setProducerTin(item.tin);
+		setProducerTelephone(item.telephone);
+		setShowModalEdit(true);
+	};
 
-  const modalEdit= () => {
-    return (
-      <Modal
-        show={showModalEdit}
-        onHide={handleCloseEdit}
-        animation={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Editar estado do produtor</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Nome do Produtor: {producerName}</Modal.Body>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formBasicRange">
-              <Form.Label>Estado da conta</Form.Label>
-              <Form.Control
-                required
-                onChange={handleType}
-                as="select"
-                defaultValue={producerState}
-              >
-                <option>Pendente</option>
-                <option>Rejeitado</option>
-                <option>Aceite</option>
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseEdit}>
-            Fechar
-          </Button>
-          <Button
-            variant="primary"
-           /*  onClick={() => edit() && handleCloseEdit} */
-          >
-            Guardar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+	const handleCloseDelete = () => {
+		setShowModalDelete(false);
+	};
 
-  const modalDelete = () => {
-    return (
-      <Modal
-        show={showModalDelete}
-        onHide={handleCloseDelete}
-        animation={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Eliminar o produtor</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Pretende eliminar o produtor {producerName}?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDelete}>
-            Fechar
-          </Button>
-          <Button
-            variant="primary"
-/*             onClick={() => delete() && handleCloseDelete}
- */          >
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+	const handleShowDelete = (item: Producer) => {
+		setProducerId(item._id.$oid);
+		setProducerName(item.name);
+		setShowModalDelete(true);
+	};
 
-  const handleEdit = async () => {
-    try {
-      await fetch("http://127.0.0.1:5000/producer", {
-        method: "PUT",
-        headers: {
-       /*    Authorization: "Bearer " + token, */
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: producerId,
-          logo: producerLogo,
-          email: producerEmail,
-          password: producerPassword,
-          country: producerCountry,
-          locality: producerLocality,
-          name: producerName,
-          postal_code: producerPostalCode,
-          social: producerSocial,
-          state: producerState,
-          street: producerStreet,
-          telephone: producerTelephone,
-          tin: producerTin,
-        }),
-      });
-      alert("Estado editado com sucesso!");
-      window.location.reload();
-    } catch (e) {
-      console.log("Error to Edit Producer: " + e);
-    }
-  };
+	const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setProducerState(e.target.value);
+	};
 
-  const handleDelete = async () => {
-    try {
-      await fetch("http://127.0.0.1:5000/producer", {
-        method: "DELETE",
-        headers: {
-         /*  Authorization: "Bearer " + token, */
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: producerId,
-        }),
-      });
-      alert("Produtor eliminado com sucesso!");
-      window.location.reload();
-    } catch (e) {
-      console.log("Error to Delete Producer: " + e);
-    }
-  };
+	const modalEdit = () => {
+		return (
+			<Modal show={showModalEdit} onHide={handleCloseEdit} animation={false}>
+				<Modal.Header closeButton>
+					<Modal.Title>Editar estado do produtor</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Nome do Produtor: {producerName}</Modal.Body>
+				<Modal.Body>
+					<Form>
+						<Form.Group controlId="formBasicRange">
+							<Form.Label>Estado da conta</Form.Label>
+							<Form.Control required onChange={handleType} as="select" defaultValue={producerState}>
+								<option>Pendente</option>
+								<option>Rejeitado</option>
+								<option>Aceite</option>
+							</Form.Control>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleCloseEdit}>
+						Fechar
+					</Button>
+					<Button
+						variant="primary"
+						/*  onClick={() => edit() && handleCloseEdit} */
+					>
+						Guardar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		);
+	};
 
-  const editSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearched(true)
-    setSearchTerm (e.target.value)
-  };
+	const modalDelete = () => {
+		return (
+			<Modal show={showModalDelete} onHide={handleCloseDelete} animation={false}>
+				<Modal.Header closeButton>
+					<Modal.Title>Eliminar o produtor</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Pretende eliminar o produtor {producerName}?</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleCloseDelete}>
+						Fechar
+					</Button>
+					<Button
+						variant="primary"
+						/*             onClick={() => delete() && handleCloseDelete}
+						 */
+					>
+						Eliminar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		);
+	};
 
- /*  const data = (value: string) => {
-    if((producer !== undefined && producer !== null))
-    { 
-      let nameSearch: string = producer.map((x) =>
-      x.name.toLowerCase().includes(value.toLowerCase())
-    )
-      if ( nameSearch === ""
-    ) {
-      return (
-        <tr>
-          <td colSpan={9}>Não existem dados para mostrar</td>
-        </tr>
-      );
-    } else {
-      return producer
-        .filter((producer) =>
-          producer.name.toLowerCase().includes(value.toLowerCase())
-        )
-        .map((item, index) => {
-          return (
-            <tr key={index}>
-              <td>{item.name}</td>
-              <td>{item.street}</td>
-              <td>{item.postal_code}</td>
-              <td>{item.country}</td>
-              <td>{item.locality}</td>
-              <td>{item.telephone}</td>
-              <td>{item.social}</td>
-              <td>{item.logo}</td>
-              <td>{item.email}</td>
-              <td>{item.state}</td>
-              <td>
-                <AiFillEdit
-                  size="25"
-                  onClick={() => handleShowEdit(item)}
-                  style={{ color: "444903" }}
-                />
-                {showModalEdit ? modalEdit() : false}
-              </td>
-              <td>
-                <AiFillDelete
-                  size="25"
-                  onClick={() => handleShowDelete(item)}
-                  style={{ color: "444903" }}
-                />
-                {showModalDelete ? modalDelete() : false}
-              </td>
-            </tr>
-          );
-        });
-    }}
-  }; */
+	const handleEdit = async () => {
+		try {
+			await fetch('http://127.0.0.1:5000/producer', {
+				method: 'PUT',
+				headers: {
+					/*    Authorization: "Bearer " + token, */
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					_id: producerId,
+					logo: producerLogo,
+					email: producerEmail,
+					password: producerPassword,
+					country: producerCountry,
+					location: producerlocation,
+					name: producerName,
+					postal_code: producerPostalCode,
+					social: producerSocial,
+					state: producerState,
+					address: produceraddress,
+					telephone: producerTelephone,
+					tin: producerTin,
+				}),
+			});
+			alert('Estado editado com sucesso!');
+			window.location.reload();
+		} catch (e) {
+			console.log('Error to Edit Producer: ' + e);
+		}
+	};
 
- /*  const checkPermissions = () => {
+	const handleDelete = async () => {
+		try {
+			await fetch('http://127.0.0.1:5000/producer', {
+				method: 'DELETE',
+				headers: {
+					/*  Authorization: "Bearer " + token, */
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					_id: producerId,
+				}),
+			});
+			alert('Produtor eliminado com sucesso!');
+			window.location.reload();
+		} catch (e) {
+			console.log('Error to Delete Producer: ' + e);
+		}
+	};
+
+	const editSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearched(true);
+		setSearchTerm(e.target.value);
+	};
+
+	const data = (value: string) => {
+		if (producer !== undefined && producer !== null) {
+			const name = Object.values(producer).filter((a: Producer) =>
+				a.name.toLowerCase().includes(value.toLocaleLowerCase())
+			);
+			if (name.length === 0) {
+				return (
+					<tr>
+						<td colSpan={9}>Não existem dados para mostrar</td>
+					</tr>
+				);
+			} else {
+				return producer
+					.filter((producer) => producer.name.toLowerCase().includes(value.toLowerCase()))
+					.map((item, index) => {
+						return (
+							<tr key={index}>
+								<td>{item.name}</td>
+								<td>{item.address}</td>
+								<td>{item.postal_code}</td>
+								<td>{item.country}</td>
+								<td>{item.location}</td>
+								<td>{item.telephone}</td>
+								<td>{item.logo}</td>
+								<td>{item.email}</td>
+								<td>{item.state}</td>
+								<td>
+									<AiFillEdit
+										size="25"
+										onClick={() => handleShowEdit(item)}
+										style={{ color: '444903' }}
+									/>
+									{showModalEdit ? modalEdit() : false}
+								</td>
+								<td>
+									<AiFillDelete
+										size="25"
+										onClick={() => handleShowDelete(item)}
+										style={{ color: '444903' }}
+									/>
+									{showModalDelete ? modalDelete() : false}
+								</td>
+							</tr>
+						);
+					});
+			}
+		}
+	};
+
+	/*  const checkPermissions = () => {
     const { isLogged, type, isLoading } = state;
     if ((isLogged === false || type !== "admin") && isLoading === true) {
       return <Redirect to="/nopermissions" />;
     }
   } */
 
-  const load = () => {
-    if (isLoading === false) {
-      return (
-        <Spinner
-          animation="border"
-          variant="success"
-          style={{
-            marginTop: 25,
-            marginBottom: 108,
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-          }}
-        />
-      );
-    }
-  };
- 
-  return ( <>
-    <div>
-    <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row id="row">
-            <Col sm={1} />
-            <Col sm={5} style={{ marginTop: 35 }}>
-              <h1 style={{ color:'#8A3535', fontFamily:'Artifika' }}>Produtores</h1>
-            </Col>
-            <Col sm={2} />
-            <Col sm={3} style={{ marginTop: 35 }}>
-            <Form className="mr-auto">
-                <InputGroup className="mb-2">
-                    <FormControl type="text" placeholder="Pesquisar" />
-                    <InputGroup.Append>
-                        <InputGroup.Text style={{ backgroundColor: '#9b3939', color: 'white' }}>
-                            <AiOutlineSearch />
-                        </InputGroup.Text>
-                    </InputGroup.Append>
-                </InputGroup>
-            </Form>
-              {/* <Form inline>
+	const load = () => {
+		if (isLoading === false) {
+			return (
+				<Spinner
+					animation="border"
+					variant="success"
+					style={{
+						marginTop: 25,
+						marginBottom: 108,
+						alignItems: 'center',
+						justifyContent: 'center',
+						display: 'flex',
+					}}
+				/>
+			);
+		}
+	};
+
+	return (
+		<>
+			<div>
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row">
+						<Col sm={1} />
+						<Col sm={5} style={{ marginTop: 35 }}>
+							<h1 style={{ color: '#8A3535', fontFamily: 'Artifika' }}>Produtores</h1>
+						</Col>
+						<Col sm={2} />
+						<Col sm={3} style={{ marginTop: 35 }}>
+							<Form className="mr-auto">
+								<InputGroup className="mb-2">
+									<FormControl type="text" placeholder="Pesquisar" />
+									<InputGroup.Append>
+										<InputGroup.Text style={{ backgroundColor: '#9b3939', color: 'white' }}>
+											<AiOutlineSearch />
+										</InputGroup.Text>
+									</InputGroup.Append>
+								</InputGroup>
+							</Form>
+							{/* <Form inline>
                 <InputGroup className="mb-3">
                   <FormControl
                     type="text"
@@ -312,64 +323,68 @@ interface ProducerList {
                    <Button variant="outline-secondary">Pesquisar</Button> 
                  </InputGroup>
               </Form> */}
-            </Col>
-            <Col sm={1} />
-          </Row>
-        </Tab.Container>
-        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row id="row" style={{ marginBottom: 200 }}>
-            <Col sm={1} />
-            <Col sm={10}>
-              <Card
-                style={{
-                  color: "#9B3939",
-                  fontFamily: "artifika",
-                  marginTop: 40,
-                }}
-              >
-                <Table
-                  style={{
-                    color: "black",
-                    fontFamily: "artifika",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                  }}
-                >
-                  <thead style={{ /* width: 10 */ }}>
-                    <tr>
-                      <th>Nome</th>
-                      <th>Rua</th>
-                      <th>Código-postal</th>
-                      <th>País</th>
-                      <th>Região</th>
-                      <th>Telefone</th>
-                      <th>Rede social</th>
-                      <th>Logótipo</th>
-                      <th>E-mail</th>
-                      <th>Estado</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {producer == null ? (
-                      <tr>
-                        <td colSpan={9}>Não existem produtores para mostrar</td>
-                      </tr>
-                    ) : (
-                      false /* data(searchTerm) */
-                    )}
-                  </tbody>
-                </Table>
-              </Card>
-            </Col>
-            <Col sm={1} />
-          </Row>
-        </Tab.Container>
-    </div>
-  </>
- 
- )
+						</Col>
+						<Col sm={1} />
+					</Row>
+				</Tab.Container>
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row" style={{ marginBottom: 200 }}>
+						<Col sm={1} />
+						<Col sm={10}>
+							<Card
+								style={{
+									color: '#9B3939',
+									fontFamily: 'artifika',
+									marginTop: 40,
+								}}
+							>
+								<Table
+									style={{
+										color: 'black',
+										fontFamily: 'artifika',
+										alignItems: 'center',
+										justifyContent: 'center',
+										textAlign: 'center',
+									}}
+								>
+									<thead
+										style={
+											{
+												/* width: 10 */
+											}
+										}
+									>
+										<tr>
+											<th>Nome</th>
+											<th>Rua</th>
+											<th>Código-postal</th>
+											<th>País</th>
+											<th>Região</th>
+											<th>Telefone</th>
+											<th>Logótipo</th>
+											<th>E-mail</th>
+											<th>Estado</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										{producer == null ? (
+											<tr>
+												<td colSpan={9}>Não existem produtores para mostrar</td>
+											</tr>
+										) : (
+											data(searchTerm)
+										)}
+									</tbody>
+								</Table>
+							</Card>
+						</Col>
+						<Col sm={1} />
+					</Row>
+				</Tab.Container>
+			</div>
+		</>
+	);
 };
 
 /* class ProducerList extends React.Component {
@@ -384,7 +399,7 @@ interface ProducerList {
     };
   } */
 
-  /* async componentDidMount() {
+/* async componentDidMount() {
     console.log("Mounting screen Producer List...");
     try {
       let token = await localStorage.getItem("token");
@@ -422,7 +437,7 @@ interface ProducerList {
     }
   } */
 
-  /* handleCloseEdit = () => {
+/* handleCloseEdit = () => {
     this.setState({ showModalEdit: false });
   };
 
@@ -434,11 +449,11 @@ interface ProducerList {
       producerEmail: item.email,
       producerPassword: item.password,
       producerCountry: item.country,
-      producerLocality: item.locality,
+      producerlocation: item.location,
       producerPostalCode: item.postal_code,
       producerSocial: item.social,
       producerLogo: item.logo,
-      producerStreet: item.street,
+      produceraddress: item.address,
       producerTin: item.tin,
       producerTelephone: item.telephone,
       showModalEdit: true,
@@ -537,11 +552,11 @@ interface ProducerList {
       producerName,
       producerLogo,
       producerState,
-      producerLocality,
+      producerlocation,
       producerPassword,
       producerPostalCode,
       producerSocial,
-      producerStreet,
+      produceraddress,
       producerTelephone,
       producerTin,
       producerCountry,
@@ -563,12 +578,12 @@ interface ProducerList {
           email: producerEmail,
           password: producerPassword,
           country: producerCountry,
-          locality: producerLocality,
+          location: producerlocation,
           name: producerName,
           postal_code: producerPostalCode,
           social: producerSocial,
           state: producerState,
-          street: producerStreet,
+          address: produceraddress,
           telephone: producerTelephone,
           tin: producerTin,
         }),
@@ -629,10 +644,10 @@ interface ProducerList {
           return (
             <tr key={index}>
               <td>{item.name}</td>
-              <td>{item.street}</td>
+              <td>{item.address}</td>
               <td>{item.postal_code}</td>
               <td>{item.country}</td>
-              <td>{item.locality}</td>
+              <td>{item.location}</td>
               <td>{item.telephone}</td>
               <td>{item.social}</td>
               <td>{item.logo}</td>
@@ -710,8 +725,11 @@ interface ProducerList {
                     onChange={this.editSearch}
                     placeholder="Pesquisar Produtor"
                   /> */
-                  {/* <Button variant="outline-secondary">Pesquisar</Button> */}
-                {/* </InputGroup>
+{
+	/* <Button variant="outline-secondary">Pesquisar</Button> */
+}
+{
+	/* </InputGroup>
               </Form>
             </Col>
             <Col sm={1} />
@@ -772,4 +790,5 @@ interface ProducerList {
     );
   }
 }
-export default ProducerList; */}
+export default ProducerList; */
+}

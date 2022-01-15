@@ -1,39 +1,38 @@
-import React, {useState} from "react";
-import "./style.css";
+import React, { useState } from 'react';
+import './style.css';
 import { Col, Container, Form, Row, Button, Image, InputGroup } from 'react-bootstrap';
-import "bootstrap/dist/css/bootstrap.min.css";
-import { AiOutlineUser, AiTwotoneLock } from "react-icons/ai";
-import axios from "axios";
-import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
+import axios from 'axios';
+import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
 import { useHistory } from 'react-router';
 
 interface ProducerList {
-  _id: {$oid: string},
-  logo: string,
-  email: string,
-  password: string,
-  country: string,
-  locality: string,
-  name: string,
-  postal_Code: string,
-  social: string,
-  state: string,
-  street: string,
-  telephone: string,
-  tin: string,
-
+	_id: { $oid: string };
+	logo: string;
+	email: string;
+	password: string;
+	country: string;
+	locality: string;
+	name: string;
+	postal_Code: string;
+	social: string;
+	state: string;
+	street: string;
+	telephone: string;
+	tin: string;
 }
 
 export const EditProducer: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 
-  const history = useHistory();
+	const history = useHistory();
 
 	const [producer, setProducer] = useState<ProducerList[]>();
-  const [showModal, setShowModal] = useState(false);
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [showPass, setShowPass] = useState(false);
-  const [email, setEmail] = useState('');
+	const [showModal, setShowModal] = useState(false);
+	const [isPasswordShown, setIsPasswordShown] = useState(false);
+	const [showPass, setShowPass] = useState(false);
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [country, setCountry] = useState('');
 	const [locality, setLocality] = useState('');
@@ -43,308 +42,271 @@ export const EditProducer: React.FC = () => {
 	const [street, setStreet] = useState('');
 	const [telephone, setTelephone] = useState('');
 	const [tin, setTin] = useState('');
-  const [logo, setLogo] = useState('');
-  const [social, setSocial] = useState('');
+	const [logo, setLogo] = useState('');
+	const [social, setSocial] = useState('');
 
+	const togglePasswordVisiblity = () => {
+		setIsPasswordShown(!isPasswordShown);
+	};
 
-const togglePasswordVisiblity = () => {
-  setIsPasswordShown( !isPasswordShown );
+	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setName(e.target.value);
+	};
+
+	const handleTin = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setTin(e.target.value);
+	};
+
+	const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setLogo(e.target.value);
+	};
+
+	const handleTelephone = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setTelephone(e.target.value);
+	};
+
+	const handleStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setStreet(e.target.value);
+	};
+
+	const handleLocality = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setLocality(e.target.value);
+	};
+
+	const handleCountry = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setCountry(e.target.value);
+	};
+
+	const handlePostal_code = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPostal_Code(e.target.value);
+	};
+
+	const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setEmail(e.target.value);
+	};
+
+	const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPassword(e.target.value);
+	};
+
+	const handleSocial = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSocial(e.target.value);
+	};
+
+	const handleState = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setState(e.target.value);
+	};
+
+	const handleSubmit = async (item: ProducerList) => {
+		try {
+			await fetch('http://127.0.0.1:5000/producer', {
+				method: 'PUT',
+				headers: {
+					/*         Authorization: "Bearer " + token,
+					 */ Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					_id: producer,
+					name: name,
+					tin: tin,
+					logo: logo,
+					telephone: telephone,
+					street: street,
+					locality: locality,
+					postal_code: postal_Code,
+					country: country,
+					email: email,
+					password: password,
+					social: social,
+					state: state,
+				}),
+			});
+
+			alert('Produtor editado com sucesso!');
+			window.location.reload();
+		} catch (e) {
+			console.log('Error to edit producer status: ');
+		}
+		history.push('/producer');
+	};
+
+	return (
+		<>
+			<Container>
+				<br />
+				<Row className="justify-content-md-center">
+					<Col xs lg="5">
+						<h3 style={{ fontWeight: 'bold' }}>Editar Conta de {name}</h3>
+					</Col>
+				</Row>
+
+				<br />
+				<br />
+
+				{/* <Form onSubmit={handleSubmit}> */}
+				<Row>
+					<Col md={30}>
+						<h5 style={{ marginTop: 25 }}>
+							<AiOutlineUser size="20" color="#000000" />
+							Informação Pessoal
+						</h5>
+					</Col>
+				</Row>
+
+				<br />
+				<Row>
+					<Col>
+						<Form.Label>Nome Completo </Form.Label>
+						<Form.Control onChange={handleName} defaultValue={name} />
+					</Col>
+
+					<Col>
+						<Form.Label>País </Form.Label>
+						<Form.Control required onChange={handleCountry} as="select" defaultValue={country}>
+							<option>País</option>
+							<option>Portugal</option>
+							<option>Espanha</option>
+						</Form.Control>
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col>
+						<Form.Label>Morada </Form.Label>
+						<Form.Control onChange={handleStreet} defaultValue={street} />
+					</Col>
+					<Col>
+						<Form.Label>Código Postal </Form.Label>
+						<Form.Control onChange={handlePostal_code} defaultValue={postal_Code} />
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col>
+						<Form.Label>Contacto </Form.Label>
+						<Form.Control onChange={handleTelephone} defaultValue={telephone} />
+					</Col>
+					<Col>
+						<Form.Label>Localidade </Form.Label>
+						<Form.Control onChange={handleLocality} defaultValue={locality} />
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={6}>
+						<Form.Label>Número de Contribuinte </Form.Label>
+						<Form.Control onChange={handleTin} defaultValue={tin} />
+					</Col>
+					<Col>
+						<Form.Label>Rede Social </Form.Label>
+						<Form.Control onChange={handleSocial} defaultValue={social} />
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={6}></Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={3}>
+						<h5 style={{ marginTop: 30 }}>
+							<AiTwotoneLock size="20" color="#000000" />
+							Informação de Login
+						</h5>
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={6}>
+						<Form.Label>Email </Form.Label>
+						<Form.Control onChange={handleEmail} defaultValue={email} />
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col>
+						<Form.Label>Palavra-Passe </Form.Label>
+						<Form.Control
+							onChange={handlePassword}
+							defaultValue={password}
+							name="password"
+							type={isPasswordShown ? 'text' : 'password'}
+							style={{ color: 'black', opacity: 1 }}
+						/>
+						<InputGroup.Append>
+							<InputGroup.Text id="inputGroupAppend">
+								{isPasswordShown ? (
+									<BsFillEyeFill
+										onClick={togglePasswordVisiblity}
+										size="20"
+										style={{ color: 'black' }}
+									/>
+								) : (
+									<BsFillEyeSlashFill
+										onClick={togglePasswordVisiblity}
+										size="20"
+										style={{ color: 'black' }}
+									/>
+								)}
+							</InputGroup.Text>
+						</InputGroup.Append>
+					</Col>
+					<Col>
+						<Form.Label>Confirmar Palavra-Passe</Form.Label>
+						<Form.Control
+							onChange={handlePassword}
+							defaultValue={password}
+							name="password"
+							type={isPasswordShown ? 'text' : 'password'}
+							style={{ color: 'black', opacity: 1 }}
+						/>
+						<InputGroup.Append>
+							<InputGroup.Text id="inputGroupAppend">
+								{isPasswordShown ? (
+									<BsFillEyeFill
+										onClick={togglePasswordVisiblity}
+										size="20"
+										style={{ color: 'black' }}
+									/>
+								) : (
+									<BsFillEyeSlashFill
+										onClick={togglePasswordVisiblity}
+										size="20"
+										style={{ color: 'black' }}
+									/>
+								)}
+							</InputGroup.Text>
+						</InputGroup.Append>
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={6}></Col>
+				</Row>
+				<Row>
+					<Col md={50}>
+						<Button type="submit" variant="dark" style={{ color: 'white', backgroundColor: '#444903' }}>
+							Submeter alterações
+						</Button>
+					</Col>
+
+					<Col md={4}>
+						<Button
+							href="/producerprofile"
+							variant="dark"
+							style={{ color: 'white', backgroundColor: '#AAAA74' }}
+						>
+							Voltar
+						</Button>
+					</Col>
+				</Row>
+				{/*  </Form> */}
+				<br />
+			</Container>
+		</>
+	);
 };
-
-const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setName(e.target.value);
-};
-
-
-const handleTin = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setTin(e.target.value );
-};
-
-const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setLogo(e.target.value);
-};
-
-const handleTelephone = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setTelephone(e.target.value);
-};
-
-const handleStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setStreet(e.target.value);
-};
-
-const handleLocality = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setLocality(e.target.value);
-};
-
-const handleCountry = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setCountry(e.target.value);
-};
-
-const handlePostal_code = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setPostal_Code(e.target.value);
-};
-
-const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setEmail(e.target.value);
-};
-
-const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setPassword( e.target.value);
-};
-
-const handleSocial = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setSocial(e.target.value);
-};
-
-const handleState = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setState(e.target.value);
-};
-
-const handleSubmit = async (item : ProducerList) => {
-  try {
-    await fetch("http://127.0.0.1:5000/producer", {
-      method: "PUT",
-      headers: {
-/*         Authorization: "Bearer " + token,
- */        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: producer,
-        name: name,
-        tin: tin,
-        logo: logo,
-        telephone: telephone,
-        street: street,
-        locality: locality,
-        postal_code: postal_Code,
-        country: country,
-        email: email,
-        password: password,
-        social: social,
-        state: state,
-      }),
-    });
-
-    alert("Produtor editado com sucesso!");
-    window.location.reload();
-  } catch (e) {
-    console.log("Error to edit producer status: ");
-  }
-  history.push('/producer');
-};
-
-  return (
-    <>
-    <Container>
-        <br />
-        <Row className="justify-content-md-center">
-          <Col xs lg="5">
-            <h3 style={{ fontWeight: "bold" }}>
-              Editar Conta de {name}
-            </h3>
-          </Col>
-        </Row>
-
-        <br />
-        <br />
-
-        {/* <Form onSubmit={handleSubmit}> */}
-          <Row>
-            <Col md={30}>
-              <h5 style={{ marginTop: 25 }}>
-                <AiOutlineUser size="20" color="#000000" />
-                Informação Pessoal
-              </h5>
-            </Col>
-          </Row>
-
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Nome Completo </Form.Label>
-              <Form.Control
-                onChange={handleName}
-                defaultValue={name}
-              />
-            </Col>
-
-            <Col>
-              <Form.Label>País </Form.Label>
-              <Form.Control
-                required
-                onChange={handleCountry}
-                as="select"
-                defaultValue={country}
-              >
-                <option>País</option>
-                <option>Portugal</option>
-                <option>Espanha</option>
-              </Form.Control>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Morada </Form.Label>
-              <Form.Control
-                onChange={handleStreet}
-                defaultValue={street}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Código Postal </Form.Label>
-              <Form.Control
-                onChange={handlePostal_code}
-                defaultValue={postal_Code}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Contacto </Form.Label>
-              <Form.Control
-                onChange={handleTelephone}
-                defaultValue={telephone}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Localidade </Form.Label>
-              <Form.Control
-                onChange={handleLocality}
-                defaultValue={locality}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}>
-              <Form.Label>Número de Contribuinte </Form.Label>
-              <Form.Control
-                onChange={handleTin}
-                defaultValue={tin}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Rede Social </Form.Label>
-              <Form.Control
-                onChange={handleSocial}
-                defaultValue={social}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}></Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={3}>
-              <h5 style={{ marginTop: 30 }}>
-                <AiTwotoneLock size="20" color="#000000" />
-                Informação de Login
-              </h5>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}>
-              <Form.Label>Email </Form.Label>
-              <Form.Control
-                onChange={handleEmail}
-                defaultValue={email}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Palavra-Passe </Form.Label>
-              <Form.Control
-                onChange={handlePassword}
-                defaultValue={password}
-                name="password"
-                type={isPasswordShown ? "text" : "password"}
-                style={{ color: "black", opacity: 1 }}
-              />
-              <InputGroup.Append>
-                <InputGroup.Text id="inputGroupAppend">
-                  {isPasswordShown ? (
-                    <BsFillEyeFill
-                      onClick={togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  ) : (
-                    <BsFillEyeSlashFill
-                      onClick={togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  )}
-                </InputGroup.Text>
-              </InputGroup.Append>
-            </Col>
-            <Col>
-              <Form.Label>Confirmar Palavra-Passe</Form.Label>
-              <Form.Control
-                onChange={handlePassword}
-                defaultValue={password}
-                name="password"
-                type={isPasswordShown ? "text" : "password"}
-                style={{ color: "black", opacity: 1 }}
-              />
-              <InputGroup.Append>
-                <InputGroup.Text id="inputGroupAppend">
-                  {isPasswordShown ? (
-                    <BsFillEyeFill
-                      onClick={togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  ) : (
-                    <BsFillEyeSlashFill
-                      onClick={togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  )}
-                </InputGroup.Text>
-              </InputGroup.Append>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}></Col>
-          </Row>
-          <Row>
-            <Col md={50}>
-              <Button
-                type="submit"
-                variant="dark"
-                style={{ color: "white", backgroundColor: "#444903" }}
-              >
-                Submeter alterações
-              </Button>
-            </Col>
-
-            <Col md={4}>
-              <Button
-                href="/producerprofile"
-                variant="dark"
-                style={{ color: "white", backgroundColor: "#AAAA74" }}
-              >
-                Voltar
-              </Button>
-            </Col>
-          </Row>
-       {/*  </Form> */}
-        <br />
-      </Container>
-    </>
-  )
-};  
 
 /* class Editproducer extends React.Component {
   constructor(props) {

@@ -1,236 +1,221 @@
-import React, {useState} from "react";
-import axios from "axios";
-import Modal from "react-bootstrap/Modal";
-import { SiInstagram } from "react-icons/si";
-import { FaFacebook } from "react-icons/fa";
-import { Image, Container, Row, Tab, Button, Card, Col } from "react-bootstrap";
+import React, { useState } from 'react';
+import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
+import { SiInstagram } from 'react-icons/si';
+import { FaFacebook } from 'react-icons/fa';
+import { Image, Container, Row, Tab, Button, Card, Col } from 'react-bootstrap';
 
 interface ProducerList {
-  _id: {$oid: string},
-  name: string,
-  logo: string,
-  email: string,
-  password: string,
-  country: string,
-  locality: string,
-  postal_code: string,
-  social: string,
-  state: string,
-  street: string,
-  telephone: string,
-  tin: string,
+	_id: { $oid: string };
+	name: string;
+	logo: string;
+	email: string;
+	password: string;
+	country: string;
+	locality: string;
+	postal_code: string;
+	social: string;
+	state: string;
+	street: string;
+	telephone: string;
+	tin: string;
 }
 
 export const Producer: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 
-  const [producer, setProducer] = useState<ProducerList[]>();
-  const [showModalDelete, setShowModalDelete] = useState(false);
+	const [producer, setProducer] = useState<ProducerList[]>();
+	const [showModalDelete, setShowModalDelete] = useState(false);
 
-  const handleCloseDelete = () => {
-    setShowModalDelete(false);
-  };
+	const handleCloseDelete = () => {
+		setShowModalDelete(false);
+	};
 
-  const  handleShowDelete = () => {
-    setShowModalDelete(true);
-  };
+	const handleShowDelete = () => {
+		setShowModalDelete(true);
+	};
 
-  const modalDelete = () => {
-    return (
-      <Modal
-        show={showModalDelete}
-        onHide={handleCloseDelete}
-        animation={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Eliminar produtor</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Pretende eliminar a sua conta produtor de {producer} ?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDelete}>
-            Fechar
-          </Button>
-          <Button
-            variant="primary"
-           /*  onClick={() => delete() && handleCloseDelete} */
-          >
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+	const modalDelete = () => {
+		return (
+			<Modal show={showModalDelete} onHide={handleCloseDelete} animation={false}>
+				<Modal.Header closeButton>
+					<Modal.Title>Eliminar produtor</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Pretende eliminar a sua conta produtor de {producer} ?</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleCloseDelete}>
+						Fechar
+					</Button>
+					<Button
+						variant="primary"
+						/*  onClick={() => delete() && handleCloseDelete} */
+					>
+						Eliminar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		);
+	};
 
-const handleDelete = async () => {
-    try {
-      await fetch("http://127.0.0.1:5000/producer", {
-        method: "DELETE",
-        headers: {
-         /*  Authorization: "Bearer " + token, */
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: producer,
-        }),
-      });
-      alert("Produtor eliminado com sucesso!");
-      window.location.reload();
-    } catch (e) {
-      console.log("Error to Delete Producer: " + e);
-    }
-  };
+	const handleDelete = async () => {
+		try {
+			await fetch('http://127.0.0.1:5000/producer', {
+				method: 'DELETE',
+				headers: {
+					/*  Authorization: "Bearer " + token, */
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					_id: producer,
+				}),
+			});
+			alert('Produtor eliminado com sucesso!');
+			window.location.reload();
+		} catch (e) {
+			console.log('Error to Delete Producer: ' + e);
+		}
+	};
 
-  return (
-    <>
-      <Container>
-        <br />
-        <Row>
-          <Col xs lg="5">
-            <h3
-              style={{
-                fontSize: 30,
-                marginTop: 30,
-                marginLeft: 0,
-                fontWeight: "bold",
-              }}
-            >
-              Perfil do Produtor
-            </h3>
-          </Col>
-        </Row>
+	return (
+		<>
+			<Container>
+				<br />
+				<Row>
+					<Col xs lg="5">
+						<h3
+							style={{
+								fontSize: 30,
+								marginTop: 30,
+								marginLeft: 0,
+								fontWeight: 'bold',
+							}}
+						>
+							Perfil do Produtor
+						</h3>
+					</Col>
+				</Row>
 
-        <br />
-        <Row>
-          <Col md={30}></Col>
-        </Row>
+				<br />
+				<Row>
+					<Col md={30}></Col>
+				</Row>
 
-        <br />
-        <Row>
-          <Col>
-            <h3
-              style={{
-                fontSize: 18,
-                marginTop: 30,
-                marginLeft: 40,
-                fontWeight: "bold",
-              }}
-            >
-              Nome do Produtor:
-            </h3>
-            <h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>
-              {/* {producer?.name} */} Nome
-            </h4>
-            <h3
-              style={{
-                fontSize: 18,
-                marginTop: 40,
-                marginLeft: 40,
-                fontWeight: "bold",
-              }}
-            >
-              Rua:
-            </h3>
-            <h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>
-              Rua
-            </h4>
-            <h3
-              style={{
-                fontSize: 18,
-                marginTop: 40,
-                marginLeft: 40,
-                fontWeight: "bold",
-              }}
-            >
-              Morada:
-            </h3>
-            <h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>
-              {/* {locality} */} Localidade
-            </h4>
-            <h3
-              style={{
-                fontSize: 18,
-                marginTop: 40,
-                marginLeft: 40,
-                fontWeight: "bold",
-              }}
-            >
-              Contacto:
-            </h3>
-            <h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>
-             {/*  {telephone} */}
-            </h4>
-            <h3
-              style={{
-                fontSize: 18,
-                marginLeft: 600,
-                marginTop: -70,
-                fontWeight: "bold",
-              }}
-            >
-              Redes Sociais:
-            </h3>
-            <Col>
-              <a style={{ marginLeft: 600 }} href="https://www.facebook.com/">
-                <FaFacebook color="blue" size="30" />
-              </a>
-              <a style={{ marginLeft: 30 }} href="https://www.instagram.com/">
-                <SiInstagram color="#E1306C" size="30" />
-              </a>
-            </Col>
-          </Col>
-        </Row>
+				<br />
+				<Row>
+					<Col>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 30,
+								marginLeft: 40,
+								fontWeight: 'bold',
+							}}
+						>
+							Nome do Produtor:
+						</h3>
+						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/* {producer?.name} */} Nome</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 40,
+								marginLeft: 40,
+								fontWeight: 'bold',
+							}}
+						>
+							Rua:
+						</h3>
+						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>Rua</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 40,
+								marginLeft: 40,
+								fontWeight: 'bold',
+							}}
+						>
+							Morada:
+						</h3>
+						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/* {locality} */} Localidade</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 40,
+								marginLeft: 40,
+								fontWeight: 'bold',
+							}}
+						>
+							Contacto:
+						</h3>
+						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/*  {telephone} */}</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginLeft: 600,
+								marginTop: -70,
+								fontWeight: 'bold',
+							}}
+						>
+							Redes Sociais:
+						</h3>
+						<Col>
+							<a style={{ marginLeft: 600 }} href="https://www.facebook.com/">
+								<FaFacebook color="blue" size="30" />
+							</a>
+							<a style={{ marginLeft: 30 }} href="https://www.instagram.com/">
+								<SiInstagram color="#E1306C" size="30" />
+							</a>
+						</Col>
+					</Col>
+				</Row>
 
-        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row id="row" style={{ marginBottom: 80 }}>
-            <Col sm={1} />
-            <Col sm={1}>
-              <Button
-                variant="dark"
-                href="/editclient"
-                size="lg"
-                style={{ color: "white", backgroundColor: "#AAAA74" }}
-              >
-                Editar{" "}
-              </Button>
-            </Col>
-            <Col sm={8} style={{ marginTop: 100 }} />
-            <Col sm={1}>
-              <Button
-                variant="dark"
-                onClick={handleShowDelete}
-                size="lg"
-                style={{ color: "white", backgroundColor: "#444903" }}
-              >
-                Eliminar{" "}
-              </Button>
-              {showModalDelete ? modalDelete() : false}
-            </Col>
-            <Col sm={1} />
-          </Row>
-        </Tab.Container>
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row" style={{ marginBottom: 80 }}>
+						<Col sm={1} />
+						<Col sm={1}>
+							<Button
+								variant="dark"
+								href="/editclient"
+								size="lg"
+								style={{ color: 'white', backgroundColor: '#AAAA74' }}
+							>
+								Editar{' '}
+							</Button>
+						</Col>
+						<Col sm={8} style={{ marginTop: 100 }} />
+						<Col sm={1}>
+							<Button
+								variant="dark"
+								onClick={handleShowDelete}
+								size="lg"
+								style={{ color: 'white', backgroundColor: '#444903' }}
+							>
+								Eliminar{' '}
+							</Button>
+							{showModalDelete ? modalDelete() : false}
+						</Col>
+						<Col sm={1} />
+					</Row>
+				</Tab.Container>
 
-        <Card.ImgOverlay>
-          <Container>
-            <Row style={{ marginTop: 300, marginLeft: 700 }}>
-              <Col xs={12} md={8}>
-                <Image
-                  src="https://s3-sa-east-1.amazonaws.com/projetos-artes/fullsize%2F2018%2F08%2F06%2F21%2FLogo-243223_6769_212624417_626643767.jpg"
-                  alt="Paris"
-                  width="500"
-                  fluid
-                />
-              </Col>
-            </Row>
-          </Container>
-        </Card.ImgOverlay>
-      </Container>
-    </>
-  )
+				<Card.ImgOverlay>
+					<Container>
+						<Row style={{ marginTop: 300, marginLeft: 700 }}>
+							<Col xs={12} md={8}>
+								<Image
+									src="https://s3-sa-east-1.amazonaws.com/projetos-artes/fullsize%2F2018%2F08%2F06%2F21%2FLogo-243223_6769_212624417_626643767.jpg"
+									alt="Paris"
+									width="500"
+									fluid
+								/>
+							</Col>
+						</Row>
+					</Container>
+				</Card.ImgOverlay>
+			</Container>
+		</>
+	);
 };
-
 
 /* class Producer extends React.Component {
   constructor(props) {

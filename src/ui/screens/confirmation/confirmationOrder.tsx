@@ -1,25 +1,18 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Col, Container, Row, Navbar, Nav, Button, Image, InputGroup, Table, Tab } from 'react-bootstrap';
 import { images } from 'assets';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import moment from 'moment';
 
-interface DataList {
+interface DataList {}
 
-}
+interface ProductList {}
 
-interface ProductList {
-
-}
-
-interface ClientList {
-
-}
-
+interface ClientList {}
 
 export const ConfirmationOrder: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 
 	const history = useHistory();
 
@@ -29,14 +22,13 @@ export const ConfirmationOrder: React.FC = () => {
 	const [client, setClient] = useState<ClientList[]>();
 	const [totalPrice, setTotalPrice] = useState('4.99');
 
-const createshop = () => {
-	const config = {
-	/* headers: { Authorization: `Bearer ${token}` }, */
-};
+	const createshop = () => {
+		const config = {
+			/* headers: { Authorization: `Bearer ${token}` }, */
+		};
 
-axios
-			.post(`http://127.0.0.1:5000/shop`, {
-				/* country_client: '',
+		axios.post(`http://127.0.0.1:5000/shop`, {
+			/* country_client: '',
 				date: moment().format('YYYY/MM/DD HH:mm:ss'),
 				doc_invoice: '',
 				hour: moment().format('YYYY/MM/DD HH:mm:ss'),
@@ -53,14 +45,14 @@ axios
 				vat: '',
 				rate: '',
 				products: products, */
-			})
-			history.push('/payment');
+		});
+		history.push('/payment');
 	};
 
-return (
-	<>
-		<div>
-		<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
+	return (
+		<>
+			<div>
+				<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
 					<Container fluid color="black">
 						<Row id="row">
 							<Col sm={3}>
@@ -129,11 +121,9 @@ return (
 					<Row style={{ marginTop: 35 }}>
 						<Col sm={1}></Col>
 						<Col sm={6}>
-							
-							<h4 style={{ fontSize: 30, color: '#000000', fontWeight:'bold' }}>Confirmação </h4>
+							<h4 style={{ fontSize: 30, color: '#000000', fontWeight: 'bold' }}>Confirmação </h4>
 						</Col>
 						<Col sm={4}>
-							
 							<InputGroup className="mb-3"></InputGroup>
 						</Col>
 					</Row>
@@ -180,14 +170,11 @@ return (
 												height="45"
 											/>
 										</td>
-										<td>
-											{/* {client.street} - {client.locality} */}
-										</td>
+										<td>{/* {client.street} - {client.locality} */}</td>
 										<td>4,99€</td>
 									</tr>
 									<tr>
 										<td align="center">
-											
 											<Image
 												src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLFZSCb7TuZPnO_zBvAfQ3K4VW2S1P9MZ0gKYTvRM4EsAEseKUtpaqdJrhw7UdUJpscCU&usqp=CAU"
 												width="45"
@@ -257,11 +244,10 @@ return (
 						<Col sm={1} />
 					</Row>
 				</Tab.Container>
-		</div>
-	</>
-)
+			</div>
+		</>
+	);
 };
-
 
 /* class Confirmation extends React.Component {
 	constructor(props) {
@@ -350,13 +336,13 @@ return (
 		});
 	}
  */
-	/* createshop = () => {
+/* createshop = () => {
 		const { client,  token,  products, userId, totalPrice } = this.state;
 		 const config = {
       headers: { Authorization: `Bearer ${token}` },
     };  */
 
-		/* axios
+/* axios
 			.post(`http://127.0.0.1:5000/shop`, {
 				country_client: '',
 				date: moment().format('YYYY/MM/DD HH:mm:ss'),

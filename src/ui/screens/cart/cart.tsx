@@ -1,44 +1,40 @@
-import React, {useState} from "react";
-import "./style.css";
-import { Image, Tab, Row, Col, Button, Table, Modal, Spinner} from "react-bootstrap";
-import { AiOutlineShoppingCart, AiFillDelete, AiFillMinusCircle, AiFillPlusCircle} from "react-icons/ai";
-import { Redirect } from "react-router-dom";
+import React, { useState } from 'react';
+import './style.css';
+import { Image, Tab, Row, Col, Button, Table, Modal, Spinner } from 'react-bootstrap';
+import { AiOutlineShoppingCart, AiFillDelete, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
+import { Redirect } from 'react-router-dom';
 
 interface CartList {
-  totalPrice : string,
+	totalPrice: string;
 }
 
-interface DataList {
-
-}
+interface DataList {}
 
 interface ProductList {
-  id_product: {$oid: string},
-  name_product: string,
-  photo_product: string,
-  price_product: string,
-  quantity_product: string,
+	id_product: { $oid: string };
+	name_product: string;
+	photo_product: string;
+	price_product: string;
+	quantity_product: string;
 }
 
 export const Cart: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [cart, setCart] = useState<CartList[]>();
+	const [isLoading, setIsLoading] = useState(false);
+	const [cart, setCart] = useState<CartList[]>();
 	const [data, setData] = useState<DataList[]>();
 	const [products, setProducts] = useState<ProductList[]>();
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [empty, setEmpty] = useState(true);
+	const [showModalDelete, setShowModalDelete] = useState(false);
+	const [empty, setEmpty] = useState(true);
 
-
-
-/* const onAdd = (index: number) => {
+	/* const onAdd = (index: number) => {
     products?[index].quantity_product =
       parseInt(products[index].quantity_product) + 1;
     setProducts(products);
     handleEdit();
   }; */
-/* 
+	/* 
 const onSub = (index: any) => {
     if (products?[index].quantity_product > 1) {
       products?[index].quantity_product -= 1;
@@ -50,263 +46,255 @@ const onSub = (index: any) => {
     handleEdit();
 }; */
 
-const handleCloseDelete = () => {
-    setShowModalDelete(false);
-  };
+	const handleCloseDelete = () => {
+		setShowModalDelete(false);
+	};
 
-const handleShowDelete = () => {
-    setShowModalDelete(true);
-  };
+	const handleShowDelete = () => {
+		setShowModalDelete(true);
+	};
 
-const modalDelete = () => {
-    return (
-      <Modal
-        show={showModalDelete}
-        onHide={handleCloseDelete}
-        animation={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Esvaziar Carrinho</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Tem a certeza que pretende esvaziar o carrinho?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDelete}>
-            Fechar
-          </Button>
-          <Button
-            variant="primary"
-            /* onClick={() => delete() && handleCloseDelete} */
-          >
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+	const modalDelete = () => {
+		return (
+			<Modal show={showModalDelete} onHide={handleCloseDelete} animation={false}>
+				<Modal.Header closeButton>
+					<Modal.Title>Esvaziar Carrinho</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Tem a certeza que pretende esvaziar o carrinho?</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleCloseDelete}>
+						Fechar
+					</Button>
+					<Button
+						variant="primary"
+						/* onClick={() => delete() && handleCloseDelete} */
+					>
+						Eliminar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		);
+	};
 
-const handleEdit = async (item : ProductList) => {
-    try {
-      await fetch("http://127.0.0.1:5000/cart/client/" /* + userId */, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-         /*  id_client: client, */
-          email_client: "email",
-          products: products,
-        }),
-      });
-    } catch (e) {
-      console.log("Error to edit cart: " + e);
-    }
-  };
+	const handleEdit = async (item: ProductList) => {
+		try {
+			await fetch('http://127.0.0.1:5000/cart/client/' /* + userId */, {
+				method: 'PUT',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					/*  id_client: client, */
+					email_client: 'email',
+					products: products,
+				}),
+			});
+		} catch (e) {
+			console.log('Error to edit cart: ' + e);
+		}
+	};
 
-const handleDelete = async () => {
-    try {
-      await fetch("http://127.0.0.1:5000/cart/client/" /* + userId */, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      window.location.reload();
-    } catch (e) {
-      console.log("Error to delete cart: " + e);
-    }
-  };
+	const handleDelete = async () => {
+		try {
+			await fetch('http://127.0.0.1:5000/cart/client/' /* + userId */, {
+				method: 'DELETE',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+			});
+			window.location.reload();
+		} catch (e) {
+			console.log('Error to delete cart: ' + e);
+		}
+	};
 
-/* const checkPermissions = () => {
+	/* const checkPermissions = () => {
     if ((isLogged === false || type !== "client") && isLoading === true) {
       return <Redirect to="/nopermissions" />;
     }
   }; */
 
-const load = () => {
-    if (isLoading === false) {
-      return (
-        <Spinner
-          animation="border"
-          variant="success"
-          style={{
-            marginTop: 25,
-            marginBottom: 108,
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-          }}
-        />
-      );
-    }
-  };
+	const load = () => {
+		if (isLoading === false) {
+			return (
+				<Spinner
+					animation="border"
+					variant="success"
+					style={{
+						marginTop: 25,
+						marginBottom: 108,
+						alignItems: 'center',
+						justifyContent: 'center',
+						display: 'flex',
+					}}
+				/>
+			);
+		}
+	};
 
-return (
-  <>
-      <div>
-        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row id="row">
-            <Col sm={1} />
-            <Col sm={5} style={{ marginTop: 35 }}>
-              <Row id="row">
-                <Col sm={2}>
-                  <AiOutlineShoppingCart size="40" color="#444903" />
-                </Col>
-                <Col sm={8}>
-                  <h4 style={{ color: "#AAAA74" }}>Carrinho de compras</h4>
-                </Col>
-                <Col sm={2} />
-              </Row>
-            </Col>
-            <Col sm={3} />
-            <Col sm={3} style={{ marginTop: 35 }}>
-              <Row id="row">
-                <Col sm={2}>
-                  <AiFillDelete size="30" color="#444903" />
-                </Col>
-                <Col sm={10}>
-                  <Button
-                    variant="outline-light"
-                    disabled={empty}
-                    onClick={handleShowDelete}
-                    style={{
-                      backgroundColor: "white",
-                      color: "#AAAA74",
-                      fontSize: 17,
-                    }}
-                  >
-                    Esvaziar carrinho
-                  </Button>
-                  {showModalDelete ? modalDelete() : false}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Tab.Container>
-        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row id="row">
-            <Col sm={1} />
-            <Col sm={10}>
-              <Table
-                size="20"
-                style={{
-                  marginTop: 30,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textAlign: "center",
-                }}
-              >
-                <thead style={{ width: 10 }}>
-                  <tr>
-                    <th>Produtos</th>
-                    <th>Quantidade</th>
-                    <th>Preço</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {empty ? (
-                    <tr>
-                      <td colSpan={4}>
-                        <h4
-                          style={{
-                            marginTop: 25,
-                            marginBottom: 25,
-                            fontWeight: "normal",
-                          }}
-                        >
-                          O seu carrinho de compras encontra-se vazio, adicione
-                          produtos ao carrinho...
-                        </h4>
-                      </td>
-                    </tr>
-                  ) : (
-                    products?.map((item, index) => {
-                      return (
-                        <tr>
-                          <td>
-                            <Image
-                              src={item.photo_product}
-                              width="80"
-                              height="150"
-                            />
-                          </td>
-                          <td style={{ fontSize: 22, textAlign: "center" }}>
-                            <AiFillMinusCircle
-                              size="28"
-                             /*  onClick={() => onSub(index)} */
-                              style={{ marginRight: 10, color: "#444903" }}
-                            />
-                            {/* {products?[index].quantity_product} */}
-                            <AiFillPlusCircle
-                              size="28"
-                            /*   onClick={() => onAdd(index)} */
-                              style={{ marginLeft: 10, color: "#444903" }}
-                            />
-                          </td>
-                          <td style={{ fontSize: 18, textAlign: "center" }}>
-                            {item.price_product}€
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th></th>
-                    <td
-                      style={{
-                        fontSize: 22,
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      Total:{" "}
-                    </td>
-                    <td style={{ fontSize: 20, textAlign: "center" }}>
-                      {/* {totalPrice} */} 4.55 €
-                    </td>
-                  </tr>
-                </tfoot>
-              </Table>
-            </Col>
-            <Col sm={1} />
-          </Row>
-        </Tab.Container>
-        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-          <Row id="row" style={{ marginBottom: 80 }}>
-            <Col sm={1} />
-            <Col sm={1}>
-              <Button
-                href="/home"
-                variant="dark"
-                size="lg"
-                style={{ backgroundColor: "white", color: "black" }}
-              >
-                Voltar
-              </Button>
-            </Col>
-            <Col sm={8} style={{ marginTop: 80 }} />
-            <Col sm={1}>
-              <Button
-                href="/ship"
-                disabled={empty}
-                variant="dark"
-                size="lg"
-                /* onClick={goTo} */
-                style={{ color: "white", backgroundColor: "#AAAA74" }}
-              >
-                Comprar
-              </Button>
-            </Col>
-            <Col sm={1} />
-          </Row>
-        </Tab.Container>
-      </div>
-    </>
-  )
-};  
+	return (
+		<>
+			<div>
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row">
+						<Col sm={1} />
+						<Col sm={5} style={{ marginTop: 35 }}>
+							<Row id="row">
+								<Col sm={2}>
+									<AiOutlineShoppingCart size="40" color="#444903" />
+								</Col>
+								<Col sm={8}>
+									<h4 style={{ color: '#AAAA74' }}>Carrinho de compras</h4>
+								</Col>
+								<Col sm={2} />
+							</Row>
+						</Col>
+						<Col sm={3} />
+						<Col sm={3} style={{ marginTop: 35 }}>
+							<Row id="row">
+								<Col sm={2}>
+									<AiFillDelete size="30" color="#444903" />
+								</Col>
+								<Col sm={10}>
+									<Button
+										variant="outline-light"
+										disabled={empty}
+										onClick={handleShowDelete}
+										style={{
+											backgroundColor: 'white',
+											color: '#AAAA74',
+											fontSize: 17,
+										}}
+									>
+										Esvaziar carrinho
+									</Button>
+									{showModalDelete ? modalDelete() : false}
+								</Col>
+							</Row>
+						</Col>
+					</Row>
+				</Tab.Container>
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row">
+						<Col sm={1} />
+						<Col sm={10}>
+							<Table
+								size="20"
+								style={{
+									marginTop: 30,
+									alignItems: 'center',
+									justifyContent: 'center',
+									textAlign: 'center',
+								}}
+							>
+								<thead style={{ width: 10 }}>
+									<tr>
+										<th>Produtos</th>
+										<th>Quantidade</th>
+										<th>Preço</th>
+									</tr>
+								</thead>
+								<tbody>
+									{empty ? (
+										<tr>
+											<td colSpan={4}>
+												<h4
+													style={{
+														marginTop: 25,
+														marginBottom: 25,
+														fontWeight: 'normal',
+													}}
+												>
+													O seu carrinho de compras encontra-se vazio, adicione produtos ao
+													carrinho...
+												</h4>
+											</td>
+										</tr>
+									) : (
+										products?.map((item, index) => {
+											return (
+												<tr>
+													<td>
+														<Image src={item.photo_product} width="80" height="150" />
+													</td>
+													<td style={{ fontSize: 22, textAlign: 'center' }}>
+														<AiFillMinusCircle
+															size="28"
+															/*  onClick={() => onSub(index)} */
+															style={{ marginRight: 10, color: '#444903' }}
+														/>
+														{/* {products?[index].quantity_product} */}
+														<AiFillPlusCircle
+															size="28"
+															/*   onClick={() => onAdd(index)} */
+															style={{ marginLeft: 10, color: '#444903' }}
+														/>
+													</td>
+													<td style={{ fontSize: 18, textAlign: 'center' }}>
+														{item.price_product}€
+													</td>
+												</tr>
+											);
+										})
+									)}
+								</tbody>
+								<tfoot>
+									<tr>
+										<th></th>
+										<td
+											style={{
+												fontSize: 22,
+												fontWeight: 'bold',
+												textAlign: 'center',
+											}}
+										>
+											Total:{' '}
+										</td>
+										<td style={{ fontSize: 20, textAlign: 'center' }}>
+											{/* {totalPrice} */} 4.55 €
+										</td>
+									</tr>
+								</tfoot>
+							</Table>
+						</Col>
+						<Col sm={1} />
+					</Row>
+				</Tab.Container>
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row" style={{ marginBottom: 80 }}>
+						<Col sm={1} />
+						<Col sm={1}>
+							<Button
+								href="/home"
+								variant="dark"
+								size="lg"
+								style={{ backgroundColor: 'white', color: 'black' }}
+							>
+								Voltar
+							</Button>
+						</Col>
+						<Col sm={8} style={{ marginTop: 80 }} />
+						<Col sm={1}>
+							<Button
+								href="/ship"
+								disabled={empty}
+								variant="dark"
+								size="lg"
+								/* onClick={goTo} */
+								style={{ color: 'white', backgroundColor: '#AAAA74' }}
+							>
+								Comprar
+							</Button>
+						</Col>
+						<Col sm={1} />
+					</Row>
+				</Tab.Container>
+			</div>
+		</>
+	);
+};
 
 /* class Cart extends React.Component {
   constructor(props) {
@@ -486,7 +474,7 @@ return (
     }
   };
  */
- /*  render() {
+/*  render() {
     const { products, showModalDelete, empty } = this.state;
      let totalQuantity = 0; 
     let totalPrice = 0;

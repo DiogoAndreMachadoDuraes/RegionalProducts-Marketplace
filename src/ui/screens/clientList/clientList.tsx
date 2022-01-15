@@ -1,478 +1,495 @@
-import React, { useState } from "react";
-import "./style.css";
-import {Tab, Row, Col, Table, Modal, Button, Form, FormControl, InputGroup, Toast, Spinner, Card} from "react-bootstrap";
-import { AiOutlineSearch, AiFillEdit, AiFillDelete, AiOutlineUnorderedList} from "react-icons/ai";
-import { Redirect } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import './style.css';
+import {
+	Tab,
+	Row,
+	Col,
+	Table,
+	Modal,
+	Button,
+	Form,
+	FormControl,
+	InputGroup,
+	Toast,
+	Spinner,
+	Card,
+} from 'react-bootstrap';
+import { AiOutlineSearch, AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai';
+import { Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'store';
 
-interface ClientList {
-  _id: {$oid: string},
-  name: string,
-  state: string,
-  tin: string,
-  birthday: string,
-  telephone: string,
-  street:string,
-  postal_code:string,
-  locality:string,
-  country: string,
-  email: string,
-  password: string,
+interface Client {
+	_id: { $oid: string };
+	name: string;
+	state: string;
+	tin: string;
+	birthday: string;
+	telephone: string;
+	address: string;
+	postal_code: string;
+	location: string;
+	country: string;
+	email: string;
+	password: string;
 }
 
 export const ClientList: React.FC = () => {
-  const [client, setClient] = useState<ClientList[]>();
-  const [showModalEdit, setShowModalEdit] = useState(false);
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [searched, setSearched] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [state, setState] = useState('');
-  const [clientName, setClientName] = useState('');
-  const [clientId, setClientId] = useState('');
-  const [clientState, setClientState] = useState('');
-  const [showToastEdit, setShowToastEdit] = useState(false);
-  const [showToastDelete, setShowToastDelete] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  //add other states for clientList
-  const [clientTin, setClientTin] = useState('9');
-  const [clientBirthday, setClientBirthday ] = useState('12/09/1995');
-  const [clientTelephone, setClientTelephone ] = useState('+351999999999');
-  const [clientStreet, setClientStreet ] = useState('Rua Doutor Francisco Cunha, nº40, 1ºEsquerdo');
-  const [clientPostalCode, setClientPostalCode] = useState('');
-  const [clientLocality, setClientLocality ] = useState('');
-  const [clientCountry, setClientCountry ] = useState('');
-  const [clientEmail, setClientEmail ] = useState('');
-  const [clientPassword, setClientPassword ] = useState('');
+	const [client, setClient] = useState<Client[]>();
+	const [showModalEdit, setShowModalEdit] = useState(false);
+	const [showModalDelete, setShowModalDelete] = useState(false);
+	const [searched, setSearched] = useState(false);
+	const [searchTerm, setSearchTerm] = useState('');
+	const [state, setState] = useState('');
+	const [clientName, setClientName] = useState('');
+	const [clientId, setClientId] = useState('');
+	const [clientState, setClientState] = useState('');
+	const [showToastEdit, setShowToastEdit] = useState(false);
+	const [showToastDelete, setShowToastDelete] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	//add other states for clientList
+	const [clientTin, setClientTin] = useState('9');
+	const [clientBirthday, setClientBirthday] = useState('12/09/1995');
+	const [clientTelephone, setClientTelephone] = useState('+351999999999');
+	const [clientAddress, setClientAddress] = useState('Rua Doutor Francisco Cunha, nº40, 1ºEsquerdo');
+	const [clientPostalCode, setClientPostalCode] = useState('');
+	const [clientLocation, setClientLocation] = useState('');
+	const [clientCountry, setClientCountry] = useState('');
+	const [clientEmail, setClientEmail] = useState('');
+	const [clientPassword, setClientPassword] = useState('');
 
-  const handleCloseEdit = () => {
-    setShowModalEdit (false)
-  };
+	const token = useSelector((state: StoreState) => state.common.user.token);
 
-  const handleShowEdit = (item: ClientList) => {
-    setClientId (item._id.$oid)
-    setClientName (item.name)
-    setClientState (item.state)
-    setClientTin (item.tin)
-    setClientBirthday (item.birthday)
-    setClientTelephone ( item.telephone)
-    setClientStreet (item.street)
-    setClientPostalCode ( item.postal_code)
-    setClientLocality ( item.locality)
-    setClientCountry ( item.country)
-    setClientEmail ( item.email)
-    setClientPassword ( item.password)
-    setShowModalEdit ( true) 
-  };
+	useEffect(() => {
+		const fetchApi = async () => {
+			if (client === undefined) {
+				try {
+					let response = await fetch('http://127.0.0.1:5000/clients', {
+						headers: {
+							Authorization: 'Bearer ' + token,
+							Accept: 'application/json',
+							'Content-Type': 'application/json',
+						},
+					});
+					let json = await response.json();
+					setClient(json);
+					setIsLoading(true);
+					console.log(json);
+				} catch (e) {
+					console.log('Error to get data: ' + e);
+				}
+			}
+		};
+		fetchApi();
+	});
 
-  const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setClientState( e.target.value );
-  };
+	const handleCloseEdit = () => {
+		setShowModalEdit(false);
+	};
 
-  const handleCloseDelete = () => {
-    setShowModalDelete (false)
-  };
+	const handleShowEdit = (item: Client) => {
+		setClientId(item._id.$oid);
+		setClientName(item.name);
+		setClientState(item.state);
+		setClientTin(item.tin);
+		setClientBirthday(item.birthday);
+		setClientTelephone(item.telephone);
+		setClientAddress(item.address);
+		setClientPostalCode(item.postal_code);
+		setClientLocation(item.location);
+		setClientCountry(item.country);
+		setClientEmail(item.email);
+		setClientPassword(item.password);
+		setShowModalEdit(true);
+	};
 
-  const handleShowDelete = (item: ClientList) => {
-    setClientId ( item._id.$oid)
-    setClientName (item.name)
-    setShowModalDelete (true)
-  };
+	const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setClientState(e.target.value);
+	};
 
-  const modalEdit = () => {
-    return (
-      <Modal
-        show={showModalEdit}
-        onHide={handleCloseEdit}
-        animation={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Editar estado do cliente</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Nome do Utilizador: {clientName}</Modal.Body>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formBasicRange">
-              <Form.Label>Estado da conta</Form.Label>
-              <Form.Control
-                required
-                onChange={handleType}
-                as="select"
-                defaultValue={clientState}
-              >
-                <option>Ativa</option>
-                <option>Desativa</option>
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseEdit}>
-            Fechar
-          </Button>
-          <Button
-            variant="primary"
-           /*  onClick={ () => edit() && handleCloseEdit} */
-          >
-            Guardar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+	const handleCloseDelete = () => {
+		setShowModalDelete(false);
+	};
 
-  const modalDelete = () => {
-    return (
-      <Modal
-        show={showModalDelete}
-        onHide={handleCloseDelete}
-        animation={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Eliminar cliente</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Pretende eliminar o/a cliente {clientName}?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDelete}>
-            Fechar
-          </Button>
-          <Button
-            variant="primary"
-           /*  onClick={() => delete() && handleCloseDelete} */
-          >
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+	const handleShowDelete = (item: Client) => {
+		setClientId(item._id.$oid);
+		setClientName(item.name);
+		setShowModalDelete(true);
+	};
 
-  const handleEdit = async () => {
-    try {
-      await fetch("http://127.0.0.1:5000/client", {
-        method: "PUT",
-        headers: {
-/*           Authorization: "Bearer " + token,
- */          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: clientId,
-          tin: clientTin,
-          name: clientName,
-          birthday: clientBirthday,
-          telephone: clientTelephone,
-          street: clientStreet,
-          postal_code: clientPostalCode,
-          locality: clientLocality,
-          country: clientCountry,
-          email: clientEmail,
-          password: clientPassword,
-          state: clientState,
-        }),
-      });
-      setShowToastEdit(true );
-      setShowModalEdit(false);
-      setTimeout(function () {
-        window.location.reload();
-      }, 3000);
-    } catch (e) {
-      console.log("Error to Edit Client Status: " + e);
-    }
-  };
+	const modalEdit = () => {
+		return (
+			<Modal show={showModalEdit} onHide={handleCloseEdit} animation={false}>
+				<Modal.Header closeButton>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Editar estado do cliente
+					</Modal.Title>
+				</Modal.Header>
+				{/*  <Modal.Body>Nome do Utilizador: {clientName}</Modal.Body> */}
+				<Modal.Body>
+					<Form>
+						<Form.Group controlId="formBasicRange">
+							<Form.Label style={{ fontFamily: 'Artifika' }}>
+								Estado da conta do utilizador {clientName}{' '}
+							</Form.Label>
+							<Form.Control required onChange={handleType} as="select" defaultValue={clientState}>
+								<option>Conta Ativa</option>
+								<option>Conta Inativa</option>
+							</Form.Control>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleCloseEdit}>
+						Cancelar
+					</Button>
+					<Button
+						variant="primary"
+						/*  onClick={ () => edit() && handleCloseEdit} */
+					>
+						Guardar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		);
+	};
 
-  const handleDelete = async () => {
-    try {
-      await fetch("http://127.0.0.1:5000/client", {
-        method: "DELETE",
-        headers: {
-/*           Authorization: "Bearer " + token,
- */          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: clientId,
-        }),
-      });
-      setShowToastDelete (true)
-      setShowModalDelete (false)
-      setTimeout(function () {
-        window.location.reload();
-      }, 3000);
-    } catch (e) {
-      console.log("Error to Delete Client: " + e);
-    }
-  };
+	const modalDelete = () => {
+		return (
+			<Modal show={showModalDelete} onHide={handleCloseDelete} animation={false}>
+				<Modal.Header closeButton>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Eliminar cliente
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body style={{ fontFamily: 'Artifika' }}>Pretende eliminar o utilizador {clientName}?</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleCloseDelete}>
+						Cancelar
+					</Button>
+					<Button
+						variant="primary"
+						/*  onClick={() => delete() && handleCloseDelete} */
+					>
+						Eliminar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		);
+	};
 
-  const editSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearched(true)
-    setSearchTerm (e.target.value)
-  };
+	const handleEdit = async () => {
+		try {
+			await fetch('http://127.0.0.1:5000/client', {
+				method: 'PUT',
+				headers: {
+					/*           Authorization: "Bearer " + token,
+					 */ Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					_id: clientId,
+					tin: clientTin,
+					name: clientName,
+					birthday: clientBirthday,
+					telephone: clientTelephone,
+					address: clientAddress,
+					postal_code: clientPostalCode,
+					location: clientLocation,
+					country: clientCountry,
+					email: clientEmail,
+					password: clientPassword,
+					state: clientState,
+				}),
+			});
+			setShowToastEdit(true);
+			setShowModalEdit(false);
+			setTimeout(function () {
+				window.location.reload();
+			}, 3000);
+		} catch (e) {
+			console.log('Error to Edit Client Status: ' + e);
+		}
+	};
 
-  const search = () => {
+	const handleDelete = async () => {
+		try {
+			await fetch('http://127.0.0.1:5000/client', {
+				method: 'DELETE',
+				headers: {
+					/*           Authorization: "Bearer " + token,
+					 */ Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					_id: clientId,
+				}),
+			});
+			setShowToastDelete(true);
+			setShowModalDelete(false);
+			setTimeout(function () {
+				window.location.reload();
+			}, 3000);
+		} catch (e) {
+			console.log('Error to Delete Client: ' + e);
+		}
+	};
 
-    if(client !== undefined){const name = Object.values(client).filter((a) =>
-      a.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    const tin = Object.values(client)
-      /* .filter((a) => a.tin === parseInt(searchTerm)) */
-      .map((a) => a);
+	const editSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearched(true);
+		setSearchTerm(e.target.value);
+	};
 
-    if (name.length === 0 && tin.length === 0) {
-      return (
-        <tr style={{ marginTop: 20 }}>
-          <td colSpan={9}> Não existem dados para mostrar</td>
-        </tr>
-      );
-    }
-    if (name.length !== 0) {
-      return name.map((item, index) => {
-        return (
-          <tr key={index}>
-            <td>{item.tin}</td>
-            <td>{item.name}</td>
-            <td>{item.telephone}</td>
-            <td>{item.street}</td>
-            <td>
-              {item.postal_code} {item.locality}, {item.country}
-            </td>
-            <td>{item.email}</td>
-            <td>{item.state}</td>
-            <td>
-              <AiFillEdit
-                size="25"
-                onClick={() => handleShowEdit(item)}
-                color="#AAAA74"
-              />
-              {showModalEdit ? modalEdit() : false}
-            </td>
-            <td>
-              <AiFillDelete
-                size="25"
-                onClick={() => handleShowDelete(item)}
-                color="#444903"
-              />
-              {showModalDelete ? modalDelete() : false}
-            </td>
-          </tr>
-        );
-      });
-    }
-    if (tin.length !== 0) {
-      return tin.map((item, index) => {
-        return (
-          <tr key={index}>
-            <td>{item.tin}</td>
-            <td>{item.name}</td>
-            <td>{item.telephone}</td>
-            <td>{item.street}</td>
-            <td>
-              {item.postal_code} {item.locality}, {item.country}
-            </td>
-            <td>{item.email}</td>
-            <td>{item.state}</td>
-            <td>
-              <AiFillEdit
-                size="25"
-                onClick={() => handleShowEdit(item)}
-                color="#AAAA74"
-              />
-              {showModalEdit ? modalEdit() : false}
-            </td>
-            <td>
-              <AiFillDelete
-                size="25"
-                onClick={() => handleShowDelete(item)}
-                color="#444903"
-              />
-              {showModalDelete ? modalDelete() : false}
-            </td>
-          </tr>
-        );
-      });
-    }} 
-  };
+	const search = () => {
+		if (client !== undefined) {
+			const name = Object.values(client).filter((a) => a.name.toLowerCase().includes(searchTerm.toLowerCase()));
+			const tin = Object.values(client)
+				/* .filter((a) => a.tin === parseInt(searchTerm)) */
+				.map((a) => a);
 
- /*  const checkPermissions = () => {
+			if (name.length === 0 && tin.length === 0) {
+				return (
+					<tr style={{ marginTop: 20 }}>
+						<td colSpan={9}> Não existem dados para mostrar</td>
+					</tr>
+				);
+			}
+			if (name.length !== 0) {
+				return name.map((item, index) => {
+					return (
+						<tr key={index}>
+							<td>{item.name}</td>
+							<td>{item.tin}</td>
+							<td>{item.birthday}</td>
+							<td>{item.address}</td>
+							<td>{item.postal_code}</td>
+							<td> {item.location}</td>
+							<td>{item.telephone}</td>
+							<td>{item.email}</td>
+							<td>{item.state}</td>
+							<td>
+								<AiFillEdit size="25" onClick={() => handleShowEdit(item)} color="#AAAA74" />
+								{showModalEdit ? modalEdit() : false}
+							</td>
+							<td>
+								<AiFillDelete size="25" onClick={() => handleShowDelete(item)} color="#444903" />
+								{showModalDelete ? modalDelete() : false}
+							</td>
+						</tr>
+					);
+				});
+			}
+			if (tin.length !== 0) {
+				return tin.map((item, index) => {
+					return (
+						<tr key={index}>
+							<td>{item.name}</td>
+							<td>{item.tin}</td>
+							<td>{item.birthday}</td>
+							<td>{item.address}</td>
+							<td>{item.postal_code}</td>
+							<td> {item.location}</td>
+							<td>{item.telephone}</td>
+							<td>{item.email}</td>
+							<td>{item.state}</td>
+							<td>
+								<AiFillEdit size="25" onClick={() => handleShowEdit(item)} color="#AAAA74" />
+								{showModalEdit ? modalEdit() : false}
+							</td>
+							<td>
+								<AiFillDelete size="25" onClick={() => handleShowDelete(item)} color="#444903" />
+								{showModalDelete ? modalDelete() : false}
+							</td>
+						</tr>
+					);
+				});
+			}
+		}
+	};
+
+	/*  const checkPermissions = () => {
     if ((isLogged === false || type !== "admin") && isLoading === true) {
       return <Redirect to="/nopermissions" />;
     }
   } */
 
-  const load = () => {
-    if (isLoading === false) {
-      return (
-        <Spinner
-          animation="border"
-          variant="success"
-          style={{
-            marginTop: 25,
-            marginBottom: 108,
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-          }}
-        />
-      );
-    }
-  };
+	const load = () => {
+		if (isLoading === false) {
+			return (
+				<Spinner
+					animation="border"
+					variant="success"
+					style={{
+						marginTop: 25,
+						marginBottom: 108,
+						alignItems: 'center',
+						justifyContent: 'center',
+						display: 'flex',
+					}}
+				/>
+			);
+		}
+	};
 
-  return ( <>
-  <div>
-  {showToastEdit && (
-    <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-      <Row id="row">
-        <Col sm={4} />
-        <Col sm={4}>
-          <Toast
-            onClose={() => setShowToastEdit(false)}
-            show={showToastEdit}
-            delay={3000}
-            autohide
-            style={{ marginTop: 20 }}
-          >
-            <Toast.Header style={{ backgroundColor: "#AAAA74" }}>
-              <strong className="me-auto" style={{ color: "#444903" }}>
-                Alerta, Cliente Editado!
-              </strong>
-            </Toast.Header>
-            <Toast.Body>Cliente editado com sucesso!</Toast.Body>
-          </Toast>
-        </Col>
-        <Col sm={4} />
-      </Row>
-    </Tab.Container>
-  )}
-  {showToastDelete && (
-    <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-      <Row id="row">
-        <Col sm={4} />
-        <Col sm={4}>
-          <Toast
-            onClose={() => setShowToastDelete(false)}
-            show={showToastDelete}
-            delay={3000}
-            autohide
-          >
-            <Toast.Header style={{ backgroundColor: "#AAAA74" }}>
-              <strong className="me-auto" style={{ color: "#444903" }}>
-                Alerta, Cliente Eliminado!
-              </strong>
-            </Toast.Header>
-            <Toast.Body>Cliente eliminado com sucesso!</Toast.Body>
-          </Toast>
-        </Col>
-        <Col sm={4} />
-      </Row>
-    </Tab.Container>
-  )}
-  <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-  <Row id="row"> 
-  <Col sm={1} />
-            <Col sm={5} style={{ marginTop: 35 }}>
-              <h1 style={{ color:'#8A3535', fontFamily:'Artifika' }}>Clientes</h1>
-            </Col>
-            <Col sm={2} />
-            <Col sm={3} style={{ marginTop: 35 }}>
-            <Form className="mr-auto">
-                <InputGroup className="mb-2">
-                    <FormControl type="text" placeholder="Pesquisar" />
-                    <InputGroup.Append>
-                        <InputGroup.Text style={{ backgroundColor: '#9b3939', color: 'white' }}>
-                            <AiOutlineSearch />
-                        </InputGroup.Text>
-                    </InputGroup.Append>
-                </InputGroup>
-            </Form>
-      </Col>
-      <Col sm={1} />
-    </Row>
-  </Tab.Container>
-  <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-    <Row id="row" style={{ marginBottom: 80 }}>
-      <Col sm={1} />
-      <Col sm={10}>
-      <Card
-                style={{
-                  color: "#9B3939",
-                  fontFamily: "artifika",
-                  marginTop: 40,
-                }}
-              >
-        <Table
-            style={{
-              color: "black",
-              fontFamily: "artifika",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-        }}
-        >
-          <thead style={{ width: 10 }}>
-            <tr>
-              <th>Nome</th>
-              <th>Nif</th>
-              <th>Data de Nascimento</th>
-              <th>Morada</th>
-              <th>Código-Postal</th>
-              <th>Localidade</th>
-              <th>Telemóvel</th>
-              <th>Email</th>
-              <th>Estado</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {(client === undefined || client === null) && (
-              <tr>
-                <td colSpan={9}>Não existem clientes para mostrar</td>
-              </tr>
-            )}
-            {(searchTerm === "" &&  (client !== undefined || client !== null))
-              ? client?.map((item: ClientList) => {
-                  return (
-                    <tr>
-                      <td>{item.tin}</td>
-                      <td>{item.name}</td>
-                      <td>{item.telephone}</td>
-                      <td>{item.street}</td>
-                      <td>
-                        {item.postal_code} {item.locality}, {item.country}
-                      </td>
-                      <td>{item.email}</td>
-                      <td>{item.state}</td>
-                      <td>
-                        <AiFillEdit
-                          size="25"
-                          onClick={() => handleShowEdit(item)}
-                          color="#9B3939"
-                        />
-                        {showModalEdit ? modalEdit() : false}
-                      </td>
-                      <td>
-                        <AiFillDelete
-                          size="25"
-                          onClick={() => handleShowDelete(item)}
-                          color="#9B3939"
-                        />
-                        {showModalDelete ? modalDelete() : false}
-                      </td>
-                    </tr>
-                  );
-                })
-              : search()}
-          </tbody>
-        </Table>
-        </Card>
-      </Col>
-      <Col sm={1} />
-    </Row>
-  </Tab.Container>
-  </div> 
-  </>
-  )
+	return (
+		<>
+			<div>
+				{showToastEdit && (
+					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+						<Row id="row">
+							<Col sm={4} />
+							<Col sm={4}>
+								<Toast
+									onClose={() => setShowToastEdit(false)}
+									show={showToastEdit}
+									delay={3000}
+									autohide
+									style={{ marginTop: 20 }}
+								>
+									<Toast.Header style={{ backgroundColor: '#AAAA74' }}>
+										<strong className="me-auto" style={{ color: '#444903' }}>
+											Atenção! Cliente Editado!
+										</strong>
+									</Toast.Header>
+									<Toast.Body>Cliente editado com sucesso!</Toast.Body>
+								</Toast>
+							</Col>
+							<Col sm={4} />
+						</Row>
+					</Tab.Container>
+				)}
+				{showToastDelete && (
+					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+						<Row id="row">
+							<Col sm={4} />
+							<Col sm={4}>
+								<Toast
+									onClose={() => setShowToastDelete(false)}
+									show={showToastDelete}
+									delay={3000}
+									autohide
+								>
+									<Toast.Header style={{ backgroundColor: '#AAAA74' }}>
+										<strong className="me-auto" style={{ color: '#444903' }}>
+											Atenção! Cliente Eliminado!
+										</strong>
+									</Toast.Header>
+									<Toast.Body>Cliente eliminado com sucesso!</Toast.Body>
+								</Toast>
+							</Col>
+							<Col sm={4} />
+						</Row>
+					</Tab.Container>
+				)}
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row">
+						<Col sm={1} />
+						<Col sm={5} style={{ marginTop: 35 }}>
+							<h1 style={{ color: '#8A3535', fontFamily: 'Artifika' }}>Clientes</h1>
+						</Col>
+						<Col sm={2} />
+						<Col sm={3} style={{ marginTop: 35 }}>
+							<Form className="mr-auto">
+								<InputGroup className="mb-2">
+									<FormControl type="text" placeholder="Pesquisar" />
+									<InputGroup.Append>
+										<InputGroup.Text style={{ backgroundColor: '#9b3939', color: 'white' }}>
+											<AiOutlineSearch />
+										</InputGroup.Text>
+									</InputGroup.Append>
+								</InputGroup>
+							</Form>
+						</Col>
+						<Col sm={1} />
+					</Row>
+				</Tab.Container>
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row" style={{ marginBottom: 80 }}>
+						<Col sm={1} />
+						<Col sm={10}>
+							<Card
+								style={{
+									color: '#9B3939',
+									fontFamily: 'artifika',
+									marginTop: 40,
+								}}
+							>
+								<Table
+									style={{
+										color: 'black',
+										fontFamily: 'artifika',
+										alignItems: 'center',
+										justifyContent: 'center',
+										textAlign: 'center',
+									}}
+								>
+									<thead style={{ width: 10 }}>
+										<tr>
+											<th>Nome</th>
+											<th>Nif</th>
+											<th>Data de Nascimento</th>
+											<th>Morada</th>
+											<th>Código-Postal</th>
+											<th>Telemóvel</th>
+											<th>Email</th>
+											<th>Estado</th>
+											<th></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										{(client === undefined || client === null) && (
+											<tr>
+												<td colSpan={9}>Não existem clientes para mostrar</td>
+											</tr>
+										)}
+										{searchTerm === '' && (client !== undefined || client !== null)
+											? client?.map((item: Client) => {
+													return (
+														//trocar a ordem para aparecer na tabela direito
+														<tr>
+															<td>{item.name}</td>
+															<td>{item.tin}</td>
+															<td>{item.birthday}</td>
+															<td>{item.address}</td>
+															<td>
+																{item.postal_code} {item.location}
+															</td>
+															{/* <td> {item.location}</td> */}
+															<td>{item.telephone}</td>
+															<td>{item.email}</td>
+															<td>{item.state}</td>
+															<td>
+																<AiFillEdit
+																	size="25"
+																	onClick={() => handleShowEdit(item)}
+																	color="#9B3939"
+																/>
+																{showModalEdit ? modalEdit() : false}
+															</td>
+															<td>
+																<AiFillDelete
+																	size="25"
+																	onClick={() => handleShowDelete(item)}
+																	color="#9B3939"
+																/>
+																{showModalDelete ? modalDelete() : false}
+															</td>
+														</tr>
+													);
+											  })
+											: search()}
+									</tbody>
+								</Table>
+							</Card>
+						</Col>
+						<Col sm={1} />
+					</Row>
+				</Tab.Container>
+			</div>
+		</>
+	);
 };
-
-
 
 /* class ClientList extends React.Component {
   constructor(props) {
@@ -493,7 +510,7 @@ export const ClientList: React.FC = () => {
     };
   } */
 
- /*  async componentDidMount() {
+/*  async componentDidMount() {
     console.log("Mounting the screen Table Client...");
     try {
       let token = await localStorage.getItem("token");
@@ -534,7 +551,7 @@ export const ClientList: React.FC = () => {
     }
   } */
 
-  /* handleCloseEdit = () => {
+/* handleCloseEdit = () => {
     this.setState({ showModalEdit: false });
   };
 
@@ -831,7 +848,7 @@ export const ClientList: React.FC = () => {
     }
   }; */
 
-  /* render() {
+/* render() {
     const {
       client,
       searchTerm,

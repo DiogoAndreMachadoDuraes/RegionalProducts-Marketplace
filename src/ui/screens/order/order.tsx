@@ -7,83 +7,84 @@ import Table from 'react-bootstrap/Table';
 import { useHistory } from 'react-router';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { AiOutlineStar, AiOutlineRight } from "react-icons/ai";
+import { AiOutlineStar, AiOutlineRight } from 'react-icons/ai';
 import { Card } from 'react-bootstrap';
 
 interface OrderList {
-	_id: {$oid: string},
-	country_client: string,
-	date: string,
-	doc_invoice: string,
-	hour: string,
-	id_client:string,
-	locality_client: string,
-	name_client: string,
-	postal_code_client: string,
-	price: string,
-	quantity: string,
-	street_client: string,
-	tax: string,
-	tin_client: string,
-	vat: string,
-	rate: string,
-	products: string,
+	_id: { $oid: string };
+	country_client: string;
+	date: string;
+	doc_invoice: string;
+	hour: string;
+	id_client: string;
+	locality_client: string;
+	name_client: string;
+	postal_code_client: string;
+	price: string;
+	quantity: string;
+	street_client: string;
+	tax: string;
+	tin_client: string;
+	vat: string;
+	rate: string;
+	products: string;
 }
 
 export const Order: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 
 	const history = useHistory();
-	
+
 	const [shops, setShops] = useState<OrderList[]>();
-	const [id_shop, setId_shop ] = useState('');
-	const [country_client, setCountry_client ] = useState('');
-	const [date, setDate ] = useState('');
-	const [doc_invoice , setDoc_invoice ] = useState('');
-	const [hour, setHour ] = useState('');
-	const [id_client, setId_client ] = useState('');
-	const [locality_client, setLocality_client ] = useState('');
-	const [name_client, setName_client ] = useState('');
-	const [postal_code_client, setPostal_code_client ] = useState('');
-	const [price, setPrice ] = useState('');
-	const [quantity, setQuantity ] = useState('');
-	const [street_client, setStreet_client ] = useState('');
-	const [tax, setTax ] = useState('');
+	const [id_shop, setId_shop] = useState('');
+	const [country_client, setCountry_client] = useState('');
+	const [date, setDate] = useState('');
+	const [doc_invoice, setDoc_invoice] = useState('');
+	const [hour, setHour] = useState('');
+	const [id_client, setId_client] = useState('');
+	const [locality_client, setLocality_client] = useState('');
+	const [name_client, setName_client] = useState('');
+	const [postal_code_client, setPostal_code_client] = useState('');
+	const [price, setPrice] = useState('');
+	const [quantity, setQuantity] = useState('');
+	const [street_client, setStreet_client] = useState('');
+	const [tax, setTax] = useState('');
 	const [tin_client, setTin_client] = useState('');
 	const [vat, setVat] = useState('');
-	const [rate, setRate ] = useState('');
-	const [products, setProducts ] = useState('');
+	const [rate, setRate] = useState('');
+	const [products, setProducts] = useState('');
 
+	const handlegotoinvoice = (shops: OrderList) => {
+		setId_shop(shops._id.$oid);
+		setCountry_client(shops.country_client);
+		setDate(shops.date);
+		setDoc_invoice(shops.doc_invoice);
+		setHour(shops.hour);
+		setId_client(shops.id_client);
+		setLocality_client(shops.locality_client);
+		setName_client(shops.name_client);
+		setPostal_code_client(shops.postal_code_client);
+		setPrice(shops.price);
+		setQuantity(shops.quantity);
+		setStreet_client(shops.street_client);
+		setTax(shops.tax);
+		setTin_client(shops.tin_client);
+		setVat(shops.vat);
+		setRate(shops.rate);
+		setProducts(shops.products);
+		history.push('/invoice');
+	};
 
-	const handlegotoinvoice = (shops : OrderList) => {
-		setId_shop (shops._id.$oid)
-		setCountry_client (shops.country_client)
-		setDate (shops.date)
-		setDoc_invoice (shops.doc_invoice)
-		setHour (shops.hour)
-		setId_client (shops.id_client)
-		setLocality_client (shops.locality_client)
-		setName_client (shops.name_client)
-		setPostal_code_client (shops.postal_code_client)
-		setPrice (shops.price)
-		setQuantity (shops.quantity)
-		setStreet_client (shops.street_client)
-		setTax (shops.tax)
-		setTin_client (shops.tin_client)
-		setVat (shops.vat)
-		setRate (shops.rate)
-		setProducts (shops.products)
-		history.push('/invoice');		
-	}
-
-
-	return ( 
-	<>
-		<div>
+	return (
+		<>
 			<div>
 				<div>
-					<Breadcrumb style={{ marginTop: 20, marginLeft: 28, fontFamily: "artifika", color: "#9B3939" }} id="breadcrumb">
-						{/* <Col md={2}>
+					<div>
+						<Breadcrumb
+							style={{ marginTop: 20, marginLeft: 28, fontFamily: 'artifika', color: '#9B3939' }}
+							id="breadcrumb"
+						>
+							{/* <Col md={2}>
 							<NavDropdown.Item href="/client" class="menulateral" eventKey="4.1">
 								A minha Conta
 							</NavDropdown.Item>
@@ -96,86 +97,90 @@ export const Order: React.FC = () => {
 								Os meus Favoritos
 							</NavDropdown.Item>
 						</Col> */}
-						<Col md={1}></Col>
-						<Col md={9}>
-						<Breadcrumb
-           /*  width="300"
+							<Col md={1}></Col>
+							<Col md={9}>
+								<Breadcrumb
+									/*  width="300"
             height="300" */
-            style={{ marginTop: 20/* , boxShadow:'rgba(117,0,0,0.5)' */ }}
-            id="breadcrumb"
-          >
+									style={{ marginTop: 20 /* , boxShadow:'rgba(117,0,0,0.5)' */ }}
+									id="breadcrumb"
+								>
+									<Card style={{ backgroundColor: '#9B3939' /* boxShadow:'rgba(117,0,0,0.4)' */ }}>
+										<Breadcrumb.Item style={{ fontFamily: 'artifika' }} href="/home">
+											Home
+										</Breadcrumb.Item>
+									</Card>
+									<Spacer width="12px" />
+									<div style={{ color: '#9B3939' }}>
+										<AiOutlineRight />
+									</div>
+									<Spacer width="12px" />
+									<Breadcrumb.Item active style={{ color: '#9B3939', fontFamily: 'artifika' }}>
+										Encomendas
+									</Breadcrumb.Item>
+								</Breadcrumb>
+								<br />
 
-            <Card style={{backgroundColor: "#9B3939", /* boxShadow:'rgba(117,0,0,0.4)' */}}>
-              <Breadcrumb.Item style={{fontFamily: "artifika" }} href="/home">Home</Breadcrumb.Item>
-            </Card>
-            <Spacer width='12px'/>
-            <div style={{color: "#9B3939"}}><AiOutlineRight /></div>
-            <Spacer width='12px'/>
-            <Breadcrumb.Item active style={{ color: "#9B3939", fontFamily: "artifika" }}>
-			 Encomendas
-            </Breadcrumb.Item>
-          </Breadcrumb>
-		  <br />
-       
-          <h1 style={{fontFamily: "artifika", color: "#9B3939" }} /* class="text-left" */> As Minhas Encomendas </h1>
-          <br />
-							<Spacer height='12px'/>
-							<div>
-								<Table hover responsive="sm">
-									<thead>
-										<tr>
-											<th>Encomenda #</th>
-											<th>Data</th>
-											<th>Total da encomenda</th>
-											<th>Morada</th>
-											<th>Ação</th>
-											<th></th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										{shops?.length === 0 && (
+								<h1 style={{ fontFamily: 'artifika', color: '#9B3939' }} /* class="text-left" */>
+									{' '}
+									As Minhas Encomendas{' '}
+								</h1>
+								<br />
+								<Spacer height="12px" />
+								<div>
+									<Table hover responsive="sm">
+										<thead>
 											<tr>
-												<td colSpan={9}>Não existem dados para mostrar</td>
+												<th>Encomenda #</th>
+												<th>Data</th>
+												<th>Total da encomenda</th>
+												<th>Morada</th>
+												<th>Ação</th>
+												<th></th>
+												<th></th>
 											</tr>
-										)}
-										{shops?.length !== 0 &&
-											shops?.map((item) => {
-												return (
-													<tr>
-														<td>{item._id.$oid}</td> 
-														<td>{item.date}</td>
-														<td>{item.price} €</td>
-														<td>{item.street_client}</td>
-														<td>
-															<a
-																href="/invoice"
-																style={{
-																	color: '#444903',
-																	fontWeight: 'bold',
-																}}
-															>
-																Ver Fatura
-															</a>
-														</td>
-													</tr>
-												);
-											})}
-									</tbody>
-								</Table>
-							</div>
-						</Col>
+										</thead>
+										<tbody>
+											{shops?.length === 0 && (
+												<tr>
+													<td colSpan={9}>Não existem dados para mostrar</td>
+												</tr>
+											)}
+											{shops?.length !== 0 &&
+												shops?.map((item) => {
+													return (
+														<tr>
+															<td>{item._id.$oid}</td>
+															<td>{item.date}</td>
+															<td>{item.price} €</td>
+															<td>{item.street_client}</td>
+															<td>
+																<a
+																	href="/invoice"
+																	style={{
+																		color: '#444903',
+																		fontWeight: 'bold',
+																	}}
+																>
+																	Ver Fatura
+																</a>
+															</td>
+														</tr>
+													);
+												})}
+										</tbody>
+									</Table>
+								</div>
+							</Col>
 
-						<br />
-					</Breadcrumb>
+							<br />
+						</Breadcrumb>
+					</div>
 				</div>
 			</div>
-		</div>
-	</>
-   
-   )
-
-};	
+		</>
+	);
+};
 /* class Order extends React.Component {
 	constructor(props) {
 		super(props);

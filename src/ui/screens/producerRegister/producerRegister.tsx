@@ -1,40 +1,39 @@
-import React, {useState} from "react";
-import axios from "axios";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Form from "react-bootstrap/Form";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Container from "react-bootstrap/Container";
-import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
-import { AiOutlineUser, AiTwotoneLock } from "react-icons/ai";
-import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
+import React, { useState } from 'react';
+import axios from 'axios';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Form from 'react-bootstrap/Form';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
+import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
 
 interface ProducerRegisterList {
-  _id: {$oid: string},
-  email: string,
-  password: string,
-  country: string,
-  locality: string,
-  name: string,
-  postal_code: string,
-  state: string,
-  street: string,
-  telephone: string,
-  tin: string,
-  logo: string,
-  social: string,
+	_id: { $oid: string };
+	email: string;
+	password: string;
+	country: string;
+	locality: string;
+	name: string;
+	postal_code: string;
+	state: string;
+	street: string;
+	telephone: string;
+	tin: string;
+	logo: string;
+	social: string;
 }
 
-
 export const ProducerRegister: React.FC = () => {
-	const Spacer = require('react-spacer')
+	const Spacer = require('react-spacer');
 
-  const [showModal, setShowModal] = useState(false);
-  const [producerRegister, setProducerRegister] = useState<ProducerRegisterList[]>();
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [showPass, setShowPass] = useState(false);
-  const [email, setEmail] = useState('');
+	const [showModal, setShowModal] = useState(false);
+	const [producerRegister, setProducerRegister] = useState<ProducerRegisterList[]>();
+	const [isPasswordShown, setIsPasswordShown] = useState(false);
+	const [showPass, setShowPass] = useState(false);
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [birthday, setBirthday] = useState('');
 	const [country, setCountry] = useState('');
@@ -45,328 +44,311 @@ export const ProducerRegister: React.FC = () => {
 	const [street, setStreet] = useState('');
 	const [telephone, setTelephone] = useState('');
 	const [tin, setTin] = useState('');
-  const [social, setSocial] = useState('');
-  const [logo, setLogo] = useState('');
+	const [social, setSocial] = useState('');
+	const [logo, setLogo] = useState('');
 
-  const togglePasswordVisiblity = () => {
-    setIsPasswordShown( !isPasswordShown );
-  };
-  
-  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-  
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword( e.target.value);
-  };
+	const togglePasswordVisiblity = () => {
+		setIsPasswordShown(!isPasswordShown);
+	};
 
-  const handleSocial = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSocial(e.target.value);
-    };
+	const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setEmail(e.target.value);
+	};
 
-  const handleCountry = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCountry(e.target.value);
-  };
+	const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPassword(e.target.value);
+	};
 
-  const handleLocality = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocality(e.target.value);
-  };
+	const handleSocial = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSocial(e.target.value);
+	};
 
-  const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
+	const handleCountry = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setCountry(e.target.value);
+	};
 
-  const handlePostal_code = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPostal_Code(e.target.value);
-  };
-  
-  const handleStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStreet(e.target.value);
-  };
-    
-  const handleTelephone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTelephone(e.target.value);
-  };
-  
-  const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setLogo(e.target.value);
-    };
-  
-  const handleTin = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTin(e.target.value );
-  };
+	const handleLocality = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setLocality(e.target.value);
+	};
 
-  const  handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.preventDefault();
-  
-      axios
-        .post("http://127.0.0.1:5000/producerregister", {
-          email: email,
-          password: password,
-          social: social,
-          country: country,
-          locality: locality,
-          name: name,
-          postal_code: postal_code,
-          state: state,
-          street: street,
-          telephone:telephone,
-          logo: logo,
-          tin: tin,
-        })
-        .then((res) => {
-          console.log(res);
-          console.log(res.data);
-        });
-    };
-  
+	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setName(e.target.value);
+	};
 
-return (
-  <>
-        <Container>
-        <br />
-        <br />
-        <br />
-        <Row className="justify-content-md-center">
-          <Col xs lg="5">
-            <h3>Criar Nova Conta Produtor</h3>
-          </Col>
-        </Row>
+	const handlePostal_code = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPostal_Code(e.target.value);
+	};
 
-        <br />
-        <Row>
-          <Col md={4}>
-            <h5>
-              <AiOutlineUser size="20" color="#000000" />
-              Informação Pessoal
-            </h5>
-          </Col>
-        </Row>
-        {/* <form onSubmit={handleSubmit}> */}
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Nome Completo </Form.Label>
-              <Form.Control
-                placeholder="Nome Completo"
-                required
-                onChange={handleName}
-              />
-            </Col>
+	const handleStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setStreet(e.target.value);
+	};
 
-            <Col>
-              <Form.Label>País </Form.Label>
-              <Form.Control as="select" required onChange={handleCountry}>
-                <option>País</option>
-                <option>Portugal</option>
-                <option>Espanha</option>
-              </Form.Control>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Rua </Form.Label>
-              <Form.Control
-                placeholder="Rua"
-                required
-                onChange={handleStreet}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Código Postal </Form.Label>
-              <Form.Control
-                id="postal_code"
-                type="number"
-                placeholder="Código Postal"
-                required
-                onChange={handlePostal_code}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Contacto </Form.Label>
-              <Form.Control
-                id="telephone"
-                type="number"
-                placeholder="Contacto"
-                required
-                onChange={handleTelephone}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Localidade </Form.Label>
-              <Form.Control
-                placeholder="Localidade"
-                required
-                onChange={handleLocality}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}>
-              <Form.Label>Número de Contribuinte </Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Número de Contribuinte"
-                required
-                onChange={handleTin}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Rede Social </Form.Label>
-              <Form.Control
-                placeholder="Rede Social"
-                onChange={handleSocial}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}>
-              <Form.Label> Comprovativo das finanças </Form.Label>
-              <Form>
-                <Form.File
-                  id="custom-file-translate-html"
-                  label="Escolher ficheiro"
-                  data-browse="Procurar"
-                  custom
-                />
-              </Form>
-            </Col>
-            <Col>
-              <Form.Group>
-                <Form.File
-                  /* onChange={selectFoto} */
-                  id="exampleFormControlFile1"
-                  label="Inserir logotipo"
-                  /* onChange={handleLogo} */
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={4}>
-              <h5>
-                <AiTwotoneLock size="20" color="#000000" />
-                Informação de Login
-              </h5>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}>
-              <Form.Label>Email </Form.Label>
-              <Form.Control placeholder="Email" />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Palavra-Passe </Form.Label>
-              <Form.Control
-                placeholder="Palavra-Passe"
-                onChange={handlePassword}
-                name="password"
-                type={isPasswordShown ? "text" : "password"}
-                style={{ color: "black", opacity: 1 }}
-              />
-              <InputGroup.Append>
-                <InputGroup.Text id="inputGroupAppend">
-                  {isPasswordShown ? (
-                    <BsFillEyeFill
-                      onClick={togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  ) : (
-                    <BsFillEyeSlashFill
-                      onClick={togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  )}
-                </InputGroup.Text>
-              </InputGroup.Append>
-            </Col>
-            <Col>
-              <Form.Label>Confirmar Palavra-Passe</Form.Label>
-              <Form.Control
-                placeholder="Confirmar Palavra-Passe"
-                onChange={handlePassword}
-                name="password"
-                type={isPasswordShown ? "text" : "password"}
-                style={{ color: "black", opacity: 1 }}
-              />
-              <InputGroup.Append>
-                <InputGroup.Text id="inputGroupAppend">
-                  {isPasswordShown ? (
-                    <BsFillEyeFill
-                      onClick={togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  ) : (
-                    <BsFillEyeSlashFill
-                      onClick={togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  )}
-                </InputGroup.Text>
-              </InputGroup.Append>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}>
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check
-                  type="checkbox"
-                  required
-                  label="Aceito os Termos e Condições / Politica de Privacidade"
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={2}>
-              <Button
-                variant="dark"
-                type="submit"
-                style={{
-                  color: "white",
-                  backgroundColor: "#AAAA74",
-                }}
-              >
-                Criar Conta
-              </Button>
-            </Col>
+	const handleTelephone = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setTelephone(e.target.value);
+	};
 
-            <Col md={2}>
-              <Button
-                variant="dark"
-                href="/register"
-                style={{
-                  color: "white",
-                  backgroundColor: "#8E8E8E",
-                }}
-              >
-                Voltar
-              </Button>
-            </Col>
-          </Row>
-     {/*    </form> */}
-        <br />
-      </Container>
-  </>
-)
+	const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setLogo(e.target.value);
+	};
+
+	const handleTin = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setTin(e.target.value);
+	};
+
+	const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault();
+
+		axios
+			.post('http://127.0.0.1:5000/producerregister', {
+				email: email,
+				password: password,
+				social: social,
+				country: country,
+				locality: locality,
+				name: name,
+				postal_code: postal_code,
+				state: state,
+				street: street,
+				telephone: telephone,
+				logo: logo,
+				tin: tin,
+			})
+			.then((res) => {
+				console.log(res);
+				console.log(res.data);
+			});
+	};
+
+	return (
+		<>
+			<Container>
+				<br />
+				<br />
+				<br />
+				<Row className="justify-content-md-center">
+					<Col xs lg="5">
+						<h3>Criar Nova Conta Produtor</h3>
+					</Col>
+				</Row>
+
+				<br />
+				<Row>
+					<Col md={4}>
+						<h5>
+							<AiOutlineUser size="20" color="#000000" />
+							Informação Pessoal
+						</h5>
+					</Col>
+				</Row>
+				{/* <form onSubmit={handleSubmit}> */}
+				<br />
+				<Row>
+					<Col>
+						<Form.Label>Nome Completo </Form.Label>
+						<Form.Control placeholder="Nome Completo" required onChange={handleName} />
+					</Col>
+
+					<Col>
+						<Form.Label>País </Form.Label>
+						<Form.Control as="select" required onChange={handleCountry}>
+							<option>País</option>
+							<option>Portugal</option>
+							<option>Espanha</option>
+						</Form.Control>
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col>
+						<Form.Label>Rua </Form.Label>
+						<Form.Control placeholder="Rua" required onChange={handleStreet} />
+					</Col>
+					<Col>
+						<Form.Label>Código Postal </Form.Label>
+						<Form.Control
+							id="postal_code"
+							type="number"
+							placeholder="Código Postal"
+							required
+							onChange={handlePostal_code}
+						/>
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col>
+						<Form.Label>Contacto </Form.Label>
+						<Form.Control
+							id="telephone"
+							type="number"
+							placeholder="Contacto"
+							required
+							onChange={handleTelephone}
+						/>
+					</Col>
+					<Col>
+						<Form.Label>Localidade </Form.Label>
+						<Form.Control placeholder="Localidade" required onChange={handleLocality} />
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={6}>
+						<Form.Label>Número de Contribuinte </Form.Label>
+						<Form.Control
+							type="number"
+							placeholder="Número de Contribuinte"
+							required
+							onChange={handleTin}
+						/>
+					</Col>
+					<Col>
+						<Form.Label>Rede Social </Form.Label>
+						<Form.Control placeholder="Rede Social" onChange={handleSocial} />
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={6}>
+						<Form.Label> Comprovativo das finanças </Form.Label>
+						<Form>
+							<Form.File
+								id="custom-file-translate-html"
+								label="Escolher ficheiro"
+								data-browse="Procurar"
+								custom
+							/>
+						</Form>
+					</Col>
+					<Col>
+						<Form.Group>
+							<Form.File
+								/* onChange={selectFoto} */
+								id="exampleFormControlFile1"
+								label="Inserir logotipo"
+								/* onChange={handleLogo} */
+							/>
+						</Form.Group>
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={4}>
+						<h5>
+							<AiTwotoneLock size="20" color="#000000" />
+							Informação de Login
+						</h5>
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={6}>
+						<Form.Label>Email </Form.Label>
+						<Form.Control placeholder="Email" />
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col>
+						<Form.Label>Palavra-Passe </Form.Label>
+						<Form.Control
+							placeholder="Palavra-Passe"
+							onChange={handlePassword}
+							name="password"
+							type={isPasswordShown ? 'text' : 'password'}
+							style={{ color: 'black', opacity: 1 }}
+						/>
+						<InputGroup.Append>
+							<InputGroup.Text id="inputGroupAppend">
+								{isPasswordShown ? (
+									<BsFillEyeFill
+										onClick={togglePasswordVisiblity}
+										size="20"
+										style={{ color: 'black' }}
+									/>
+								) : (
+									<BsFillEyeSlashFill
+										onClick={togglePasswordVisiblity}
+										size="20"
+										style={{ color: 'black' }}
+									/>
+								)}
+							</InputGroup.Text>
+						</InputGroup.Append>
+					</Col>
+					<Col>
+						<Form.Label>Confirmar Palavra-Passe</Form.Label>
+						<Form.Control
+							placeholder="Confirmar Palavra-Passe"
+							onChange={handlePassword}
+							name="password"
+							type={isPasswordShown ? 'text' : 'password'}
+							style={{ color: 'black', opacity: 1 }}
+						/>
+						<InputGroup.Append>
+							<InputGroup.Text id="inputGroupAppend">
+								{isPasswordShown ? (
+									<BsFillEyeFill
+										onClick={togglePasswordVisiblity}
+										size="20"
+										style={{ color: 'black' }}
+									/>
+								) : (
+									<BsFillEyeSlashFill
+										onClick={togglePasswordVisiblity}
+										size="20"
+										style={{ color: 'black' }}
+									/>
+								)}
+							</InputGroup.Text>
+						</InputGroup.Append>
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={6}>
+						<Form.Group controlId="formBasicCheckbox">
+							<Form.Check
+								type="checkbox"
+								required
+								label="Aceito os Termos e Condições / Politica de Privacidade"
+							/>
+						</Form.Group>
+					</Col>
+				</Row>
+				<Row>
+					<Col md={2}>
+						<Button
+							variant="dark"
+							type="submit"
+							style={{
+								color: 'white',
+								backgroundColor: '#AAAA74',
+							}}
+						>
+							Criar Conta
+						</Button>
+					</Col>
+
+					<Col md={2}>
+						<Button
+							variant="dark"
+							href="/register"
+							style={{
+								color: 'white',
+								backgroundColor: '#8E8E8E',
+							}}
+						>
+							Voltar
+						</Button>
+					</Col>
+				</Row>
+				{/*    </form> */}
+				<br />
+			</Container>
+		</>
+	);
 };
-
 
 /* class ProducerRegister extends React.Component {
   constructor(props) {
@@ -583,7 +565,7 @@ return (
                   onChange={this.selectFoto}
                   id="exampleFormControlFile1"
                   label="Inserir logotipo"
- */                  //onChange={this.handleLogo}
+ */ //onChange={this.handleLogo}
 /*                 />
               </Form.Group>
             </Col>
