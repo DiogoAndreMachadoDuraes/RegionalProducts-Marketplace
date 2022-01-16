@@ -28,3 +28,4 @@ export * from './productListProducer';
 export * from './register';
 export * from './ship';
 export * from './termsConditions';
+export * from './login';

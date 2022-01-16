@@ -9,7 +9,6 @@ import {
 	AboutUs,
 	Footer,
 	Login,
-	ResetPassword,
 	Thanks,
 	ClientProfile,
 	NotFoundPage,
@@ -55,7 +54,6 @@ export const App: React.FC = () => {
 							<Route exact path="/about" component={AboutUs} />
 							<Route exact path="/login" component={Login} />
 							<Route exact path="/thanks" component={Thanks} />
-							<Route exact path="/resetPassword" component={ResetPassword} />
 							<Route exact path="/profile" component={ClientProfile} />
 							<Route exact path="/noPermissions" component={NoPermissions} />
 							<Route exact path="/termsConditions" component={TermsConditions} />

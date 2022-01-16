@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React /* , { useState } */ from 'react';
 import { Nav, Button, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { Login } from 'ui';
+/* import { LoginModal } from 'ui'; */
 
 export const HeaderTopWithoutSession: React.FC = () => {
 	const history = useHistory();
+
+	const handleLogin = () => {
+		history.push('/login');
+	};
 
 	const handleRegister = () => {
 		history.push('/register');
 	};
 
-	const [show, setShow] = useState(false);
+	/* 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleShow = () => setShow(true); */
 
 	return (
 		<Row>
@@ -23,7 +27,7 @@ export const HeaderTopWithoutSession: React.FC = () => {
 					<Nav.Link>
 						<Button
 							variant="outline-dark"
-							onClick={handleShow}
+							onClick={handleLogin}
 							style={{
 								color: 'black',
 								fontWeight: 500,
@@ -50,7 +54,7 @@ export const HeaderTopWithoutSession: React.FC = () => {
 					</Nav.Link>
 				</Nav>
 			</Col>
-			<Login show={show} onHide={handleClose} />
+			{/* <LoginModal show={show} onHide={handleClose} /> */}
 		</Row>
 	);
 };

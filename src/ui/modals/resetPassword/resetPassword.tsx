@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { Modal, Row, Col, Button, Form, ModalProps } from 'react-bootstrap';
 import { GiUnlocking } from 'react-icons/gi';
+import { useHistory } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 
-export const ResetPassword: React.FC<ModalProps> = ({ show }) => {
+export const ResetPassword: React.FC<ModalProps> = ({ show, onHide }) => {
+	const history = useHistory();
 	const [email, setEmail] = useState<string | undefined>(undefined);
 	const [isValidEmail, setIsValidEmail] = useState(true);
-	const [showModal, setShowModal] = useState(show);
 
-	const handleCheckEmail = (email: string) => {
+	const handleChangeEmail = (email: string) => {
 		setEmail(email);
+	};
+
+	const handleCheckEmail = () => {
 		const expression = /^[a-zA-Z0-9.!#$%&’+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)$/;
 		var validEmail = expression.test(String(email).toLowerCase());
 
@@ -19,40 +24,40 @@ export const ResetPassword: React.FC<ModalProps> = ({ show }) => {
 		}
 	};
 
-	const handleSendEmail = async () => {
-		// TODO DD - send email
-		/* try {
-			let response = await fetch('http://127.0.0.1:5000/auth', {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
+	const handleSendEmail = () => {
+		if (email !== undefined) {
+			const newPassword = Math.random().toString(36).slice(-8);
+
+			emailjs.send(
+				'service_zbuc09s',
+				'template_rgz2mxs',
+				{
+					message: newPassword,
+					reply_to: email,
 				},
-				body: JSON.stringify({
-					
-				}),
-			});
-			let json = await response.json();
-		} catch (e) {
-			console.log('Error to Reset Password: ' + e);
-		} */
+				'user_DC9PAIZiNcmpGHPruC1FU'
+			);
+
+			history.push('/login');
+		}
 	};
 
 	return (
-		<Modal size="lg" show={show} onHide={() => setShowModal(false)} centered={true}>
+		<Modal size="lg" show={show} onHide={onHide} centered={true}>
 			<Modal.Body>
-				<div style={{ padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+				<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: 22 }}>
 					<Row id="row">
 						<Col sm={1} />
 						<Col sm={1} style={{ color: 'black', fontFamily: 'artifika' }}>
-							<GiUnlocking size="40" style={{ color: 'black', marginLeft: 20, marginTop: 50 }} />
+							<GiUnlocking size="40" style={{ color: '#9B3939', marginLeft: 20, marginTop: 50 }} />
 						</Col>
 						<Col
 							sm={9}
 							style={{
 								marginLeft: 20,
 								marginTop: 50,
-								color: '#9B3939',
+								color: 'black',
+								fontWeight: 600,
 								fontFamily: 'artifika',
 							}}
 						>
@@ -118,10 +123,11 @@ export const ResetPassword: React.FC<ModalProps> = ({ show }) => {
 											type="email"
 											className={isValidEmail ? 'form-control' : 'form-control is-invalid'}
 											name="email"
-											value={email}
+											value={email || ''}
 											onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-												handleCheckEmail(e.target.value)
+												handleChangeEmail(e.target.value)
 											}
+											onBlur={handleCheckEmail}
 											style={{
 												backgroundColor: '#FFFFFF',
 												width: 350,
@@ -142,9 +148,7 @@ export const ResetPassword: React.FC<ModalProps> = ({ show }) => {
 										}}
 									>
 										<Button
-											type="submit"
 											className="mb-2"
-											href="login"
 											onClick={handleSendEmail}
 											disabled={!isValidEmail}
 											style={{

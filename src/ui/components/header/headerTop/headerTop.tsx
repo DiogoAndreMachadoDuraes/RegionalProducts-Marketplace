@@ -44,24 +44,29 @@ export const HeaderTop: React.FC<HeaderTopProps> = ({ isLogged, name, type }) =>
 									id="language-dropdown"
 									style={{ fontSize: 14, marginLeft: 2, marginTop: -8, color: 'black' }}
 								>
-									<Dropdown.Header>
-										<span style={{ fontWeight: 'bold', color: 'black' }}>Linguagem:</span>
-										<Form.Group style={{ width: 70 }}>
-											<Form.Control
-												as="select"
-												value={language}
-												onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-													setLanguage(e.target.value)
-												}
-											>
-												<option value="PT">PT</option>
-												<option value="EN">EN</option>
-											</Form.Control>
-										</Form.Group>
+									<Dropdown.Header style={{ width: 220 }}>
+										<Row style={{ marginLeft: 1, marginBottom: -15 }}>
+											<span style={{ fontWeight: 'bold', color: 'black', marginTop: 5 }}>
+												Linguagem:
+											</span>
+											<Form.Group style={{ marginLeft: 15 }}>
+												<Form.Control
+													as="select"
+													value={language}
+													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+														setLanguage(e.target.value)
+													}
+													style={{ width: 70 }}
+												>
+													<option value="PT">PT</option>
+													<option value="EN">EN</option>
+												</Form.Control>
+											</Form.Group>
+										</Row>
 									</Dropdown.Header>
 									<Dropdown.Divider />
 									<Dropdown.Header>
-										<p>
+										<p style={{ marginTop: 1, marginBottom: 3 }}>
 											<span style={{ fontWeight: 'bold', color: 'black' }}>Moeda: </span>Euro (€)
 										</p>
 									</Dropdown.Header>

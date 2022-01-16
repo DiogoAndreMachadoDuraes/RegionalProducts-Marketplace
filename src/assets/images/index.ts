@@ -11,6 +11,7 @@ import image from './image.jpg';
 import kiwi from './kiwi.jpg';
 import logoFerCarnes from './logo_fercarnes.png';
 import logo from './logo.jpg';
+import logoExpanded from './logoExpanded.jpg';
 import maxResDefault from './maxresdefault.jpg';
 import mb from './mb.png';
 import mbway from './mbway.png';
@@ -60,4 +61,5 @@ export const images = {
 	table,
 	tea,
 	imageProfileDefault,
+	logoExpanded,
 };

@@ -5,10 +5,10 @@ import { InputGroup, Image, Row, Col, Button, Form, Navbar, Modal, ModalProps } 
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { userInfo, userLogin } from 'store/User';
-import { ResetPassword } from '..';
+import { ResetPassword } from 'ui';
 import axios from 'axios';
 
-export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
+export const LoginModal: React.FC<ModalProps> = ({ show, onHide }) => {
 	const [email, setEmail] = useState<string | undefined>(undefined);
 	const [password, setPassword] = useState<string | undefined>(undefined);
 	const [isValidEmail, setIsValidEmail] = useState(true);
@@ -17,8 +17,11 @@ export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 	const [forgetPasswordShow, setForgetPasswordShow] = useState(false);
 	const history = useHistory();
 
-	const handleCheckEmail = (email: string) => {
+	const handleEmail = (email: string) => {
 		setEmail(email);
+	};
+
+	const handleCheckEmail = () => {
 		const expression = /^[a-zA-Z0-9.!#$%&’+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)$/;
 		var validEmail = expression.test(String(email).toLowerCase());
 
@@ -29,10 +32,12 @@ export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 		}
 	};
 
-	const handleCheckPassword = (password: string) => {
+	const handlePassword = (password: string) => {
 		setPassword(password);
+	};
 
-		if (password.length < 8) {
+	const handleCheckPassword = () => {
+		if (password !== undefined && password.length < 8) {
 			setIsValidPassword(false);
 		} else {
 			setIsValidPassword(true);
@@ -45,7 +50,6 @@ export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 
 	const handleForgetPassword = () => {
 		setForgetPasswordShow(!forgetPasswordShow);
-		console.log(forgetPasswordShow);
 	};
 
 	const dispatch = useDispatch();
@@ -137,10 +141,11 @@ export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 											type="email"
 											className={isValidEmail ? 'form-control' : 'form-control is-invalid'}
 											name="email"
-											value={email}
+											value={email || ''}
 											onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-												handleCheckEmail(e.target.value)
+												handleEmail(e.target.value)
 											}
+											onBlur={handleCheckEmail}
 											placeholder="Email"
 											style={{ color: 'black', opacity: 1 }}
 										/>
@@ -164,10 +169,11 @@ export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 								<Form.Group controlId="formBasicPassword" style={{ color: 'black' }}>
 									<InputGroup className="mb-2">
 										<Form.Control
-											value={password}
+											value={password || ''}
 											onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-												handleCheckPassword(e.target.value)
+												handlePassword(e.target.value)
 											}
+											onBlur={handleCheckPassword}
 											className={isValidPassword ? 'form-control' : 'form-control is-invalid'}
 											name="password"
 											type={isShowedPassword ? 'text' : 'password'}
@@ -211,7 +217,7 @@ export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 									variant="light"
 									size="sm"
 									onClick={login}
-									disabled={!isValidEmail || !isValidPassword}
+									disabled={!email || !password || !isValidEmail || !isValidPassword}
 									style={{
 										color: 'white',
 										fontFamily: 'artifika',
@@ -227,7 +233,7 @@ export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 							<Col sm={1} />
 							<Col sm={10}>
 								<Navbar.Text>
-									<button
+									<Button
 										onClick={handleForgetPassword}
 										style={{
 											color: 'black',
@@ -237,9 +243,9 @@ export const Login: React.FC<ModalProps> = ({ show, onHide }) => {
 										}}
 									>
 										Esqueceu-se da palavra-passe?
-									</button>
+									</Button>
 								</Navbar.Text>
-								<ResetPassword show={forgetPasswordShow} />
+								{forgetPasswordShow && <ResetPassword show={forgetPasswordShow} />}
 							</Col>
 							<Col sm={1} />
 						</Row>
