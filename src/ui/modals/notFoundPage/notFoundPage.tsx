@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { MdError } from 'react-icons/md';
+import { useHistory } from 'react-router';
 
 export const NotFoundPage: React.FC = () => {
+	const history = useHistory();
 	const [show, setShow] = useState(true);
 
 	const handleClose = () => setShow(false);
+
+	const handleHome = () => history.push('/');
 
 	return (
 		<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} centered={true}>
@@ -35,7 +39,7 @@ export const NotFoundPage: React.FC = () => {
 						Lamentamos, mas não existe a página pretendida.
 					</h2>
 					<Button
-						href="/"
+						onClick={handleHome}
 						variant="light"
 						size="lg"
 						style={{
