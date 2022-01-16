@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Image, Tab, Row, Col, Button, Table, Modal, Form, Container, InputGroup, FormControl } from 'react-bootstrap';
-import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { Producer } from '..';
+import { AiFillEdit, AiFillDelete, AiOutlineSearch } from 'react-icons/ai';
 /*import { Redirect } from "react-router-dom";*/
 
 interface ProductList {
@@ -619,7 +620,6 @@ export const ProductListProducer: React.FC = () => {
 							</Col>
 						</Row>
 						<Row style={{ marginTop: 20 }}>
-							{' '}
 							<Button
 								type="submit"
 								/*  onClick={() =>
@@ -1026,18 +1026,23 @@ export const ProductListProducer: React.FC = () => {
 					<Row style={{ marginTop: 35 }}>
 						<Col sm={1}></Col>
 						<Col sm={6}>
-							{' '}
-							<h1 style={{ color: '#AAAA74' }}>Produtos de {products}</h1>
+							<div style={{ display: 'flex', marginLeft: 100 }}>
+								<h1 style={{ fontFamily: 'artifika', color: '#9B3939' }} className="text-left">
+									Produtos de {/* {producer.name} */}
+								</h1>
+							</div>
 						</Col>
 						<Col sm={4}>
-							<InputGroup>
-								<FormControl
-									type="text"
-									value={searchTerm}
-									onChange={editSearch}
-									placeholder="Procurar Produto"
-								/>
-							</InputGroup>
+							<Form className="mr-auto">
+								<InputGroup className="mb-2">
+									<FormControl type="text" placeholder="Pesquisar" />
+									<InputGroup.Append>
+										<InputGroup.Text style={{ backgroundColor: '#9b3939', color: 'white' }}>
+											<AiOutlineSearch />
+										</InputGroup.Text>
+									</InputGroup.Append>
+								</InputGroup>
+							</Form>
 							<br></br>
 							<Form.Label>Filtrar por Categoria </Form.Label>
 							<Form.Control
@@ -1141,7 +1146,7 @@ export const ProductListProducer: React.FC = () => {
 															<AiFillEdit
 																onClick={() => handleShowEdit(item)}
 																size="25"
-																style={{ color: '444903' }}
+																style={{ color: '#9B3939' }}
 															/>
 															{showModalEditAguardente ? modalEditAguardente() : false}
 															{ShowModalEditWine ? modalEditWine() : false}
@@ -1152,7 +1157,7 @@ export const ProductListProducer: React.FC = () => {
 															<AiFillDelete
 																onClick={() => handleShowDelete(item)}
 																size="25"
-																style={{ color: '444903' }}
+																style={{ color: '#9B3939' }}
 															/>
 
 															{showModalDelete ? modalDelete() : false}

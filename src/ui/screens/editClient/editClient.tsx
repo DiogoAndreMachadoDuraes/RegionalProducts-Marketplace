@@ -137,7 +137,7 @@ export const EditClient: React.FC = () => {
 
 				<br />
 				<br />
-				{/*  <Form onSubmit={handleSubmit}> */}
+
 				<Row>
 					<Col md={30}>
 						<Spacer horizontal="10px" />
@@ -456,68 +456,75 @@ export const EditClient: React.FC = () => {
 				<br />
 				<Row>
 					<Col>
-						<Form.Label style={{ fontFamily: 'Artifika' }}>Palavra-Passe </Form.Label>
-						<Form.Control
-							onChange={handlePassword}
-							defaultValue={password}
-							name="password"
-							type={isPasswordShown ? 'text' : 'password'}
-							style={{ color: 'black', opacity: 1 }}
-						/>
-
-						<InputGroup.Append>
-							<InputGroup.Text id="inputGroupAppend">
-								{isPasswordShown ? (
-									<BsFillEyeFill
-										onClick={togglePasswordVisiblity}
-										size="20"
-										style={{ color: 'white' }}
-									/>
-								) : (
-									<BsFillEyeSlashFill
-										onClick={togglePasswordVisiblity}
-										size="20"
-										style={{ color: 'white' }}
-									/>
-								)}
-							</InputGroup.Text>
-						</InputGroup.Append>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Palavra-Passe </Form.Label>
+						<InputGroup className="mb-1">
+							<Form.Control
+								placeholder="Palavra-Passe"
+								onChange={handlePassword}
+								defaultValue={password}
+								name="password"
+								type={isPasswordShown ? 'text' : 'password'}
+								style={{ color: 'black', opacity: 1 }}
+							/>
+							<InputGroup.Append>
+								<InputGroup.Text id="inputGroupAppend" style={{ backgroundColor: 'white' }}>
+									{isPasswordShown ? (
+										<BsFillEyeFill
+											onClick={togglePasswordVisiblity}
+											size="20"
+											style={{ color: '#9B3939' }}
+										/>
+									) : (
+										<BsFillEyeSlashFill
+											onClick={togglePasswordVisiblity}
+											size="20"
+											style={{ color: '#9B3939' }}
+										/>
+									)}
+								</InputGroup.Text>
+							</InputGroup.Append>
+						</InputGroup>
 					</Col>
 					<Col>
-						<Form.Label style={{ fontFamily: 'Artifika' }}>Confirmar Palavra-Passe</Form.Label>
-						<Form.Control
-							onChange={handlePassword}
-							defaultValue={password}
-							name="password"
-							type={isPasswordShown ? 'text' : 'password'}
-							style={{ color: 'black', opacity: 1 }}
-						/>
-						<InputGroup.Append>
-							<InputGroup.Text id="inputGroupAppend">
-								{isPasswordShown ? (
-									<BsFillEyeFill
-										onClick={togglePasswordVisiblity}
-										size="20"
-										style={{ color: 'white' }}
-									/>
-								) : (
-									<BsFillEyeSlashFill
-										onClick={togglePasswordVisiblity}
-										size="20"
-										style={{ color: 'white' }}
-									/>
-								)}
-							</InputGroup.Text>
-						</InputGroup.Append>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Confirmar Palavra-Passe</Form.Label>
+						<InputGroup className="mb-1">
+							<Form.Control
+								placeholder="Confirmar Palavra-Passe"
+								onChange={handlePassword}
+								defaultValue={password}
+								name="password"
+								type={isPasswordShown ? 'text' : 'password'}
+								style={{ color: 'black', opacity: 1 }}
+							/>
+							<InputGroup.Append>
+								<InputGroup.Text id="inputGroupAppend" style={{ backgroundColor: 'white' }}>
+									{isPasswordShown ? (
+										<BsFillEyeFill
+											onClick={togglePasswordVisiblity}
+											size="20"
+											style={{ color: '#9B3939' }}
+										/>
+									) : (
+										<BsFillEyeSlashFill
+											onClick={togglePasswordVisiblity}
+											size="20"
+											style={{ color: '#9B3939' }}
+										/>
+									)}
+								</InputGroup.Text>
+							</InputGroup.Append>
+						</InputGroup>
 					</Col>
 				</Row>
+				<br />
+				<br />
 				<br />
 				<Row>
 					<Col md={50}>
 						<Button
 							type="submit"
 							variant="dark"
-							style={{ backgroundColor: '#8A3535' /* backgroundColor: 'color="#8A3535"' */ }}
+							style={{ backgroundColor: '#8A3535', marginLeft: '450px' }}
 						>
 							Submeter alterações
 						</Button>
@@ -529,7 +536,7 @@ export const EditClient: React.FC = () => {
 						</Button>
 					</Col>
 				</Row>
-				{/* </Form> */}
+				<br />
 				<br />
 			</Container>
 		</>
