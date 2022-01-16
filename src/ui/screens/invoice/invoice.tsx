@@ -8,17 +8,17 @@ export const Invoice: React.FC = () => {
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [invoice, setInvoice] = useState('');
-	const [email, setEmail] = useState('et@sapo.pt');
+	const [email, setEmail] = useState('juli@sapo.pt');
 	const [locality, setLocality] = useState('Alentejo');
-	const [name, setName] = useState('Júlia Martins');
+	const [name, setName] = useState('Julieta Martins');
 	const [postalCode, setPostalCode] = useState('5600-000');
 	const [id, setId] = useState('1');
 	const [street, setStreet] = useState('Rua do Baixo Alentejo');
-	const [telephone, setTelephone] = useState('+351666666789');
-	const [tin, setTin] = useState('111111111');
+	const [telephone, setTelephone] = useState('+351663366789');
+	const [tin, setTin] = useState('555111111');
 	const [price, setPrice] = useState('5.67');
 	const [quantity, setQuantity] = useState('1');
-	const [date, setDate] = useState('15/01/2022');
+	const [date, setDate] = useState('18/01/2022');
 
 	/* const checkPermissions = () => {
     if ((isLogged === false || type !== "client") && isLoading === true) {
@@ -48,12 +48,11 @@ export const Invoice: React.FC = () => {
 		<>
 			<div>
 				<div>
-					<Breadcrumb style={{ marginTop: 20, marginLeft: 28 }} id="breadcrumb">
+					<Breadcrumb style={{ marginTop: 20, marginLeft: 28, fontFamily: 'artifika' }} id="breadcrumb">
 						<Breadcrumb.Item href="/home">Home </Breadcrumb.Item>
 						<Breadcrumb.Item href="/order">Encomendas </Breadcrumb.Item>
-						<Breadcrumb.Item active style={{ color: '#AAAA74' }}>
-							{' '}
-							Faturas{' '}
+						<Breadcrumb.Item active style={{ color: '#9B3939', fontFamily: 'artifika' }}>
+							Faturas
 						</Breadcrumb.Item>
 					</Breadcrumb>
 				</div>
