@@ -35,22 +35,22 @@ export const ProducerRegister: React.FC = () => {
 				<br />
 				<br />
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
-					<h2 style={{ color: '#9B3939' }}>Criar Conta Produtor</h2>
+					<h2 style={{ color: '#9B3939', fontFamily: 'artifika' }}>Criar Conta Produtor</h2>
 				</div>
 				<br />
 				<br />
 				<Row>
 					<AiOutlineUser size="25" color="#9B3939" />
-					<h5 style={{ marginLeft: 5 }}>Informação Pessoal</h5>
+					<h5 style={{ marginLeft: 5, fontFamily: 'artifika', fontWeight: 'bold' }}>Informação Pessoal</h5>
 				</Row>
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Nome Completo </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Nome Completo </Form.Label>
 						<Form.Control placeholder="Nome Completo" required onChange={handleName} />
 					</Col>
 					<Col>
-						<Form.Label>Número de Contribuinte </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Número de Contribuinte </Form.Label>
 						<Form.Control
 							type="number"
 							placeholder="Número de Contribuinte"
@@ -59,7 +59,7 @@ export const ProducerRegister: React.FC = () => {
 						/>
 					</Col>
 					<Col>
-						<Form.Label>Contacto </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Contacto </Form.Label>
 						<Form.Control
 							id="telephone"
 							type="number"
@@ -72,11 +72,11 @@ export const ProducerRegister: React.FC = () => {
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Rua</Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Rua</Form.Label>
 						<Form.Control placeholder="Rua" required onChange={handleStreet} />
 					</Col>
 					<Col>
-						<Form.Label>Código Postal </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Código Postal </Form.Label>
 						<Form.Control
 							id="postal_code"
 							type="number"
@@ -86,22 +86,22 @@ export const ProducerRegister: React.FC = () => {
 						/>
 					</Col>
 					<Col>
-						<Form.Label>Localidade </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Localidade </Form.Label>
 						<Form.Control placeholder="Localidade" required onChange={handleLocation} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Rede Social </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Rede Social </Form.Label>
 						<Form.Control placeholder="Rede Social" onChange={handleSocial} />
 					</Col>
 					<Col>
-						<Form.Label>Região</Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Região</Form.Label>
 						<Form.Control placeholder="Região" required onChange={handleRegion} />
 					</Col>
 					<Col>
-						<Form.Label>País </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>País </Form.Label>
 						<Form.Control title="País" as="select" required onChange={handleCountry}>
 							<option>Portugal</option>
 							<option>Espanha</option>
@@ -111,7 +111,7 @@ export const ProducerRegister: React.FC = () => {
 				<br />
 				<Row>
 					<Col md={6}>
-						<Form.Label> Comprovativo das finanças </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}> Comprovativo das finanças </Form.Label>
 						<Form.Group>
 							<Form.File
 								id="custom-file-translate-html"
@@ -131,19 +131,19 @@ export const ProducerRegister: React.FC = () => {
 				<br />
 				<Row>
 					<AiTwotoneLock size="25" color="#9B3939" />
-					<h5 style={{ marginLeft: 5 }}>Informação de Login</h5>
+					<h5 style={{ marginLeft: 5, fontFamily: 'artifika', fontWeight: 'bold' }}>Informação de Login</h5>
 				</Row>
 				<br />
 				<Row>
 					<Col md={6}>
-						<Form.Label>Email </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Email </Form.Label>
 						<Form.Control placeholder="Email" onChange={handleEmail} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Palavra-Passe </Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Palavra-Passe </Form.Label>
 						<InputGroup className="mb-1">
 							<Form.Control
 								placeholder="Palavra-Passe"
@@ -172,7 +172,7 @@ export const ProducerRegister: React.FC = () => {
 						</InputGroup>
 					</Col>
 					<Col>
-						<Form.Label>Confirmar Palavra-Passe</Form.Label>
+						<Form.Label style={{ fontFamily: 'artifika' }}>Confirmar Palavra-Passe</Form.Label>
 						<InputGroup className="mb-1">
 							<Form.Control
 								placeholder="Confirmar Palavra-Passe"
@@ -207,6 +207,7 @@ export const ProducerRegister: React.FC = () => {
 					<Col>
 						<Form.Group controlId="formBasicCheckbox">
 							<Form.Check
+								style={{ fontFamily: 'artifika', color: '#9B3939', fontWeight: 'bold' }}
 								type="checkbox"
 								required
 								label="Aceito os Termos e Condições / Politica de Privacidade"
@@ -222,6 +223,7 @@ export const ProducerRegister: React.FC = () => {
 						style={{
 							color: 'white',
 							backgroundColor: '#9B3939',
+							fontFamily: 'artifika',
 						}}
 					>
 						Criar Conta

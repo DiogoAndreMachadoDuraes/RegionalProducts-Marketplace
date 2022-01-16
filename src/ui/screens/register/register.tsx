@@ -7,8 +7,11 @@ import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
 import { list } from './list';
 import { Link } from 'react-router-dom';
+import { ModalSuccess } from '../producerRegister/modalSuccess';
 
 export const Register: React.FC = () => {
+	const Spacer = require('react-spacer');
+
 	const history = useHistory();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -166,42 +169,32 @@ export const Register: React.FC = () => {
 			<Container>
 				<br />
 				<br />
-				<Row className="justify-content-md-center">
-					<Col xs lg="5">
-						<h3>Criar Nova Conta Cliente</h3>
-					</Col>
+				<br />
+				<div style={{ display: 'flex', justifyContent: 'center' }}>
+					<h2 style={{ color: '#9B3939', fontFamily: 'artifika' }}>Criar Conta Cliente</h2>
+				</div>
+				<br />
+				<br />
+				<Row>
+					<AiOutlineUser size="25" color="#9B3939" />
+					<h5 style={{ marginLeft: 5, fontFamily: 'artifika', fontWeight: 'bold' }}>Informação Pessoal</h5>
+
+					<Link
+						to="/producerregister"
+						style={{ fontFamily: 'artifika', color: '#9B3939', fontWeight: 'bold', marginLeft: '385px' }}
+					>
+						Gostaria de registar-se como Produtor? Clique aqui!
+					</Link>
 				</Row>
 				<br />
-
-				<Row>
-					<Col md={4}>
-						<h5>
-							<AiOutlineUser size="20" color="#000000" />
-							Informação Pessoal
-						</h5>
-					</Col>
-
-					<Col md={{ span: 11, offset: 11 }}>
-						<Link to="/producerregister" style={{ color: '#444903', fontWeight: 'bold' }}>
-							É Produtor?
-						</Link>
-					</Col>
-				</Row>
 				<form onSubmit={handleSubmit}>
 					<Row>
 						<Col>
-							<Form.Label>Nome Completo </Form.Label>
-							<Form.Control
-								id="name"
-								type="text"
-								required
-								onChange={handleName}
-								placeholder="Nome Completo"
-							/>
+							<Form.Label style={{ fontFamily: 'artifika' }}>Nome Completo </Form.Label>
+							<Form.Control placeholder="Nome Completo" required onChange={handleName} />
 						</Col>
-
 						<Col>
-							<Form.Label>Data de Nascimento </Form.Label>
+							<Form.Label style={{ fontFamily: 'artifika' }}>Data de Nascimento </Form.Label>
 							<Form.Control
 								id="birthday"
 								max="2021-05-19"
@@ -215,7 +208,7 @@ export const Register: React.FC = () => {
 					<br />
 					<Row>
 						<Col>
-							<Form.Label>Morada </Form.Label>
+							<Form.Label style={{ fontFamily: 'artifika' }}>Morada </Form.Label>
 							<Form.Control
 								id="street"
 								type="text"
@@ -225,7 +218,7 @@ export const Register: React.FC = () => {
 							/>
 						</Col>
 						<Col>
-							<Form.Label>Código Postal </Form.Label>
+							<Form.Label style={{ fontFamily: 'artifika' }}>Código Postal </Form.Label>
 							<Form.Control
 								id="postal_code"
 								type="text"
@@ -238,7 +231,7 @@ export const Register: React.FC = () => {
 					<br />
 					<Row>
 						<Col>
-							<Form.Label>Contacto </Form.Label>
+							<Form.Label style={{ fontFamily: 'artifika' }}>Contacto </Form.Label>
 							<Form.Control
 								id="telephone"
 								type="number"
@@ -248,7 +241,7 @@ export const Register: React.FC = () => {
 							/>
 						</Col>
 						<Col>
-							<Form.Label>Localidade </Form.Label>
+							<Form.Label style={{ fontFamily: 'artifika' }}>Localidade </Form.Label>
 							<Form.Control
 								id="locality"
 								type="text"
@@ -262,7 +255,7 @@ export const Register: React.FC = () => {
 					<br />
 					<Row>
 						<Col md={6}>
-							<Form.Label>Número de Contribuinte </Form.Label>
+							<Form.Label style={{ fontFamily: 'artifika' }}>Número de Contribuinte </Form.Label>
 							<Form.Control
 								id="tin"
 								type="number"
@@ -272,7 +265,7 @@ export const Register: React.FC = () => {
 							/>
 						</Col>
 						<Col>
-							<Form.Label>País </Form.Label>
+							<Form.Label style={{ fontFamily: 'artifika' }}>País </Form.Label>
 							<Form.Control as="select" required onChange={handleCountry}>
 								{list.map((i, index) => (
 									<option key={index}>{i.name}</option>
@@ -280,21 +273,19 @@ export const Register: React.FC = () => {
 							</Form.Control>
 						</Col>
 					</Row>
-
 					<br />
-
+					<br />
+					<br />
 					<Row>
-						<Col md={4}>
-							<h5>
-								<AiTwotoneLock size="20" color="#000000" />
-								Informação de Login
-							</h5>
-						</Col>
+						<AiTwotoneLock size="25" color="#9B3939" />
+						<h5 style={{ marginLeft: 5, fontFamily: 'artifika', fontWeight: 'bold' }}>
+							Informação de Login
+						</h5>
 					</Row>
 					<br />
 					<Row>
 						<Col md={6}>
-							<Form.Label>Email </Form.Label>
+							<Form.Label style={{ fontFamily: 'artifika' }}>Email </Form.Label>
 							<Form.Control
 								id="email"
 								type="text"
@@ -310,29 +301,28 @@ export const Register: React.FC = () => {
 					<br />
 					<Row>
 						<Col>
-							<Form.Label>Palavra-Passe </Form.Label>
-							<InputGroup className="mb-2">
+							<Form.Label style={{ fontFamily: 'artifika' }}>Palavra-Passe </Form.Label>
+							<InputGroup className="mb-1">
 								<Form.Control
-									placeholder="Password"
-									required
+									placeholder="Palavra-Passe"
 									onChange={handlePassword}
 									name="password"
 									type={isPasswordShown ? 'text' : 'password'}
 									style={{ color: 'black', opacity: 1 }}
 								/>
 								<InputGroup.Append>
-									<InputGroup.Text id="inputGroupAppend">
+									<InputGroup.Text id="inputGroupAppend" style={{ backgroundColor: 'white' }}>
 										{isPasswordShown ? (
 											<BsFillEyeFill
 												onClick={togglePasswordVisiblity}
 												size="20"
-												style={{ color: 'black' }}
+												style={{ color: '#9B3939' }}
 											/>
 										) : (
 											<BsFillEyeSlashFill
 												onClick={togglePasswordVisiblity}
 												size="20"
-												style={{ color: 'black' }}
+												style={{ color: '#9B3939' }}
 											/>
 										)}
 									</InputGroup.Text>
@@ -340,29 +330,28 @@ export const Register: React.FC = () => {
 							</InputGroup>
 						</Col>
 						<Col>
-							<Form.Label>Confirme a Password </Form.Label>
-							<InputGroup className="mb-2">
+							<Form.Label style={{ fontFamily: 'artifika' }}>Confirmar Palavra-Passe</Form.Label>
+							<InputGroup className="mb-1">
 								<Form.Control
-									placeholder="Password"
-									required
+									placeholder="Confirmar Palavra-Passe"
 									onChange={handlePassword}
 									name="password"
 									type={isPasswordShown ? 'text' : 'password'}
 									style={{ color: 'black', opacity: 1 }}
 								/>
 								<InputGroup.Append>
-									<InputGroup.Text id="inputGroupAppend">
+									<InputGroup.Text id="inputGroupAppend" style={{ backgroundColor: 'white' }}>
 										{isPasswordShown ? (
 											<BsFillEyeFill
 												onClick={togglePasswordVisiblity}
 												size="20"
-												style={{ color: 'black' }}
+												style={{ color: '#9B3939' }}
 											/>
 										) : (
 											<BsFillEyeSlashFill
 												onClick={togglePasswordVisiblity}
 												size="20"
-												style={{ color: 'black' }}
+												style={{ color: '#9B3939' }}
 											/>
 										)}
 									</InputGroup.Text>
@@ -371,39 +360,47 @@ export const Register: React.FC = () => {
 						</Col>
 					</Row>
 					<br />
-					<Row>
-						<Col md={6}>
+					<br />
+					<Row style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+						<Col>
 							<Form.Group controlId="formBasicCheckbox">
 								<Form.Check
+									style={{ fontFamily: 'artifika', color: '#9B3939', fontWeight: 'bold' }}
 									type="checkbox"
 									required
-									label="Aceito os Termos e Condições/Politica de Privacidade"
+									label="Aceito os Termos e Condições / Politica de Privacidade"
 								/>
 							</Form.Group>
 						</Col>
 					</Row>
-					<Row>
-						<Col md={2}>
-							<Button
-								type="submit"
-								variant="dark"
-								style={{ color: 'white', backgroundColor: '#AAAA74' }}
-								onClick={handleModal}
-							>
-								Criar Conta
-							</Button>
-							{showModal ? modal() : false}
-						</Col>
-
-						<Col md={2}>
-							<Button
-								onClick={() => history.push('/')}
-								variant="dark"
-								style={{ color: 'white', backgroundColor: '#8E8E8E' }}
-							>
-								Voltar
-							</Button>
-						</Col>
+					<ModalSuccess
+						show={false}
+						handleClose={function (): void {
+							throw new Error('Function not implemented.');
+						}}
+						name={''}
+						handleLogin={function (): void {
+							throw new Error('Function not implemented.');
+						}} /* show={show} handleClose={handleClose} name={name} handleLogin={handleLogin} */
+					/>
+					<Row
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							textAlign: 'center',
+						}}
+					>
+						<Button
+							variant="dark"
+							onClick={handleSubmit}
+							style={{
+								color: 'white',
+								backgroundColor: '#9B3939',
+								fontFamily: 'artifika',
+							}}
+						>
+							Criar Conta
+						</Button>
 					</Row>
 				</form>
 				<br />
