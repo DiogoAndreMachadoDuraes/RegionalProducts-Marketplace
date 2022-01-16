@@ -89,6 +89,8 @@ export const Producer: React.FC = () => {
 								marginTop: 30,
 								marginLeft: 0,
 								fontWeight: 'bold',
+								fontFamily: 'artifika',
+								color: '#9B3939',
 							}}
 						>
 							Perfil do Produtor
@@ -110,50 +112,59 @@ export const Producer: React.FC = () => {
 								marginTop: 30,
 								marginLeft: 40,
 								fontWeight: 'bold',
+								fontFamily: 'artifika',
 							}}
 						>
 							Nome do Produtor:
 						</h3>
-						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/* {producer?.name} */} Nome</h4>
+						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>
+							{/* {producer?.name} */} Andreia Sousa{' '}
+						</h4>
 						<h3
 							style={{
 								fontSize: 18,
 								marginTop: 40,
 								marginLeft: 40,
 								fontWeight: 'bold',
+								fontFamily: 'artifika',
 							}}
 						>
 							Rua:
 						</h3>
-						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>Rua</h4>
+						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>Rua Doutor Francisco </h4>
 						<h3
 							style={{
 								fontSize: 18,
 								marginTop: 40,
 								marginLeft: 40,
 								fontWeight: 'bold',
+								fontFamily: 'artifika',
 							}}
 						>
-							Morada:
+							Localidade:
 						</h3>
-						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/* {locality} */} Localidade</h4>
+						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/* {locality} */} Felgeuiras</h4>
 						<h3
 							style={{
 								fontSize: 18,
 								marginTop: 40,
 								marginLeft: 40,
 								fontWeight: 'bold',
+								fontFamily: 'artifika',
 							}}
 						>
 							Contacto:
 						</h3>
-						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{/*  {telephone} */}</h4>
+						<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>
+							{/*  {telephone} */} +351999999999
+						</h4>
 						<h3
 							style={{
 								fontSize: 18,
 								marginLeft: 600,
 								marginTop: -70,
 								fontWeight: 'bold',
+								fontFamily: 'artifika',
 							}}
 						>
 							Redes Sociais:
@@ -168,29 +179,31 @@ export const Producer: React.FC = () => {
 						</Col>
 					</Col>
 				</Row>
-
+				<br />
+				<br />
+				<br />
 				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
 					<Row id="row" style={{ marginBottom: 80 }}>
-						<Col sm={1} />
-						<Col sm={1}>
+						<Col sm={2} />
+						<Col sm={2}>
 							<Button
 								variant="dark"
 								href="/editclient"
 								size="lg"
-								style={{ color: 'white', backgroundColor: '#AAAA74' }}
+								style={{ color: '#9B3939', backgroundColor: 'white', fontFamily: 'artifika' }}
 							>
-								Editar{' '}
+								Editar
 							</Button>
 						</Col>
-						<Col sm={8} style={{ marginTop: 100 }} />
+						<Col sm={4} style={{ marginTop: 100 }} />
 						<Col sm={1}>
 							<Button
 								variant="dark"
 								onClick={handleShowDelete}
 								size="lg"
-								style={{ color: 'white', backgroundColor: '#444903' }}
+								style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}
 							>
-								Eliminar{' '}
+								Eliminar
 							</Button>
 							{showModalDelete ? modalDelete() : false}
 						</Col>
