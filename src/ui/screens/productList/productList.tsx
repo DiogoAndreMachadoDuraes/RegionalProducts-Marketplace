@@ -17,7 +17,6 @@ import {
 import { AiFillDelete, AiFillEdit, AiOutlineSearch } from 'react-icons/ai';
 import { StoreState } from 'store';
 import { useSelector } from 'react-redux';
-
 /*import { Redirect } from "react-router-dom";*/
 
 interface Product {
@@ -347,9 +346,13 @@ export const ProductList: React.FC = () => {
 		return (
 			<Modal show={showModalDelete} size="lg" onHide={handleCloseEdit} animation={true}>
 				<Modal.Header closeButton>
-					<Modal.Title>Eliminar Produto</Modal.Title>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Eliminar Produto
+					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Pretende eliminar o produto {activeItemName}?</Modal.Body>
+				<Modal.Body style={{ fontFamily: 'Artifika' }}>
+					Pretende eliminar o produto {activeItemName}?
+				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleCloseEdit}>
 						Cancelar
@@ -371,7 +374,9 @@ export const ProductList: React.FC = () => {
 		return (
 			<Modal centered size="lg" show={showModalEditAguardente} onHide={handleCloseEdit} animation={true}>
 				<Modal.Header closeButton>
-					<Modal.Title>Editar dados do produto {activeItemName}</Modal.Title>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Editar dados do produto {activeItemName}
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					{/* <Form onSubmit={handleSubmit}> */}
@@ -525,7 +530,9 @@ export const ProductList: React.FC = () => {
 		return (
 			<Modal show={ShowModalEditWine} centered size="lg" onHide={handleCloseEdit} animation={true}>
 				<Modal.Header closeButton>
-					<Modal.Title>Editar dados do produto {activeItemName}</Modal.Title>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Editar dados do produto {activeItemName}
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Container>
@@ -687,7 +694,9 @@ export const ProductList: React.FC = () => {
 		return (
 			<Modal show={showModalEditLicor} centered size="lg" onHide={handleCloseEdit} animation={true}>
 				<Modal.Header closeButton>
-					<Modal.Title>Editar dados do produto {activeItemName} </Modal.Title>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Editar dados do produto {activeItemName}{' '}
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Container>
@@ -850,7 +859,9 @@ export const ProductList: React.FC = () => {
 		return (
 			<Modal show={ShowModalEditOlive} onHide={handleCloseEdit} centered size="lg" animation={true}>
 				<Modal.Header closeButton>
-					<Modal.Title>Editar dados do produto {activeItemName} </Modal.Title>
+					<Modal.Title style={{ color: '#8A3535', fontFamily: 'Artifika', fontWeight: 'bold' }}>
+						Editar dados do produto {activeItemName}{' '}
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Container>
@@ -982,7 +993,6 @@ export const ProductList: React.FC = () => {
 							</Col>
 						</Row>
 						<Row style={{ marginTop: 20 }}>
-							{' '}
 							<Button
 								type="submit"
 								/* onClick={() =>
@@ -1046,7 +1056,7 @@ export const ProductList: React.FC = () => {
 								<AiFillEdit
 									onClick={() => handleShowEdit(item)}
 									size="25"
-									style={{ color: '444903' }}
+									style={{ color: '#9B3939' }}
 								/>
 								{showModalEditAguardente ? modalEditAguardente() : false}
 								{ShowModalEditWine ? modalEditWine() : false}
@@ -1057,7 +1067,7 @@ export const ProductList: React.FC = () => {
 								<AiFillDelete
 									onClick={() => handleShowDelete(item)}
 									size="25"
-									style={{ color: '#444903' }}
+									style={{ color: '#9B3939' }}
 								/>
 								{showModalDelete ? modalDelete() : false}
 							</td>

@@ -40,6 +40,7 @@ import {
 	ProductListProducer,
 	Favorites,
 	Home,
+	ProducerProfile,
 } from 'ui';
 
 export const App: React.FC = () => {
@@ -82,6 +83,7 @@ export const App: React.FC = () => {
 							<Route exact path="/createproduct" component={CreateProduct} />
 							<Route exact path="/productListProducer" component={ProductListProducer} />
 							<Route exact path="/favorites" component={Favorites} />
+							<Route exact path="/producerProfile" component={ProducerProfile} />
 							<Route component={NotFoundPage} />
 						</Switch>
 					</div>

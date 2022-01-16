@@ -129,7 +129,9 @@ export const EditClient: React.FC = () => {
 				<br />
 				<Row className="justify-content-md">
 					<Col xs lg="12">
-						<h3 style={{ fontWeight: 'bold' }}>Editar Informação da Conta de {name}</h3>
+						<h3 style={{ color: '#8A3535', fontFamily: 'Artifika' }}>
+							Editar Informação da Conta de {name}
+						</h3>
 					</Col>
 				</Row>
 
@@ -138,8 +140,9 @@ export const EditClient: React.FC = () => {
 				{/*  <Form onSubmit={handleSubmit}> */}
 				<Row>
 					<Col md={30}>
-						<h5>
-							<AiOutlineUser size="20" color="#000000" />
+						<Spacer horizontal="10px" />
+						<h5 style={{ fontFamily: 'Artifika' }}>
+							<AiOutlineUser size="24" color="#8A3535" />
 							Informação Pessoal
 						</h5>
 					</Col>
@@ -149,45 +152,45 @@ export const EditClient: React.FC = () => {
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Nome Completo </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Nome Completo </Form.Label>
 						<Form.Control onChange={handleName} defaultValue={name} />
 					</Col>
 
 					<Col>
-						<Form.Label>Data de Nascimento </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Data de Nascimento </Form.Label>
 						<Form.Control onChange={handleBirthday} defaultValue={birthday} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Morada </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Morada </Form.Label>
 						<Form.Control onChange={handleStreet} defaultValue={street} />
 					</Col>
 					<Col>
-						<Form.Label>Código Postal </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Código Postal </Form.Label>
 						<Form.Control onChange={handlePostal_code} defaultValue={postal_Code} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Contacto </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Contacto </Form.Label>
 						<Form.Control onChange={handleTelephone} defaultValue={telephone} />
 					</Col>
 					<Col>
-						<Form.Label>Localidade </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Localidade </Form.Label>
 						<Form.Control onChange={handleLocality} defaultValue={locality} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col md={6}>
-						<Form.Label>Número de Contribuinte </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Número de Contribuinte </Form.Label>
 						<Form.Control onChange={handleTin} defaultValue={tin} />
 					</Col>
 					<Col>
-						<Form.Label>País </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>País </Form.Label>
 						<Form.Control required onChange={handleCountry} as="select" defaultValue={country}>
 							<option>País</option>
 							<option>Afeganistão</option>
@@ -437,8 +440,8 @@ export const EditClient: React.FC = () => {
 				<br />
 				<Row>
 					<Col md={3}>
-						<h5 style={{ marginTop: 40 }}>
-							<AiTwotoneLock size="20" color="#000000" />
+						<h5 style={{ marginTop: 20, fontFamily: 'Artifika' }}>
+							<AiTwotoneLock size="20" color="#8A3535" />
 							Informação de Login
 						</h5>
 					</Col>
@@ -446,14 +449,14 @@ export const EditClient: React.FC = () => {
 				<br />
 				<Row>
 					<Col md={6}>
-						<Form.Label>Email </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Email </Form.Label>
 						<Form.Control onChange={handleEmail} defaultValue={email} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col>
-						<Form.Label>Palavra-Passe </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Palavra-Passe </Form.Label>
 						<Form.Control
 							onChange={handlePassword}
 							defaultValue={password}
@@ -468,20 +471,20 @@ export const EditClient: React.FC = () => {
 									<BsFillEyeFill
 										onClick={togglePasswordVisiblity}
 										size="20"
-										style={{ color: 'black' }}
+										style={{ color: 'white' }}
 									/>
 								) : (
 									<BsFillEyeSlashFill
 										onClick={togglePasswordVisiblity}
 										size="20"
-										style={{ color: 'black' }}
+										style={{ color: 'white' }}
 									/>
 								)}
 							</InputGroup.Text>
 						</InputGroup.Append>
 					</Col>
 					<Col>
-						<Form.Label>Confirmar Palavra-Passe</Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Confirmar Palavra-Passe</Form.Label>
 						<Form.Control
 							onChange={handlePassword}
 							defaultValue={password}
@@ -495,13 +498,13 @@ export const EditClient: React.FC = () => {
 									<BsFillEyeFill
 										onClick={togglePasswordVisiblity}
 										size="20"
-										style={{ color: 'black' }}
+										style={{ color: 'white' }}
 									/>
 								) : (
 									<BsFillEyeSlashFill
 										onClick={togglePasswordVisiblity}
 										size="20"
-										style={{ color: 'black' }}
+										style={{ color: 'white' }}
 									/>
 								)}
 							</InputGroup.Text>
@@ -511,13 +514,17 @@ export const EditClient: React.FC = () => {
 				<br />
 				<Row>
 					<Col md={50}>
-						<Button type="submit" variant="dark" style={{ color: 'white', backgroundColor: '#444903' }}>
+						<Button
+							type="submit"
+							variant="dark"
+							style={{ backgroundColor: '#8A3535' /* backgroundColor: 'color="#8A3535"' */ }}
+						>
 							Submeter alterações
 						</Button>
 					</Col>
 
 					<Col md={4}>
-						<Button href="/client" variant="dark" style={{ color: 'white', backgroundColor: '#AAAA74' }}>
+						<Button href="/client" variant="dark" style={{ color: '#8A3535', backgroundColor: '#FFFFFF' }}>
 							Voltar
 						</Button>
 					</Col>
