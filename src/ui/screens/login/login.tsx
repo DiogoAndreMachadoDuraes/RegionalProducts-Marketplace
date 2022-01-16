@@ -127,7 +127,7 @@ export const Login: React.FC = () => {
 						>
 							<Col sm={1} />
 							<Col sm={10}>
-								<button
+								<Button
 									onClick={login}
 									disabled={!email || !password || !isValidEmail || !isValidPassword}
 									style={{
@@ -139,7 +139,7 @@ export const Login: React.FC = () => {
 									}}
 								>
 									Entrar
-								</button>
+								</Button>
 							</Col>
 							<Col sm={1} />
 						</Row>
