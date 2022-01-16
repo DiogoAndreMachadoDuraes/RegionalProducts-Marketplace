@@ -281,40 +281,90 @@ export const Home: React.FC = () => {
 			<Container style={{ marginTop: 25, marginBottom: 80 }}>
 				<Carousel activeIndex={index} onSelect={handleSelect}>
 					<Carousel.Item>
-						<img className="d-block w-100" src={images.logo} width={800} height={400} alt="First slide" />
+						<img className="d-block w-100" src={images.mix} width={700} height={500} alt="First slide" />
 						<Carousel.Caption>
-							<h3 style={{ color: 'black' }}>Bem Vindo!</h3>
-							<p style={{ color: 'black' }}>Aqui encontrará os melhores produtos aos melhores preços.</p>
+							<Card style={{ opacity: 0.8 }}>
+								<h3 style={{ color: 'black', fontWeight: 700, fontFamily: 'artifika' }}>Bem Vindo!</h3>
+								<p style={{ color: 'black', fontWeight: 'bold', fontFamily: 'artifika' }}>
+									Aqui encontrará os melhores produtos aos melhores preços.
+								</p>
+							</Card>
 						</Carousel.Caption>
 					</Carousel.Item>
 					<Carousel.Item>
-						<img className="d-block w-100" src={images.quei} width={800} height={400} alt="Second slide" />
+						<img className="d-block w-100" src={images.quei} width={700} height={500} alt="Second slide" />
 						<Carousel.Caption>
-							<h3>Venha conhecer a nossa gama de queijos!</h3>
-							<p>Delicioso, típico e original queijo dos melhores produtores nacionais.</p>
+							<Card style={{ opacity: 0.8 }}>
+								<h3 style={{ color: 'black', fontWeight: 700, fontFamily: 'artifika' }}>
+									Venha conhecer a nossa gama de queijos!
+								</h3>
+								<p style={{ color: 'black', fontWeight: 'bold', fontFamily: 'artifika' }}>
+									Delicioso, típico e original queijo dos melhores produtores nacionais.
+								</p>
+							</Card>
 						</Carousel.Caption>
 					</Carousel.Item>
 					<Carousel.Item>
 						<img
 							className="d-block w-100"
 							src={images.enchidos}
-							width={800}
-							height={400}
+							width={700}
+							height={500}
 							alt="Third slide"
 						/>
 						<Carousel.Caption>
-							<h3>Ou então o melhor fumeiro do país!</h3>
-							<p>Não espere mais, compre os melhores enchidos connosco.</p>
+							<Card style={{ opacity: 0.8 }}>
+								<h3 style={{ color: 'black', fontWeight: 700, fontFamily: 'artifika' }}>
+									Disfrute do melhor fumeiro do país!
+								</h3>
+								<p style={{ color: 'black', fontWeight: 'bold', fontFamily: 'artifika' }}>
+									Não espere mais, compre os melhores enchidos e carnes connosco.
+								</p>
+							</Card>
+						</Carousel.Caption>
+					</Carousel.Item>
+					<Carousel.Item>
+						<img
+							className="d-block w-100"
+							src={images.granola}
+							width={700}
+							height={500}
+							alt="Fourth slide"
+						/>
+						<Carousel.Caption>
+							<Card style={{ opacity: 0.8 }}>
+								<h3 style={{ color: 'black', fontWeight: 700, fontFamily: 'artifika' }}>
+									À sua disposição uma gama selecionada de frutos secos!
+								</h3>
+								<p style={{ color: 'black', fontWeight: 'bold', fontFamily: 'artifika' }}>
+									Experimente!
+								</p>
+							</Card>
+						</Carousel.Caption>
+					</Carousel.Item>
+					<Carousel.Item>
+						<img className="d-block w-100" src={images.kiwi} width={700} height={500} alt="Fifth slide" />
+						<Carousel.Caption>
+							<Card style={{ opacity: 0.8 }}>
+								<h3 style={{ color: 'black', fontWeight: 700, fontFamily: 'artifika' }}>
+									A melhor seleção de compotas e geleias!
+								</h3>
+								<p style={{ color: 'black', fontWeight: 'bold', fontFamily: 'artifika' }}>
+									Edição limitada, compre já!
+								</p>
+							</Card>
 						</Carousel.Caption>
 					</Carousel.Item>
 				</Carousel>
-				<h1 style={{ color: '#9B3939', textAlign: 'center', marginTop: 60 }}>Top Vendas Mensais</h1>
+				<h1 style={{ color: '#9B3939', textAlign: 'center', marginTop: 60, fontFamily: 'artifika' }}>
+					Top Vendas Mensais
+				</h1>
 				{categories?.map((category, index) => {
 					return (
 						<div key={index}>
-							<h1 style={{ color: '#9B3939' }}>{category}</h1>
+							<h1 style={{ color: '#9B3939', fontFamily: 'artifika' }}>{category}</h1>
 							<br />
-							<Row style={{ marginBottom: 40 }}>
+							<Row style={{ marginBottom: 40, fontFamily: 'artifika' }}>
 								<br />
 								{products
 									?.filter((x) => x.category === category)
@@ -331,7 +381,11 @@ export const Home: React.FC = () => {
 												<Card.ImgOverlay>
 													<div
 														className="text-right"
-														style={{ marginTop: -10, marginRight: -5 }}
+														style={{
+															marginTop: -10,
+															marginRight: -5,
+															fontFamily: 'artifika',
+														}}
 													>
 														<BsFillHeartFill
 															color="red"
@@ -349,22 +403,26 @@ export const Home: React.FC = () => {
 														display: 'flex',
 														flexDirection: 'column',
 														justifyContent: 'center',
+														fontFamily: 'artifika',
 													}}
 												>
 													<Card.Title
 														style={{
 															fontWeight: 600,
+															fontFamily: 'artifika',
 														}} /* onClick={() => handlegotodetail(product)} */
 													>
 														<i>{x.name}</i>
 													</Card.Title>
 													<Card.Text style={{ fontSize: 14 }}>
-														<span style={{ fontWeight: 600 }}>Preço: </span>
+														<span style={{ fontWeight: 600, fontFamily: 'artifika' }}>
+															Preço:{' '}
+														</span>
 														{x.price} €
 													</Card.Text>
 													<Button
 														variant="primary"
-														style={{ backgroundColor: '#9B3939' }}
+														style={{ backgroundColor: '#9B3939', fontFamily: 'artifika' }}
 														/* onClick={() => handleaddToCart(product) && handleModalOptionsCart} */
 													>
 														Adicionar ao Carrinho
