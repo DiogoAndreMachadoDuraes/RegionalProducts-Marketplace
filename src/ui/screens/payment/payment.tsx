@@ -178,7 +178,7 @@ export const Payment: React.FC = () => {
 							active
 							style={{
 								color: 'white',
-								backgroundColor: '#AAAA74',
+								backgroundColor: '#9B3939',
 								fontFamily: 'artifika',
 								marginLeft: 100,
 								marginTop: 40,
@@ -193,7 +193,7 @@ export const Payment: React.FC = () => {
 							active
 							style={{
 								color: 'white',
-								backgroundColor: '#444903',
+								backgroundColor: '#9B3939',
 								fontFamily: 'artifika',
 								marginLeft: 300,
 								marginTop: 40,

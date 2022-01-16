@@ -144,8 +144,9 @@ export const Confirmation: React.FC = () => {
 												style={{
 													fontSize: 24,
 													fontWeight: 'bold',
-													color: 'black',
+													color: 'white',
 													textDecoration: 'underline',
+													fontFamily: 'artifika',
 												}}
 											>
 												Confirmação
@@ -166,8 +167,18 @@ export const Confirmation: React.FC = () => {
 								</Col>
 								<Col sm={2}>
 									<Nav className="mr-auto">
-										<Nav.Link href="/payment">
-											<h3 style={{ fontSize: 18, color: 'black' }}>Pagamento</h3>
+										<Nav.Link href="/confirmation">
+											<h3
+												style={{
+													fontSize: 24,
+													fontWeight: 'bold',
+													color: 'white',
+													textDecoration: 'underline',
+													fontFamily: 'artifika',
+												}}
+											>
+												Pagamento
+											</h3>
 										</Nav.Link>
 									</Nav>
 								</Col>
@@ -284,7 +295,7 @@ export const Confirmation: React.FC = () => {
 									href="/ship"
 									variant="dark"
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#AAAA74' }}
+									style={{ color: 'white', backgroundColor: '#9B3939' }}
 								>
 									Voltar
 								</Button>
@@ -295,7 +306,7 @@ export const Confirmation: React.FC = () => {
 									/* onClick={createshop} */
 									variant="dark"
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#444903' }}
+									style={{ color: 'white', backgroundColor: '#9B3939' }}
 								>
 									Seguinte
 								</Button>
