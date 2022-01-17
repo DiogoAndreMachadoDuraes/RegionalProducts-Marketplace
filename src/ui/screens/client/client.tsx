@@ -82,7 +82,7 @@ export const ClientProfile: React.FC = () => {
 			<Row>
 				<Col sm={1} />
 				<Col sm={10}>
-					<h3 style={{ color: '#8A3535' }}>Informações da Conta</h3>
+					<h3 style={{ color: '#8A3535', fontFamily: 'artifika' }}>Informações da Conta</h3>
 				</Col>
 				<Col sm={1} />
 			</Row>
@@ -105,7 +105,7 @@ export const ClientProfile: React.FC = () => {
 					<Row>
 						<AiOutlineUser size="22" color="#8A3535" />
 						<h6 style={{ marginLeft: 5, fontSize: 16 }}>
-							<span style={{ fontWeight: 'bold' }}>Nome:</span> {client.name}
+							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Nome:</span> {client.name}
 						</h6>
 					</Row>
 				</Col>
@@ -114,7 +114,8 @@ export const ClientProfile: React.FC = () => {
 					<Row>
 						<MdDateRange size="22" color="#8A3535" />
 						<h5 style={{ marginLeft: 7, fontSize: 16 }}>
-							<span style={{ fontWeight: 'bold' }}>Data de nascimento:</span> {client.birthday}
+							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Data de nascimento:</span>{' '}
+							{client.birthday}
 						</h5>
 					</Row>
 				</Col>
@@ -125,7 +126,8 @@ export const ClientProfile: React.FC = () => {
 					<Row>
 						<AiFillCreditCard size="22" color="#8A3535" />
 						<h5 style={{ marginLeft: 8, fontSize: 16 }}>
-							<span style={{ fontWeight: 'bold' }}>Número de contribuinte:</span> {client.tin}
+							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Número de contribuinte:</span>{' '}
+							{client.tin}
 						</h5>
 					</Row>
 				</Col>
@@ -134,7 +136,8 @@ export const ClientProfile: React.FC = () => {
 					<Row>
 						<AiFillPhone size="22" color="#8A3535" />
 						<h5 style={{ marginLeft: 5, fontSize: 16 }}>
-							<span style={{ fontWeight: 'bold' }}>Contacto:</span> {client.telephone}
+							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Contacto:</span>{' '}
+							{client.telephone}
 						</h5>
 					</Row>
 				</Col>
@@ -145,7 +148,7 @@ export const ClientProfile: React.FC = () => {
 					<Row>
 						<FaMapSigns size="22" color="#8A3535" />
 						<h5 style={{ marginLeft: 8, fontSize: 16 }}>
-							<span style={{ fontWeight: 'bold' }}>Morada:</span> {client.address}
+							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Morada:</span> {client.address}
 						</h5>
 					</Row>
 				</Col>
@@ -154,7 +157,8 @@ export const ClientProfile: React.FC = () => {
 					<Row>
 						<IoLocationOutline size="22" color="#8A3535" />
 						<h5 style={{ marginLeft: 5, fontSize: 16 }}>
-							<span style={{ fontWeight: 'bold' }}>Código Postal:</span> {client.postal_code}
+							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Código Postal:</span>{' '}
+							{client.postal_code}
 						</h5>
 					</Row>
 				</Col>
@@ -165,8 +169,8 @@ export const ClientProfile: React.FC = () => {
 					<Row>
 						<BsFillPinMapFill size="22" color="#8A3535" style={{ color: '#8A3535' }} />
 						<h5 style={{ marginLeft: 8, fontSize: 16 }}>
-							<span style={{ fontWeight: 'bold' }}>Localidade:</span> {/* {client.locality}, */}{' '}
-							{client.country}
+							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Localidade:</span>{' '}
+							{/* {client.locality}, */} {client.country}
 						</h5>
 					</Row>
 				</Col>
@@ -175,7 +179,7 @@ export const ClientProfile: React.FC = () => {
 					<Row>
 						<AiOutlineMail size="22" color="#8A3535" />
 						<h5 style={{ marginLeft: 7, fontSize: 16 }}>
-							<span style={{ fontWeight: 'bold' }}>Email:</span> {client.email}
+							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Email:</span> {client.email}
 						</h5>
 					</Row>
 				</Col>
@@ -190,6 +194,7 @@ export const ClientProfile: React.FC = () => {
 							color: '#9B3939',
 							backgroundColor: 'white',
 							fontWeight: 'bold',
+							fontFamily: 'artifika',
 						}}
 					>
 						Editar dados
@@ -202,6 +207,7 @@ export const ClientProfile: React.FC = () => {
 						style={{
 							color: 'white',
 							backgroundColor: '#8A3535',
+							fontFamily: 'artifika',
 						}}
 					>
 						Eliminar conta

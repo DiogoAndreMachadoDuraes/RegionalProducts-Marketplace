@@ -225,7 +225,7 @@ export const ConfirmationOrder: React.FC = () => {
 								href="/ship"
 								variant="dark"
 								size="lg"
-								style={{ color: 'white', backgroundColor: '#AAAA74' }}
+								style={{ color: 'white', backgroundColor: '#9B3939' }}
 							>
 								Voltar
 							</Button>
@@ -236,7 +236,7 @@ export const ConfirmationOrder: React.FC = () => {
 								onClick={() => createshop()}
 								variant="dark"
 								size="lg"
-								style={{ color: 'white', backgroundColor: '#444903' }}
+								style={{ color: 'white', backgroundColor: '#9B3939' }}
 							>
 								Seguinte
 							</Button>

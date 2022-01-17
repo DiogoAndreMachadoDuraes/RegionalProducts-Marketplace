@@ -32,11 +32,6 @@ export const Ship: React.FC = () => {
 				<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
 					<Container fluid color="black">
 						<Row id="row">
-							<Col sm={3}>
-								<Navbar.Brand>
-									<Image src={images.logo} />
-								</Navbar.Brand>
-							</Col>
 							<Col sm={1}>
 								<Nav className="mr-auto">
 									<Nav.Link href="/ship">
@@ -44,8 +39,9 @@ export const Ship: React.FC = () => {
 											style={{
 												fontSize: 24,
 												fontWeight: 'bold',
-												color: 'black',
+												color: 'white',
 												textDecoration: 'underline',
+												fontFamily: 'artifika',
 											}}
 										>
 											Envio
@@ -67,7 +63,9 @@ export const Ship: React.FC = () => {
 							<Col sm={1.5}>
 								<Nav className="mr-auto">
 									<Nav.Link href="/confirmation">
-										<h3 style={{ fontSize: 18, color: 'black' }}>Confirmação</h3>
+										<h3 style={{ fontSize: 18, color: 'white', fontFamily: 'artifika' }}>
+											Confirmação
+										</h3>
 									</Nav.Link>
 								</Nav>
 							</Col>
@@ -99,7 +97,9 @@ export const Ship: React.FC = () => {
 						<Col sm={1}></Col>
 						<Col sm={6}>
 							{' '}
-							<h4 style={{ color: '#000000', fontWeight: 'bold', fontSize: 30 }}>Envio</h4>
+							<h4 style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 30, fontFamily: 'artifika' }}>
+								Envio
+							</h4>
 						</Col>
 						<Col sm={4}>
 							{' '}
@@ -132,7 +132,7 @@ export const Ship: React.FC = () => {
 											/>
 										</td>
 										<th>
-											<h4 style={{ fontWeight: 'bold', fontSize: 18 }}>
+											<h4 style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'artifika' }}>
 												Onde devemos entregar a tua encomenda?{' '}
 											</h4>
 										</th>
@@ -142,14 +142,20 @@ export const Ship: React.FC = () => {
 								<tbody>
 									<tr>
 										<th>
-											<h4 style={{ fontSize: 16, fontWeight: 'bold' }}>Endereço atual:</h4>
+											<h4 style={{ fontSize: 16, fontWeight: 'bold', fontFamily: 'artifika' }}>
+												Endereço atual:
+											</h4>
 										</th>
 										<td>{/* 	{client.street} - {client.locality} */}</td>
 										<td>
 											<Button
 												href="/editclient"
 												variant="dark"
-												style={{ color: 'white', backgroundColor: '#AAAA74' }}
+												style={{
+													color: 'white',
+													backgroundColor: '#9B3939',
+													fontFamily: 'artifika',
+												}}
 											>
 												Editar
 											</Button>
@@ -172,6 +178,7 @@ export const Ship: React.FC = () => {
 								textAlign: 'center',
 								color: '#2f3300',
 								fontWeight: 'bold',
+								fontFamily: 'artifika',
 							}}
 						>
 							Método de envio:{' '}
@@ -191,7 +198,7 @@ export const Ship: React.FC = () => {
 							</Col>
 
 							<Col>
-								<h6 style={{ textAlign: 'left', alignItems: 'center' }}>
+								<h6 style={{ textAlign: 'left', alignItems: 'center', fontFamily: 'artifika' }}>
 									Entrega em 3-4 dias úteis na morada indicada. Para garantirmos a entrega da tua
 									encomenda verifica se o contacto está correto: +351912312096
 								</h6>
@@ -204,6 +211,7 @@ export const Ship: React.FC = () => {
 										fontWeight: 'bold',
 										textAlign: 'center',
 										alignItems: 'center',
+										fontFamily: 'artifika',
 									}}
 								>
 									Custo de envio: 4,99€
@@ -229,7 +237,7 @@ export const Ship: React.FC = () => {
 									href="/cart"
 									variant="dark"
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#AAAA74' }}
+									style={{ color: '#9B3939', backgroundColor: 'white', fontFamily: 'artifika' }}
 								>
 									Voltar
 								</Button>
@@ -240,7 +248,7 @@ export const Ship: React.FC = () => {
 									href="/confirmation"
 									variant="dark"
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#444903' }}
+									style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}
 								>
 									Seguinte
 								</Button>

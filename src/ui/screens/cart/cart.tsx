@@ -143,10 +143,10 @@ const onSub = (index: any) => {
 						<Col sm={5} style={{ marginTop: 35 }}>
 							<Row id="row">
 								<Col sm={2}>
-									<AiOutlineShoppingCart size="40" color="#444903" />
+									<AiOutlineShoppingCart size="40" color="#9B3939" />
 								</Col>
 								<Col sm={8}>
-									<h4 style={{ color: '#AAAA74' }}>Carrinho de compras</h4>
+									<h4 style={{ color: '#9B3939', fontFamily: 'artifika' }}>Carrinho de compras</h4>
 								</Col>
 								<Col sm={2} />
 							</Row>
@@ -155,7 +155,7 @@ const onSub = (index: any) => {
 						<Col sm={3} style={{ marginTop: 35 }}>
 							<Row id="row">
 								<Col sm={2}>
-									<AiFillDelete size="30" color="#444903" />
+									<AiFillDelete size="30" color="#9B3939" />
 								</Col>
 								<Col sm={10}>
 									<Button
@@ -164,8 +164,9 @@ const onSub = (index: any) => {
 										onClick={handleShowDelete}
 										style={{
 											backgroundColor: 'white',
-											color: '#AAAA74',
+											color: '#9B3939',
 											fontSize: 17,
+											fontFamily: 'artifika',
 										}}
 									>
 										Esvaziar carrinho
@@ -187,6 +188,7 @@ const onSub = (index: any) => {
 									alignItems: 'center',
 									justifyContent: 'center',
 									textAlign: 'center',
+									fontFamily: 'artifika',
 								}}
 							>
 								<thead style={{ width: 10 }}>
@@ -205,6 +207,7 @@ const onSub = (index: any) => {
 														marginTop: 25,
 														marginBottom: 25,
 														fontWeight: 'normal',
+														fontFamily: 'artifika',
 													}}
 												>
 													O seu carrinho de compras encontra-se vazio, adicione produtos ao
@@ -219,17 +222,23 @@ const onSub = (index: any) => {
 													<td>
 														<Image src={item.photo_product} width="80" height="150" />
 													</td>
-													<td style={{ fontSize: 22, textAlign: 'center' }}>
+													<td
+														style={{
+															fontSize: 22,
+															textAlign: 'center',
+															fontFamily: 'artifika',
+														}}
+													>
 														<AiFillMinusCircle
 															size="28"
 															/*  onClick={() => onSub(index)} */
-															style={{ marginRight: 10, color: '#444903' }}
+															style={{ marginRight: 10, color: '#9B3939' }}
 														/>
 														{/* {products?[index].quantity_product} */}
 														<AiFillPlusCircle
 															size="28"
 															/*   onClick={() => onAdd(index)} */
-															style={{ marginLeft: 10, color: '#444903' }}
+															style={{ marginLeft: 10, color: '#9B3939' }}
 														/>
 													</td>
 													<td style={{ fontSize: 18, textAlign: 'center' }}>
@@ -248,11 +257,12 @@ const onSub = (index: any) => {
 												fontSize: 22,
 												fontWeight: 'bold',
 												textAlign: 'center',
+												fontFamily: 'artifika',
 											}}
 										>
 											Total:{' '}
 										</td>
-										<td style={{ fontSize: 20, textAlign: 'center' }}>
+										<td style={{ fontSize: 20, textAlign: 'center', fontFamily: 'artifika' }}>
 											{/* {totalPrice} */} 4.55 €
 										</td>
 									</tr>
@@ -270,7 +280,7 @@ const onSub = (index: any) => {
 								href="/home"
 								variant="dark"
 								size="lg"
-								style={{ backgroundColor: 'white', color: 'black' }}
+								style={{ backgroundColor: 'white', color: 'black', fontFamily: 'artifika' }}
 							>
 								Voltar
 							</Button>
@@ -283,7 +293,7 @@ const onSub = (index: any) => {
 								variant="dark"
 								size="lg"
 								/* onClick={goTo} */
-								style={{ color: 'white', backgroundColor: '#AAAA74' }}
+								style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}
 							>
 								Comprar
 							</Button>

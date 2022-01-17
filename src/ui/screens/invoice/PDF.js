@@ -18,7 +18,7 @@ const PDF = (props) => {
 								marginLeft: 600,
 								marginTop: 0,
 								fontFamily: 'artifika',
-								backgroundColor: '#AAAA74',
+								backgroundColor: '#9B3939',
 								color: 'white',
 							}}
 						>
@@ -31,12 +31,12 @@ const PDF = (props) => {
 			<div className="Invoice" ref={ref} style={{ width: 800, height: 800, marginTop: 50 }}>
 				<Row id="row" style={{ marginTop: 30 }}>
 					<Col sm={1} />
-					<Col sm={11} style={{ color: '444903', fontFamily: 'artifika' }}>
+					<Col sm={11} style={{ color: '#9B3939', fontFamily: 'artifika' }}>
 						<Row id="row">
 							<Col sm={1}>
 								<FaFileInvoice size="30" style={{ color: 'black' }} />
 							</Col>
-							<Col sm={3} style={{ color: '#AAAA74', fontFamily: 'artifika' }}>
+							<Col sm={3} style={{ color: '#9B3939', fontFamily: 'artifika' }}>
 								<h3> Fatura </h3>
 							</Col>
 							<Col sm={8} />
@@ -99,7 +99,7 @@ const PDF = (props) => {
 				</Row>
 				<Row id="row" style={{ marginTop: 20 }}>
 					<Col sm={12}>
-						<hr style={{ backgroundColor: '#AAAA74', height: 5, width: 700 }} />
+						<hr style={{ backgroundColor: '#9B3939', height: 5, width: 700 }} />
 					</Col>
 				</Row>
 				<Row id="row" style={{ textAlign: 'center' }}>
@@ -144,7 +144,7 @@ const PDF = (props) => {
 				</Row>
 				<Row id="row">
 					<Col sm={12}>
-						<hr style={{ backgroundColor: '#AAAA74', height: 5, width: 700 }} />
+						<hr style={{ backgroundColor: '#9B3939', height: 5, width: 700 }} />
 					</Col>
 				</Row>
 				<Row id="row" style={{ marginTop: 20 }}>
