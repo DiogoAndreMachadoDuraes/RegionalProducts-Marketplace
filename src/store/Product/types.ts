@@ -5,9 +5,12 @@ export enum ProductActions {
 
 export interface Product {
 	id: string;
+	_id: {
+		$oid: string;
+	};
 	category: string;
 	email_producer: string;
-	harvest_date: string;
+	harvest: string;
 	id_producer: number;
 	logo_producer: string;
 	name: string;
@@ -21,13 +24,11 @@ export interface Product {
 
 export type ProductState = {
 	products: Product[];
-	/* categories: string[]; */
 };
 
 export type ProductAction = {
 	type: string;
 	product: Product;
-	/* category: string; */
 };
 
 export type DispatchTypeProduct = (args: ProductAction) => ProductAction;

@@ -2,9 +2,13 @@ import React from 'react';
 import { Nav, Navbar, Dropdown, NavDropdown } from 'react-bootstrap';
 import { TiShoppingCart } from 'react-icons/ti';
 import { useHistory, Link } from 'react-router-dom';
+import { StoreState } from 'store';
+import { useSelector } from 'react-redux';
 
 export const HeaderClient: React.FC = () => {
 	const history = useHistory();
+
+	const categories = useSelector((state: StoreState) => state.categories.categories);
 
 	return (
 		<>
@@ -19,27 +23,16 @@ export const HeaderClient: React.FC = () => {
 						id="collasible-nav-dropdown"
 						style={{ color: 'white' }}
 					>
-						{/* {
-							data.map((item, index) => {
-								return(
-										<Dropdown.Header>{item.category}</Dropdown.Header>
-										<Dropdown.Item href="/product/:categoryolive/virgin" eventKey="1">{item.type}</Dropdown.Item>
-										<Dropdown.Item href="/product/olive/extravirgin" eventKey="2">{item.type}</Dropdown.Item>
-										<Dropdown.Item href="/product/olive/flavor" eventKey="3">{item.type}</Dropdown.Item>
-										<Dropdown.Divider />
-									);
-								})
-						} */}
-
-						<Dropdown.Item onClick={() => history.push('/product/olive/virgin')} eventKey="1">
-							Mel
-						</Dropdown.Item>
-						<Dropdown.Item href="/product/olive/extravirgin" eventKey="2">
-							Compotas
-						</Dropdown.Item>
-						<Dropdown.Item href="/product/olive/flavor" eventKey="3">
-							Frutos Secos
-						</Dropdown.Item>
+						{categories.map((item, index) => {
+							return (
+								<Dropdown.Item
+									onClick={() => history.push('/product/' + item)}
+									eventKey={index.toString()}
+								>
+									{item}
+								</Dropdown.Item>
+							);
+						})}
 					</NavDropdown>
 					<Nav.Link onClick={() => history.push('/favorites')} style={{ color: 'white' }}>
 						Favoritos

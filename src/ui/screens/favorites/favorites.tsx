@@ -15,7 +15,7 @@ interface Product {
 	id: string;
 	category: string;
 	email_producer: string;
-	harvest_date: string;
+	harvest: string;
 	id_producer: number;
 	logo_producer: string;
 	name: string;

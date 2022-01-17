@@ -22,7 +22,7 @@ import {
 	ClientList,
 	ProducerList,
 	ProductList,
-	Product,
+	ProductPage as Product,
 	Order,
 	DashboardAdmin,
 	DashboardProducer,
@@ -61,12 +61,12 @@ export const App: React.FC = () => {
 							<Route exact path="/cookiesPolitics" component={CookiesPolitics} />
 							<Route exact path="/privacityPolitics" component={PrivacityPolitics} />
 							<Route exact path="/frequentTask" component={FrequentTask} />
-							<Route exact path="/productDetail" component={ProductDetail} />
+							<Route exact path="/productDetail/:id" component={ProductDetail} />
 							<Route exact path="/register" component={Register} />
 							<Route exact path="/clientlist" component={ClientList} />
 							<Route exact path="/producerlist" component={ProducerList} />
 							<Route exact path="/productlist" component={ProductList} />
-							<Route exact path="/product" component={Product} />
+							<Route exact path="/product/:category" component={Product} />
 							<Route exact path="/order" component={Order} />
 							<Route exact path="/dashboardadmin" component={DashboardAdmin} />
 							<Route exact path="/dashboardproducer" component={DashboardProducer} />

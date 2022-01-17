@@ -3,66 +3,51 @@ import { Card, Container, Button, Modal, Row, Carousel } from 'react-bootstrap';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 /* import { useHistory } from 'react-router-dom'; */
-import { StoreState, productList /* , getCategories */ } from 'store';
+import { StoreState, productList, categoryList, Product } from 'store';
 import { images } from 'assets';
 import axios from 'axios';
 
-interface Product {
-	id: string;
-	category: string;
-	email_producer: string;
-	harvest_date: string;
-	id_producer: number;
-	logo_producer: string;
-	name: string;
-	name_producer: string;
-	photo: string;
-	price: number;
-	quantity: number;
-	stock: number;
-	validity: string;
-}
-
 export const Home: React.FC = () => {
-	const productsList = useSelector((state: StoreState) => state.products.products);
+	const productsList: Product[] = useSelector((state: StoreState) => state.products.products);
+	const categoriesList = useSelector((state: StoreState) => state.categories.categories);
+
 	/* const history = useHistory(); */
 
 	const dispatch = useDispatch();
 	const [showModalOptionsFavorites /* , setShowModalOptionsFavorites */] = useState(false);
 	const [showModalOptionsCart /* , setShowModalOptionsCart */] = useState(false);
 	const [products, setProducts] = useState<Product[]>(productsList);
-	const [categories, setCategories] = useState<string[]>();
-
-	const getAllCategories = () => {
-		let categoriesRepeted: string[] = [];
-
-		products.map((x, index) => (categoriesRepeted[index] = x.category));
-
-		let categories = categoriesRepeted.filter(function (el, i) {
-			return categoriesRepeted.indexOf(el) === i;
-		});
-
-		setCategories(categories);
-	};
+	const [categories, setCategories] = useState<string[]>(categoriesList);
 
 	useEffect(() => {
 		const fecthAPI = async () => {
-			if (productsList.length === 0) {
-				try {
-					axios.get(`http://127.0.0.1:5000/productslist`).then((res) => {
-						const products = res.data;
-						setProducts(products);
-						dispatch(productList(products));
+			try {
+				await axios.get(`http://127.0.0.1:5000/productslist`).then((res) => {
+					const products = res.data;
+					console.log(products);
+					setProducts(products);
+					products.forEach((x: Product) => {
+						dispatch(productList(x));
 					});
-				} catch (e) {
-					console.log('Error rending data: ' + e);
-				}
+					let categoriesRepeted: string[] = [];
+
+					products?.map((x: Product, index: number) => (categoriesRepeted[index] = x.category));
+
+					let categories = categoriesRepeted.filter(function (el, i) {
+						return categoriesRepeted.indexOf(el) === i;
+					});
+
+					setCategories(categories);
+					dispatch(categoryList(categories));
+				});
+			} catch (e) {
+				console.log('Error rending data: ' + e);
 			}
 		};
-		fecthAPI();
-		getAllCategories();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch, productsList]);
+		if (productsList.length === 0) {
+			fecthAPI();
+		}
+	}, []);
 
 	/* const handlegotodetail = () => {
 		history.push('/productDetail'); */

@@ -1,4 +1,4 @@
 export * from './store';
 export * from './User';
-/* export * from './Modal'; */
+export * from './Category';
 export * from './Product';
