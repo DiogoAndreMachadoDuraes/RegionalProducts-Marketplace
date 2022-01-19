@@ -7,17 +7,14 @@ export const HeaderProducer: React.FC = () => {
 
 	return (
 		<>
-			<Nav.Link onClick={() => history.push('/dashboardadmin')} style={{ color: 'white', marginLeft: 20 }}>
+			<Nav.Link onClick={() => history.push('/dashboardProducer')} style={{ color: 'white', marginLeft: 20 }}>
 				Home
 			</Nav.Link>
-			<Nav.Link onClick={() => history.push('/producerlist')} style={{ color: 'white' }}>
-				Produtores
-			</Nav.Link>
-			<Nav.Link onClick={() => history.push('/productlist')} style={{ color: 'white' }}>
+			<Nav.Link onClick={() => history.push('/productListProducer')} style={{ color: 'white' }}>
 				Produtos
 			</Nav.Link>
-			<Nav.Link onClick={() => history.push('/clientlist')} style={{ color: 'white' }}>
-				Clientes
+			<Nav.Link onClick={() => history.push('/producerOrder')} style={{ color: 'white' }}>
+				Encomendas
 			</Nav.Link>
 		</>
 	);
