@@ -23,7 +23,7 @@ export const Loader: React.FC = () => {
 			}}
 		>
 			<Spinner animation="border" />
-			<span style={{ textAlign: 'center', marginTop: 8, fontSize: 20 }}>Loading...</span>
+			<span style={{ textAlign: 'center', marginTop: 8, fontSize: 20, fontFamily: 'artifika' }}>Loading...</span>
 		</div>
 	) : (
 		<ErrorPage />

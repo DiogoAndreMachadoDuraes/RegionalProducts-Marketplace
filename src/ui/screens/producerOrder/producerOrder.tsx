@@ -18,20 +18,13 @@ export const ProducerOrder: React.FC = () => {
 		<>
 			<div>
 				<Row id="row">
-					<Col sm={2} />
-					<Col sm={7} style={{ color: '444903', fontFamily: 'artifika' }}>
-						<AiOutlineDropbox size="40" style={{ color: 'black', marginLeft: 20, marginTop: 50 }} />
-					</Col>
-					<Col sm={3} />
-				</Row>
-				<Row id="row">
 					<Col sm={1} />
 					<Col
 						sm={8}
 						style={{
-							color: '#AAAA74',
+							color: '#9B3939',
 							fontFamily: 'artifika',
-							marginTop: -35,
+							marginTop: 35,
 							marginLeft: 40,
 						}}
 					>
@@ -47,9 +40,9 @@ export const ProducerOrder: React.FC = () => {
 								<div className="col-md-4">
 									<Col>
 										<Image
-											/* src={images.gallo} */
+											src={images.mel}
 											thumbnail
-											style={{ marginTop: 10, width: 130, height: 120 }}
+											style={{ marginTop: 5, marginLeft: 20, width: 100, height: 100 }}
 										/>
 									</Col>
 								</div>
@@ -143,9 +136,9 @@ export const ProducerOrder: React.FC = () => {
 								<div className="col-md-4">
 									<Col>
 										<Image
-											/* src={images.compota} */
+											src={images.presunto}
 											thumbnail
-											style={{ marginTop: 10, width: 130, height: 120 }}
+											style={{ marginTop: 5, marginLeft: 20, width: 100, height: 100 }}
 										/>
 									</Col>
 								</div>
@@ -239,9 +232,9 @@ export const ProducerOrder: React.FC = () => {
 								<div className="col-md-4">
 									<Col>
 										<Image
-											/* 		src={images.mateus} */
+											src={images.granolaSemAcucar}
 											thumbnail
-											style={{ marginTop: 10, width: 130, height: 120 }}
+											style={{ marginTop: 5, marginLeft: 20, width: 100, height: 100 }}
 										/>
 									</Col>
 								</div>
