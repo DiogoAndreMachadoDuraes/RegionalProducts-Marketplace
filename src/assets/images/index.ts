@@ -13,12 +13,11 @@ import logoFerCarnes from './logo_fercarnes.png';
 import logo from './logo.jpg';
 import logoExpanded from './logoExpanded.jpg';
 import maxResDefault from './maxresdefault.jpg';
-import mb from './mb.png';
 import mbway from './mbway.png';
+import mb from './mb.png';
 import mel from './mel.jpg';
 import mix from './mix.jpg';
 import morango from './morango.jpeg';
-import paypal from './paypal.png';
 import peach from './peach.jpg';
 import presunto from './presunto.jpg';
 import producer from './producer.jpg';
@@ -33,6 +32,12 @@ import cereja from './cereja.jpg';
 import stepOne from './stepOne.svg';
 import stepTwo from './stepTwo.svg';
 import stepThree from './stepThree.svg';
+import multibanco from './multibanco.svg';
+import paypal from './paypal.svg';
+import p from './p.png';
+import m from './m.png';
+import truck from './truck.svg';
+import shopBag from './shopBag.svg';
 
 export const images = {
 	alheira,
@@ -49,12 +54,11 @@ export const images = {
 	logoFerCarnes,
 	logo,
 	maxResDefault,
-	mb,
 	mbway,
 	mel,
 	mix,
 	morango,
-	paypal,
+	mb,
 	peach,
 	presunto,
 	producer,
@@ -70,4 +74,10 @@ export const images = {
 	stepOne,
 	stepTwo,
 	stepThree,
+	multibanco,
+	paypal,
+	m,
+	p,
+	truck,
+	shopBag,
 };

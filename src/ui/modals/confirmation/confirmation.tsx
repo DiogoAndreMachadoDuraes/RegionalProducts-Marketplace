@@ -7,15 +7,17 @@ import { images } from 'assets';
 import axios from 'axios';
 import moment from 'moment';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'store';
 
 interface Client {
+	/* 	id_client: { $oid: string }; */
 	name: string;
 	locality: string;
 	postalCode: string;
 	street: string;
 	tin: string;
 }
-
 interface Products {
 	photo_product: string;
 	name_product: string;
@@ -29,14 +31,14 @@ export const Confirmation: React.FC = () => {
 	const [client, setClient] = useState<Client>({ name: '', locality: '', postalCode: '', street: '', tin: '' });
 	const [isLoading, setIsLoading] = useState(false);
 	const [totalPrice, setTotalPrice] = useState(4.99);
-
+	const [empty, setEmpty] = useState(true);
 	const history = useHistory();
-
+	const token = useSelector((state: StoreState) => state.common.user.token);
 	const handleClose = () => setShow(false);
 
-	/* useEffect(() => {
+	/*  useEffect(() => {
 		try {
-			let response = await fetch('http://127.0.0.1:5000/cart/client/' + userId, {
+			let response = await fetch('http://127.0.0.1:5000/cart/client/' userId , {
 				headers: {
 					Authorization: 'Bearer ' + token,
 					Accept: 'application/json',
@@ -64,10 +66,10 @@ export const Confirmation: React.FC = () => {
 		const config = {
 			headers: { Authorization: `Bearer ${token}` },
 		};
-		axios.get(`http://127.0.0.1:5000/client/${userId}`, config).then((res) => {
+		axios.get('' */ /* `http://127.0.0.1:5000/client/${userId}` */ /* , config).then((res) => {
 			const client = res.data;
-			this.setState({ client });
-			this.setState({
+			setClient(client); */
+	/* setState({
 				name: client.name,
 				tin: client.tin,
 				birthday: client.birthday,
@@ -79,236 +81,160 @@ export const Confirmation: React.FC = () => {
 				email: client.email,
 				password: client.password,
 				state: client.state,
-			});
-		});
+			}); */
+	/* 	});
 	}, [input]); */
 
-	/* const createshop = () => {
-		axios
-			.post(`http://127.0.0.1:5000/shop`, {
-				country_client: '',
-				date: moment().format('YYYY/MM/DD HH:mm:ss'),
-				doc_invoice: '',
-				hour: moment().format('YYYY/MM/DD HH:mm:ss'),
-				id_client: userId,
-				id_producer: '',
-				locality_client: client.locality,
-				name_client: client.name,
-				postal_code_client: client.postalCode,
-				price: totalPrice,
-				quantity: '',
-				street_client: client.street,
-				tax: 23,
-				tin_client: client.tin,
-				vat: '',
-				rate: '',
-				products: products,
-			})
-			.then(history.push('/payment'));
-	}; */
+	const createShop = () => {
+		axios.post(`http://127.0.0.1:5000/shop`, {
+			country_client: '',
+			date: moment().format('YYYY/MM/DD HH:mm:ss'),
+			doc_invoice: '',
+			hour: moment().format('YYYY/MM/DD HH:mm:ss'),
+			id_client: '',
+			id_producer: '',
+			locality_client: client.locality,
+			name_client: client.name,
+			postal_code_client: client.postalCode,
+			price: totalPrice,
+			quantity: '',
+			street_client: client.street,
+			tax: 23,
+			tin_client: client.tin,
+			vat: '',
+			rate: '',
+			products: products,
+		});
+		history.push('/payment');
+	};
 
 	return (
-		<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} centered={true}>
+		<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} centered={true} size="lg">
 			<Modal.Body>
 				<div>
-					<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
-						<Container fluid color="black">
-							<Row id="row">
-								<Col sm={3}>
-									<Navbar.Brand>
-										<Image src={images.logo} />
-									</Navbar.Brand>
-								</Col>
-								<Col sm={1}>
-									<Nav className="mr-auto">
-										<Nav.Link href="/ship">
-											<h3 style={{ fontSize: 18, color: 'black' }}>Envio</h3>
-										</Nav.Link>
-									</Nav>
-								</Col>
-								<Col>
-									<hr
-										style={{
-											color: '#000000',
-											backgroundColor: '#000000',
-											height: 0.5,
-											borderColor: '#000000',
-											width: 200,
-										}}
-									></hr>
-								</Col>
-								<Col sm={1.5}>
-									<Nav className="mr-auto">
-										<Nav.Link href="/confirmation">
-											<h3
-												style={{
-													fontSize: 24,
-													fontWeight: 'bold',
-													color: 'white',
-													textDecoration: 'underline',
-													fontFamily: 'artifika',
-												}}
-											>
-												Confirmação
-											</h3>
-										</Nav.Link>
-									</Nav>
-								</Col>
-								<Col>
-									<hr
-										style={{
-											color: '#000000',
-											backgroundColor: '#000000',
-											height: 0.5,
-											borderColor: '#000000',
-											width: 200,
-										}}
-									></hr>
-								</Col>
-								<Col sm={2}>
-									<Nav className="mr-auto">
-										<Nav.Link href="/confirmation">
-											<h3
-												style={{
-													fontSize: 24,
-													fontWeight: 'bold',
-													color: 'white',
-													textDecoration: 'underline',
-													fontFamily: 'artifika',
-												}}
-											>
-												Pagamento
-											</h3>
-										</Nav.Link>
-									</Nav>
-								</Col>
-
-								<Col sm={1} />
-							</Row>
-						</Container>
-					</Navbar>
-					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-						<Row style={{ marginTop: 35 }}>
-							<Col sm={1}></Col>
-							<Col sm={6}>
-								{' '}
-								<h4 style={{ fontSize: 30, color: '#000000', fontWeight: 'bold' }}>Confirmação </h4>
-							</Col>
-							<Col sm={4}>
-								{' '}
-								<InputGroup className="mb-3"></InputGroup>
-							</Col>
-						</Row>
-					</Tab.Container>
+					<Row id="row"></Row>
+					<div style={{ flexDirection: 'row', display: 'flex', marginLeft: '10px' }}>
+						<Image src={images.stepTwo} />
+						<h1
+							style={{
+								marginLeft: '20px',
+								fontWeight: 'bold',
+								color: '#8A3535',
+								fontFamily: 'artifika',
+								marginTop: '10px',
+							}}
+						>
+							Confirmar Compra
+						</h1>
+					</div>
+					<div style={{ height: 1, backgroundColor: '#8A3535', marginTop: '20px' }}></div>
+					<br />
+					<br />
 					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
 						<Row id="row">
 							<Col sm={1} />
 							<Col sm={10}>
-								<Table
-									size="20"
-									style={{
-										marginTop: 50,
-										alignItems: 'center',
-										justifyContent: 'center',
-										textAlign: 'center',
-									}}
-								>
-									<thead style={{ width: 10 }}>
-										<tr>
-											<td align="center">
-												<Image
-													src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGO2wiPfU15-zOiYMeoKZwYhtpAU4mxDscILYdNxCJl8pRdcxaaVLnFsV-H3p7Av2ruMk&usqp=CAU"
-													width="45"
-													height="45"
-												/>
-											</td>
-											<th>
-												<h4 style={{ fontWeight: 'bold', fontSize: 20 }}>
-													Verifica e confirma a tua encomenda
-												</h4>
-											</th>
-											<td></td>
-										</tr>
-									</thead>
-									<tbody>
+								<div style={{ flexDirection: 'row', display: 'flex' }}>
+									<Image src={images.truck} width="85" height="85" />
+									<h4
+										style={{
+											fontWeight: 'bold',
+											fontSize: 16,
+											fontFamily: 'artifika',
+											marginTop: 20,
+											marginLeft: 10,
+										}}
+									>
+										Rua Doutor Francisco Dias da Cunha, nº40, 1ºEsquerdo
+									</h4>
+									<h4
+										style={{
+											fontWeight: 'bold',
+											fontSize: 14,
+											fontFamily: 'artifika',
+											marginTop: 45,
+											marginLeft: -380,
+										}}
+									>
+										4610-282 Felgueiras
+									</h4>
+								</div>
+								<br />
+								<br />
+								<div style={{ flexDirection: 'row', display: 'flex', marginLeft: 30 }}>
+									<Image src={images.shopBag} width="50" height="50" />
+
+									<h4
+										style={{
+											fontWeight: 'bold',
+											fontSize: 18,
+											fontFamily: 'artifika',
+											marginTop: 10,
+											marginLeft: 12,
+										}}
+									>
+										Cesto de Compras
+									</h4>
+								</div>
+								{products.map((item) => {
+									return (
 										<tr>
 											<td align="right">
-												<Image
-													src="https://i.pinimg.com/originals/09/8f/6c/098f6c69aaeda7d34e245cc9ed942e8e.png"
-													width="45"
-													height="45"
-												/>
+												<Image src={item.photo_product} width="60" height="65" />
 											</td>
-											<td>
-												{client.street} - {client.locality}
-											</td>
-											<td>4,99€</td>
+											<td>{item.name_product}</td>
+											<td>{item.price_product}€</td>
 										</tr>
-										<tr>
-											<td align="center">
-												{' '}
-												<Image
-													src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLFZSCb7TuZPnO_zBvAfQ3K4VW2S1P9MZ0gKYTvRM4EsAEseKUtpaqdJrhw7UdUJpscCU&usqp=CAU"
-													width="45"
-													height="45"
-												/>
-											</td>
-											<td>
-												<h4 style={{ fontSize: 18, fontWeight: 'bold' }}>Artigos Comprados</h4>
-											</td>
-											<td></td>
-										</tr>
-
-										{products.map((item) => {
-											return (
-												<tr>
-													<td align="right">
-														{' '}
-														<Image src={item.photo_product} width="60" height="65" />
-													</td>
-													<td>{item.name_product}</td>
-													<td>{item.price_product}€</td>
-												</tr>
-											);
-										})}
-
-										<tr>
-											<th style={{ textAlign: 'right' }}>
-												<h4 style={{ fontSize: 22, fontWeight: 'bold' }}>TOTAL</h4>
-											</th>
-											<td></td>
-											<th>
-												<h4 style={{ fontSize: 22, fontWeight: 'bold' }}>{totalPrice}€ </h4>
-											</th>
-										</tr>
-									</tbody>
-								</Table>
+									);
+								})}
+								<br />
+								<br />
+								<br />
+								<div style={{ flexDirection: 'row', display: 'flex' }}>
+									<h4
+										style={{
+											fontSize: 22,
+											fontWeight: 'bold',
+											fontFamily: 'artifika',
+											marginTop: 2,
+											marginLeft: 20,
+										}}
+									>
+										Valor total:
+									</h4>
+									<h4 style={{ fontSize: 20, fontFamily: 'artifika', marginLeft: 14, marginTop: 3 }}>
+										{totalPrice}€
+									</h4>
+								</div>
 							</Col>
 							<Col sm={1} />
 						</Row>
 					</Tab.Container>
+					<div style={{ height: 1, backgroundColor: '#8A3535', marginTop: '20px' }}></div>
+					<br />
+					<br />
 					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-						<Row id="row" style={{ marginBottom: 80 }}>
+						<Row id="row">
 							<Col sm={1} />
 							<Col sm={1}>
 								<Button
 									href="/ship"
 									variant="dark"
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#9B3939' }}
+									style={{ color: '#9B3939', backgroundColor: 'white', fontFamily: 'artifika' }}
 								>
 									Voltar
 								</Button>
 							</Col>
-							<Col sm={8} style={{ marginTop: 100 }} />
+							<Col sm={8} />
 							<Col sm={1}>
 								<Button
-									/* onClick={createshop} */
+									href="/payment"
 									variant="dark"
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#9B3939' }}
+									style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}
 								>
-									Seguinte
+									Pagar
 								</Button>
 							</Col>
 							<Col sm={1} />
@@ -638,6 +564,5 @@ export const Confirmation: React.FC = () => {
 		);
 	}
 }
-
 export default Confirmation;
  */
