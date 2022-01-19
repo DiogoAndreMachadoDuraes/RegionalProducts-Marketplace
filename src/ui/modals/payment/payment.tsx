@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
-import Table from 'react-bootstrap/Table';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { Col, Container, Row, Navbar, Nav, Button, Image, Modal, Form } from 'react-bootstrap';
+import { Col, Container, Row, Button, Image, Modal, Form } from 'react-bootstrap';
 import { images } from 'assets';
 import axios from 'axios';
-import moment from 'moment';
+
 import { useHistory } from 'react-router';
 
 export const Payment: React.FC = () => {
