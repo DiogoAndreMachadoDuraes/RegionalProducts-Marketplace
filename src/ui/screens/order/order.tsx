@@ -3,12 +3,10 @@ import './style.css';
 import axios from 'axios';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Table from 'react-bootstrap/Table';
 import { useHistory } from 'react-router';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { AiOutlineStar, AiOutlineRight } from 'react-icons/ai';
-import { Card } from 'react-bootstrap';
+import { Card, Navbar, Row } from 'react-bootstrap';
+import { images } from 'assets';
+import Image from 'react-bootstrap/Image';
 
 interface OrderList {
 	_id: { $oid: string };
@@ -78,258 +76,331 @@ export const Order: React.FC = () => {
 	return (
 		<>
 			<div>
-				<div>
-					<div>
-						<Breadcrumb
-							style={{ marginTop: 20, marginLeft: 28, fontFamily: 'artifika', color: '#9B3939' }}
-							id="breadcrumb"
-						>
-							{/* <Col md={2}>
-							<NavDropdown.Item href="/client" class="menulateral" eventKey="4.1">
-								A minha Conta
-							</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item href="/order" eventKey="4.3">
-								As Minhas Encomendas
-							</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item href="/favorites" eventKey="4.4">
-								Os meus Favoritos
-							</NavDropdown.Item>
-						</Col> */}
-							<Col md={1}></Col>
-							<Col md={9}>
-								<Breadcrumb
-									/*  width="300"
-            height="300" */
-									style={{ marginTop: 20 /* , boxShadow:'rgba(117,0,0,0.5)' */ }}
-									id="breadcrumb"
-								>
-									<Card style={{ backgroundColor: '#9B3939' /* boxShadow:'rgba(117,0,0,0.4)' */ }}>
-										<Breadcrumb.Item style={{ fontFamily: 'artifika' }} href="/home">
-											Home
-										</Breadcrumb.Item>
-									</Card>
-									<Spacer width="12px" />
-									<div style={{ color: '#9B3939' }}>
-										<AiOutlineRight />
-									</div>
-									<Spacer width="12px" />
-									<Breadcrumb.Item active style={{ color: '#9B3939', fontFamily: 'artifika' }}>
-										Encomendas
-									</Breadcrumb.Item>
-								</Breadcrumb>
-								<br />
-
-								<h1 style={{ fontFamily: 'artifika', color: '#9B3939' }} /* class="text-left" */>
-									{' '}
-									As Minhas Encomendas{' '}
-								</h1>
-								<br />
-								<Spacer height="12px" />
-								<div>
-									<Table hover responsive="sm">
-										<thead>
-											<tr>
-												<th>Encomenda #</th>
-												<th>Data</th>
-												<th>Total da encomenda</th>
-												<th>Morada</th>
-												<th>Ação</th>
-												<th></th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											{shops?.length === 0 && (
-												<tr>
-													<td colSpan={9}>Não existem dados para mostrar</td>
-												</tr>
-											)}
-											{shops?.length !== 0 &&
-												shops?.map((item) => {
-													return (
-														<tr>
-															<td>{item._id.$oid}</td>
-															<td>{item.date}</td>
-															<td>{item.price} €</td>
-															<td>{item.street_client}</td>
-															<td>
-																<a
-																	href="/invoice"
-																	style={{
-																		color: '#444903',
-																		fontWeight: 'bold',
-																	}}
-																>
-																	Ver Fatura
-																</a>
-															</td>
-														</tr>
-													);
-												})}
-										</tbody>
-									</Table>
+				<Row id="row">
+					<Col sm={1} />
+					<Col
+						sm={8}
+						style={{
+							color: '#9B3939',
+							fontFamily: 'artifika',
+							marginTop: 35,
+							marginLeft: 40,
+						}}
+					>
+						<h3> As Minhas Encomendas </h3>
+					</Col>
+					<Col sm={3} />
+				</Row>
+				<br />
+				<Row id="row" style={{ marginTop: 40, marginLeft: 60 }}>
+					<Col sm={2} />
+					<Col sm={7}>
+						<Card border="dark">
+							<div className="row gutters">
+								<div className="col-md-4">
+									<Col>
+										<Image
+											src={images.amora}
+											thumbnail
+											style={{ marginTop: 5, marginLeft: 20, width: 100, height: 100 }}
+										/>
+									</Col>
 								</div>
-							</Col>
-
-							<br />
-						</Breadcrumb>
-					</div>
-				</div>
+								<div className="col-md-8">
+									<div className="card-body">
+										<h4
+											className="card-title"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: 0,
+											}}
+										>
+											Nº 123{' '}
+										</h4>
+										<Row
+											id="row"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: 250,
+												marginTop: -50,
+											}}
+										>
+											<Col sm={2} />
+											<Col sm={9}>
+												<Navbar.Text>
+													<a style={{ fontFamily: 'artifika' }} href="/invoice">
+														Ver informações
+													</a>
+												</Navbar.Text>
+												<h6
+													className="card-text"
+													style={{
+														color: 'black',
+														fontFamily: 'artifika',
+														marginLeft: 45,
+														marginTop: 0,
+													}}
+												>
+													4 artigos{' '}
+												</h6>
+												<h6
+													className="card-text"
+													style={{
+														color: 'black',
+														fontFamily: 'artifika',
+														marginLeft: 45,
+														marginTop: 10,
+													}}
+												>
+													€ 123.75{' '}
+												</h6>
+											</Col>
+											<Col sm={1} />
+										</Row>
+										<h5
+											className="card-text"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: -40,
+											}}
+										>
+											{' '}
+											Entregue{' '}
+										</h5>
+										<p
+											className="card-text"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: 0,
+											}}
+										></p>
+									</div>
+								</div>
+							</div>
+						</Card>
+						<div className="mt-5"> </div>
+						<Card border="dark">
+							<div className="row gutters">
+								<div className="col-md-4">
+									<Col>
+										<Image
+											src={images.cheese}
+											thumbnail
+											style={{ marginTop: 5, marginLeft: 20, width: 100, height: 100 }}
+										/>
+									</Col>
+								</div>
+								<div className="col-md-8">
+									<div className="card-body">
+										<h4
+											className="card-title"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: 0,
+											}}
+										>
+											Nº 124{' '}
+										</h4>
+										<Row
+											id="row"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: 250,
+												marginTop: -50,
+											}}
+										>
+											<Col sm={2} />
+											<Col sm={9}>
+												<Navbar.Text>
+													<a style={{ fontFamily: 'artifika' }} href="/invoice">
+														Ver informações
+													</a>
+												</Navbar.Text>
+												<h6
+													className="card-text"
+													style={{
+														color: 'black',
+														fontFamily: 'artifika',
+														marginLeft: 45,
+														marginTop: 0,
+													}}
+												>
+													6 artigos{' '}
+												</h6>
+												<h6
+													className="card-text"
+													style={{
+														color: 'black',
+														fontFamily: 'artifika',
+														marginLeft: 45,
+														marginTop: 10,
+													}}
+												>
+													€ 43.99{' '}
+												</h6>
+											</Col>
+											<Col sm={1} />
+										</Row>
+										<h5
+											className="card-text"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: -40,
+											}}
+										>
+											{' '}
+											Entregue
+										</h5>
+										<p
+											className="card-text"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: 0,
+											}}
+										>
+											{/* <medium className="text"> 03/03/2021 </medium> */}
+										</p>
+									</div>
+								</div>
+							</div>
+						</Card>
+						<div className="mt-5"> </div>
+						<Card border="dark">
+							<div className="row gutters">
+								<div className="col-md-4">
+									<Col>
+										<Image
+											src={images.frutos}
+											thumbnail
+											style={{ marginTop: 5, marginLeft: 20, width: 100, height: 100 }}
+										/>
+									</Col>
+								</div>
+								<div className="col-md-8">
+									<div className="card-body">
+										<h4
+											className="card-title"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: 0,
+											}}
+										>
+											Nº 125{' '}
+										</h4>
+										<Row
+											id="row"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: 250,
+												marginTop: -50,
+											}}
+										>
+											<Col sm={2} />
+											<Col sm={9}>
+												<Navbar.Text>
+													<a style={{ fontFamily: 'artifika' }} href="/invoice">
+														Ver informações
+													</a>
+												</Navbar.Text>
+												<h6
+													className="card-text"
+													style={{
+														color: 'black',
+														fontFamily: 'artifika',
+														marginLeft: 45,
+														marginTop: 0,
+													}}
+												>
+													2 artigos{' '}
+												</h6>
+												<h6
+													className="card-text"
+													style={{
+														color: 'black',
+														fontFamily: 'artifika',
+														marginLeft: 45,
+														marginTop: 10,
+													}}
+												>
+													€ 20.80{' '}
+												</h6>
+											</Col>
+											<Col sm={1} />
+										</Row>
+										<h5
+											className="card-text"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: -40,
+											}}
+										>
+											{' '}
+											Entregue
+										</h5>
+										<p
+											className="card-text"
+											style={{
+												color: 'black',
+												fontFamily: 'artifika',
+												marginLeft: -60,
+												marginTop: 0,
+											}}
+										>
+											{/* <medium className="text"> 18/03/2021 </medium> */}
+										</p>
+									</div>
+								</div>
+							</div>
+						</Card>
+					</Col>
+					<Col sm={3} />
+				</Row>
+				<div className="mt-5"> </div>
 			</div>
 		</>
 	);
 };
-/* class Order extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			shops: [],
-		};
-	}
 
-	async componentDidMount() {
-		try {
-			let token = await localStorage.getItem('token');
-			let type = await localStorage.getItem('type');
-			let userId = await localStorage.getItem('userId');
-			let name_client = await localStorage.getItem('name');
-			if (token !== null) {
-				this.setState({
-					isLogged: true,
-					token,
-					type,
-					userId,
-					name_client,
-				});
-				console.log(userId);
-			} else {
-				this.setState({
-					isLogged: false,
-				});
-			}
-		} catch (e) {
-			console.log('Error rending data: ' + e);
-		}
-
-		const { token, userId } = this.state;
-
-		const config = {
-			headers: { Authorization: `Bearer ${token}` },
-		};
-
-		axios.get(`http://127.0.0.1:5000/shop/client/${userId}`, config).then((res) => {
-			const shops = res.data;
-			this.setState(shops);
-		});
-	}
-	handlegotoinvoice(shops) {
-		this.props.history.push('/invoice', {
-			id_shop: shops._id.$oid,
-			country_client: shops.country_client,
-			date: shops.date,
-			doc_invoice: shops.doc_invoice,
-			hour: shops.hour,
-			id_client: shops.id_client,
-			locality_client: shops.locality_client,
-			name_client: shops.name_client,
-			postal_code_client: shops.postal_code_client,
-			price: shops.price,
-			quantity: shops.quantity,
-			street_client: shops.street_client,
-			tax: shops.tax,
-			tin_client: shops.tin_client,
-			vat: shops.vat,
-			rate: shops.rate,
-			products: shops.products,
-		});
-	}
-
-	render() {
-		const { shops } = this.state;
-
+{
+	/* {shops?.length !== 0 &&
+		shops?.map((item) => {
 		return (
-			<div>
-				<div>
-					<div>
-						<Breadcrumb style={{ marginTop: 20, marginLeft: 28 }} id="breadcrumb">
-							<Col md={2}>
-								<NavDropdown.Item href="/client" class="menulateral" eventKey="4.1">
-									A minha Conta
-								</NavDropdown.Item>
-								<NavDropdown.Divider />
-								<NavDropdown.Item href="/order" eventKey="4.3">
-									As Minhas Encomendas
-								</NavDropdown.Item>
-								<NavDropdown.Divider />
-								<NavDropdown.Item href="/favorites" eventKey="4.4">
-									Os meus Favoritos
-								</NavDropdown.Item>
-							</Col>
-							<Col md={1}></Col>
-							<Col md={9}>
-								<h3 style={{ color: '#AAAA74' }}>
-									As minhas Encomendas {shops.data}
-									<br />
-								</h3>
-								<h6>Aqui estão todas as Encomendas que já fez.</h6>
-								<h7>
-									<br />
-								</h7>
-								<div>
-									<Table hover responsive="sm">
-										<thead>
-											<tr>
-												<th>Encomenda #</th>
-												<th>Data</th>
-												<th>Total da encomenda</th>
-												<th>Morada</th>
-												<th>Ação</th>
-												<th></th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											{shops.length === 0 && (
-												<tr>
-													<td colSpan="9">Não existem dados para mostrar</td>
-												</tr>
-											)}
-											{shops.length !== 0 &&
-												shops.map((item) => {
-													return (
-														<tr>
-															<td>{item._id.$oid}</td>
-															<td>{item.date}</td>
-															<td>{item.price} €</td>
-															<td>{item.street_client}</td>
-															<td>
-																<a
-																	href="/invoice"
-																	style={{
-																		color: '#444903',
-																		fontWeight: 'bold',
-																	}}
-																>
-																	Ver Fatura
-																</a>
-															</td>
-														</tr>
-													);
-												})}
-										</tbody>
-									</Table>
-								</div>
-							</Col>
-
-							<br />
-						</Breadcrumb>
-					</div>
-				</div>
-			</div>
+			<tr>
+				<td>{item._id.$oid}</td>
+				<td>{item.date}</td>
+				<td>{item.price} €</td>
+				<td>{item.street_client}</td>
+				<td>
+					<a
+						href="/invoice"
+						style={{
+							color: '#444903',
+							fontWeight: 'bold',
+						}}
+					>
+						Ver Fatura
+					</a>
+				</td>
+			</tr>
 		);
-	}
+	})} */
 }
-export default Order;
- */

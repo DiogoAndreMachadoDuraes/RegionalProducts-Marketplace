@@ -22,6 +22,7 @@ export const NotFoundPage: React.FC = () => {
 						justifyContent: 'center',
 						alignItems: 'center',
 						textAlign: 'center',
+						fontFamily: 'artifika',
 					}}
 				>
 					<MdError size="80" color="#9B3939" />

@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import {
+/* import axios from 'axios';
+ */ import {
 	Image,
 	Tab,
 	Row,
 	Col,
 	Button,
 	Table,
-	Modal,
-	Form,
 	Container,
 	InputGroup,
 	FormControl,
 	Nav,
-	Card,
 	Navbar,
 } from 'react-bootstrap';
 import { images } from 'assets';
@@ -38,10 +35,10 @@ export const Ship: React.FC = () => {
 										<h3
 											style={{
 												fontSize: 24,
-												fontWeight: 'bold',
 												color: 'white',
-												textDecoration: 'underline',
 												fontFamily: 'artifika',
+												textDecoration: 'underline',
+												marginLeft: 14,
 											}}
 										>
 											Envio
@@ -72,10 +69,10 @@ export const Ship: React.FC = () => {
 							<Col>
 								<hr
 									style={{
-										color: '#000000',
-										backgroundColor: '#000000',
+										color: '#FFFFFF',
+										backgroundColor: '#FFFFFF',
 										height: 0.5,
-										borderColor: '#000000',
+										borderColor: '#FFFFFF',
 										width: 200,
 									}}
 								></hr>
@@ -83,7 +80,9 @@ export const Ship: React.FC = () => {
 							<Col sm={2}>
 								<Nav className="mr-auto">
 									<Nav.Link href="/payment">
-										<h3 style={{ fontSize: 18, color: 'black' }}>Pagamento</h3>
+										<h3 style={{ fontSize: 18, color: 'white', fontFamily: 'artifika' }}>
+											Pagamento
+										</h3>
 									</Nav.Link>
 								</Nav>
 							</Col>

@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.css';
-import { Col, Container, Row, Navbar, Form, Nav, Button, Image } from 'react-bootstrap';
+import { Col, Container, Row, Navbar, Form, Nav, Button, Image, Tab } from 'react-bootstrap';
 import { images } from 'assets';
 
 export const Payment: React.FC = () => {
@@ -11,25 +11,29 @@ export const Payment: React.FC = () => {
 				<Navbar collapseOnSelect expand="lg" className={'nav-up'}>
 					<Container fluid color="black">
 						<Row id="row">
-							<Col sm={3}>
-								<Navbar.Brand>
-									<Image src={images.logo} />
-								</Navbar.Brand>
-							</Col>
 							<Col sm={1}>
 								<Nav className="mr-auto">
 									<Nav.Link href="/ship">
-										<h3 style={{ fontSize: 18, color: 'black' }}>Envio</h3>
+										<h3
+											style={{
+												fontSize: 18,
+												color: 'white',
+												fontFamily: 'artifika',
+												marginLeft: 14,
+											}}
+										>
+											Envio
+										</h3>
 									</Nav.Link>
 								</Nav>
 							</Col>
 							<Col>
 								<hr
 									style={{
-										color: '#000000',
-										backgroundColor: '#000000',
+										color: '#FFFFFF',
+										backgroundColor: '#FFFFFF',
 										height: 0.5,
-										borderColor: '#000000',
+										borderColor: '#FFFFFF',
 										width: 200,
 									}}
 								></hr>
@@ -37,17 +41,19 @@ export const Payment: React.FC = () => {
 							<Col sm={1.5}>
 								<Nav className="mr-auto">
 									<Nav.Link href="/confirmation">
-										<h3 style={{ fontSize: 18, color: 'black' }}>Confirmação</h3>
+										<h3 style={{ fontSize: 18, color: 'white', fontFamily: 'artifika' }}>
+											Confirmação
+										</h3>
 									</Nav.Link>
 								</Nav>
 							</Col>
 							<Col>
 								<hr
 									style={{
-										color: '#000000',
-										backgroundColor: '#000000',
+										color: '#FFFFFF',
+										backgroundColor: '#FFFFFF',
 										height: 0.5,
-										borderColor: '#000000',
+										borderColor: '#FFFFFF',
 										width: 200,
 									}}
 								></hr>
@@ -59,8 +65,9 @@ export const Payment: React.FC = () => {
 											style={{
 												fontSize: 24,
 												fontWeight: 'bold',
-												color: 'black',
+												color: 'white',
 												textDecoration: 'underline',
+												fontFamily: 'artifika',
 											}}
 										>
 											Pagamento
@@ -75,9 +82,9 @@ export const Payment: React.FC = () => {
 				</Navbar>
 
 				<Container>
-					<br></br>
+					<br />
+					<br />
 					<Row>
-						{' '}
 						<h2
 							style={{
 								color: 'black',
@@ -90,7 +97,7 @@ export const Payment: React.FC = () => {
 							Por favor selecione um método de pagamento :{' '}
 						</h2>
 					</Row>
-
+					<br />
 					<Container style={{ marginTop: 50 }}>
 						<Row>
 							<Col>
@@ -129,7 +136,6 @@ export const Payment: React.FC = () => {
 								</>
 							</Col>
 							<Col>
-								{' '}
 								<Image
 									width="170"
 									height="100"
@@ -151,7 +157,6 @@ export const Payment: React.FC = () => {
 								</>
 							</Col>
 							<Col>
-								{' '}
 								<Image
 									width="140"
 									height="40"
@@ -161,48 +166,44 @@ export const Payment: React.FC = () => {
 							</Col>
 
 							<Col>
-								{' '}
 								<Form.Control
 									style={{ marginLeft: -300 }}
 									placeholder="Introduza o número do cartão:"
-								/>{' '}
+								/>
 							</Col>
 						</Row>
 					</Container>
-
-					<Container style={{ marginTop: 40 }}>
-						<Button
-							variant="primary"
-							size="lg"
-							href="/confirmation"
-							active
-							style={{
-								color: 'white',
-								backgroundColor: '#9B3939',
-								fontFamily: 'artifika',
-								marginLeft: 100,
-								marginTop: 40,
-							}}
-						>
-							Voltar
-						</Button>{' '}
-						<Button
-							variant="primary"
-							size="lg"
-							href="/checkout"
-							active
-							style={{
-								color: 'white',
-								backgroundColor: '#9B3939',
-								fontFamily: 'artifika',
-								marginLeft: 300,
-								marginTop: 40,
-							}}
-						>
-							Confirmar
-						</Button>{' '}
-					</Container>
-					<br></br>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+						<Row id="row" style={{ marginBottom: 40 }}>
+							<Col sm={1} />
+							<Col sm={1}>
+								<Button
+									href="/confirmation"
+									variant="dark"
+									size="lg"
+									style={{ color: '#9B3939', backgroundColor: 'white', fontFamily: 'artifika' }}
+								>
+									Voltar
+								</Button>
+							</Col>
+							<Col sm={8} style={{ marginTop: 100 }} />
+							<Col sm={1}>
+								<Button
+									href="/checkout"
+									variant="dark"
+									size="lg"
+									style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}
+								>
+									Confirmar
+								</Button>
+							</Col>
+							<Col sm={1} />
+						</Row>
+					</Tab.Container>
 				</Container>
 			</div>
 		</>
