@@ -8,13 +8,11 @@ import { GiWineBottle, GiPriceTag } from 'react-icons/gi';
 import { GrValidate, GrShare } from 'react-icons/gr';
 import { MdLocalShipping } from 'react-icons/md';
 import { FacebookShareButton } from 'react-share';
-import { Loader } from 'ui';
-import { images } from 'assets';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Product, StoreState } from 'store';
+import moment from 'moment';
 
 interface ParamType {
 	id: string;
@@ -36,10 +34,9 @@ export const ProductDetail: React.FC = () => {
 	const [validity, setValidity] = useState('');
 	const [producerName, setProducerName] = useState('');
 	const [quantity, setQuantity] = useState(0);
-	const [productId, setProductId] = useState(id);
 	const [photo, setPhoto] = useState('');
 	const [photoProducer, setPhotoProducer] = useState('');
-	const [description, setDescription] = useState(
+	const [description /* , setDescription */] = useState(
 		`Os nossos produtos primam pela aliança da qualidade e de personalidade ímpar com o sabor de tradição.`
 	);
 	const history = useHistory();
@@ -97,8 +94,8 @@ export const ProductDetail: React.FC = () => {
 					id_product: id,
 					name_product: name,
 					photo_product: photo,
-					price_product: priceTotal,
-					quantity_product: quantityProduct,
+					price_product: price,
+					quantity_product: 1,
 				}),
 			});
 		} catch (e) {

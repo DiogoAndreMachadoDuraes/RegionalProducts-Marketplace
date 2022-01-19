@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './style.css';
-import { Row, Card, Container, Button, Breadcrumb } from 'react-bootstrap';
+import { Row, Card, Container, Button, Breadcrumb, Alert } from 'react-bootstrap';
+import axios from 'axios';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState, Product } from 'store';
-import { BsFillHeartFill } from 'react-icons/bs';
 
 interface ParamType {
 	category: string;
@@ -14,103 +13,118 @@ export const ProductPage: React.FC = () => {
 	const { category } = useParams<ParamType>();
 	const history = useHistory();
 
+	const userId = useSelector((state: StoreState) => state.common.user.id);
+	const email = useSelector((state: StoreState) => state.common.user.email);
+	const token = useSelector((state: StoreState) => state.common.user.token);
+	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
 	const productsList: Product[] = useSelector((state: StoreState) => state.products.products);
+
 	const [products, setProducts] = useState<Product[]>();
+	const [showAddCart, setShowAddCart] = useState(false);
+
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
+	};
 
 	useEffect(() => {
 		const finalList: Product[] = productsList.filter((x) => x.category === category);
 		setProducts(finalList);
 	}, [category, productsList]);
 
+	const showAlertAddCart = () => {
+		window.setTimeout(() => {
+			setShowAddCart(false);
+		}, 5000);
+	};
+
+	const handleAddCart = (product: Product) => {
+		axios.post(
+			`http://127.0.0.1:5000/carts`,
+			{
+				email_client: email,
+				id_client: userId,
+				id_product: product._id.$oid,
+				name_product: product.name,
+				photo_product: product.photo,
+				price_product: product.price,
+				quantity: 1,
+			},
+			config
+		);
+		setShowAddCart(true);
+		showAlertAddCart();
+	};
+
 	return (
-		<>
+		<div>
+			<Alert key={'success'} variant={'success'} show={showAddCart} style={{ textAlign: 'center' }}>
+				O produto foi adicionado ao carrinho
+			</Alert>
 			<div>
-				<div>
-					<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
-						<Breadcrumb.Item onClick={() => history.push('/')}>
-							<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
-						</Breadcrumb.Item>
-						<Breadcrumb.Item active>
-							<span style={{ fontFamily: 'artifika', color: 'black' }}>{category}</span>
-						</Breadcrumb.Item>
-					</Breadcrumb>
-				</div>
+				<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+					<Breadcrumb.Item onClick={() => history.push('/')}>
+						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+					</Breadcrumb.Item>
+					<Breadcrumb.Item active>
+						<span style={{ fontFamily: 'artifika', color: 'black' }}>{category}</span>
+					</Breadcrumb.Item>
+				</Breadcrumb>
+			</div>
+			<br />
+			<Container>
+				<h1 style={{ fontFamily: 'artifika', color: '#9B3939' }}>{category}</h1>
 				<br />
-				<Container>
-					<h1 style={{ fontFamily: 'artifika', color: '#9B3939' }} /* class="text-left" */>{category}</h1>
-					<br />
-					<Row>
-						{products?.map((x: Product, index: number) => {
-							return (
-								<Card key={index} style={{ width: '16rem', marginRight: 20 }}>
-									<Card.Img
-										variant="top"
-										src={x.photo}
-										width={200}
-										height={200}
-										onClick={() => history.push('/productDetail/' + x._id.$oid)}
-									/>
-									{/* <Card.ImgOverlay>
-										<div
-											className="text-right"
+				<Row>
+					{products?.map((x: Product, index: number) => {
+						return (
+							<Card key={index} style={{ width: '16rem', marginRight: 20, marginBottom: 50 }}>
+								<Card.Img
+									variant="top"
+									src={x.photo}
+									width={200}
+									height={200}
+									onClick={() => history.push('/productDetail/' + x._id.$oid)}
+								/>
+								<Card.Body
+									style={{
+										display: 'flex',
+										flexDirection: 'column',
+										justifyContent: 'center',
+										fontFamily: 'artifika',
+									}}
+								>
+									<Card.Title>
+										<Link
+											to={'/productDetail/' + x._id.$oid}
 											style={{
-												marginTop: -10,
-												marginRight: -5,
+												fontWeight: 600,
+												color: 'black',
 												fontFamily: 'artifika',
 											}}
 										>
-											<BsFillHeartFill
-												color="red"
-												size={25}
-												onClick={() => handleaddToFavorite(product) && handleModalOptionsFavorites} 
-											>
-												 {showModalOptionsFavorites
-																? modalOptionsFavorites()
-																: false} 
-											</BsFillHeartFill>
-										</div>
-									</Card.ImgOverlay> */}
-									<Card.Body
-										style={{
-											display: 'flex',
-											flexDirection: 'column',
-											justifyContent: 'center',
-											fontFamily: 'artifika',
-										}}
+											<i>{x.name}</i>
+										</Link>
+									</Card.Title>
+									<Card.Text style={{ fontSize: 14 }}>
+										<span style={{ fontWeight: 600, fontFamily: 'artifika' }}>Preço: </span>
+										{x.price} €
+									</Card.Text>
+									<Button
+										variant="primary"
+										style={{ backgroundColor: '#9B3939', fontFamily: 'artifika' }}
+										disabled={!isLogged}
+										onClick={() => handleAddCart(x)}
 									>
-										<Card.Title>
-											<Link
-												to={'/productDetail/' + x._id.$oid}
-												style={{
-													fontWeight: 600,
-													color: 'black',
-													fontFamily: 'artifika',
-												}}
-											>
-												<i>{x.name}</i>
-											</Link>
-										</Card.Title>
-										<Card.Text style={{ fontSize: 14 }}>
-											<span style={{ fontWeight: 600, fontFamily: 'artifika' }}>Preço: </span>
-											{x.price} €
-										</Card.Text>
-										<Button
-											variant="primary"
-											style={{ backgroundColor: '#9B3939', fontFamily: 'artifika' }}
-											/* onClick={() => handleaddToCart(product) && handleModalOptionsCart} */
-										>
-											Adicionar ao Carrinho
-											{/* {showModalOptionsCart ? modalOptionsCart() : false} */}
-										</Button>
-									</Card.Body>
-								</Card>
-							);
-						})}
-					</Row>
-					<br />
-				</Container>
-			</div>
-		</>
+										Adicionar ao Carrinho
+									</Button>
+								</Card.Body>
+							</Card>
+						);
+					})}
+				</Row>
+				<br />
+			</Container>
+		</div>
 	);
 };
 

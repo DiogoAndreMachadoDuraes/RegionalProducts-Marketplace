@@ -1,927 +1,184 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Breadcrumb, Row, Col, CardImg, Card, Button, Modal, NavDropdown } from 'react-bootstrap';
+import { Breadcrumb, Row, Alert, Col, Card, Button, Container } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import { BsFillHeartFill } from 'react-icons/bs';
-import { AiOutlineRight } from 'react-icons/ai';
-import { useDispatch, useSelector } from 'react-redux';
-import { productList, StoreState } from 'store';
-import { ProductDetail } from '..';
-/*import { Redirect } from "react-router-dom";*/
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { StoreState } from 'store';
 
-interface FavoritesList {}
-
-interface Product {
-	id: string;
-	category: string;
-	email_producer: string;
-	harvest: string;
-	id_producer: number;
-	logo_producer: string;
-	name: string;
-	name_producer: string;
-	photo: string;
-	price: number;
-	quantity: number;
-	stock: number;
-	validity: string;
+interface Favorite {
+	_id: { $oid: string };
+	date: string;
+	hour: string;
+	id_client: string;
+	id_product: string;
+	name_product: string;
+	photo_product: string;
+	price_product: number;
+	quantity_product: number;
 }
 
-interface Products2List {}
-
-interface Products3List {}
-
 export const Favorites: React.FC = () => {
-	const Spacer = require('react-spacer');
-
-	const dispatch = useDispatch();
 	const history = useHistory();
-	const productsList = useSelector((state: StoreState) => state.products.products);
 
-	const [favorites, setFavorites] = useState<FavoritesList[]>();
-	const [products, setProducts] = useState<Product[]>(productsList);
-	const [products2, setProducts2] = useState<Products2List[]>();
-	const [products3, setProducts3] = useState<Products3List[]>();
-	const [isLogged, setIsLogged] = useState(false);
+	const userId = useSelector((state: StoreState) => state.common.user.id);
+	const email = useSelector((state: StoreState) => state.common.user.email);
+	const token = useSelector((state: StoreState) => state.common.user.token);
+
+	const [favorites, setFavorites] = useState<Favorite[]>();
 	const [hasfavorites, setHasfavorites] = useState(false);
-	const [carts, setCarts] = useState('');
-	const [categories, setCategories] = useState<string[]>();
+	const [showDeleteFavorite, setShowDeleteFavorite] = useState(false);
+	const [showAddCart, setShowAddCart] = useState(false);
 
-	const [showModalOptions, setShowModalOptions] = useState(false);
-
-	const modalOptions = () => {
-		return (
-			<Modal /* size="md" */ show={showModalOptions} animation={true}>
-				<Modal.Header>
-					<Modal.Title>O produto foi adicionado ao Carrinho!</Modal.Title>
-				</Modal.Header>
-			</Modal>
-		);
-	};
-
-	const handleDeleteFavorites = () => {
-		const config = {
-			/* headers: { Authorization: `Bearer ${token}` }, */
-		};
-		axios.delete('' /* `http://127.0.0.1:5000/favorites/${userId}` */, config);
-		window.location.reload();
-	};
-
-	const handleModalOptions = () => {
-		setShowModalOptions(true);
-	};
-
-	const handleaddToCart = (product: Product) => {
-		if (isLogged === false) {
-			history.push('/login');
-		} else {
-			const config = {
-				/* headers: { Authorization: `Bearer ${token}` }, */
-			};
-
-			axios.get('' /* `http://127.0.0.1:5000/cart/client/${userId}` */, config).then(
-				(response) => {
-					const carts = response.data;
-					setCarts(carts);
-					const products2 = carts.products;
-					setProducts2(products2);
-
-					var teste = {
-						id_product: products2.id_product,
-						name_product: products2.name_product,
-						photo_product: products2.photo_product,
-						price_product: products2.price_product,
-						quantity_product: products2.quantity_product,
-					};
-					products2.push(teste);
-
-					axios.put(
-						'',
-						/* `http://127.0.0.1:5000/cart/client/${userId}` */ {
-							/* id_client: userId, */
-							email_client: 'email',
-							products: products2,
-						},
-						config
-					);
-					setShowModalOptions(true);
-					setTimeout(function () {
-						window.location.reload();
-					}, 1000);
-				},
-				(error) => {
-					axios.post(
-						'http://127.0.0.1:5000/carts',
-						{
-							/* id_client: userId, */
-							email_client: 'email',
-							products: [
-								{
-									/* id_product: products.id_product,
-									name_product: products.name,
-									photo_product: products.photo,
-									price_product: products.price,
-									quantity_product: products.quantity, */
-								},
-							],
-						},
-						config
-					);
-					setShowModalOptions(true);
-					setTimeout(function () {
-						window.location.reload();
-					}, 1000);
-				}
-			);
-		}
-	};
-
-	const handleRemoveFavorite = () => {
-		const config = {
-			/*       headers: { Authorization: `Bearer ${token}` },
-			 */
-		};
-
-		axios.get('' /* `http://127.0.0.1:5000/favorites/${userId}` */, config).then((response) => {
-			const favorites = response.data;
-			setFavorites(favorites);
-			const products3 = favorites.products;
-			setProducts3(products3);
-			var teste = {
-				id_product: products3.id,
-				name_product: products3.name,
-				photo_product: products3.photo,
-				price_product: products3.price,
-				quantity_product: products3.quantity,
-			};
-			products3.pop(teste);
-
-			if (!products3.length) {
-				axios.delete('' /* `http://127.0.0.1:5000/favorites/${userId}` */, config);
-				window.location.reload();
-			} else {
-				axios.put(
-					'',
-					/*  `http://127.0.0.1:5000/favorites/${userId}` */ {
-						/* id_client: userId, */
-						date: 'email',
-						products: products3,
-					},
-					config
-				);
-				window.location.reload();
-			}
-		});
-	};
-
-	const handlegotodetail = (product: {
-		/* 	id: any;
-		acidity: any;
-		quantity: any;
-		name: any;
-		harvest: any;
-		validity: any;
-		category: any;
-		type: any;
-		price: any;
-		photo: any;
-		alcohol_content: any;
-		id_producer: any;
-		name_producer: any;
-		photo_producer: any; */
-	}) => {
-		history.push('/productdetail', {
-			/* 	id_product: product.id,
-			acidity: product.acidity,
-			quantity: product.quantity,
-			name: product.name,
-			harvest: product.harvest,
-			validity: product.validity,
-			category: product.category,
-			type: product.type,
-			price: product.price,
-			photo: product.photo,
-			alcohol_content: product.alcohol_content,
-			id_producer: product.id_producer,
-			name_producer: product.name_producer,
-			photo_producer: product.photo_producer, */
-		});
-	};
-
-	const getAllCategories = () => {
-		let categoriesRepeted: string[] = [];
-
-		products.map((x, index) => (categoriesRepeted[index] = x.category));
-
-		let categories = categoriesRepeted.filter(function (el, i) {
-			return categoriesRepeted.indexOf(el) === i;
-		});
-
-		setCategories(categories);
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
 	};
 
 	useEffect(() => {
 		const fecthAPI = async () => {
-			if (productsList.length === 0) {
-				try {
-					axios.get(`http://127.0.0.1:5000/productslist`).then((res) => {
-						const products = res.data;
-						setProducts(products);
-						dispatch(productList(products));
-					});
-				} catch (e) {
-					console.log('Error rending data: ' + e);
+			axios.get(`http://127.0.0.1:5000/favorites/${userId}`, config).then((res) => {
+				const favorites = res.data;
+				setFavorites(favorites);
+				if (favorites.lenght === 0) {
+					setHasfavorites(false);
+				} else {
+					setHasfavorites(true);
 				}
-			}
+			});
 		};
 		fecthAPI();
-		getAllCategories();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch, productsList]);
+	}, [showDeleteFavorite]);
 
-	const renderFavorite = () => {
+	const showAlertAddCart = () => {
+		window.setTimeout(() => {
+			setShowAddCart(false);
+		}, 5000);
+	};
+
+	const showAlertDeletFavorite = () => {
+		window.setTimeout(() => {
+			setShowDeleteFavorite(false);
+		}, 5000);
+	};
+
+	const handleDeleteFavorite = (id: string) => {
+		axios.delete(`http://127.0.0.1:5000/favorite/delete/${id}`, config);
+		setShowDeleteFavorite(true);
+		showAlertDeletFavorite();
+	};
+
+	const handleAddCart = (product: Favorite) => {
+		axios.post(
+			`http://127.0.0.1:5000/cart/client/${userId}`,
+			{
+				email_client: email,
+				id_client: userId,
+				id_product: product.id_product,
+				name_product: product.name_product,
+				photo_product: product.photo_product,
+				price_product: product.price_product,
+				quantity: product.quantity_product,
+			},
+			config
+		);
+		setShowAddCart(true);
+		showAlertAddCart();
+	};
+
+	const renderFavorite = (x: Favorite, index: number) => {
 		return (
-			<Card style={{ width: 900 }} /* key={index} */>
-				<Row>
-					<Col lg="4" className="text-center" style={{ marginTop: 25, marginLeft: 20 }}>
-						<CardImg onClick={() => handlegotodetail(ProductDetail)} /* src={x.photo} */ />
-					</Col>
-
-					<Col /*  margin={{ marginLeft: 20 }} */>
-						<Row md={12}>
-							<h3
-								onClick={() => handlegotodetail(ProductDetail)}
-								style={{ marginLeft: 20, marginTop: 25 }}
-							>
-								{/* {x.name} */}
-							</h3>
-
-							<BsFillHeartFill
-								style={{ marginLeft: 200, marginTop: 25 }}
-								color="red"
-								size="2em"
-								/* onClick={() => handleRemoveFavorite(product)} */
-							></BsFillHeartFill>
-						</Row>
-
-						<Row style={{ marginLeft: 3, marginTop: 25 }}>
-							<h6 style={{ marginLeft: 3, marginTop: -1 }}>Quantidade : {/* {x.quantity} */} </h6>
-						</Row>
-
-						<Row style={{ marginTop: 20 }}>
-							<h6 style={{ marginLeft: 20 }}> Preço : {/* {x.price} */} € </h6>
-						</Row>
-
-						<Row style={{ marginTop: 70, marginLeft: 80 }}>
-							<Col>
-								<Button
-									size="lg"
-									variant="primary"
-									/* onClick={() =>
-                    handleaddToCart(product) && handleModalOptions
-                  } */
-								>
-									Adicionar ao Carrinho
-									{showModalOptions ? modalOptions() : false}
-								</Button>
-							</Col>
-						</Row>
-					</Col>
-				</Row>
+			<Card key={index} style={{ width: '16rem', marginRight: 20 }}>
+				<Card.Img variant="top" src={x.photo_product} width={200} height={200} />
+				<div
+					style={{
+						marginTop: -190,
+						marginRight: 10,
+						display: 'flex',
+						justifyContent: 'right',
+						marginBottom: 170,
+					}}
+				>
+					<BsFillHeartFill color="red" size={25} onClick={() => handleDeleteFavorite(x._id.$oid)} />
+				</div>
+				<Card.Body
+					style={{
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						fontFamily: 'artifika',
+					}}
+				>
+					<Card.Title
+						style={{
+							fontWeight: 600,
+							fontFamily: 'artifika',
+						}}
+					>
+						<Link
+							to={'/productDetail/' + x.id_product}
+							style={{
+								fontWeight: 600,
+								color: 'black',
+								fontFamily: 'artifika',
+							}}
+						>
+							<i>{x.name_product}</i>
+						</Link>
+					</Card.Title>
+					<Card.Text style={{ fontSize: 14 }}>
+						<span style={{ fontWeight: 600, fontFamily: 'artifika' }}>Preço: </span>
+						{x.price_product} €
+					</Card.Text>
+					<Button
+						variant="primary"
+						style={{ backgroundColor: '#9B3939', fontFamily: 'artifika' }}
+						onClick={() => handleAddCart(x)}
+					>
+						Adicionar ao Carrinho
+					</Button>
+				</Card.Body>
 			</Card>
 		);
 	};
 
 	return (
-		<>
+		<div>
+			<Alert key={'info'} variant={'info'} show={showDeleteFavorite} style={{ textAlign: 'center' }}>
+				O produto foi removido dos favoritos
+			</Alert>
+			<Alert key={'success'} variant={'success'} show={showAddCart} style={{ textAlign: 'center' }}>
+				O produto foi adicionado ao carrinho
+			</Alert>
 			<div>
-				<Breadcrumb
-					style={{ marginTop: 20, marginLeft: 28, fontFamily: 'artifika', color: '#9B3939' }}
-					id="breadcrumb"
-				>
-					<Card style={{ backgroundColor: '#9B3939' /* boxShadow:'rgba(117,0,0,0.4)' */ }}>
-						<Breadcrumb.Item style={{ fontFamily: 'artifika' }} href="/home">
-							Home
-						</Breadcrumb.Item>
-					</Card>
-					<Spacer width="12px" />
-					<div style={{ color: '#9B3939' }}>
-						<AiOutlineRight />
-					</div>
-					<Spacer width="12px" />
-					<Breadcrumb.Item active style={{ color: '#9B3939', fontFamily: 'artifika' }}>
-						Favoritos
+				<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+					<Breadcrumb.Item onClick={() => history.push('/')}>
+						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+					</Breadcrumb.Item>
+					<Breadcrumb.Item active style={{ color: '#9B3939' }}>
+						<span style={{ fontFamily: 'artifika', color: 'black' }}>Favoritos</span>
 					</Breadcrumb.Item>
 				</Breadcrumb>
-				<br />
-				<br />
-				<div style={{ display: 'flex', marginLeft: 100 }}>
-					<h1 style={{ fontFamily: 'artifika', color: '#9B3939' }} className="text-left">
-						Favoritos
-					</h1>
-				</div>
-				<br />
-				<br />
-				<Row style={{ marginBottom: 40 }}>
-					<Card /* key={index} */ style={{ width: 500, marginRight: 20, marginLeft: 100 }}>
-						<Card.Img
-							variant="top"
-							/* src={products.photo} */
-							src="https://www.sistersmommies.com.br/wp-content/uploads/2018/10/granola-sisters_mommies.jpg"
-							width={200}
-							height={280}
-							onClick={() => handlegotodetail(products)}
-						/>
-						<Card.ImgOverlay>
-							<div className="text-right" style={{ marginTop: -10, marginRight: -5 }}>
-								<BsFillHeartFill
-									color="red"
-									size={25}
-									/* onClick={() => handleaddToFavorite(product) && handleModalOptionsFavorites} */
-								>
-									{/* {showModalOptionsFavorites ? modalOptionsFavorites() : false} */}
-								</BsFillHeartFill>
-							</div>
-						</Card.ImgOverlay>
-						<Card.Body
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-								justifyContent: 'center',
-							}}
-						>
-							<Card.Title
-								style={{
-									fontWeight: 600,
-									fontFamily: 'artifika',
-									color: '#9B3939',
-								}}
-								onClick={() => handlegotodetail(products)}
-							>
-								{/* <i>{x.name}</i> */} Granola sem açucar
-							</Card.Title>
-							<Card.Text style={{ fontSize: 16 }}>
-								<span style={{ fontWeight: 600, fontFamily: 'artifika' }}>Preço: 6.00 € </span>
-								{/* {x.price} € */}
-							</Card.Text>
-							<Button
-								variant="primary"
-								style={{ backgroundColor: '#9B3939', fontFamily: 'artifika' }}
-								/* onClick={() => handleaddToCart(product) && handleModalOptionsCart} */
-							>
-								Adicionar ao Carrinho
-								{/* {showModalOptionsCart ? modalOptionsCart() : false} */}
-							</Button>
-						</Card.Body>
-					</Card>
-				</Row>
-
-				<br />
-				<br />
 			</div>
-		</>
+			<br />
+			<Container>
+				<h1 style={{ fontFamily: 'artifika', color: '#9B3939' }}>Favoritos</h1>
+				<br />
+				{hasfavorites ? (
+					<Row>{favorites?.map((x, index) => renderFavorite(x, index))}</Row>
+				) : (
+					<Row style={{ marginTop: 50, marginBottom: 150, textAlign: 'center' }}>
+						<Col sm={2} />
+						<Col sm={8}>
+							<h4>Não tem nenhum produto como favorito!</h4>
+						</Col>
+						<Col sm={2} />
+					</Row>
+				)}
+			</Container>
+			<br />
+			<br />
+		</div>
 	);
 };
-
-//Code for FAVORITES - render that not function for Andreia
-/* return (
-    <div>
-      <div>
-        <Breadcrumb
-          style={{ marginTop: 20, marginLeft: 28 }}
-          id="breadcrumb"
-        >
-          <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-          <Breadcrumb.Item active style={{ color: "#AAAA74" }}>
-            {" "}
-            Favoritos{" "}
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-
-      <Row>
-        <Breadcrumb
-          style={{ marginTop: 20, marginLeft: 28 }}
-          id="breadcrumb"
-        ></Breadcrumb>
-
-        <Col md={2}  style={{ marginTop: 80 }}>
-          <NavDropdown.Item
-            href="/client"
-            class="menulateral"
-            eventKey="4.1"
-          >
-            A minha Conta{" "}
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="/order" eventKey="4.3">
-            As Minhas Encomendas
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="/favorites" eventKey="4.4">
-            Os meus Favoritos
-          </NavDropdown.Item>
-        </Col>
-
-        <Col>
-          <h1  style={{ color: "#AAAA74" }}>
-            {" "}
-            Favoritos{" "}
-          </h1>
-          <br></br>
-          {products.map(renderFavorite)}
-        </Col>
-      </Row>
-      <br></br>
-      <Row>
-        <Col></Col>
-        <Col>
-          {" "}
-          <Row style={{ marginLeft: 120 }}>
-            {" "}
-            <Button
-              size="lg"
-              variant="primary"
-              onClick={() => handleDeleteFavorites()}
-            >
-              Limpar Favoritos
-            </Button>{" "}
-          </Row>
-        </Col>
-      </Row>
-      <br />
-    </div>
-  );
-} else {
-  return (
-    <div>
-      <div>
-        <Breadcrumb
-          style={{ marginTop: 20, marginLeft: 28 }}
-          id="breadcrumb"
-        >
-          <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-          <Breadcrumb.Item active style={{ color: "#AAAA74" }}>
-            {" "}
-            Favoritos{" "}
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-
-      <Row>
-        <Breadcrumb
-          style={{ marginTop: 20, marginLeft: 28 }}
-          id="breadcrumb"
-        ></Breadcrumb>
-
-        <Col md={2}  style={{ marginTop: 80 }}>
-          <NavDropdown.Item
-            href="/client"
-            class="menulateral"
-            eventKey="4.1"
-          >
-            A minha Conta{" "}
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="/order" eventKey="4.3">
-            As Minhas Encomendas
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="/favorites" eventKey="4.4">
-            Os meus Favoritos
-          </NavDropdown.Item>
-        </Col>
-
-        <Col>
-          <h1 active style={{ color: "#AAAA74" }}>
-            {" "}
-            Favoritos{" "}
-          </h1>
-          <br></br>
-          <h3>
-            Não possui nenhum produto favorito, visite a nossa página de
-            produtos
-          </h3>
-        </Col>
-      </Row>
-      <br></br>
-
-      <br />
-    </div>
-  );
-}; */
-
-/*  class Favorites extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      favorites: {},
-      products: [],
-      products2: {},
-      products3: [],
-      isLogged: false,
-      hasfavorites: false,
-      showModalOptions: false,
-    };
-  }
-
-  async componentDidMount() {
-    try {
-      let token = await localStorage.getItem("token");
-      let type = await localStorage.getItem("type");
-      let userId = await localStorage.getItem("userId");
-      let name = await localStorage.getItem("name");
-      if (token !== null) {
-        this.setState({
-          isLogged: true,
-          token,
-          type,
-          userId,
-          name,
-        });
-        console.log(userId);
-      } else {
-        this.setState({
-          isLogged: false,
-        });
-      }
-    } catch (e) {
-      console.log("Error rending data: " + e);
-    }
-    const { token, userId } = this.state;
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    axios
-      .get(`http://127.0.0.1:5000/favorites/${userId}`, config)
-      .then((res) => {
-        console.log(res.data);
-        const favorites = res.data;
-        this.setState({ favorites });
-        const products = favorites.products;
-        this.setState({ products });
-        if (products.lenght === 0) {
-          this.setState({ hasfavorites: false });
-        } else {
-          this.setState({ hasfavorites: true });
-        }
-        console.log(products);
-      });
-  }
-
-  modalOptions() {
-    const { showModalOptions } = this.state;
-    return (
-      <Modal size="md" show={showModalOptions} animation={true}>
-        <Modal.Header>
-          <Modal.Title>O produto foi adicionado ao Carrinho!</Modal.Title>
-        </Modal.Header>
-      </Modal>
-    );
-  }
-
-  handleDeleteFavorites() {
-    const { userId, token } = this.state;
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    axios.delete(`http://127.0.0.1:5000/favorites/${userId}`, config);
-    window.location.reload();
-  }
-
-  handleModalOptions = () => {
-    this.setState({ showModalOptions: true });
-  };
-
-  handleaddToCart(product) {
-    const { userId, token, isLogged } = this.state;
-
-    if (isLogged === false) {
-      this.props.history.push("/login");
-    } else {
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-
-      axios.get(`http://127.0.0.1:5000/cart/client/${userId}`, config).then(
-        (response) => {
-          const carts = response.data;
-          this.setState({ carts });
-          const products2 = carts.products;
-          this.setState(products2);
-
-          var teste = {
-            id_product: product.id_product,
-            name_product: product.name_product,
-            photo_product: product.photo_product,
-            price_product: product.price_product,
-            quantity_product: product.quantity_product,
-          };
-          products2.push(teste);
-
-          axios.put(
-            `http://127.0.0.1:5000/cart/client/${userId}`,
-            {
-              id_client: userId,
-              email_client: "email",
-              products: products2,
-            },
-            config
-          );
-          this.setState({ showModalOptions: true });
-          setTimeout(function () {
-            window.location.reload();
-          }, 1000);
-        },
-        (error) => {
-          axios.post(
-            "http://127.0.0.1:5000/carts",
-            {
-              id_client: userId,
-              email_client: "email",
-              products: [
-                {
-                  id_product: product.id_product,
-                  name_product: product.name_product,
-                  photo_product: product.photo_product,
-                  price_product: product.price_product,
-                  quantity_product: product.quantity_product,
-                },
-              ],
-            },
-            config
-          );
-          this.setState({ showModalOptions: true });
-          setTimeout(function () {
-            window.location.reload();
-          }, 1000);
-        }
-      );
-    }
-  }
-
-  handleRemoveFavorite(product) {
-    const { userId, token } = this.state;
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    axios
-      .get(`http://127.0.0.1:5000/favorites/${userId}`, config)
-      .then((response) => {
-        const favorites = response.data;
-        this.setState({ favorites });
-        const products3 = favorites.products;
-        this.setState(products3);
-        var teste = {
-          id_product: product.id,
-          name_product: product.name,
-          photo_product: product.photo,
-          price_product: product.price,
-          quantity_product: product.quantity,
-        };
-        products3.pop(teste);
-
-        if (!products3.length) {
-          axios.delete(`http://127.0.0.1:5000/favorites/${userId}`, config);
-          window.location.reload();
-        } else {
-          axios.put(
-            `http://127.0.0.1:5000/favorites/${userId}`,
-            {
-              id_client: userId,
-              date: "email",
-              products: products3,
-            },
-            config
-          );
-          window.location.reload();
-        }
-      });
-  }
-  handlegotodetail(product) {
-    this.props.history.push("/productdetail", {
-      id_product: product.id,
-      acidity: product.acidity,
-      quantity: product.quantity,
-      name: product.name,
-      harvest: product.harvest,
-      validity: product.validity,
-      category: product.category,
-      type: product.type,
-      price: product.price,
-      photo: product.photo,
-      alcohol_content: product.alcohol_content,
-      id_producer: product.id_producer,
-      name_producer: product.name_producer,
-      photo_producer: product.photo_producer,
-    });
-  }
-  renderFavorite = (product, index) => {
-    const { showModalOptions } = this.state;
-    return (
-      <Card style={{ width: 900 }} key={index}>
-        <Row>
-          <Col
-            lg="4"
-            class="text-center"
-            style={{ marginTop: 25, marginLeft: 20 }}
-          >
-            {" "}
-            <CardImg
-              onClick={() => this.handlegotodetail(product)}
-              src={product.photo_product}
-            />
-          </Col>
-
-          <Col lg={{ marginLeft: 20 }}>
-            <Row md={12}>
-              <h3
-                onClick={() => this.handlegotodetail(product)}
-                style={{ marginLeft: 20, marginTop: 25 }}
-              >
-                {product.name_product}
-              </h3>
-
-              <BsFillHeartFill
-                style={{ marginLeft: 200, marginTop: 25 }}
-                color="red"
-                size="2em"
-                onClick={() => this.handleRemoveFavorite(product)}
-              ></BsFillHeartFill>
-            </Row>
-
-            <Row style={{ marginLeft: 3, marginTop: 25 }}>
-              <h6 style={{ marginLeft: 3, marginTop: -1 }}>
-                Quantidade : {product.quantity_product} ml
-              </h6>
-            </Row>
-
-            <Row style={{ marginTop: 20 }}>
-              <h6 style={{ marginLeft: 20 }}>
-                {" "}
-                Preço : {product.price_product} €{" "}
-              </h6>
-            </Row>
-
-            <Row style={{ marginTop: 70, marginLeft: 80 }}>
-              <Col>
-                <Button
-                  size="lg"
-                  variant="primary"
-                  onClick={() =>
-                    this.handleaddToCart(product) && this.handleModalOptions
-                  }
-                >
-                  Adicionar ao Carrinho
-                  {showModalOptions ? this.modalOptions() : false}
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Card>
-    );
-  };
-
-  render() {
-    const { hasfavorites, products } = this.state;
-    if( type != "client" ){
-        return (
-            <Redirect to="/nopermissions" />
-        );
-    } 
-   if (hasfavorites === true) {
-      return (
-        <div>
-          <div>
-            <Breadcrumb
-              style={{ marginTop: 20, marginLeft: 28 }}
-              id="breadcrumb"
-            >
-              <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-              <Breadcrumb.Item active style={{ color: "#AAAA74" }}>
-                {" "}
-                Favoritos{" "}
-              </Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
-
-          <Row>
-            <Breadcrumb
-              style={{ marginTop: 20, marginLeft: 28 }}
-              id="breadcrumb"
-            ></Breadcrumb>
-
-            <Col md={2} active style={{ marginTop: 80 }}>
-              <NavDropdown.Item
-                href="/client"
-                class="menulateral"
-                eventKey="4.1"
-              >
-                A minha Conta{" "}
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/order" eventKey="4.3">
-                As Minhas Encomendas
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/favorites" eventKey="4.4">
-                Os meus Favoritos
-              </NavDropdown.Item>
-            </Col>
-
-            <Col>
-              <h1 active style={{ color: "#AAAA74" }}>
-                {" "}
-                Favoritos{" "}
-              </h1>
-              <br></br>
-              {products.map(this.renderFavorite)}
-            </Col>
-          </Row>
-          <br></br>
-          <Row>
-            <Col></Col>
-            <Col>
-              {" "}
-              <Row active style={{ marginLeft: 120 }}>
-                {" "}
-                <Button
-                  size="lg"
-                  variant="primary"
-                  onClick={() => this.handleDeleteFavorites()}
-                >
-                  Limpar Favoritos
-                </Button>{" "}
-              </Row>
-            </Col>
-          </Row>
-          <br />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <div>
-            <Breadcrumb
-              style={{ marginTop: 20, marginLeft: 28 }}
-              id="breadcrumb"
-            >
-              <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-              <Breadcrumb.Item active style={{ color: "#AAAA74" }}>
-                {" "}
-                Favoritos{" "}
-              </Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
-
-          <Row>
-            <Breadcrumb
-              style={{ marginTop: 20, marginLeft: 28 }}
-              id="breadcrumb"
-            ></Breadcrumb>
-
-            <Col md={2} active style={{ marginTop: 80 }}>
-              <NavDropdown.Item
-                href="/client"
-                class="menulateral"
-                eventKey="4.1"
-              >
-                A minha Conta{" "}
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/order" eventKey="4.3">
-                As Minhas Encomendas
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/favorites" eventKey="4.4">
-                Os meus Favoritos
-              </NavDropdown.Item>
-            </Col>
-
-            <Col>
-              <h1 active style={{ color: "#AAAA74" }}>
-                {" "}
-                Favoritos{" "}
-              </h1>
-              <br></br>
-              <h3>
-                Não possui nenhum produto favorito, visite a nossa página de
-                produtos
-              </h3>
-            </Col>
-          </Row>
-          <br></br>
-
-          <br />
-        </div>
-      );
-    }
-  }
-}export default Favorites; */

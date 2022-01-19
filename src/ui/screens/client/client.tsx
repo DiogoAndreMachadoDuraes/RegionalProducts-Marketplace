@@ -51,6 +51,10 @@ export const ClientProfile: React.FC = () => {
 		);
 	};
 
+	const handleEdit = () => {
+		history.push('/editclient');
+	};
+
 	const handleDelete = async () => {
 		try {
 			await fetch('http://127.0.0.1:5000/client', {
@@ -189,7 +193,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={3}>
 					<Button
 						variant="dark"
-						href="/editclient"
+						onClick={handleEdit}
 						style={{
 							color: '#9B3939',
 							backgroundColor: 'white',

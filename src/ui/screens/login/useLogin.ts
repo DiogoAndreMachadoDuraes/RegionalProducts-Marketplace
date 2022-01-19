@@ -5,19 +5,20 @@ import { userInfo, userLogin } from 'store/User';
 import axios from 'axios';
 
 interface LoginOutPut {
-	handleEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	email?: string;
-	isValidEmail: boolean;
-	handleCheckEmail: () => void;
 	password?: string;
+	isShowedPassword: boolean;
+	show: boolean;
+	isValidEmail: boolean;
+	isValidPassword: boolean;
+	isInvalidCredentials: boolean;
+	handleEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	handleCheckEmail: () => void;
+	changeShowedPassword: () => void;
 	handlePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleCheckPassword: () => void;
-	isShowedPassword: boolean;
-	isValidPassword: boolean;
-	changeShowedPassword: () => void;
 	login: () => void;
 	handleShow: () => void;
-	show: boolean;
 	handleClose: () => void;
 }
 
@@ -27,6 +28,7 @@ export const useLogin = (): LoginOutPut => {
 	const [isValidEmail, setIsValidEmail] = useState(true);
 	const [isValidPassword, setIsValidPassword] = useState(true);
 	const [isShowedPassword, setIsShowedPassword] = useState(false);
+	const [isInvalidCredentials, setIsInvalidCredentials] = useState(false);
 	const [show, setShow] = useState(false);
 	const history = useHistory();
 
@@ -66,6 +68,12 @@ export const useLogin = (): LoginOutPut => {
 
 	const dispatch = useDispatch();
 
+	const showInvalidAlert = () => {
+		window.setTimeout(() => {
+			setIsInvalidCredentials(false);
+		}, 5000);
+	};
+
 	const login = async () => {
 		try {
 			let response = await fetch('http://127.0.0.1:5000/auth', {
@@ -97,6 +105,19 @@ export const useLogin = (): LoginOutPut => {
 				console.log('Error to get Client: ' + e);
 			}
 
+			try {
+				const config = {
+					headers: { Authorization: `Bearer ${token}` },
+				};
+
+				await axios.get(`http://127.0.0.1:5000/client/${userId}`, config).then((res) => {
+					const client = res.data;
+					dispatch(userInfo(client));
+				});
+			} catch (e) {
+				console.log('Error to get Favorites: ' + e);
+			}
+
 			if (type === 'client') {
 				dispatch(userLogin(json));
 				history.push('/');
@@ -109,7 +130,8 @@ export const useLogin = (): LoginOutPut => {
 						dispatch(userLogin(json));
 						history.push('/');
 					} else {
-						alert('O email e/ou palavra-passe estão incorretos!');
+						setIsInvalidCredentials(true);
+						showInvalidAlert();
 					}
 				}
 			}
@@ -133,5 +155,6 @@ export const useLogin = (): LoginOutPut => {
 		handleShow,
 		show,
 		handleClose,
+		isInvalidCredentials,
 	};
 };
