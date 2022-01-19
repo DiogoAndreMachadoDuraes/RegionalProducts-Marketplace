@@ -24,12 +24,45 @@ export const Login: React.FC = () => {
 		handleClose,
 	} = useLogin();
 
+	/* const myStyle = {
+		backgroundImage: "url('https://static.portugalbywine.com/media//MULTIMEDIA/FOTOS/3806/13448496174585C.jpg')",
+		height: '100vh',
+		marginLeft: '-40px',
+		backgroundSize: 'cover',
+		backgroundRepeat: 'no-repeat',
+		backgroundPosition: 'center',
+		width: '180vh',
+		marginTop: '-40px',
+	}; */
+
 	return (
 		<Container style={{ marginTop: 40, marginBottom: 70 }}>
 			<div style={{ display: 'flex', flexDirection: 'row' }}>
-				<div style={{ padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-					<h1 style={{ color: '#9B3939' }}>Produtos Regionais</h1>
-					<h6>Venha conhecer a nossa gama de produtos.</h6>
+				<div
+					style={{
+						padding: '20px',
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						fontFamily: 'artifika',
+					}}
+				>
+					<h1
+						style={{
+							color: '#9B3939',
+							fontFamily: 'artifika',
+						}}
+					>
+						Produtos Regionais
+					</h1>
+					<h6
+						style={{
+							color: '#000000',
+							fontFamily: 'artifika',
+						}}
+					>
+						Venha conhecer a nossa gama de produtos.
+					</h6>
 				</div>
 				<div
 					style={{
@@ -123,7 +156,12 @@ export const Login: React.FC = () => {
 						</Row>
 						<Row
 							id="row"
-							style={{ marginTop: 20, textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+							style={{
+								marginTop: 20,
+								textAlign: 'center',
+								display: 'flex',
+								justifyContent: 'center',
+							}}
 						>
 							<Col sm={1} />
 							<Col sm={10}>
@@ -180,6 +218,7 @@ export const Login: React.FC = () => {
 					</Form>
 				</div>
 			</div>
+
 			<ResetPassword show={show} onHide={handleClose} />
 		</Container>
 	);

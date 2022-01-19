@@ -39,10 +39,12 @@ export const Thanks: React.FC = () => {
 		<Modal size="lg" show={show} onHide={handleClose} centered={true} backdrop="static" keyboard={false}>
 			<Modal.Body>
 				<div style={{ padding: '20px' }}>
-					<Modal.Title style={{ marginTop: 20, textAlign: 'center', color: '#9B3939' }}>
+					<Modal.Title
+						style={{ marginTop: 20, textAlign: 'center', color: '#9B3939', fontFamily: 'artifika' }}
+					>
 						Obrigado pela sua compra!
 					</Modal.Title>
-					<p style={{ marginTop: 14, fontSize: 14, textAlign: 'center' }}>
+					<p style={{ marginTop: 14, fontFamily: 'artifika', fontSize: 14, textAlign: 'center' }}>
 						Agradecemos a sua compra e gostariamos de receber a sua avaliação.
 					</p>
 					<Row id="row">
@@ -89,7 +91,11 @@ export const Thanks: React.FC = () => {
 						<Col sm={2} />
 					</Row>
 					<div style={{ textAlign: 'center', marginTop: 25, marginBottom: 20 }}>
-						<Button variant="link" style={{ color: '#9B3939' }} onClick={handleClose}>
+						<Button
+							variant="link"
+							style={{ color: '#9B3939', fontFamily: 'artifika' }}
+							onClick={handleClose}
+						>
 							Não pretende avaliar?
 						</Button>
 					</div>

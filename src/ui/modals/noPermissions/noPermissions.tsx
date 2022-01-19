@@ -23,6 +23,7 @@ export const NoPermissions: React.FC = () => {
 						alignItems: 'center',
 						textAlign: 'center',
 						marginTop: 10,
+						fontFamily: 'artifika',
 					}}
 				>
 					<MdOutlineNoEncryptionGmailerrorred size="50" color="#9B3939" />
