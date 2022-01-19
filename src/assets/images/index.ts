@@ -30,6 +30,9 @@ import table from './table.jpg';
 import tea from './tea.jpg';
 import imageProfileDefault from './imageProfileDefault.png';
 import cereja from './cereja.jpg';
+import stepOne from './stepOne.svg';
+import stepTwo from './stepTwo.svg';
+import stepThree from './stepThree.svg';
 
 export const images = {
 	alheira,
@@ -64,4 +67,7 @@ export const images = {
 	imageProfileDefault,
 	logoExpanded,
 	cereja,
+	stepOne,
+	stepTwo,
+	stepThree,
 };
