@@ -26,9 +26,6 @@ import {
 	Order,
 	DashboardAdmin,
 	DashboardProducer,
-	Ship,
-	Payment,
-	ConfirmationOrder,
 	EditClient,
 	EditProducer,
 	Producer,
@@ -41,6 +38,9 @@ import {
 	Favorites,
 	Home,
 	ProducerProfile,
+	Confirmation,
+	Payment,
+	Ship,
 } from 'ui';
 
 export const App: React.FC = () => {
@@ -72,7 +72,7 @@ export const App: React.FC = () => {
 							<Route exact path="/dashboardProducer" component={DashboardProducer} />
 							<Route exact path="/ship" component={Ship} />
 							<Route exact path="/payment" component={Payment} />
-							<Route exact path="/confirmationOrder" component={ConfirmationOrder} />
+							<Route exact path="/confirmation" component={Confirmation} />
 							<Route exact path="/editClient" component={EditClient} />
 							<Route exact path="/editProducer" component={EditProducer} />
 							<Route exact path="/producer" component={Producer} />

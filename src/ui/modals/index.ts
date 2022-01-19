@@ -5,6 +5,8 @@ export * from './notFoundPage';
 export * from './resetPassword';
 export * from './thanks';
 export * from './confirmation';
+export * from './ship';
+export * from './payment';
 
 export const Modals = {
 	errorPage: 'errorPage',
@@ -14,4 +16,6 @@ export const Modals = {
 	resetPassword: 'resetPassword',
 	thanks: 'thanks',
 	confirmation: 'confirmation',
+	ship:'ship',
+	payment:'payment',
 };
