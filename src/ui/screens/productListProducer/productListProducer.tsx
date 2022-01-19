@@ -3,10 +3,12 @@ import axios from 'axios';
 import { Image, Tab, Row, Col, Button, Table, Modal, Form, Container, InputGroup, FormControl } from 'react-bootstrap';
 import { Producer } from '..';
 import { AiFillEdit, AiFillDelete, AiOutlineSearch } from 'react-icons/ai';
-/*import { Redirect } from "react-router-dom";*/
+import { useSelector } from 'react-redux';
+import { StoreState } from 'store';
+import { Redirect } from 'react-router-dom';
 
 interface ProductList {
-	_id: {
+	id: {
 		$oid: string;
 	};
 	name: string;
@@ -27,7 +29,7 @@ interface ProductList {
 
 export const ProductListProducer: React.FC = () => {
 	const Spacer = require('react-spacer');
-
+	const userId = useSelector((state: StoreState) => state.common.user.id);
 	const [showModalEditAguardente, setShowModalEditAguardente] = useState(false);
 	const [showModalEditLicor, setShowModalEditLicor] = useState(false);
 	const [ShowModalEditOlive, setShowModalEditOlive] = useState(false);
@@ -55,9 +57,11 @@ export const ProductListProducer: React.FC = () => {
 	const [categoryfilter, setCategoryfilter] = useState('');
 	const [products, setProducts] = useState<ProductList[]>();
 
+	const token = useSelector((state: StoreState) => state.common.user.token);
+
 	const handleShowEdit = (item: ProductList) => {
 		setActiveItemName(item.name);
-		setActiveItemID(item._id.$oid);
+		setActiveItemID(item.id.$oid);
 		setActiveItemQuantity(item.quantity);
 		setActiveItemValidity(item.validity);
 		setActiveItemAcidity(item.acidity);
@@ -72,24 +76,21 @@ export const ProductListProducer: React.FC = () => {
 		setActiveItemlogo_producer(item.logo_producer);
 		setActiveItemid_producer(item.id_producer);
 
-		if (activeItemCategory === 'Aguardente') {
+		if (activeItemCategory === 'Mel') {
 			setShowModalEditAguardente(true);
 		}
 
-		if (activeItemCategory === 'Licor') {
+		if (activeItemCategory === 'Compotas') {
 			setShowModalEditLicor(true);
 		}
 
-		if (activeItemCategory === 'Vinho') {
+		if (activeItemCategory === 'Frutos Secos') {
 			setShowModalEditWine(true);
-		}
-		if (activeItemCategory === 'Azeite') {
-			setShowModalEditOlive(true);
 		}
 	};
 
 	const handleShowDelete = (item: ProductList) => {
-		setActiveItemID(item._id.$oid);
+		setActiveItemID(item.id.$oid);
 		setActiveItemName(item.name);
 		setShowModalDelete(true);
 	};
@@ -99,103 +100,35 @@ export const ProductListProducer: React.FC = () => {
 			setCategoryfilter('Todos');
 		}
 
-		if (e.target.value === 'Todos os Vinhos') {
-			setCategoryfilter('Vinho');
+		if (e.target.value === 'Todo o Mel') {
+			setCategoryfilter('Mel');
 		}
-		if (e.target.value === 'Todos os Azeites') {
-			setCategoryfilter('Azeite');
+		if (e.target.value === 'Todas as Compotas') {
+			setCategoryfilter('Compotas');
 		}
-		if (e.target.value === 'Todos os Licores') {
-			setCategoryfilter('Licor');
-		}
-		if (e.target.value === 'Todas as Aguardentes') {
-			setCategoryfilter('Aguardente');
-		}
-		if (e.target.value === 'Vinho Branco') {
-			setCategoryfilter('Branco');
-		}
-		if (e.target.value === 'Vinho Tinto') {
-			setCategoryfilter('Tinto');
-		}
-		if (e.target.value === 'Vinho Rose') {
-			setCategoryfilter('Rose');
-		}
-		if (e.target.value === 'Vinho Espumante') {
-			setCategoryfilter('Espumante');
-		}
-		if (e.target.value === 'Azeite Virgem') {
-			setCategoryfilter('Virgem');
-		}
-		if (e.target.value === 'Azeite Extra-Virgem') {
-			setCategoryfilter('Extra-Virgem');
-		}
-		if (e.target.value === 'Azeite Aromatizado') {
-			setCategoryfilter('Aromatizado');
-		}
-		if (e.target.value === 'Aguardente de Medronho') {
-			setCategoryfilter('Medronho');
-		}
-		if (e.target.value === 'Aguardente de Cereais') {
-			setCategoryfilter('Cereais');
-		}
-		if (e.target.value === 'Aguardente de Cana de Madeira') {
-			setCategoryfilter('Cana de Madeira');
-		}
-		if (e.target.value === 'Aguardente de Pera') {
-			setCategoryfilter('Pera');
-		}
-		if (e.target.value === 'Licor de Limoncello') {
-			setCategoryfilter('Limoncello');
-		}
-		if (e.target.value === 'Licor de Cafe') {
-			setCategoryfilter('Cafe');
-		}
-		if (e.target.value === 'Licor de Amendoas') {
-			setCategoryfilter('Amendoa');
-		}
-		if (e.target.value === 'Licor de Chocolate') {
-			setCategoryfilter('Chocolate');
+		if (e.target.value === 'Todos os Frutos Secos') {
+			setCategoryfilter('Frutos Secos');
 		}
 	};
 
-	const getByCategory = (category: string) => {
-		/*  const { token } = this.state; */
-
+	const getByCategory = (category: string, id: string) => {
 		const config = {
-			/*   headers: { Authorization: `Bearer ${token}` }, */
+			headers: { Authorization: `Bearer ${token}` },
 		};
 
 		if (category === 'Todos') {
-			axios.get('' /* `http://127.0.0.1:5000/products/producer/${userId}` */, config).then((res) => {
+			axios.get(`http://127.0.0.1:5000/products/producer/${userId}`, config).then((res) => {
 				const products = res.data;
 				setProducts(products);
 			});
 		} else {
-			if (
-				category === 'Branco' ||
-				category === 'Tinto' ||
-				category === 'Rose' ||
-				category === 'Espumante' ||
-				category === 'Virgem' ||
-				category === 'Extra-Virgem' ||
-				category === 'Aromatizado' ||
-				category === 'Cereais' ||
-				category === 'Medronho' ||
-				category === 'Cana de Madeira' ||
-				category === 'Pera' ||
-				category === 'Chocolate' ||
-				category === 'Amendoa' ||
-				category === 'Cafe' ||
-				category === 'Limoncello'
-			) {
-				axios
-					.get('', /* `http://127.0.0.1:5000/products/${userId}/Category/${category}` */ config)
-					.then((res) => {
-						const products = res.data;
-						setProducts(products);
-					});
+			if (category === 'Mel' || category === 'Compotas' || category === 'Frutos Secos') {
+				axios.get(`http://127.0.0.1:5000/products/${userId}/Category/${category}`, config).then((res) => {
+					const products = res.data;
+					setProducts(products);
+				});
 			} else {
-				axios.get(/* `http://127.0.0.1:5000/products/${userId}/${category}` */ '', config).then((res) => {
+				axios.get(`http://127.0.0.1:5000/products/${userId}/${category}`, config).then((res) => {
 					const products = res.data;
 					setProducts(products);
 				});
@@ -250,10 +183,9 @@ export const ProductListProducer: React.FC = () => {
 	};
 
 	const handleSubmit = (id: string) => {
-		/*     const { token } = this.state;
-		 */
+		handleCloseEdit();
 		const config = {
-			/*  headers: { Authorization: `Bearer ${token}` }, */
+			headers: { Authorization: `Bearer ${token}` },
 		};
 
 		axios
@@ -291,13 +223,12 @@ export const ProductListProducer: React.FC = () => {
 		setShowModalDelete(false);
 	};
 
-	const handleDelete = (id: string) => {
-		/* const { token } = this.state; */
-
+	const handleCloseDelete = (id: string) => {
+		handleCloseEdit();
 		const config = {
-			/* headers: { Authorization: `Bearer ${token}` }, */
+			headers: { Authorization: `Bearer ${token}` },
 		};
-		axios.delete(`http://127.0.0.1:5000/products/${id}`, config).then((res) => {
+		axios.delete(`http://127.0.0.1:5000/products/${userId}`, config).then((res) => {
 			console.log(res);
 			console.log(res.data);
 		});
@@ -306,11 +237,7 @@ export const ProductListProducer: React.FC = () => {
 
 	const modalDelete = () => {
 		return (
-			<Modal
-				show={showModalDelete}
-				/* onHide={handleCloseDelete} */
-				animation={false}
-			>
+			<Modal show={showModalDelete} onHide={handleCloseDelete} animation={false}>
 				<Modal.Header closeButton>
 					<Modal.Title>Eliminar Produto</Modal.Title>
 				</Modal.Header>
@@ -319,10 +246,7 @@ export const ProductListProducer: React.FC = () => {
 					<Button variant="secondary" onClick={handleCloseEdit}>
 						Cancelar
 					</Button>
-					<Button
-						variant="primary"
-						/* onClick={() => delete(activeItemID) && handleCloseEdit} */
-					>
+					<Button variant="primary" onClick={() => handleCloseDelete(activeItemID)}>
 						Apagar
 					</Button>
 				</Modal.Footer>
@@ -337,7 +261,6 @@ export const ProductListProducer: React.FC = () => {
 					<Modal.Title>Editar dados do produto {activeItemName}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					{/* <Form onSubmit={handleSubmit}> */}
 					<Row>
 						<Col>
 							<Form.Label>Nome </Form.Label>
@@ -421,12 +344,9 @@ export const ProductListProducer: React.FC = () => {
 					<br />
 					<Row>
 						<Col>
-							<Form.Label>Tipo de Aguardente </Form.Label>
+							<Form.Label>Tipo de Mel </Form.Label>
 							<Form.Control required onChange={handleType} as="select" defaultValue={activeItemType}>
-								<option>Medronho</option>
-								<option>Ceriais</option>
-								<option>Cana de Madeira</option>
-								<option>Pera</option>
+								<option>Mel Natural</option>
 							</Form.Control>
 						</Col>
 						<Col>
@@ -462,9 +382,7 @@ export const ProductListProducer: React.FC = () => {
 					<Row style={{ marginTop: 20 }}>
 						<Button
 							type="submit"
-							/*  onClick={() =>
-                  handleSubmit(activeItemID) && handleCloseEdit
-                } */
+							onClick={() => handleSubmit(activeItemID)}
 							variant="primary"
 							size="lg"
 							block
@@ -472,7 +390,6 @@ export const ProductListProducer: React.FC = () => {
 							Alterar
 						</Button>
 					</Row>
-					{/* </Form> */}
 				</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={handleCloseEdit} variant="secondary">
@@ -496,7 +413,7 @@ export const ProductListProducer: React.FC = () => {
 						<Row>
 							<Col md={4}></Col>
 						</Row>
-						{/* <form onSubmit={handleSubmit}> */}
+
 						<Row>
 							<Col>
 								<Form.Label>Nome </Form.Label>
@@ -581,12 +498,11 @@ export const ProductListProducer: React.FC = () => {
 						<br />
 						<Row>
 							<Col>
-								<Form.Label>Tipo de Vinho </Form.Label>
+								<Form.Label>Tipo de Frutos Secos </Form.Label>
 								<Form.Control required onChange={handleType} as="select" defaultValue={activeItemType}>
-									<option>Tinto</option>
-									<option>Branco</option>
-									<option>Rose</option>
-									<option>Espumante</option>
+									<option>Amêndoa</option>
+									<option>Granola sem açucar</option>
+									<option>Pinhão</option>
 								</Form.Control>
 							</Col>
 							<Col>
@@ -622,9 +538,7 @@ export const ProductListProducer: React.FC = () => {
 						<Row style={{ marginTop: 20 }}>
 							<Button
 								type="submit"
-								/*  onClick={() =>
-                    handleSubmit(activeItemID) && handleCloseEdit
-                  } */
+								onClick={() => handleSubmit(activeItemID)}
 								variant="primary"
 								size="lg"
 								block
@@ -632,169 +546,6 @@ export const ProductListProducer: React.FC = () => {
 								Alterar
 							</Button>
 						</Row>
-						{/* </form> */}
-					</Container>
-				</Modal.Body>
-				<Modal.Footer>
-					<Button onClick={handleCloseEdit} variant="secondary">
-						Cancelar
-					</Button>
-				</Modal.Footer>
-			</Modal>
-		);
-	};
-
-	const modalEditOlive = () => {
-		return (
-			<Modal centered size="lg" show={ShowModalEditOlive} onHide={handleCloseEdit} animation={true}>
-				<Modal.Header closeButton>
-					<Modal.Title>Editar dados do produto {activeItemName} </Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Container>
-						<Row></Row>
-						<br />
-
-						<Row>
-							<Col md={4}></Col>
-						</Row>
-						{/*   <form onSubmit={handleSubmit}> */}
-						<Row>
-							<Col>
-								<Form.Label>Nome </Form.Label>
-								<Form.Control
-									id="nome"
-									required
-									defaultValue={activeItemName}
-									onChange={handleName}
-									type="text"
-									placeholder="Nome"
-								/>
-							</Col>
-
-							<Col>
-								<Form.Label>Quantidade por garrafa (em ML) </Form.Label>
-								<Form.Control
-									required
-									onChange={handleQuantity}
-									defaultValue={activeItemQuantity}
-									id="quantidade"
-									type="number"
-									min="1"
-									placeholder="Quantidade por garrafa"
-								/>
-							</Col>
-						</Row>
-						<br />
-						<Row>
-							<Col>
-								<Form.Label> Validade </Form.Label>
-								<Form.Control
-									required
-									onChange={handleValidity}
-									defaultValue={activeItemValidity}
-									id="validade"
-									min="2021"
-									type="number"
-									placeholder=" Validade"
-								/>
-							</Col>
-							<Col>
-								<Form.Label>Data de Colheita </Form.Label>
-								<Form.Control
-									required
-									onChange={handleHarvest}
-									defaultValue={activeItemHarvest}
-									id="data_colheita"
-									max="2021-05-03"
-									type="date"
-									placeholder="Data de Colheita"
-								/>
-							</Col>
-						</Row>
-						<br />
-						<Row>
-							<Col>
-								<Form.Label>Acidez </Form.Label>
-								<Form.Control
-									onChange={handleAcidity}
-									defaultValue={activeItemAcidity}
-									required
-									min="0"
-									id="acidez"
-									type="number"
-									placeholder="Acidez"
-								/>
-							</Col>
-							<Col md={6}>
-								<Form.Label>Preço </Form.Label>
-								<Form.Control
-									required
-									onChange={handlePrice}
-									defaultValue={activeItemPrice}
-									id="preco"
-									min="0.01"
-									type="number"
-									placeholder="Preço"
-									step=".01"
-								/>
-							</Col>
-						</Row>
-						<br />
-						<Row>
-							<Col>
-								<Form.Label>Tipo de Azeite </Form.Label>
-								<Form.Control required onChange={handleType} as="select" defaultValue={activeItemType}>
-									<option>Virgem</option>
-									<option>Extra-Virgem</option>
-									<option>Aromatizado</option>
-								</Form.Control>
-							</Col>
-							<Col>
-								<Form.Label>Quantidade de Stock </Form.Label>
-								<Form.Control
-									required
-									onChange={handleStock}
-									defaultValue={activeItemStock}
-									id="stock"
-									min="1"
-									type="number"
-									placeholder="Stock"
-								/>
-							</Col>
-						</Row>
-						<br />
-						<Row>
-							<Col>
-								<Form>
-									<Form.Group>
-										<Form.File
-											onChange={handlePhoto}
-											id="exampleFormControlFile1"
-											label="Inserir foto"
-										/>
-									</Form.Group>
-								</Form>
-							</Col>
-							<Col>
-								<Image height="120" width="80" className="padding_image" src={activeItemPhoto}></Image>
-							</Col>
-						</Row>
-						<Row style={{ marginTop: 20 }}>
-							{' '}
-							<Button
-								type="submit"
-								/*   onClick={() =>
-                    handleSubmit(activeItemID) && handleCloseEdit
-                  } */
-								variant="primary"
-								size="lg"
-								block
-							>
-								Alterar
-							</Button>
-						</Row>
-						{/*  </form> */}
 					</Container>
 				</Modal.Body>
 				<Modal.Footer>
@@ -820,7 +571,7 @@ export const ProductListProducer: React.FC = () => {
 						<Row>
 							<Col md={4}></Col>
 						</Row>
-						{/*  <form onSubmit={handleSubmit}> */}
+
 						<Row>
 							<Col>
 								<Form.Label>Nome </Form.Label>
@@ -905,12 +656,11 @@ export const ProductListProducer: React.FC = () => {
 						<br />
 						<Row>
 							<Col>
-								<Form.Label>Tipo de Licor </Form.Label>
+								<Form.Label>Tipo de Compotas </Form.Label>
 								<Form.Control required onChange={handleType} as="select" defaultValue={activeItemType}>
-									<option>Limoncello</option>
-									<option>Cafe</option>
-									<option>Amendoa</option>
-									<option>Chocolate</option>
+									<option>Compota de Figos</option>
+									<option>Compota de Morango</option>
+									<option>Compota de Kiwi</option>
 								</Form.Control>
 							</Col>
 							<Col>
@@ -946,9 +696,7 @@ export const ProductListProducer: React.FC = () => {
 						<Row style={{ marginTop: 20 }}>
 							<Button
 								type="submit"
-								/* onClick={() =>
-                    handleSubmit(activeItemID) && handleCloseEdit
-                  } */
+								onClick={() => handleSubmit(activeItemID)}
 								variant="primary"
 								size="lg"
 								block
@@ -956,7 +704,6 @@ export const ProductListProducer: React.FC = () => {
 								Alterar
 							</Button>
 						</Row>
-						{/* </form> */}
 					</Container>
 				</Modal.Body>
 				<Modal.Footer>
@@ -973,51 +720,44 @@ export const ProductListProducer: React.FC = () => {
 		setSearchTerm(e.target.value);
 	};
 
-	/*  const search = () => {
-    const name = Object.values(products).filter((a) =>
-      a.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    if (name.length !== 0) {
-      return name.map((item, index) => {
-        return (
-          <tr key={index}>
-            <td>{item.name}</td>
-            <td>{item.category}</td>
-            <td>{item.quantity}</td>
-            <td>{item.validity}</td>
-            <td>{item.harvest}</td>
-            <td>{item.type}</td>
-            <td>{item.alcohol_content}</td>
-            <td>{item.acidity}</td>
-            <td>{item.price}</td>
-            <td>
-              <Image height="60" width="50" src={item.photo}></Image>
-            </td>
-            <td>{item.stock}</td>
-            <td>
-              <AiFillEdit
-                onClick={() => handleShowEdit(item)}
-                size="25"
-                style={{ color: "444903" }}
-              />
-              {showModalEditAguardente ? modalEditAguardente() : false}
-              {showModalEditWine ? modalEditWine() : false}
-              {showModalEditOlive ? modalEditOlive() : false}
-              {showModalEditLicor ? modalEditLicor() : false}
-            </td>
-            <td>
-              <AiFillDelete
-                onClick={() => handleShowDelete(item)}
-                size="25"
-                style={{ color: "444903" }}
-              />
-              {showModalDelete ? modalDelete() : false}
-            </td>
-          </tr>
-        );
-      });
-    }
-  }; */
+	const search = () => {
+		if (products !== undefined) {
+			const name = Object.values(products).filter((a) => a.name.toLowerCase().includes(searchTerm.toLowerCase()));
+			return name.map((item, index) => {
+				return (
+					<tr key={index}>
+						<td>{item.name}</td>
+						<td>{item.category}</td>
+						<td>{item.quantity}</td>
+						<td>{item.validity}</td>
+						<td>{item.harvest}</td>
+						<td>{item.type}</td>
+						<td>{item.alcohol_content}</td>
+						<td>{item.acidity}</td>
+						<td>{item.price}</td>
+						<td>
+							<Image height="60" width="50" src={item.photo}></Image>
+						</td>
+						<td>{item.stock}</td>
+						<td>
+							<AiFillEdit onClick={() => handleShowEdit(item)} size="25" style={{ color: '#8A3535' }} />
+							{showModalEditAguardente ? modalEditAguardente() : false}
+							{ShowModalEditWine ? modalEditWine() : false}
+							{showModalEditLicor ? modalEditLicor() : false}
+						</td>
+						<td>
+							<AiFillDelete
+								onClick={() => handleShowDelete(item)}
+								size="25"
+								style={{ color: '#8A3535' }}
+							/>
+							{showModalDelete ? modalDelete() : false}
+						</td>
+					</tr>
+				);
+			});
+		}
+	};
 
 	return (
 		<>
@@ -1050,39 +790,19 @@ export const ProductListProducer: React.FC = () => {
 								size="sm"
 								required
 								onChange={handleCategoryFilter}
-								onClick={() => getByCategory(categoryfilter)}
+								/* 	onClick={() => getByCategory(categoryfilter)} */
 								as="select"
 							>
 								<option style={{ fontSize: 14, fontWeight: 'bold', color: 'black' }}>
 									Todos os Produtos
 								</option>
+								<option style={{ fontSize: 14, fontWeight: 'bold', color: 'black' }}>Todo o Mel</option>
 								<option style={{ fontSize: 14, fontWeight: 'bold', color: 'black' }}>
-									Todos os Vinhos
+									Todos as Compotas
 								</option>
-								<option>Vinho Branco</option>
-								<option>Vinho Tinto</option>
-								<option>Vinho Rose</option>
-								<option>Vinho Espumante</option>
 								<option style={{ fontSize: 14, fontWeight: 'bold', color: 'black' }}>
-									Todos os Azeites
+									Todos os Frutos Secos
 								</option>
-								<option>Azeite Virgem</option>
-								<option>Azeite Extra-Virgem</option>
-								<option>Azeite Aromatizado</option>
-								<option style={{ fontSize: 14, fontWeight: 'bold', color: 'black' }}>
-									Todos os Licores
-								</option>
-								<option>Licor de Limoncello</option>
-								<option>Licor de Cafe</option>
-								<option>Licor de Amendoas</option>
-								<option>Licor de Chocolate</option>
-								<option style={{ fontSize: 14, fontWeight: 'bold', color: 'black' }}>
-									Todas as Aguardentes
-								</option>
-								<option>Aguardente de Medronho</option>
-								<option>Aguardente de Cereais</option>
-								<option>Aguardente de Cana de Madeira</option>
-								<option>Aguardente de Pera</option>
 							</Form.Control>
 						</Col>
 					</Row>
@@ -1114,7 +834,6 @@ export const ProductListProducer: React.FC = () => {
 										<th>Foto</th>
 										<th>Stock</th>
 										<th>
-											{' '}
 											<Button href="/createproduct"> Adicionar Novo Produto</Button>{' '}
 										</th>
 									</tr>
@@ -1150,7 +869,6 @@ export const ProductListProducer: React.FC = () => {
 															/>
 															{showModalEditAguardente ? modalEditAguardente() : false}
 															{ShowModalEditWine ? modalEditWine() : false}
-															{ShowModalEditOlive ? modalEditOlive() : false}
 															{showModalEditLicor ? modalEditLicor() : false}
 														</td>
 														<td>
@@ -1165,7 +883,7 @@ export const ProductListProducer: React.FC = () => {
 													</tr>
 												);
 										  })
-										: /*  search() */ false}
+										: search()}
 								</tbody>
 							</Table>
 						</Col>

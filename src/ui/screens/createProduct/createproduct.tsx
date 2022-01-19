@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Card, Accordion, Row, Col, Button, Container, Spinner, Form, Image, Modal } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'store';
 
 interface ProductsList {
 	name: string;
@@ -41,6 +43,8 @@ export const CreateProduct: React.FC = () => {
 	const [stock, setStock] = useState('');
 	const [alcohol_content, setAlcohol_Content] = useState('');
 	const [name_producer, setName_producer] = useState('');
+
+	const token = useSelector((state: StoreState) => state.common.user.token);
 
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value);
@@ -162,7 +166,7 @@ export const CreateProduct: React.FC = () => {
 		e.preventDefault();
 		setShowModalOptions(true);
 		const config = {
-			/* headers: { Authorization: `Bearer ${token}` }, */
+			headers: { Authorization: `Bearer ${token}` },
 		};
 
 		axios
@@ -226,7 +230,7 @@ export const CreateProduct: React.FC = () => {
 
 	const modalOptions = () => {
 		return (
-			<Modal /* size="md" */ show={showModalOptions} animation={true}>
+			<Modal size="lg" show={showModalOptions} animation={true}>
 				<Modal.Header>
 					<Modal.Title>O produto {name} foi adicionado com Sucesso!</Modal.Title>
 				</Modal.Header>
