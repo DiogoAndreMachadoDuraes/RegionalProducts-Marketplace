@@ -63,24 +63,24 @@ export const App: React.FC = () => {
 							<Route exact path="/frequentTask" component={FrequentTask} />
 							<Route exact path="/productDetail/:id" component={ProductDetail} />
 							<Route exact path="/register" component={Register} />
-							<Route exact path="/clientlist" component={ClientList} />
-							<Route exact path="/producerlist" component={ProducerList} />
-							<Route exact path="/productlist" component={ProductList} />
+							<Route exact path="/clientList" component={ClientList} />
+							<Route exact path="/producerList" component={ProducerList} />
+							<Route exact path="/productList" component={ProductList} />
 							<Route exact path="/product/:category" component={Product} />
 							<Route exact path="/order" component={Order} />
-							<Route exact path="/dashboardadmin" component={DashboardAdmin} />
-							<Route exact path="/dashboardproducer" component={DashboardProducer} />
+							<Route exact path="/dashboardAdmin" component={DashboardAdmin} />
+							<Route exact path="/dashboardProducer" component={DashboardProducer} />
 							<Route exact path="/ship" component={Ship} />
 							<Route exact path="/payment" component={Payment} />
 							<Route exact path="/confirmationOrder" component={ConfirmationOrder} />
-							<Route exact path="/editclient" component={EditClient} />
-							<Route exact path="/editproducer" component={EditProducer} />
+							<Route exact path="/editClient" component={EditClient} />
+							<Route exact path="/editProducer" component={EditProducer} />
 							<Route exact path="/producer" component={Producer} />
 							<Route exact path="/cart" component={Cart} />
 							<Route exact path="/invoice" component={Invoice} />
-							<Route exact path="/producerorder" component={ProducerOrder} />
+							<Route exact path="/producerOrder" component={ProducerOrder} />
 							<Route exact path="/producerRegister" component={ProducerRegister} />
-							<Route exact path="/createproduct" component={CreateProduct} />
+							<Route exact path="/createProduct" component={CreateProduct} />
 							<Route exact path="/productListProducer" component={ProductListProducer} />
 							<Route exact path="/favorites" component={Favorites} />
 							<Route exact path="/producerProfile" component={ProducerProfile} />
