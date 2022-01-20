@@ -56,6 +56,7 @@ export const ProductDetail: React.FC = () => {
 			setPhoto(finalList[0].photo);
 			setPhotoProducer(finalList[0].logo_producer);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const onPlus = () => {

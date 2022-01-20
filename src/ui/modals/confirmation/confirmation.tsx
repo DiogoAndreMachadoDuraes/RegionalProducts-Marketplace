@@ -1,115 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import Tab from 'react-bootstrap/Tab';
-import Table from 'react-bootstrap/Table';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { Col, Container, Row, Navbar, Nav, Button, Image, Modal } from 'react-bootstrap';
+import { Col, Row, Button, Image, Modal, Tab } from 'react-bootstrap';
 import { images } from 'assets';
-import axios from 'axios';
-import moment from 'moment';
-import { useHistory } from 'react-router';
-import { useSelector } from 'react-redux';
-import { StoreState } from 'store';
+import { CartList } from 'ui';
 
-interface Client {
-	/* 	id_client: { $oid: string }; */
-	name: string;
-	locality: string;
-	postalCode: string;
-	street: string;
-	tin: string;
-}
-interface Products {
-	photo_product: string;
-	name_product: string;
-	price_product: string;
+interface ModalConfirmationProps {
+	show: boolean;
+	onHide: () => void;
+	item?: CartList[];
+	price: number;
+	handleGoBack: () => void;
 }
 
-export const Confirmation: React.FC = () => {
-	const [show, setShow] = useState(true);
-	const [data, setData] = useState([]);
-	const [products, setProducts] = useState<Products[]>([]);
-	const [client, setClient] = useState<Client>({ name: '', locality: '', postalCode: '', street: '', tin: '' });
-	const [isLoading, setIsLoading] = useState(false);
+export const Confirmation: React.FC<ModalConfirmationProps> = ({ show, onHide, handleGoBack, item, price }) => {
 	const [totalPrice, setTotalPrice] = useState(4.99);
-	const [empty, setEmpty] = useState(true);
-	const history = useHistory();
-	const token = useSelector((state: StoreState) => state.common.user.token);
-	const handleClose = () => setShow(false);
 
-	/*  useEffect(() => {
-		try {
-			let response = await fetch('http://127.0.0.1:5000/cart/client/' userId , {
-				headers: {
-					Authorization: 'Bearer ' + token,
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-			});
-			let json = await response.json();
-			const products = json.products;
-			let Price = 4.99;
-
-			products.forEach((item, index: number) => {
-				Price += products[index].quantity_product * products[index].price_product;
-			});
-
-			setTotalPrice(Price);
-
-			setData(json);
-			setIsLoading(true);
-			setProducts(products);
-		} catch (e) {
-			console.log('Error to get cart: ' + e);
-			setIsLoading(true);
-			setEmpty(true);
+	useEffect(() => {
+		if (price < 49.99) {
+			setTotalPrice(price + 4.99);
+		} else {
+			setTotalPrice(price);
 		}
-		const config = {
-			headers: { Authorization: `Bearer ${token}` },
-		};
-		axios.get('' */ /* `http://127.0.0.1:5000/client/${userId}` */ /* , config).then((res) => {
-			const client = res.data;
-			setClient(client); */
-	/* setState({
-				name: client.name,
-				tin: client.tin,
-				birthday: client.birthday,
-				telephone: client.telephone,
-				street: client.street,
-				locality: client.locality,
-				country: client.country,
-				postal_code: client.postal_code,
-				email: client.email,
-				password: client.password,
-				state: client.state,
-			}); */
-	/* 	});
-	}, [input]); */
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-	const createShop = () => {
-		axios.post(`http://127.0.0.1:5000/shop`, {
-			country_client: '',
-			date: moment().format('YYYY/MM/DD HH:mm:ss'),
-			doc_invoice: '',
-			hour: moment().format('YYYY/MM/DD HH:mm:ss'),
-			id_client: '',
-			id_producer: '',
-			locality_client: client.locality,
-			name_client: client.name,
-			postal_code_client: client.postalCode,
-			price: totalPrice,
-			quantity: '',
-			street_client: client.street,
-			tax: 23,
-			tin_client: client.tin,
-			vat: '',
-			rate: '',
-			products: products,
-		});
-		history.push('/payment');
+	const renderProducts = (item: CartList, index: number) => {
+		return (
+			<>
+				<div key={index} style={{ display: 'flex', flexDirection: 'row' }}>
+					<Image src={item.photo_product} width="69" height="69" />
+					<p style={{ marginTop: 20, marginLeft: 60, width: 250 }}>
+						<i>{item.name_product}</i>
+					</p>
+					<p style={{ marginTop: 18, marginLeft: 10 }}>
+						<span style={{ fontWeight: 'bold' }}>Preço: </span>
+						{item.price_product} €
+					</p>
+				</div>
+				<br />
+			</>
+		);
 	};
 
 	return (
-		<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} centered={true} size="lg">
+		<Modal show={show} onHide={onHide} backdrop="static" keyboard={false} centered={true} size="lg">
 			<Modal.Body>
 				<div>
 					<Row id="row"></Row>
@@ -129,11 +62,10 @@ export const Confirmation: React.FC = () => {
 					</div>
 					<div style={{ height: 1, backgroundColor: '#8A3535', marginTop: '20px' }}></div>
 					<br />
-					<br />
 					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
 						<Row id="row">
 							<Col sm={1} />
-							<Col sm={10}>
+							<Col sm={10} style={{ marginBottom: 20 }}>
 								<div style={{ flexDirection: 'row', display: 'flex' }}>
 									<Image src={images.truck} width="85" height="85" />
 									<h4
@@ -176,34 +108,30 @@ export const Confirmation: React.FC = () => {
 										Cesto de Compras
 									</h4>
 								</div>
-								{products.map((item) => {
-									return (
-										<tr>
-											<td align="right">
-												<Image src={item.photo_product} width="60" height="65" />
-											</td>
-											<td>{item.name_product}</td>
-											<td>{item.price_product}€</td>
-										</tr>
-									);
-								})}
+								<div style={{ marginLeft: 120, marginTop: 20 }}>
+									{item?.map((item, index) => renderProducts(item, index))}
+								</div>
 								<br />
-								<br />
-								<br />
-								<div style={{ flexDirection: 'row', display: 'flex' }}>
+								<div style={{ textAlign: 'right' }}>
 									<h4
 										style={{
 											fontSize: 22,
 											fontWeight: 'bold',
 											fontFamily: 'artifika',
-											marginTop: 2,
-											marginLeft: 20,
+											marginTop: 10,
+											marginRight: 60,
 										}}
 									>
 										Valor total:
 									</h4>
-									<h4 style={{ fontSize: 20, fontFamily: 'artifika', marginLeft: 14, marginTop: 3 }}>
-										{totalPrice}€
+									<h4
+										style={{
+											fontSize: 20,
+											fontFamily: 'artifika',
+											marginTop: -32,
+										}}
+									>
+										{totalPrice} €
 									</h4>
 								</div>
 							</Col>
@@ -212,13 +140,12 @@ export const Confirmation: React.FC = () => {
 					</Tab.Container>
 					<div style={{ height: 1, backgroundColor: '#8A3535', marginTop: '20px' }}></div>
 					<br />
-					<br />
 					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
 						<Row id="row">
 							<Col sm={1} />
 							<Col sm={1}>
 								<Button
-									href="/ship"
+									onClick={handleGoBack}
 									variant="dark"
 									size="lg"
 									style={{ color: '#9B3939', backgroundColor: 'white', fontFamily: 'artifika' }}
@@ -229,7 +156,7 @@ export const Confirmation: React.FC = () => {
 							<Col sm={8} />
 							<Col sm={1}>
 								<Button
-									href="/payment"
+									onClick={onHide}
 									variant="dark"
 									size="lg"
 									style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}

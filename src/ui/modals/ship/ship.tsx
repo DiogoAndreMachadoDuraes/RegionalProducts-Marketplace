@@ -1,36 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import Tab from 'react-bootstrap/Tab';
-import Table from 'react-bootstrap/Table';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { Col, Container, Row, Button, Image, Modal } from 'react-bootstrap';
+import React from 'react';
+import { Tab, Col, Container, Row, Button, Image, Modal } from 'react-bootstrap';
 import { images } from 'assets';
-import axios from 'axios';
-import moment from 'moment';
-import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'store';
 
-interface ClientList {
-	name: string;
-	locality: string;
-	postalCode: string;
-	street: string;
-	tin: string;
+interface ModalShipProps {
+	show: boolean;
+	onHide: () => void;
+	handleContinue: () => void;
 }
 
-export const Ship: React.FC = () => {
-	const [show, setShow] = useState(true);
-	const Spacer = require('react-spacer');
+export const Ship: React.FC<ModalShipProps> = ({ show, onHide, handleContinue }) => {
+	const telephone = useSelector((state: StoreState) => state.common.client.telephone);
+	const address = useSelector((state: StoreState) => state.common.client.address);
+	const postal_code = useSelector((state: StoreState) => state.common.client.postal_code);
+	const location = useSelector((state: StoreState) => state.common.client.location);
+	const country = useSelector((state: StoreState) => state.common.client.country);
 
-	const [client, setClient] = useState<ClientList[]>();
-	const [showModalDelete, setShowModalDelete] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [totalPrice, setTotalPrice] = useState(4.99);
-
-	const history = useHistory();
-
-	const handleClose = () => setShow(false);
+	const handleClick = () => {
+		onHide();
+	};
 
 	return (
-		<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} centered={true} size="lg">
+		<Modal show={show} onHide={onHide} backdrop="static" keyboard={false} centered={true} size="lg">
 			<Modal.Body>
 				<div>
 					<Row id="row"></Row>
@@ -53,39 +45,106 @@ export const Ship: React.FC = () => {
 					<br />
 
 					<Container>
-						<br />
-						<Row>
-							<Col>
+						<Row style={{ marginLeft: 20 }}>
+							<Col sm={4}>
+								<br />
 								<Image
 									src="https://4.bp.blogspot.com/-n4IEPwlCD2Y/XN2fukZ1DOI/AAAAAAAACk0/X5qGV-6rgxgvUbH34RKOMdO8O-l9yEI5gCLcBGAs/s1600/og-image.jpg"
 									width="180"
 									height="80"
 									thumbnail
 								/>
-							</Col>
-
-							<Col>
-								<h6 style={{ textAlign: 'left', alignItems: 'center', fontFamily: 'artifika' }}>
-									Entrega até 5 dias úteis na morada indicada.
-								</h6>
-								<h6 style={{ textAlign: 'left', alignItems: 'center', fontFamily: 'artifika' }}>
-									Para garantirmos a entrega da tua encomenda verifica se o contacto está correto:
-									+351988776667
-								</h6>
-							</Col>
-
-							<Col>
-								{' '}
 								<h6
 									style={{
-										fontWeight: 'bold',
-										textAlign: 'center',
-										alignItems: 'center',
+										marginTop: 20,
+										marginLeft: 15,
 										fontFamily: 'artifika',
 									}}
 								>
-									Custo de envio: 3,99€
+									<span
+										style={{
+											fontWeight: 'bold',
+										}}
+									>
+										Custo de envio:{' '}
+									</span>{' '}
+									4,99 €
 								</h6>
+							</Col>
+							<Col sm={8}>
+								<Row style={{ marginLeft: 50 }}>
+									<h6
+										style={{
+											textAlign: 'left',
+											alignItems: 'center',
+											fontFamily: 'artifika',
+											marginTop: 15,
+										}}
+									>
+										Entrega até 5 dias úteis na morada indicada.
+									</h6>
+									<h6
+										style={{
+											textAlign: 'left',
+											alignItems: 'center',
+											fontFamily: 'artifika',
+											marginTop: 15,
+										}}
+									>
+										Para garantirmos a entrega verifica os teus dados:
+									</h6>
+									<div style={{ marginLeft: 30 }}>
+										<h6
+											style={{
+												textAlign: 'left',
+												fontFamily: 'artifika',
+												marginTop: 25,
+												fontSize: '14px',
+											}}
+										>
+											<span
+												style={{
+													fontWeight: 'bold',
+												}}
+											>
+												Morada:{' '}
+											</span>{' '}
+											{address}
+										</h6>
+										<h6
+											style={{
+												textAlign: 'left',
+												fontFamily: 'artifika',
+												fontSize: '14px',
+											}}
+										>
+											<span
+												style={{
+													fontWeight: 'bold',
+												}}
+											>
+												Código Postal:{' '}
+											</span>{' '}
+											{postal_code}, {location} - {country}
+										</h6>
+										<h6
+											style={{
+												textAlign: 'left',
+												fontFamily: 'artifika',
+												fontSize: '14px',
+											}}
+										>
+											<span
+												style={{
+													fontWeight: 'bold',
+												}}
+											>
+												Telemóvel:{' '}
+											</span>{' '}
+											{telephone}
+										</h6>
+									</div>
+								</Row>
 							</Col>
 						</Row>
 						<br />
@@ -99,7 +158,7 @@ export const Ship: React.FC = () => {
 							<Col sm={1} />
 							<Col sm={1}>
 								<Button
-									href="/cart"
+									onClick={handleClick}
 									variant="dark"
 									size="lg"
 									style={{ color: '#9B3939', backgroundColor: 'white', fontFamily: 'artifika' }}
@@ -110,7 +169,7 @@ export const Ship: React.FC = () => {
 							<Col sm={8} style={{ marginTop: 60 }} />
 							<Col sm={1}>
 								<Button
-									href="/confirmation"
+									onClick={handleContinue}
 									variant="dark"
 									size="lg"
 									style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}

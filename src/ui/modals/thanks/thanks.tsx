@@ -1,42 +1,83 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Form, Modal } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'store';
+import { CartList } from 'ui';
+import moment from 'moment';
+import axios from 'axios';
 
-export const Thanks: React.FC = () => {
-	const [show, setShow] = useState(true);
-	const [avaliation, setAvaliation] = useState('1');
+interface ModalTanksProps {
+	show: boolean;
+	item?: CartList[];
+	price: number;
+	onHide: () => void;
+}
 
-	const handleClose = () => setShow(false);
+export const Thanks: React.FC<ModalTanksProps> = ({ show, item, price, onHide }) => {
+	const [avaliation, setAvaliation] = useState('');
 
-	/* const postAvaliation = async () => {
-		const { orderId, avaliation, token } = this.state;
+	const token = useSelector((state: StoreState) => state.common.user.token);
+	const country = useSelector((state: StoreState) => state.common.client.country);
+	const tin = useSelector((state: StoreState) => state.common.client.tin);
+	const address = useSelector((state: StoreState) => state.common.client.address);
+	const postalCode = useSelector((state: StoreState) => state.common.client.postal_code);
+	const telephone = useSelector((state: StoreState) => state.common.client.telephone);
+	const location = useSelector((state: StoreState) => state.common.client.location);
+	const userId = useSelector((state: StoreState) => state.common.user.id);
+
+	const handleClick = async () => {
+		// eslint-disable-next-line array-callback-return
+		item?.map((product) => {
+			try {
+				fetch('http://127.0.0.1:5000/shop', {
+					method: 'POST',
+					headers: {
+						Authorization: 'Bearer ' + token,
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						country_client: country,
+						date: moment().format('YYYY/MM/DD'),
+						email_client: product.email_client,
+						pdf_invoice: '',
+						hour: moment().format('HH:mm:ss'),
+						id_client: product.id_client,
+						id_product: product.id_product,
+						photo_product: product.photo_product,
+						location_client: location,
+						telephone_client: telephone,
+						postal_code: postalCode,
+						price_final: price < 49.99 ? price + 4.99 : price,
+						quantity_final: product.quantity,
+						address_client: address,
+						tax: price < 49.99 ? ((price + 4.99) * 0.23).toFixed(2) : (price * 0.23).toFixed(2),
+						tin_client: tin,
+						vat: '23%',
+						avaliation: avaliation,
+						name_product: product.name_product,
+					}),
+				});
+			} catch (e) {
+				console.log('Error to post order: ' + e);
+			}
+		});
 		try {
-			await fetch('http://127.0.0.1:5000/avaliation', {
-				method: 'POST',
+			await axios.delete(`http://127.0.0.1:5000/cart/client/` + userId, {
 				headers: {
 					Authorization: 'Bearer ' + token,
 					Accept: 'application/json',
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					_id: orderId,
-					avaliation: avaliation,
-				}),
 			});
-			this.setState({ showSucess: true });
-			setTimeout(function () {
-				window.location.reload();
-			}, 5000);
 		} catch (e) {
-			console.log('Error to post Avaliation: ' + e);
-			this.setState({ showFailure: true });
-			setTimeout(function () {
-				window.location.reload();
-			}, 5000);
+			console.log('Error to delete cart: ' + e);
 		}
-	}; */
+		onHide();
+	};
 
 	return (
-		<Modal size="lg" show={show} onHide={handleClose} centered={true} backdrop="static" keyboard={false}>
+		<Modal size="lg" show={show} onHide={onHide} centered={true} backdrop="static" keyboard={false}>
 			<Modal.Body>
 				<div style={{ padding: '20px' }}>
 					<Modal.Title
@@ -76,7 +117,7 @@ export const Thanks: React.FC = () => {
 									<Button
 										type="submit"
 										className="mb-2"
-										/* onClick={postRate} */
+										onClick={handleClick}
 										style={{
 											backgroundColor: '#9B3939',
 											color: 'white',
@@ -94,7 +135,7 @@ export const Thanks: React.FC = () => {
 						<Button
 							variant="link"
 							style={{ color: '#9B3939', fontFamily: 'artifika' }}
-							onClick={handleClose}
+							onClick={handleClick}
 						>
 							Não pretende avaliar?
 						</Button>

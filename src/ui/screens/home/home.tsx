@@ -28,19 +28,16 @@ export const Home: React.FC = () => {
 			try {
 				await axios.get(`http://127.0.0.1:5000/productslist`).then((res) => {
 					const products = res.data;
-					console.log(products);
 					setProducts(products);
 					products.forEach((x: Product) => {
 						dispatch(productList(x));
 					});
+
 					let categoriesRepeted: string[] = [];
-
 					products?.map((x: Product, index: number) => (categoriesRepeted[index] = x.category));
-
 					let categories = categoriesRepeted.filter(function (el, i) {
 						return categoriesRepeted.indexOf(el) === i;
 					});
-
 					setCategories(categories);
 					dispatch(categoryList(categories));
 				});
