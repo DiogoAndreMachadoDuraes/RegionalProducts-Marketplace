@@ -108,7 +108,7 @@ export const Order: React.FC = () => {
 								<div className="col-md-4">
 									<Col>
 										<Image
-											src={images.amora}
+											src={images.amendoim}
 											thumbnail
 											style={{ marginTop: 5, marginLeft: 20, width: 100, height: 100 }}
 										/>
@@ -125,7 +125,7 @@ export const Order: React.FC = () => {
 												marginTop: 0,
 											}}
 										>
-											Nº 123{' '}
+											Nº 123
 										</h4>
 										<Row
 											id="row"
@@ -139,10 +139,7 @@ export const Order: React.FC = () => {
 											<Col sm={2} />
 											<Col sm={9}>
 												<Navbar.Text>
-													<a
-														style={{ fontFamily: 'artifika' }}
-														onClick={() => history.push('/invoice')}
-													>
+													<a style={{ fontFamily: 'artifika' }} href="/invoice">
 														Ver informações
 													</a>
 												</Navbar.Text>
@@ -155,7 +152,7 @@ export const Order: React.FC = () => {
 														marginTop: 0,
 													}}
 												>
-													4 artigos{' '}
+													6 artigos{' '}
 												</h6>
 												<h6
 													className="card-text"
@@ -166,7 +163,7 @@ export const Order: React.FC = () => {
 														marginTop: 10,
 													}}
 												>
-													€ 123.75{' '}
+													€ 4.39
 												</h6>
 											</Col>
 											<Col sm={1} />
@@ -181,7 +178,7 @@ export const Order: React.FC = () => {
 											}}
 										>
 											{' '}
-											Entregue{' '}
+											Entregue
 										</h5>
 										<p
 											className="card-text"
@@ -191,7 +188,9 @@ export const Order: React.FC = () => {
 												marginLeft: -60,
 												marginTop: 0,
 											}}
-										></p>
+										>
+											{/* <medium className="text"> 03/03/2021 </medium> */}
+										</p>
 									</div>
 								</div>
 							</div>
