@@ -4,7 +4,7 @@ import axios from 'axios';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useHistory } from 'react-router';
-import { Card, Navbar, Row } from 'react-bootstrap';
+import { Breadcrumb, Card, Navbar, Row } from 'react-bootstrap';
 import { images } from 'assets';
 import Image from 'react-bootstrap/Image';
 
@@ -29,8 +29,6 @@ interface OrderList {
 }
 
 export const Order: React.FC = () => {
-	const Spacer = require('react-spacer');
-
 	const history = useHistory();
 
 	const [shops, setShops] = useState<OrderList[]>();
@@ -76,6 +74,17 @@ export const Order: React.FC = () => {
 	return (
 		<>
 			<div>
+				<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+					<Breadcrumb.Item onClick={() => history.push('/')}>
+						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+					</Breadcrumb.Item>
+					<Breadcrumb.Item active>
+						<span style={{ fontFamily: 'artifika', color: 'black' }}>Encomendas</span>
+					</Breadcrumb.Item>
+				</Breadcrumb>
+			</div>
+			<br />
+			<div>
 				<Row id="row">
 					<Col sm={1} />
 					<Col
@@ -83,7 +92,6 @@ export const Order: React.FC = () => {
 						style={{
 							color: '#9B3939',
 							fontFamily: 'artifika',
-							marginTop: 35,
 							marginLeft: 40,
 						}}
 					>
@@ -131,7 +139,10 @@ export const Order: React.FC = () => {
 											<Col sm={2} />
 											<Col sm={9}>
 												<Navbar.Text>
-													<a style={{ fontFamily: 'artifika' }} href="/invoice">
+													<a
+														style={{ fontFamily: 'artifika' }}
+														onClick={() => history.push('/invoice')}
+													>
 														Ver informações
 													</a>
 												</Navbar.Text>
