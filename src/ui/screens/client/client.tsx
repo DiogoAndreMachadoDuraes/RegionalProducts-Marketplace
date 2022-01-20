@@ -108,7 +108,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={5}>
 					<Row>
 						<AiOutlineUser size="22" color="#8A3535" />
-						<h6 style={{ marginLeft: 5, fontSize: 16 }}>
+						<h6 style={{ marginLeft: 5, fontSize: 16, fontFamily: 'artifika' }}>
 							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Nome:</span> {client.name}
 						</h6>
 					</Row>
@@ -117,7 +117,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={5}>
 					<Row>
 						<MdDateRange size="22" color="#8A3535" />
-						<h5 style={{ marginLeft: 7, fontSize: 16 }}>
+						<h5 style={{ marginLeft: 7, fontSize: 16, fontFamily: 'artifika' }}>
 							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Data de nascimento:</span>{' '}
 							{client.birthday}
 						</h5>
@@ -129,7 +129,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={5}>
 					<Row>
 						<AiFillCreditCard size="22" color="#8A3535" />
-						<h5 style={{ marginLeft: 8, fontSize: 16 }}>
+						<h5 style={{ marginLeft: 8, fontSize: 16, fontFamily: 'artifika' }}>
 							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Número de contribuinte:</span>{' '}
 							{client.tin}
 						</h5>
@@ -139,7 +139,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={5}>
 					<Row>
 						<AiFillPhone size="22" color="#8A3535" />
-						<h5 style={{ marginLeft: 5, fontSize: 16 }}>
+						<h5 style={{ marginLeft: 5, fontSize: 16, fontFamily: 'artifika' }}>
 							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Contacto:</span>{' '}
 							{client.telephone}
 						</h5>
@@ -151,7 +151,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={5}>
 					<Row>
 						<FaMapSigns size="22" color="#8A3535" />
-						<h5 style={{ marginLeft: 8, fontSize: 16 }}>
+						<h5 style={{ marginLeft: 8, fontSize: 16, fontFamily: 'artifika' }}>
 							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Morada:</span> {client.address}
 						</h5>
 					</Row>
@@ -160,7 +160,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={5}>
 					<Row>
 						<IoLocationOutline size="22" color="#8A3535" />
-						<h5 style={{ marginLeft: 5, fontSize: 16 }}>
+						<h5 style={{ marginLeft: 5, fontSize: 16, fontFamily: 'artifika' }}>
 							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Código Postal:</span>{' '}
 							{client.postal_code}
 						</h5>
@@ -172,7 +172,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={5}>
 					<Row>
 						<BsFillPinMapFill size="22" color="#8A3535" style={{ color: '#8A3535' }} />
-						<h5 style={{ marginLeft: 8, fontSize: 16 }}>
+						<h5 style={{ marginLeft: 8, fontSize: 16, fontFamily: 'artifika' }}>
 							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Localidade:</span>{' '}
 							{/* {client.locality}, */} {client.country}
 						</h5>
@@ -182,7 +182,7 @@ export const ClientProfile: React.FC = () => {
 				<Col sm={5}>
 					<Row>
 						<AiOutlineMail size="22" color="#8A3535" />
-						<h5 style={{ marginLeft: 7, fontSize: 16 }}>
+						<h5 style={{ marginLeft: 7, fontSize: 16, fontFamily: 'artifika' }}>
 							<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Email:</span> {client.email}
 						</h5>
 					</Row>
