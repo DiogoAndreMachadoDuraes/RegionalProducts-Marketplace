@@ -21,7 +21,7 @@ export const Confirmation: React.FC<ModalConfirmationProps> = ({ show, onHide, h
 			setTotalPrice(price);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [price]);
 
 	const renderProducts = (item: CartList, index: number) => {
 		return (
@@ -119,7 +119,7 @@ export const Confirmation: React.FC<ModalConfirmationProps> = ({ show, onHide, h
 											fontWeight: 'bold',
 											fontFamily: 'artifika',
 											marginTop: 10,
-											marginRight: 60,
+											marginRight: 69,
 										}}
 									>
 										Valor total:
