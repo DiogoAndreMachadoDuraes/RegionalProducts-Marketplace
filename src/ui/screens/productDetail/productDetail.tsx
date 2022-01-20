@@ -37,7 +37,7 @@ export const ProductDetail: React.FC = () => {
 	const [photo, setPhoto] = useState('');
 	const [photoProducer, setPhotoProducer] = useState('');
 	const [description /* , setDescription */] = useState(
-		`Os nossos produtos primam pela aliança da qualidade e de personalidade ímpar com o sabor de tradição.`
+		`Os nossos produtos primam pela aliança da qualidade e de sabor inconfundível com a nossa tradição.`
 	);
 	const history = useHistory();
 
@@ -155,8 +155,8 @@ export const ProductDetail: React.FC = () => {
 						<Row style={{ justifyContent: 'center' }}>
 							<Image src={photo} width="300" style={{ marginTop: 50 }} />
 							<div style={{ marginTop: 100 }}>
-								<h5 style={{ color: 'black', fontWeight: 'bold' }}>Produtor</h5>
-								<p style={{ color: 'black', fontSize: 14, marginTop: 20 }}>
+								<h5 style={{ color: 'black', fontWeight: 'bold', fontFamily: 'artifika' }}>Produtor</h5>
+								<p style={{ color: 'black', fontSize: 14, marginTop: 20, fontFamily: 'artifika' }}>
 									{name} proveniente colhido e tratado por {producerName} LDA.
 								</p>
 							</div>
@@ -175,11 +175,16 @@ export const ProductDetail: React.FC = () => {
 								<Link to="/favorites" onClick={addFavorites}>
 									<RiBookmark3Line
 										size="30"
-										style={{ marginTop: 10, marginRight: 20, color: 'black' }}
+										style={{
+											marginTop: 10,
+											marginRight: 20,
+											color: 'black',
+											fontFamily: 'artifika',
+										}}
 									/>
 								</Link>
 							)}
-							<h1 style={{ color: 'black' }}>{name}</h1>
+							<h1 style={{ color: 'black', fontFamily: 'artifika' }}>{name}</h1>
 							<FacebookShareButton
 								url={'http://localhost:3000/productDetail/617bc51f0472afba75b9d1b9'}
 								quote={
@@ -194,13 +199,17 @@ export const ProductDetail: React.FC = () => {
 								<ImLocation size="25" />
 							</Col>
 							<Col sm={5}>
-								<h6 style={{ color: 'black', fontSize: 20 }}>Região: {harvest}</h6>
+								<h6 style={{ color: 'black', fontSize: 20, fontFamily: 'artifika' }}>
+									Região: {harvest}
+								</h6>
 							</Col>
 							<Col sm={1}>
 								<GiWineBottle size="25" />
 							</Col>
 							<Col sm={5}>
-								<h6 style={{ color: 'black', fontSize: 20 }}>Quantidade: {quantity}</h6>
+								<h6 style={{ color: 'black', fontSize: 20, fontFamily: 'artifika' }}>
+									Quantidade: {quantity}
+								</h6>
 							</Col>
 						</Row>
 						<Row style={{ marginTop: 30 }}>
@@ -208,16 +217,20 @@ export const ProductDetail: React.FC = () => {
 								<GrValidate size="25" />
 							</Col>
 							<Col sm={5}>
-								<h5 style={{ color: 'black', fontSize: 20 }}>Validade: {validity}</h5>
+								<h5 style={{ color: 'black', fontSize: 20, fontFamily: 'artifika' }}>
+									Validade: {validity}
+								</h5>
 							</Col>
 							<Col lg={1}>
 								<GiPriceTag size="25" />
 							</Col>
 							<Col lg={5}>
-								<h5 style={{ color: 'black', fontSize: 20 }}>Preço: {priceTotal}€</h5>
+								<h5 style={{ color: 'black', fontSize: 20, fontFamily: 'artifika' }}>
+									Preço: {priceTotal}€
+								</h5>
 							</Col>
 						</Row>
-						<Row style={{ marginTop: 60 }}>
+						<Row style={{ marginTop: 60, fontFamily: 'artifika' }}>
 							<h5>Descrição:</h5>
 							<p>{description}</p>
 						</Row>
@@ -238,6 +251,7 @@ export const ProductDetail: React.FC = () => {
 										color: 'black',
 										textAlign: 'center',
 										marginLeft: 10,
+										fontFamily: 'artifika',
 									}}
 								>
 									{quantityProduct}
@@ -253,7 +267,7 @@ export const ProductDetail: React.FC = () => {
 									disabled={quantityProduct === 0}
 									onClick={addCart}
 									size="lg"
-									style={{ color: 'white', backgroundColor: '#9B3939' }}
+									style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}
 								>
 									Adicionar
 								</Button>
@@ -266,9 +280,12 @@ export const ProductDetail: React.FC = () => {
 							</Col>
 							<Col sm={8}>
 								<h6 style={{ color: 'black' }}>
-									<span style={{ fontWeight: 'bold' }}>Entregas gratuitas </span>a partir de 50€.
+									<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>
+										Entregas gratuitas{' '}
+									</span>
+									a partir de 50€.
 								</h6>
-								<h6 style={{ color: 'black' }}>Custos de envio: 4,99€.</h6>
+								<h6 style={{ color: 'black', fontFamily: 'artifika' }}>Custos de envio: 4,99€.</h6>
 							</Col>
 						</Row>
 					</Col>
