@@ -126,7 +126,7 @@ const PDF = (props) => {
 				<Row id="row" style={{ marginTop: 40, textAlign: 'center' }}>
 					<Col sm={1} />
 					<Col sm={4}>
-						<Image src={images.medusa} style={{ width: 150, height: 160 }} />
+						<Image src={images.presunto} style={{ width: 150, height: 160 }} />
 					</Col>
 					<Col sm={3}>
 						<h5 className="card-text" style={{ color: 'black', fontFamily: 'artifika' }}>

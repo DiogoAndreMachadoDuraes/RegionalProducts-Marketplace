@@ -45,6 +45,7 @@ export const CreateProduct: React.FC = () => {
 	const [name_producer, setName_producer] = useState('');
 
 	const token = useSelector((state: StoreState) => state.common.user.token);
+	const userId = useSelector((state: StoreState) => state.common.user.id);
 
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value);
@@ -82,7 +83,7 @@ export const CreateProduct: React.FC = () => {
 		setPrice(e.target.value);
 	};
 
-	const handlePhotoBrandy = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handlePhotoFruit = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const data = new FormData();
 		/*  data.append("file", uploadInput0.files[0]); */
 		data.append('filename', '');
@@ -97,7 +98,7 @@ export const CreateProduct: React.FC = () => {
 		});
 	};
 
-	const handlePhotoWine = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handlePhotoHoney = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const data = new FormData();
 		/*      data.append("file", uploadInput1.files[0]); */
 		data.append('filename', '');
@@ -112,7 +113,7 @@ export const CreateProduct: React.FC = () => {
 		});
 	};
 
-	const handlePhotoOlive = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handlePhotoJam = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const data = new FormData();
 		/* data.append("file", uploadInput2.files[0]); */
 		data.append('filename', '');
@@ -146,20 +147,19 @@ export const CreateProduct: React.FC = () => {
 		setStock(e.target.value);
 	};
 
-	const handleCategoryWine = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setCategory('Vinho');
+	const handleCategoryHoney = (e: React.ChangeEvent<HTMLInputElement>) => {
+		handleModalOptions();
+		setCategory('Mel');
 	};
 
-	const handleCategoryOlive = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setCategory('Azeite');
+	const handleCategoryJam = (e: React.ChangeEvent<HTMLInputElement>) => {
+		handleModalOptions();
+		setCategory('Comptas');
 	};
 
-	const handleCategoryBrandy = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setCategory('Aguardente');
-	};
-
-	const handleCategoryLicor = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setCategory('Licor');
+	const handleCategoryFruit = (e: React.ChangeEvent<HTMLInputElement>) => {
+		handleModalOptions();
+		setCategory('Frutos Secos');
 	};
 
 	const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,11 +204,11 @@ export const CreateProduct: React.FC = () => {
 		setShowModalOptions(false);
 	};
 
-	/*  const checkPermissions = () => {
-      if ((isLogged === false || type !== "client") && isLoading === false) {
-        return <Redirect to="/nopermissions" />;
-      }
-    }; */
+	const checkPermissions = () => {
+		if ((isLogged === false || type !== 'client') && isLoading === false) {
+			return <Redirect to="/noPermissions" />;
+		}
+	};
 
 	const load = () => {
 		if (isLoading === false) {
@@ -275,7 +275,7 @@ export const CreateProduct: React.FC = () => {
 											eventKey="0"
 											style={{ color: 'white' }}
 										>
-											<h2>Adicionar Vinho</h2>
+											<h2>Adicionar Mel</h2>
 										</Accordion.Toggle>
 									</Card.Header>
 									<Accordion.Collapse eventKey="0" style={{ color: 'black', fontFamily: 'artifika' }}>
@@ -284,7 +284,7 @@ export const CreateProduct: React.FC = () => {
 												<Row>
 													<Col>
 														<h4>
-															Preencha os seguintes campos para adicionar um novo vinho :
+															Preencha os seguintes campos para adicionar o seu produto:
 														</h4>
 													</Col>
 												</Row>
@@ -292,7 +292,7 @@ export const CreateProduct: React.FC = () => {
 												<Row>
 													<Col md={4}></Col>
 												</Row>
-												{/*    <form onSubmit={handleSubmit}> */}
+
 												<Row>
 													<Col>
 														<Form.Label>Nome </Form.Label>
@@ -371,15 +371,6 @@ export const CreateProduct: React.FC = () => {
 												<br />
 												<Row>
 													<Col>
-														<Form.Label>Tipo de Vinho </Form.Label>
-														<Form.Control required onChange={handleType} as="select">
-															<option>Tinto</option>
-															<option>Branco</option>
-															<option>Rose</option>
-															<option>Espumante</option>
-														</Form.Control>
-													</Col>
-													<Col>
 														<Form.Label>Quantidade de Stock </Form.Label>
 														<Form.Control
 															required
@@ -395,7 +386,6 @@ export const CreateProduct: React.FC = () => {
 												<Row>
 													<Col>
 														<Form>
-															{/* <form onChange={handlePhotoWine}> */}
 															<div>
 																<input
 																	ref={(ref) => {
@@ -406,7 +396,6 @@ export const CreateProduct: React.FC = () => {
 															</div>
 
 															<br />
-															{/*    </form> */}
 														</Form>
 													</Col>
 													<Col>
@@ -419,13 +408,9 @@ export const CreateProduct: React.FC = () => {
 													</Col>
 												</Row>
 												<Row style={{ marginTop: 20 }}>
-													{' '}
 													<Button
 														type="submit"
-														/* onClick={() =>
-                                handleCategoryWine() &&
-                                handleModalOptions
-                              } */
+														/* 	onClick={handleCategoryHoney} */
 														variant="primary"
 														size="lg"
 														block
@@ -434,8 +419,6 @@ export const CreateProduct: React.FC = () => {
 														{showModalOptions ? modalOptions() : false}
 													</Button>
 												</Row>
-												{/*                         </form>
-												 */}{' '}
 											</Container>
 										</Card.Body>
 									</Accordion.Collapse>
@@ -448,7 +431,7 @@ export const CreateProduct: React.FC = () => {
 											eventKey="1"
 											style={{ color: '#9B3939' }}
 										>
-											<h2>Adicionar Azeite</h2>
+											<h2>Adicionar Compotas</h2>
 										</Accordion.Toggle>
 									</Card.Header>
 									<Accordion.Collapse eventKey="1" style={{ color: 'black' }}>
@@ -457,7 +440,7 @@ export const CreateProduct: React.FC = () => {
 												<Row>
 													<Col>
 														<h4>
-															Preencha os seguintes campos para adicionar um novo azeite :
+															Preencha os seguintes campos para adicionar o seu produto :
 														</h4>
 													</Col>
 												</Row>
@@ -545,14 +528,6 @@ export const CreateProduct: React.FC = () => {
 												<br />
 												<Row>
 													<Col>
-														<Form.Label>Tipo de Azeite </Form.Label>
-														<Form.Control required onChange={handleType} as="select">
-															<option>Virgem</option>
-															<option>Extra-Virgem</option>
-															<option>Aromatizado</option>
-														</Form.Control>
-													</Col>
-													<Col>
 														<Form.Label>Quantidade de Stock </Form.Label>
 														<Form.Control
 															required
@@ -568,7 +543,6 @@ export const CreateProduct: React.FC = () => {
 												<Row>
 													<Col>
 														<Form>
-															{/*  <form onChange={handlePhotoOlive} >*/}
 															<div>
 																<input
 																	ref={(ref) => {
@@ -579,7 +553,6 @@ export const CreateProduct: React.FC = () => {
 															</div>
 
 															<br />
-															{/*  </form> */}
 														</Form>
 													</Col>
 													<Col>
@@ -592,10 +565,9 @@ export const CreateProduct: React.FC = () => {
 													</Col>
 												</Row>
 												<Row style={{ marginTop: 20 }}>
-													{' '}
 													<Button
 														type="submit"
-														/*   onClick={handleCategoryOlive} */
+														/* 	onClick={handleCategoryJam} */
 														variant="primary"
 														size="lg"
 														block
@@ -616,7 +588,7 @@ export const CreateProduct: React.FC = () => {
 											eventKey="2"
 											style={{ color: 'white' }}
 										>
-											<h2>Adicionar Aguardente</h2>
+											<h2>Adicionar Frutos Secos</h2>
 										</Accordion.Toggle>
 									</Card.Header>
 									<Accordion.Collapse eventKey="2" style={{ color: 'black' }}>
@@ -625,8 +597,7 @@ export const CreateProduct: React.FC = () => {
 												<Row>
 													<Col>
 														<h4>
-															Preencha os seguintes campos para adicionar uma nova
-															Aguardente :
+															Preencha os seguintes campos para adicionar o seu produto:
 														</h4>
 													</Col>
 												</Row>
@@ -714,15 +685,6 @@ export const CreateProduct: React.FC = () => {
 												<br />
 												<Row>
 													<Col>
-														<Form.Label>Tipo de Aguardente </Form.Label>
-														<Form.Control required onChange={handleType} as="select">
-															<option>Medronho</option>
-															<option>Ceriais</option>
-															<option>Cana de Madeira</option>
-															<option>Pera</option>
-														</Form.Control>
-													</Col>
-													<Col>
 														<Form.Label>Quantidade de Stock </Form.Label>
 														<Form.Control
 															required
@@ -738,7 +700,6 @@ export const CreateProduct: React.FC = () => {
 												<Row>
 													<Col>
 														<Form>
-															{/* <form onChange={handlePhotoBrandy}> */}
 															<div>
 																<input
 																	ref={(ref) => {
@@ -749,7 +710,6 @@ export const CreateProduct: React.FC = () => {
 															</div>
 
 															<br />
-															{/*  </form> */}
 														</Form>
 													</Col>
 													<Col>
@@ -762,177 +722,9 @@ export const CreateProduct: React.FC = () => {
 													</Col>
 												</Row>
 												<Row style={{ marginTop: 20 }}>
-													{' '}
 													<Button
 														type="submit"
-														/* onClick={handleCategoryBrandy} */
-														variant="primary"
-														size="lg"
-														block
-													>
-														Adicionar
-													</Button>
-												</Row>
-												{/*   </Form> */}
-											</Container>
-										</Card.Body>
-									</Accordion.Collapse>
-								</Card>
-								<Card>
-									<Card.Header style={{ backgroundColor: 'white' }}>
-										<Accordion.Toggle
-											as={Button}
-											variant="link"
-											eventKey="3"
-											style={{ color: '#9B3939' }}
-										>
-											<h2>Adicionar Licor</h2>
-										</Accordion.Toggle>
-									</Card.Header>
-									<Accordion.Collapse eventKey="3" style={{ color: 'black' }}>
-										<Card.Body>
-											<Container>
-												<Row>
-													<Col>
-														<h4>
-															Preencha os seguintes campos para adicionar um novo licor :
-														</h4>
-													</Col>
-												</Row>
-												<br />
-
-												<Row>
-													<Col md={4}></Col>
-												</Row>
-
-												{/*  <Form onSubmit={handleSubmit}> */}
-												<Row>
-													<Col>
-														<Form.Label>Nome </Form.Label>
-														<Form.Control
-															id="nome"
-															required
-															onChange={handleName}
-															type="text"
-															placeholder="Nome"
-														/>
-													</Col>
-
-													<Col>
-														<Form.Label>Quantidade por garrafa (em ML) </Form.Label>
-														<Form.Control
-															onChange={handleQuantity}
-															id="quantidade"
-															type="number"
-															min="1"
-															placeholder="Quantidade"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Validade </Form.Label>
-														<Form.Control
-															required
-															onChange={handleValidity}
-															id="validade"
-															min="2021"
-															type="number"
-															placeholder=" Validade"
-														/>
-													</Col>
-													<Col>
-														<Form.Label>Data de Colheita </Form.Label>
-														<Form.Control
-															required
-															onChange={handleHarvest}
-															id="data_colheita"
-															max="2021-05-03"
-															type="date"
-															placeholder="Data de Colheita"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Teor Alcóol </Form.Label>
-														<Form.Control
-															required
-															onChange={handleAlcoholContent}
-															id="teor"
-															min="0"
-															type="number"
-															placeholder="Teor de Alcóol"
-														/>
-													</Col>
-													<Col md={6}>
-														<Form.Label>Preço </Form.Label>
-														<Form.Control
-															required
-															onChange={handlePrice}
-															id="preco"
-															min="0.01"
-															type="number"
-															placeholder="Preço"
-															step=".01"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Tipo de Licor </Form.Label>
-														<Form.Control required onChange={handleType} as="select">
-															<option>Limoncello</option>
-															<option>Cafe</option>
-															<option>Amendoa</option>
-															<option>Chocolate</option>
-														</Form.Control>
-													</Col>
-													<Col>
-														<Form.Label>Quantidade de Stock </Form.Label>
-														<Form.Control
-															required
-															onChange={handleStock}
-															id="stock"
-															min="1"
-															type="number"
-															placeholder="Stock"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														{/*   <form onChange={handlePhotoLicor}> */}
-														<div>
-															<input
-																ref={(ref) => {
-																	/*  uploadInput3 = ref; */
-																}}
-																type="file"
-															/>
-														</div>
-
-														<br />
-														{/* </form> */}
-													</Col>
-													<Col>
-														<Image
-															height="120"
-															width="80"
-															className="padding_image"
-															src={photoURL}
-														></Image>
-													</Col>
-												</Row>
-												<Row style={{ marginTop: 20 }}>
-													{' '}
-													<Button
-														type="submit"
-														/*   onClick={handleCategoryLicor} */
+														/* 	onClick={handleCategoryFruit} */
 														variant="primary"
 														size="lg"
 														block
@@ -1036,7 +828,7 @@ export const CreateProduct: React.FC = () => {
     this.setState({ price: e.target.value });
   };
 
-  handlePhotoBrandy = (e) => {
+  handlePhotoFruit = (e) => {
     const data = new FormData();
     data.append("file", this.uploadInput0.files[0]);
     data.append("filename", "");
@@ -1051,7 +843,7 @@ export const CreateProduct: React.FC = () => {
     });
   };
 
-  handlePhotoWine = (e) => {
+  handlePhotoHoney = (e) => {
     const data = new FormData();
     data.append("file", this.uploadInput1.files[0]);
     data.append("filename", "");
@@ -1065,7 +857,7 @@ export const CreateProduct: React.FC = () => {
       });
     });
   };
-  handlePhotoOlive = (e) => {
+  handlePhotoJam = (e) => {
     const data = new FormData();
     data.append("file", this.uploadInput2.files[0]);
     data.append("filename", "");
@@ -1098,15 +890,15 @@ export const CreateProduct: React.FC = () => {
     this.setState({ stock: e.target.value });
   };
 
-  handleCategoryWine = (e) => {
+  handleCategoryHoney = (e) => {
     this.setState({ category: "Vinho" });
   };
 
-  handleCategoryOlive = (e) => {
+  handleCategoryJam = (e) => {
     this.setState({ category: "Azeite" });
   };
 
-  handleCategoryBrandy = (e) => {
+  handleCategoryFruit = (e) => {
     this.setState({ category: "Aguardente" });
   };
 
@@ -1369,7 +1161,7 @@ export const CreateProduct: React.FC = () => {
                           <Row>
                             <Col>
                               <Form>
-                                <form onChange={this.handlePhotoWine}>
+                                <form onChange={this.handlePhotoHoney}>
                                   <div>
                                     <input
                                       ref={(ref) => {
@@ -1397,7 +1189,7 @@ export const CreateProduct: React.FC = () => {
                             <Button
                               type="submit"
                               onClick={() =>
-                                this.handleCategoryWine() &&
+                                this.handleCategoryHoney() &&
                                 this.handleModalOptions
                               }
                               variant="primary"
@@ -1548,7 +1340,7 @@ export const CreateProduct: React.FC = () => {
                           <Row>
                             <Col>
                               <Form>
-                                <form onChange={this.handlePhotoOlive}>
+                                <form onChange={this.handlePhotoJam}>
                                   <div>
                                     <input
                                       ref={(ref) => {
@@ -1575,7 +1367,7 @@ export const CreateProduct: React.FC = () => {
                             {" "}
                             <Button
                               type="submit"
-                              onClick={this.handleCategoryOlive}
+                              onClick={this.handleCategoryJam}
                               variant="primary"
                               size="lg"
                               block
@@ -1724,7 +1516,7 @@ export const CreateProduct: React.FC = () => {
                           <Row>
                             <Col>
                               <Form>
-                                <form onChange={this.handlePhotoBrandy}>
+                                <form onChange={this.handlePhotoFruit}>
                                   <div>
                                     <input
                                       ref={(ref) => {
@@ -1751,7 +1543,7 @@ export const CreateProduct: React.FC = () => {
                             {" "}
                             <Button
                               type="submit"
-                              onClick={this.handleCategoryBrandy}
+                              onClick={this.handleCategoryFruit}
                               variant="primary"
                               size="lg"
                               block

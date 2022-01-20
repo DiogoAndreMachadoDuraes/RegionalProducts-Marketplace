@@ -29,11 +29,12 @@ interface ProductList {
 
 export const ProductListProducer: React.FC = () => {
 	const Spacer = require('react-spacer');
+
 	const userId = useSelector((state: StoreState) => state.common.user.id);
-	const [showModalEditAguardente, setShowModalEditAguardente] = useState(false);
-	const [showModalEditLicor, setShowModalEditLicor] = useState(false);
-	const [ShowModalEditOlive, setShowModalEditOlive] = useState(false);
-	const [ShowModalEditWine, setShowModalEditWine] = useState(false);
+
+	const [showModalEditHoney, setShowModalEditHoney] = useState(false);
+	const [showmodalEditJam, setShowmodalEditJam] = useState(false);
+	const [ShowModalEditFruit, setShowModalEditFruit] = useState(false);
 	const [showModalEdit, setShowModalEdit] = useState(false);
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [searched, setSearched] = useState(false);
@@ -77,15 +78,15 @@ export const ProductListProducer: React.FC = () => {
 		setActiveItemid_producer(item.id_producer);
 
 		if (activeItemCategory === 'Mel') {
-			setShowModalEditAguardente(true);
+			setShowModalEditHoney(true);
 		}
 
 		if (activeItemCategory === 'Compotas') {
-			setShowModalEditLicor(true);
+			setShowmodalEditJam(true);
 		}
 
 		if (activeItemCategory === 'Frutos Secos') {
-			setShowModalEditWine(true);
+			setShowModalEditFruit(true);
 		}
 	};
 
@@ -216,10 +217,9 @@ export const ProductListProducer: React.FC = () => {
 	};
 
 	const handleCloseEdit = () => {
-		setShowModalEditAguardente(false);
-		setShowModalEditWine(false);
-		setShowModalEditLicor(false);
-		setShowModalEditOlive(false);
+		setShowModalEditHoney(false);
+		setShowModalEditFruit(false);
+		setShowmodalEditJam(false);
 		setShowModalDelete(false);
 	};
 
@@ -254,9 +254,9 @@ export const ProductListProducer: React.FC = () => {
 		);
 	};
 
-	const modalEditAguardente = () => {
+	const modalEditHoney = () => {
 		return (
-			<Modal centered size="lg" show={showModalEditAguardente} onHide={handleCloseEdit} animation={true}>
+			<Modal centered size="lg" show={showModalEditHoney} onHide={handleCloseEdit} animation={true}>
 				<Modal.Header closeButton>
 					<Modal.Title>Editar dados do produto {activeItemName}</Modal.Title>
 				</Modal.Header>
@@ -400,9 +400,9 @@ export const ProductListProducer: React.FC = () => {
 		);
 	};
 
-	const modalEditWine = () => {
+	const modalEditFruit = () => {
 		return (
-			<Modal centered size="lg" show={ShowModalEditWine} onHide={handleCloseEdit} animation={true}>
+			<Modal centered size="lg" show={ShowModalEditFruit} onHide={handleCloseEdit} animation={true}>
 				<Modal.Header closeButton>
 					<Modal.Title>Editar dados do produto {activeItemName}</Modal.Title>
 				</Modal.Header>
@@ -557,9 +557,9 @@ export const ProductListProducer: React.FC = () => {
 		);
 	};
 
-	const modalEditLicor = () => {
+	const modalEditJam = () => {
 		return (
-			<Modal centered size="lg" show={showModalEditLicor} onHide={handleCloseEdit} animation={true}>
+			<Modal centered size="lg" show={showmodalEditJam} onHide={handleCloseEdit} animation={true}>
 				<Modal.Header closeButton>
 					<Modal.Title>Editar dados do produto {activeItemName} </Modal.Title>
 				</Modal.Header>
@@ -741,9 +741,9 @@ export const ProductListProducer: React.FC = () => {
 						<td>{item.stock}</td>
 						<td>
 							<AiFillEdit onClick={() => handleShowEdit(item)} size="25" style={{ color: '#8A3535' }} />
-							{showModalEditAguardente ? modalEditAguardente() : false}
-							{ShowModalEditWine ? modalEditWine() : false}
-							{showModalEditLicor ? modalEditLicor() : false}
+							{showModalEditHoney ? modalEditHoney() : false}
+							{ShowModalEditFruit ? modalEditFruit() : false}
+							{showmodalEditJam ? modalEditJam() : false}
 						</td>
 						<td>
 							<AiFillDelete
@@ -768,7 +768,7 @@ export const ProductListProducer: React.FC = () => {
 						<Col sm={6}>
 							<div style={{ display: 'flex', marginLeft: 100 }}>
 								<h1 style={{ fontFamily: 'artifika', color: '#9B3939' }} className="text-left">
-									Produtos de {/* {producer.name} */}
+									Produtos de {activeItemname_producer}
 								</h1>
 							</div>
 						</Col>
@@ -867,9 +867,9 @@ export const ProductListProducer: React.FC = () => {
 																size="25"
 																style={{ color: '#9B3939' }}
 															/>
-															{showModalEditAguardente ? modalEditAguardente() : false}
-															{ShowModalEditWine ? modalEditWine() : false}
-															{showModalEditLicor ? modalEditLicor() : false}
+															{showModalEditHoney ? modalEditHoney() : false}
+															{ShowModalEditFruit ? modalEditFruit() : false}
+															{showmodalEditJam ? modalEditJam() : false}
 														</td>
 														<td>
 															<AiFillDelete
@@ -909,9 +909,9 @@ export const ProductListProducer: React.FC = () => {
     super(props);
     this.state = {
       products: [],
-      showModalEditAguardente: false,
-      showModalEditLicor: false,
-      showModalEditWine: false,
+      showModalEditHoney: false,
+      showmodalEditJam: false,
+      showModalEditFruit: false,
       showModalEditOlive: false,
       showModalDelete: false,
       activeItemName: "",
@@ -991,15 +991,15 @@ export const ProductListProducer: React.FC = () => {
     });
 
     if (item.category === "Aguardente") {
-      this.setState({ showModalEditAguardente: true });
+      this.setState({ showModalEditHoney: true });
     }
 
     if (item.category === "Licor") {
-      this.setState({ showModalEditLicor: true });
+      this.setState({ showmodalEditJam: true });
     }
 
     if (item.category === "Vinho") {
-      this.setState({ showModalEditWine: true });
+      this.setState({ showModalEditFruit: true });
     }
     if (item.category === "Azeite") {
       this.setState({ showModalEditOlive: true });
@@ -1209,9 +1209,9 @@ export const ProductListProducer: React.FC = () => {
   }
 
   handleCloseEdit = () => {
-    this.setState({ showModalEditAguardente: false });
-    this.setState({ showModalEditWine: false });
-    this.setState({ showModalEditLicor: false });
+    this.setState({ showModalEditHoney: false });
+    this.setState({ showModalEditFruit: false });
+    this.setState({ showmodalEditJam: false });
     this.setState({ showModalEditOlive: false });
     this.setState({ showModalDelete: false });
   };
@@ -1256,9 +1256,9 @@ export const ProductListProducer: React.FC = () => {
     );
   }
 
-  modalEditAguardente() {
+  modalEditHoney() {
     const {
-      showModalEditAguardente,
+      showModalEditHoney,
       activeItemName,
       activeItemQuantity,
       activeItemStock,
@@ -1274,7 +1274,7 @@ export const ProductListProducer: React.FC = () => {
       <Modal
         centered
         size="lg"
-        show={showModalEditAguardente}
+        show={showModalEditHoney}
         onHide={this.handleCloseEdit}
         animation={true}
       >
@@ -1439,9 +1439,9 @@ export const ProductListProducer: React.FC = () => {
     );
   }
 
-  modalEditWine() {
+  modalEditFruit() {
     const {
-      showModalEditWine,
+      showModalEditFruit,
       activeItemName,
       activeItemQuantity,
       activeItemStock,
@@ -1457,7 +1457,7 @@ export const ProductListProducer: React.FC = () => {
       <Modal
         centered
         size="lg"
-        show={showModalEditWine}
+        show={showModalEditFruit}
         onHide={this.handleCloseEdit}
         animation={true}
       >
@@ -1821,9 +1821,9 @@ export const ProductListProducer: React.FC = () => {
     );
   }
 
-  modalEditLicor() {
+  modalEditJam() {
     const {
-      showModalEditLicor,
+      showmodalEditJam,
       activeItemName,
       activeItemQuantity,
       activeItemStock,
@@ -1839,7 +1839,7 @@ export const ProductListProducer: React.FC = () => {
       <Modal
         centered
         size="lg"
-        show={showModalEditLicor}
+        show={showmodalEditJam}
         onHide={this.handleCloseEdit}
         animation={true}
       >
@@ -2025,10 +2025,10 @@ export const ProductListProducer: React.FC = () => {
       searchTerm,
       products,
       showModalDelete,
-      showModalEditLicor,
+      showmodalEditJam,
       showModalEditOlive,
-      showModalEditWine,
-      showModalEditAguardente,
+      showModalEditFruit,
+      showModalEditHoney,
     } = this.state;
 
     const name = Object.values(products).filter((a) =>
@@ -2057,10 +2057,10 @@ export const ProductListProducer: React.FC = () => {
                 size="25"
                 style={{ color: "444903" }}
               />
-              {showModalEditAguardente ? this.modalEditAguardente() : false}
-              {showModalEditWine ? this.modalEditWine() : false}
+              {showModalEditHoney ? this.modalEditHoney() : false}
+              {showModalEditFruit ? this.modalEditFruit() : false}
               {showModalEditOlive ? this.modalEditOlive() : false}
-              {showModalEditLicor ? this.modalEditLicor() : false}
+              {showmodalEditJam ? this.modalEditJam() : false}
             </td>
             <td>
               <AiFillDelete
@@ -2081,10 +2081,10 @@ export const ProductListProducer: React.FC = () => {
       categoryfilter,
       searchTerm,
       products,
-      showModalEditAguardente,
-      showModalEditLicor,
+      showModalEditHoney,
+      showmodalEditJam,
       showModalEditOlive,
-      showModalEditWine,
+      showModalEditFruit,
       showModalDelete,
       name,
     } = this.state;
@@ -2233,15 +2233,15 @@ export const ProductListProducer: React.FC = () => {
                                 size="25"
                                 style={{ color: "444903" }}
                               />
-                              {showModalEditAguardente
-                                ? this.modalEditAguardente()
+                              {showModalEditHoney
+                                ? this.modalEditHoney()
                                 : false}
-                              {showModalEditWine ? this.modalEditWine() : false}
+                              {showModalEditFruit ? this.modalEditFruit() : false}
                               {showModalEditOlive
                                 ? this.modalEditOlive()
                                 : false}
-                              {showModalEditLicor
-                                ? this.modalEditLicor()
+                              {showmodalEditJam
+                                ? this.modalEditJam()
                                 : false}
                             </td>
                             <td>
