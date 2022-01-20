@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { userInfo, userLogin } from 'store/User';
 import axios from 'axios';
+import { producerInfo } from 'store';
 
 interface LoginOutPut {
 	email?: string;
@@ -100,6 +101,19 @@ export const useLogin = (): LoginOutPut => {
 				await axios.get(`http://127.0.0.1:5000/client/${userId}`, config).then((res) => {
 					const client = res.data;
 					dispatch(userInfo(client));
+				});
+			} catch (e) {
+				console.log('Error to get Client: ' + e);
+			}
+
+			try {
+				const config = {
+					headers: { Authorization: `Bearer ${token}` },
+				};
+
+				await axios.get(`http://127.0.0.1:5000/producer/${userId}`, config).then((res) => {
+					const producer = res.data;
+					dispatch(producerInfo(producer));
 				});
 			} catch (e) {
 				console.log('Error to get Client: ' + e);

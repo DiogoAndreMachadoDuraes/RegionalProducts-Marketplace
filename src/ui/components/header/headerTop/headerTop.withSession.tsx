@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Nav, Row, Col, Image } from 'react-bootstrap';
 import { GiExitDoor } from 'react-icons/gi';
 import { useHistory } from 'react-router-dom';
@@ -11,12 +11,32 @@ interface HeaderTopProps {
 }
 
 export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ name }) => {
-	const userPhoto = useSelector((state: StoreState) => state.common.client.photo);
+	const type = useSelector((state: StoreState) => state.common.user.type);
+	const clientPhoto = useSelector((state: StoreState) => state.common.client.photo);
+	const producerPhoto = useSelector((state: StoreState) => state.producer.producer.logo);
+	console.log(clientPhoto);
+
+	const [userPhoto, setUserPhoto] = useState<string | undefined>(images.imageProfileDefault);
+
+	useEffect(() => {
+		if (type === 'client' && clientPhoto !== '') {
+			setUserPhoto(clientPhoto);
+		}
+
+		if (type === 'producer' && producerPhoto !== '') {
+			setUserPhoto(producerPhoto);
+		}
+	}, []);
 
 	const history = useHistory();
 
 	const handleAccount = () => {
-		history.push('/profile');
+		if (type === 'client') {
+			history.push('/profile');
+		}
+		if (type === 'producer') {
+			history.push('/producerProfile');
+		}
 	};
 
 	return (
@@ -26,12 +46,7 @@ export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ name }) => {
 				<Nav className="mr-auto">
 					<Nav.Link onClick={handleAccount}>
 						<Row>
-							<Image
-								src={userPhoto ? userPhoto : images.imageProfileDefault}
-								width={37}
-								height={37}
-								roundedCircle
-							/>
+							<Image src={userPhoto} width={37} height={37} roundedCircle />
 							<h3 style={{ fontSize: 14, color: 'black', marginLeft: 20 }}>
 								Bem vindo,
 								<h3
