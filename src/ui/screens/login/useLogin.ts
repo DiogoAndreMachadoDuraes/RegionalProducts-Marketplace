@@ -116,8 +116,21 @@ export const useLogin = (): LoginOutPut => {
 					dispatch(producerInfo(producer));
 				});
 			} catch (e) {
-				console.log('Error to get Client: ' + e);
+				console.log('Error to get Producer: ' + e);
 			}
+
+			/* try {
+				const config = {
+					headers: { Authorization: `Bearer ${token}` },
+				};
+
+				await axios.get(`http://127.0.0.1:5000/admin/${userId}`, config).then((res) => {
+					const admin = res.data;
+					dispatch(adminInfo(admin));
+				});
+			} catch (e) {
+				console.log('Error to get Admin: ' + e);
+			} */
 
 			try {
 				const config = {

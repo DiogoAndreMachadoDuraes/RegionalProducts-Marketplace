@@ -37,6 +37,9 @@ export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ name }) => {
 		if (type === 'producer') {
 			history.push('/producerProfile');
 		}
+		if (type === 'admin') {
+			history.push('/adminProfile');
+		}
 	};
 
 	return (
