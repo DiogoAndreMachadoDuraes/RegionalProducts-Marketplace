@@ -1,12 +1,10 @@
 import React from 'react';
 import Pdf from 'react-to-pdf';
 import { Image, Row, Col } from 'react-bootstrap';
-import { images } from 'assets';
 import { FaFileInvoice } from 'react-icons/fa';
 
-const ref = React.createRef();
-
 const PDF = (props) => {
+	const ref = React.createRef();
 	return (
 		<>
 			<div>
@@ -22,8 +20,7 @@ const PDF = (props) => {
 								color: 'white',
 							}}
 						>
-							{' '}
-							<FaFileInvoice size="15" style={{ color: 'white', marginTop: -5 }} /> Fatura/Recibo{' '}
+							<FaFileInvoice size="15" style={{ color: 'white', marginTop: -5 }} /> Fatura/Recibo
 						</button>
 					)}
 				</Pdf>
@@ -37,7 +34,7 @@ const PDF = (props) => {
 								<FaFileInvoice size="30" style={{ color: 'black' }} />
 							</Col>
 							<Col sm={3} style={{ color: '#9B3939', fontFamily: 'artifika' }}>
-								<h3> Fatura </h3>
+								<h3>Fatura</h3>
 							</Col>
 							<Col sm={8} />
 						</Row>
@@ -45,11 +42,10 @@ const PDF = (props) => {
 				</Row>
 				<Row id="row" style={{ marginTop: 40 }}>
 					<Col sm={1} />
-					<Col sm={5} style={{ color: 'black', fontFamily: 'artifika' }}>
+					<Col sm={4} style={{ color: 'black', fontFamily: 'artifika' }}>
 						<h4>{props.name}</h4>
 					</Col>
-					<Col sm={2} />
-					<Col sm={3} style={{ color: 'black', fontFamily: 'artifika' }}>
+					<Col sm={6} style={{ color: 'black', fontFamily: 'artifika', textAlign: 'right' }}>
 						<h5 className="card-text" style={{ color: 'black', fontFamily: 'artifika' }}>
 							Fatura nº {props.id}
 						</h5>
@@ -118,6 +114,7 @@ const PDF = (props) => {
 					</Col>
 					<Col sm={3}>
 						<h5 className="card-text" style={{ color: 'black', fontFamily: 'artifika' }}>
+							{' '}
 							Preço{' '}
 						</h5>
 					</Col>
@@ -126,16 +123,19 @@ const PDF = (props) => {
 				<Row id="row" style={{ marginTop: 40, textAlign: 'center' }}>
 					<Col sm={1} />
 					<Col sm={4}>
-						<Image src={images.presunto} style={{ width: 150, height: 160 }} />
+						<Image src={props.image} style={{ width: 150, height: 150 }} />
 					</Col>
 					<Col sm={3}>
-						<h5 className="card-text" style={{ color: 'black', fontFamily: 'artifika' }}>
+						<h5 className="card-text" style={{ color: 'black', fontFamily: 'artifika', marginTop: 50 }}>
 							{' '}
 							{props.quantity}
 						</h5>
 					</Col>
 					<Col sm={3}>
-						<h5 className="card-text" style={{ color: 'black', fontFamily: 'artifika' }}>
+						<h5
+							className="card-text"
+							style={{ color: 'black', fontFamily: 'artifika', marginLeft: 5, marginTop: 50 }}
+						>
 							{' '}
 							€ {props.price}
 						</h5>

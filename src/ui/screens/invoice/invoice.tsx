@@ -1,51 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Breadcrumb, Container } from 'react-bootstrap';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import { StoreState } from 'store';
-import axios from 'axios';
+import { Order, StoreState } from 'store';
 import PDF from './PDF';
 
 interface InvoiceParams {
 	id: string;
 }
 
-interface Shop {
-	name: string;
-	id: string;
-	tin: number;
-	date: string;
-	telephone: string;
-	email: string;
-	street: string;
-	postalCode: string;
-	locality: string;
-	quantity: number;
-	price: number;
-}
-
 export const Invoice: React.FC = () => {
 	const { id } = useParams<InvoiceParams>();
-	const token = useSelector((state: StoreState) => state.common.user.token);
+	const history = useHistory();
+	const orderList = useSelector((state: StoreState) => state.orders.orders);
+	const clientName = useSelector((state: StoreState) => state.common.client.name);
+	const telephone = useSelector((state: StoreState) => state.common.client.telephone);
 
-	const [invoice, setInvoice] = useState<Shop>();
-
-	const config = {
-		headers: { Authorization: `Bearer ${token}` },
-	};
+	const [invoice, setInvoice] = useState<Order>();
 
 	useEffect(() => {
-		const fetchApi = async () => {
-			try {
-				await axios.get(`http://127.0.0.1:5000/shop/` + id, config).then((res) => {
-					const invoice = res.data;
-					setInvoice(invoice);
-				});
-			} catch (e) {
-				console.log('Error rending data: ' + e);
-			}
-		};
-		fetchApi();
+		const orderInvoice = orderList.filter((x) => x._id.$oid === id).map((x) => x);
+		setInvoice(orderInvoice[0]);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -53,11 +28,15 @@ export const Invoice: React.FC = () => {
 		<>
 			<div>
 				<div>
-					<Breadcrumb style={{ marginTop: 20, marginLeft: 28, fontFamily: 'artifika' }} id="breadcrumb">
-						<Breadcrumb.Item href="/home">Home </Breadcrumb.Item>
-						<Breadcrumb.Item href="/order">Encomendas </Breadcrumb.Item>
-						<Breadcrumb.Item active style={{ color: '#9B3939', fontFamily: 'artifika' }}>
-							Fatura
+					<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+						<Breadcrumb.Item onClick={() => history.push('/')}>
+							<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+						</Breadcrumb.Item>
+						<Breadcrumb.Item onClick={() => history.push('/order')}>
+							<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Encomendas</span>
+						</Breadcrumb.Item>
+						<Breadcrumb.Item active>
+							<span style={{ fontFamily: 'artifika', color: 'black' }}>Fatura</span>
 						</Breadcrumb.Item>
 					</Breadcrumb>
 				</div>
@@ -66,17 +45,18 @@ export const Invoice: React.FC = () => {
 						<Col sm={1} />
 						<Col sm={10}>
 							<PDF
-								name={invoice?.name}
+								name={clientName}
 								id={id}
-								tin={invoice?.tin}
+								tin={invoice?.tin_client}
 								date={invoice?.date}
-								telephone={invoice?.telephone}
-								email={invoice?.email}
-								street={invoice?.street}
-								postalCode={invoice?.postalCode}
-								locality={invoice?.locality}
-								quantity={invoice?.quantity}
-								price={invoice?.price}
+								telephone={telephone}
+								email={invoice?.email_client}
+								street={invoice?.address_client}
+								postalCode={invoice?.postal_code}
+								locality={invoice?.location_client}
+								quantity={invoice?.quantity_final}
+								price={invoice?.price_final}
+								image={invoice?.photo_product}
 							/>
 						</Col>
 						<Col sm={1} />

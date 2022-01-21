@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-
-/* interface Producer {
-	email?: string;
-	password?: string;
-	country?: string;
-	location?: string;
-	name?: string;
-	postal_code?: string;
-	state?: string;
-	street?: string;
-	telephone?: string;
-	tin?: string;
-	logo?: string;
-	social?: string;
-} */
-
 interface ProducerRegisterOutPut {
+	show: boolean;
+	name: string;
+	password: string;
+	confirmPassword: string;
+	isPasswordShown: boolean;
+	checkbox: boolean;
+	togglePasswordVisiblity: () => void;
+	handleClose: () => void;
+	handleLogin: () => void;
+	handleSubmit: () => void;
+	handleChangeCheckbox: () => void;
 	handleName: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleTin: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleTelephone: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -30,33 +25,27 @@ interface ProducerRegisterOutPut {
 	handleLogo: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handlePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	isPasswordShown: boolean;
-	togglePasswordVisiblity: () => void;
-	show: boolean;
-	handleClose: () => void;
-	name: string;
-	handleLogin: () => void;
-	handleSubmit: () => void;
+	handleConfirmPassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const useProducerRegister = (): ProducerRegisterOutPut => {
 	const history = useHistory();
 	const [show, setShow] = useState(false);
-	/* const [producer, setProducer] = useState<Producer>(); */
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const [region, setRegion] = useState('');
 	const [country, setCountry] = useState('');
 	const [location, setLocation] = useState('');
 	const [name, setName] = useState('');
-	const [postal_code, setPostal_Code] = useState('');
-	const [state /* , setState */] = useState('Ativo');
+	const [postalCode, setPostalCode] = useState('');
 	const [street, setStreet] = useState('');
 	const [telephone, setTelephone] = useState('');
 	const [tin, setTin] = useState('');
 	const [social, setSocial] = useState('');
 	const [logo, setLogo] = useState('');
+	const [checkbox, setCheckbox] = useState(false);
 
 	const togglePasswordVisiblity = () => {
 		setIsPasswordShown(!isPasswordShown);
@@ -68,6 +57,10 @@ export const useProducerRegister = (): ProducerRegisterOutPut => {
 
 	const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
+	};
+
+	const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setConfirmPassword(e.target.value);
 	};
 
 	const handleSocial = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,7 +84,7 @@ export const useProducerRegister = (): ProducerRegisterOutPut => {
 	};
 
 	const handlePostalCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPostal_Code(e.target.value);
+		setPostalCode(e.target.value);
 	};
 
 	const handleStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,23 +110,11 @@ export const useProducerRegister = (): ProducerRegisterOutPut => {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	const handleChangeCheckbox = () => {
+		setCheckbox(!checkbox);
+	};
+
 	const handleSubmit = () => {
-		console.log(
-			logo,
-			email,
-			tin,
-			password,
-			country,
-			location,
-			name,
-			postal_code,
-			region,
-			social,
-			state,
-			street,
-			telephone,
-			show
-		);
 		handleShow();
 		axios.post('http://127.0.0.1:5000/producerregister', {
 			logo: logo,
@@ -143,10 +124,10 @@ export const useProducerRegister = (): ProducerRegisterOutPut => {
 			country: country,
 			location: location,
 			name: name,
-			postal_code: postal_code,
+			postal_code: postalCode,
 			region: region,
 			social_network: social,
-			state: state,
+			state: 'Ativo',
 			address: street,
 			telephone: telephone,
 		});
@@ -154,6 +135,13 @@ export const useProducerRegister = (): ProducerRegisterOutPut => {
 	};
 
 	return {
+		name,
+		password,
+		confirmPassword,
+		show,
+		checkbox,
+		isPasswordShown,
+		handleChangeCheckbox,
 		handleName,
 		handleTin,
 		handleTelephone,
@@ -166,12 +154,10 @@ export const useProducerRegister = (): ProducerRegisterOutPut => {
 		handleLogo,
 		handleEmail,
 		handlePassword,
-		isPasswordShown,
 		togglePasswordVisiblity,
-		show,
 		handleClose,
-		name,
 		handleLogin,
 		handleSubmit,
+		handleConfirmPassword,
 	};
 };

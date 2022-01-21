@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Breadcrumb, Row, Alert, Col, Card, Button, Container } from 'react-bootstrap';
-import { useHistory } from 'react-router';
+import { Link, useHistory } from 'react-router-dom';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { StoreState } from 'store';
 
 interface Favorite {

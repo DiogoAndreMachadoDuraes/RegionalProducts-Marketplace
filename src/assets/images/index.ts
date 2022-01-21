@@ -38,6 +38,7 @@ import p from './p.png';
 import m from './m.png';
 import truck from './truck.svg';
 import shopBag from './shopBag.svg';
+import amendoim from './amendoim.jpg';
 
 export const images = {
 	alheira,
@@ -80,4 +81,5 @@ export const images = {
 	p,
 	truck,
 	shopBag,
+	amendoim,
 };

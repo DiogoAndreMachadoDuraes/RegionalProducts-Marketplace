@@ -5,26 +5,14 @@ import { SiInstagram } from 'react-icons/si';
 import { FaFacebook } from 'react-icons/fa';
 import { Image, Container, Row, Tab, Button, Card, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { StoreState } from 'store';
-
-interface Producer {
-	_id: { $oid: string };
-	logo: string;
-	email: string;
-	password: string;
-	country: string;
-	location: string;
-	name: string;
-	postal_code: string;
-	social: string;
-	state: string;
-	address: string;
-	telephone: string;
-	tin: string;
-}
+import { Producer, StoreState } from 'store';
+import { useHistory } from 'react-router-dom';
 
 export const ProducerProfile: React.FC = () => {
-	const [producer, setProducer] = useState<Producer[]>();
+	const userInfo = useSelector((state: StoreState) => state.common.client);
+	const userId = useSelector((state: StoreState) => state.common.user.id);
+	const producer = useSelector((state: StoreState) => state.producer.producer);
+
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [producerName, setProducerName] = useState('');
 	const [producerLocation, setProducerLocation] = useState('');
@@ -32,6 +20,7 @@ export const ProducerProfile: React.FC = () => {
 	const [producerTelephone, setProducerTelephone] = useState('');
 	const [producerlocation, setProducerlocation] = useState('');
 
+	const history = useHistory();
 	const token = useSelector((state: StoreState) => state.common.user.token);
 
 	const handleCloseDelete = () => {
@@ -53,13 +42,17 @@ export const ProducerProfile: React.FC = () => {
 					<Button variant="secondary" onClick={handleCloseDelete}>
 						Fechar
 					</Button>
-					<Button variant="primary" /* onClick={() => delete() && handleCloseDelete} */>Eliminar</Button>
+					<Button variant="primary" onClick={() => handleDelete()}>
+						{' '}
+						Eliminar{' '}
+					</Button>
 				</Modal.Footer>
 			</Modal>
 		);
 	};
 
 	const handleDelete = async () => {
+		handleCloseDelete();
 		try {
 			await fetch('http://127.0.0.1:5000/producer', {
 				method: 'DELETE',
@@ -96,7 +89,7 @@ export const ProducerProfile: React.FC = () => {
 									fontWeight: 'bold',
 								}}
 							>
-								Perfil do Produtor
+								Perfil do Produtor {producer.name}
 							</h3>
 						</Col>
 					</Row>
@@ -116,10 +109,9 @@ export const ProducerProfile: React.FC = () => {
 									marginLeft: 40,
 									fontWeight: 'bold',
 									fontFamily: 'Artifika',
-									//fontSize: 20,
 								}}
 							>
-								Nome do Produtor:
+								Nome do Produtor: {producer.name}
 							</h3>
 							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{producerName}</h4>
 							<h3
@@ -131,7 +123,7 @@ export const ProducerProfile: React.FC = () => {
 									fontFamily: 'Artifika',
 								}}
 							>
-								Rua:
+								Rua: {producer.address}
 							</h3>
 							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}> {producerAddress}</h4>
 							<h3
@@ -143,7 +135,7 @@ export const ProducerProfile: React.FC = () => {
 									fontFamily: 'Artifika',
 								}}
 							>
-								Morada:
+								Morada: {producer.address}
 							</h3>
 							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}> {producerLocation}</h4>
 							<h3
@@ -167,7 +159,7 @@ export const ProducerProfile: React.FC = () => {
 									fontFamily: 'Artifika',
 								}}
 							>
-								Redes Sociais:
+								Redes Sociais: {producer.social_network}
 							</h3>
 							<Col>
 								<a style={{ marginLeft: 600 }} href="https://www.facebook.com/">

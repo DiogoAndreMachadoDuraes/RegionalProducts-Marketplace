@@ -1,59 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Breadcrumb, Card, Row, Image, Col } from 'react-bootstrap';
-import { images } from 'assets';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
-import axios from 'axios';
-
-interface OrderList {
-	_id: { $oid: string };
-	country_client: string;
-	date: string;
-	doc_invoice: string;
-	hour: string;
-	id_client: string;
-	locality_client: string;
-	name_client: string;
-	postal_code_client: string;
-	quantity: string;
-	street_client: string;
-	tax: string;
-	tin_client: string;
-	vat: string;
-	rate: string;
-	products: string;
-	price_final: string;
-}
 
 export const Order: React.FC = () => {
 	const history = useHistory();
 
-	const userId = useSelector((state: StoreState) => state.common.user.id);
-	const token = useSelector((state: StoreState) => state.common.user.token);
-
-	const [shops, setShops] = useState<OrderList[]>([]);
-
-	const config = {
-		headers: { Authorization: `Bearer ${token}` },
-	};
-
-	useEffect(() => {
-		const fetchApi = async () => {
-			try {
-				await axios.get(`http://127.0.0.1:5000/shop/client/` + userId, config).then((res) => {
-					const shops = res.data;
-					setShops(shops.shops);
-					console.log(shops);
-				});
-			} catch (e) {
-				console.log('Error rending data: ' + e);
-			}
-		};
-		fetchApi();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const orderList = useSelector((state: StoreState) => state.orders.orders);
 
 	return (
 		<>
@@ -86,8 +40,8 @@ export const Order: React.FC = () => {
 				<Row id="row" style={{ marginTop: 25 }}>
 					<Col sm={2} />
 					<Col sm={8}>
-						{shops?.length !== 0 &&
-							shops?.map((item, index) => {
+						{orderList?.length !== 0 &&
+							orderList?.map((item, index) => {
 								return (
 									<>
 										<Card
@@ -98,7 +52,7 @@ export const Order: React.FC = () => {
 											<div className="row gutters">
 												<div className="col-md-4">
 													<Image
-														src={images.amora}
+														src={item.photo_product}
 														thumbnail
 														style={{ marginLeft: 20, width: 140, height: 140 }}
 													/>
