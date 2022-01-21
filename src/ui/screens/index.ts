@@ -27,3 +27,4 @@ export * from './register';
 export * from './termsConditions';
 export * from './login';
 export * from './editAdmin';
+export * from './adminProfile';
