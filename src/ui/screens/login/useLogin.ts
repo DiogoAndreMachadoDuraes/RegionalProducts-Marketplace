@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { userInfo, userLogin } from 'store/User';
 import axios from 'axios';
-import { Order, orderList, producerInfo } from 'store';
+import { Order, orderList, producerInfo, adminInfo } from 'store';
 
 interface LoginOutPut {
 	email?: string;
@@ -119,18 +119,20 @@ export const useLogin = (): LoginOutPut => {
 				console.log('Error to get Producer: ' + e);
 			}
 
-			/* try {
+			try {
 				const config = {
 					headers: { Authorization: `Bearer ${token}` },
+					params:{_id:userId}
 				};
 
-				await axios.get(`http://127.0.0.1:5000/admin/${userId}`, config).then((res) => {
+				await axios.get(`http://127.0.0.1:5000/admin`, config).then((res) => {
 					const admin = res.data;
+					console.log(admin)
 					dispatch(adminInfo(admin));
 				});
 			} catch (e) {
 				console.log('Error to get Admin: ' + e);
-			} */
+			} 
 
 			try {
 				const config = {

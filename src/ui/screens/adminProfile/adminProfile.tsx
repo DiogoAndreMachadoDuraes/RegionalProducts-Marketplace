@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { Image, Container, Row, Col, Modal, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Alert } from 'react-bootstrap';
 import { AiOutlineUser, AiFillPhone, AiFillCreditCard, AiOutlineMail } from 'react-icons/ai';
 import { BsFillPinMapFill } from 'react-icons/bs';
 import { MdDateRange } from 'react-icons/md';
 import { IoLocationOutline } from 'react-icons/io5';
 import { FaMapSigns } from 'react-icons/fa';
-import { images } from 'assets';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
 
 export const AdminProfile: React.FC = () => {
-	const adminInfo = useSelector((state: StoreState) => state.admin.admin);
+	const admin = useSelector((state: StoreState) => state.admin.admin);
 	const token = useSelector((state: StoreState) => state.common.user.token);
-	const userId = useSelector((state: StoreState) => state.common.user.id);
+
 	const history = useHistory();
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [showAlertDelete, setShowAlertDelete] = useState(false);
@@ -37,7 +36,7 @@ export const AdminProfile: React.FC = () => {
 				<Modal.Header closeButton>
 					<Modal.Title>Eliminar cliente</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Pretende eliminar a sua conta cliente de {adminInfo.name}?</Modal.Body>
+				<Modal.Body>Pretende eliminar a sua conta cliente de {admin.name}?</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleCloseDelete}>
 						Fechar
@@ -70,7 +69,7 @@ export const AdminProfile: React.FC = () => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					_id: userId,
+					_id: admin,
 				}),
 			});
 			setShowAlertDelete(true);
@@ -107,8 +106,7 @@ export const AdminProfile: React.FC = () => {
 						<Row>
 							<AiOutlineUser size="22" color="#8A3535" />
 							<h6 style={{ marginLeft: 5, fontSize: 16, fontFamily: 'artifika' }}>
-								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Nome:</span>{' '}
-								{adminInfo.name}
+								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Nome:</span> {admin.name}
 							</h6>
 						</Row>
 					</Col>
@@ -118,7 +116,7 @@ export const AdminProfile: React.FC = () => {
 							<MdDateRange size="22" color="#8A3535" />
 							<h5 style={{ marginLeft: 7, fontSize: 16, fontFamily: 'artifika' }}>
 								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Data de nascimento:</span>{' '}
-								{adminInfo.birthday}
+								{admin.birthday}
 							</h5>
 						</Row>
 					</Col>
@@ -132,7 +130,7 @@ export const AdminProfile: React.FC = () => {
 								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>
 									Número de contribuinte:
 								</span>{' '}
-								{adminInfo.tin}
+								{admin.tin}
 							</h5>
 						</Row>
 					</Col>
@@ -142,7 +140,7 @@ export const AdminProfile: React.FC = () => {
 							<AiFillPhone size="22" color="#8A3535" />
 							<h5 style={{ marginLeft: 5, fontSize: 16, fontFamily: 'artifika' }}>
 								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Contacto:</span>{' '}
-								{adminInfo.telephone}
+								{admin.telephone}
 							</h5>
 						</Row>
 					</Col>
@@ -154,7 +152,7 @@ export const AdminProfile: React.FC = () => {
 							<FaMapSigns size="22" color="#8A3535" />
 							<h5 style={{ marginLeft: 8, fontSize: 16, fontFamily: 'artifika' }}>
 								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Morada:</span>{' '}
-								{adminInfo.address}
+								{admin.address}
 							</h5>
 						</Row>
 					</Col>
@@ -164,7 +162,7 @@ export const AdminProfile: React.FC = () => {
 							<IoLocationOutline size="22" color="#8A3535" />
 							<h5 style={{ marginLeft: 5, fontSize: 16, fontFamily: 'artifika' }}>
 								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Código Postal:</span>{' '}
-								{adminInfo.postal_code}
+								{admin.postal_code}
 							</h5>
 						</Row>
 					</Col>
@@ -176,7 +174,7 @@ export const AdminProfile: React.FC = () => {
 							<BsFillPinMapFill size="22" color="#8A3535" style={{ color: '#8A3535' }} />
 							<h5 style={{ marginLeft: 8, fontSize: 16, fontFamily: 'artifika' }}>
 								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Localidade:</span>{' '}
-								{adminInfo.country}
+								{admin.country}
 							</h5>
 						</Row>
 					</Col>
@@ -185,8 +183,7 @@ export const AdminProfile: React.FC = () => {
 						<Row>
 							<AiOutlineMail size="22" color="#8A3535" />
 							<h5 style={{ marginLeft: 7, fontSize: 16, fontFamily: 'artifika' }}>
-								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Email:</span>{' '}
-								{adminInfo.email}
+								<span style={{ fontWeight: 'bold', fontFamily: 'artifika' }}>Email:</span> {admin.email}
 							</h5>
 						</Row>
 					</Col>
