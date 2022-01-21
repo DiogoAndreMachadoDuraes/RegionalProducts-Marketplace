@@ -26,3 +26,4 @@ export * from './productListProducer';
 export * from './register';
 export * from './termsConditions';
 export * from './login';
+export * from './editAdmin';

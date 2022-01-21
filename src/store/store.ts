@@ -5,6 +5,7 @@ import { ProductState, productReducer } from './Product';
 import { CategoryState, categoryReducer } from './Category';
 import { ProducerState, producerReducer } from './Producer';
 import { orderReducer, OrderState } from './Order';
+import { AdminState, adminReducer } from './Admin';
 
 export interface StoreState {
 	common: UserState;
@@ -12,6 +13,7 @@ export interface StoreState {
 	categories: CategoryState;
 	producer: ProducerState;
 	orders: OrderState;
+	admin: AdminState;
 }
 
 const appReducers = combineReducers({
@@ -20,6 +22,7 @@ const appReducers = combineReducers({
 	categories: categoryReducer,
 	producer: producerReducer,
 	orders: orderReducer,
+	admin: adminReducer,
 });
 
 export const store = createStore(appReducers, composeWithDevTools());

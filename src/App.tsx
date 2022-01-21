@@ -41,6 +41,7 @@ import {
 	Confirmation,
 	Payment,
 	Ship,
+	EditAdmin,
 } from 'ui';
 
 export const App: React.FC = () => {
@@ -84,6 +85,7 @@ export const App: React.FC = () => {
 							<Route exact path="/productListProducer" component={ProductListProducer} />
 							<Route exact path="/favorites" component={Favorites} />
 							<Route exact path="/producerProfile" component={ProducerProfile} />
+							<Route exact path="/editAdmin" component={EditAdmin} />
 							<Route component={NotFoundPage} />
 						</Switch>
 					</div>

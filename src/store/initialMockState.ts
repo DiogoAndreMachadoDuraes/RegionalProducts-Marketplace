@@ -4,6 +4,7 @@ import { productInitialState } from './Product';
 import { categoryInitialState } from './Category';
 import { producerInitialState } from './Producer';
 import { orderInitialState } from './Order';
+import { adminInitialState } from './Admin';
 
 export const mockState: StoreState = {
 	common: userInitialState,
@@ -11,4 +12,5 @@ export const mockState: StoreState = {
 	categories: categoryInitialState,
 	producer: producerInitialState,
 	orders: orderInitialState,
+	admin: adminInitialState,
 };
