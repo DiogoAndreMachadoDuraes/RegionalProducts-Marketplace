@@ -77,7 +77,7 @@ export const App: React.FC = () => {
 							<Route exact path="/editProducer" component={EditProducer} />
 							<Route exact path="/producer" component={Producer} />
 							<Route exact path="/cart" component={Cart} />
-							<Route exact path="/invoice" component={Invoice} />
+							<Route exact path="/invoice/:id" component={Invoice} />
 							<Route exact path="/producerOrder" component={ProducerOrder} />
 							<Route exact path="/producerRegister" component={ProducerRegister} />
 							<Route exact path="/createProduct" component={CreateProduct} />

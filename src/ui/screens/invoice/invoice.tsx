@@ -1,48 +1,53 @@
-import React, { useState } from 'react';
-import { Row, Col, Breadcrumb, Container, Spinner } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Breadcrumb, Container } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+import { StoreState } from 'store';
+import axios from 'axios';
 import PDF from './PDF';
-import { Redirect } from 'react-router-dom';
+
+interface InvoiceParams {
+	id: string;
+}
+
+interface Shop {
+	name: string;
+	id: string;
+	tin: number;
+	date: string;
+	telephone: string;
+	email: string;
+	street: string;
+	postalCode: string;
+	locality: string;
+	quantity: number;
+	price: number;
+}
 
 export const Invoice: React.FC = () => {
-	const Spacer = require('react-spacer');
+	const { id } = useParams<InvoiceParams>();
+	const token = useSelector((state: StoreState) => state.common.user.token);
 
-	const [isLoading, setIsLoading] = useState(false);
-	const [invoice, setInvoice] = useState('');
-	const [email, setEmail] = useState('juli@sapo.pt');
-	const [locality, setLocality] = useState('Alentejo');
-	const [name, setName] = useState('Julieta Martins');
-	const [postalCode, setPostalCode] = useState('5600-000');
-	const [id, setId] = useState('1');
-	const [street, setStreet] = useState('Rua do Baixo Alentejo');
-	const [telephone, setTelephone] = useState('+351663366789');
-	const [tin, setTin] = useState('555111111');
-	const [price, setPrice] = useState('5.67');
-	const [quantity, setQuantity] = useState('1');
-	const [date, setDate] = useState('18/01/2022');
+	const [invoice, setInvoice] = useState<Shop>();
 
-	/* const checkPermissions = () => {
-    if ((isLogged === false || type !== "client") && isLoading === true) {
-      return <Redirect to="/nopermissions" />;
-    }
-  } */
-
-	const load = () => {
-		if (isLoading === false) {
-			return (
-				<Spinner
-					animation="border"
-					variant="success"
-					style={{
-						marginTop: 25,
-						marginBottom: 108,
-						alignItems: 'center',
-						justifyContent: 'center',
-						display: 'flex',
-					}}
-				/>
-			);
-		}
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
 	};
+
+	useEffect(() => {
+		const fetchApi = async () => {
+			try {
+				await axios.get(`http://127.0.0.1:5000/shop/` + id, config).then((res) => {
+					const invoice = res.data;
+					setInvoice(invoice);
+				});
+			} catch (e) {
+				console.log('Error rending data: ' + e);
+			}
+		};
+		fetchApi();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<>
@@ -52,7 +57,7 @@ export const Invoice: React.FC = () => {
 						<Breadcrumb.Item href="/home">Home </Breadcrumb.Item>
 						<Breadcrumb.Item href="/order">Encomendas </Breadcrumb.Item>
 						<Breadcrumb.Item active style={{ color: '#9B3939', fontFamily: 'artifika' }}>
-							Faturas
+							Fatura
 						</Breadcrumb.Item>
 					</Breadcrumb>
 				</div>
@@ -61,17 +66,17 @@ export const Invoice: React.FC = () => {
 						<Col sm={1} />
 						<Col sm={10}>
 							<PDF
-								name={name}
+								name={invoice?.name}
 								id={id}
-								tin={tin}
-								date={date}
-								telephone={telephone}
-								email={email}
-								street={street}
-								postalCode={postalCode}
-								locality={locality}
-								quantity={quantity}
-								price={price}
+								tin={invoice?.tin}
+								date={invoice?.date}
+								telephone={invoice?.telephone}
+								email={invoice?.email}
+								street={invoice?.street}
+								postalCode={invoice?.postalCode}
+								locality={invoice?.locality}
+								quantity={invoice?.quantity}
+								price={invoice?.price}
 							/>
 						</Col>
 						<Col sm={1} />
