@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Col, Container, Form, Row, Button, Image, InputGroup, Alert, Breadcrumb } from 'react-bootstrap';
 import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
+import { useHistory } from 'react-router-dom';
 
 export const EditProducer: React.FC = () => {
-	const history = useHistory();
 	const Spacer = require('react-spacer');
 
 	const userId = useSelector((state: StoreState) => state.common.user.id);
 	const producerInfo = useSelector((state: StoreState) => state.producer.producer);
 	const token = useSelector((state: StoreState) => state.common.user.token);
+	const history = useHistory();
 
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
 	const [password, setPassword] = useState('');
@@ -26,7 +26,7 @@ export const EditProducer: React.FC = () => {
 	const [postalCode, setPostalCode] = useState(producerInfo.postal_code);
 	const [telephone, setTelephone] = useState(producerInfo.telephone);
 	const [tin, setTin] = useState(producerInfo.tin);
-	const [logo /* , setLogo */] = useState(producerInfo.logo);
+	const [logo, setLogo] = useState(producerInfo.logo);
 	const [socialNetwork, setSocialNetwork] = useState(producerInfo.social_network);
 
 	const [showEditProducer, setShowEditProducer] = useState(false);
@@ -47,9 +47,9 @@ export const EditProducer: React.FC = () => {
 		setSocialNetwork(e.target.value);
 	};
 
-	/* const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setLogo(e.target.value);
-	}; */
+	};
 
 	const handleTelephone = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTelephone(e.target.value);

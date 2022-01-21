@@ -10,7 +10,7 @@ export const HeaderAdmin: React.FC = () => {
 			<Nav.Link onClick={() => history.push('/dashboardadmin')} style={{ color: 'white', marginLeft: 20 }}>
 				Home
 			</Nav.Link>
-			<Nav.Link onClick={() => history.push('/producerlist')} style={{ color: 'white' }}>
+			<Nav.Link onClick={() => history.push('/producerList')} style={{ color: 'white' }}>
 				Produtores
 			</Nav.Link>
 			<Nav.Link onClick={() => history.push('/productlist')} style={{ color: 'white' }}>
