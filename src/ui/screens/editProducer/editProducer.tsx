@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import './style.css';
-import { Col, Container, Form, Row, Button, Image, InputGroup } from 'react-bootstrap';
+import { Col, Container, Form, Row, Button, Image, InputGroup, Alert, Breadcrumb } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
 import axios from 'axios';
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'store';
 
 interface ProducerList {
 	_id: { $oid: string };
@@ -25,6 +27,8 @@ interface ProducerList {
 
 export const EditProducer: React.FC = () => {
 	const Spacer = require('react-spacer');
+	const producerInfo = useSelector((state: StoreState) => state.producer.producer);
+	const token = useSelector((state: StoreState) => state.common.user.token);
 
 	const history = useHistory();
 
@@ -32,18 +36,21 @@ export const EditProducer: React.FC = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
 	const [showPass, setShowPass] = useState(false);
-	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [country, setCountry] = useState('');
-	const [locality, setLocality] = useState('');
-	const [name, setName] = useState('');
-	const [postal_Code, setPostal_Code] = useState('');
-	const [state, setState] = useState('Ativo');
-	const [street, setStreet] = useState('');
-	const [telephone, setTelephone] = useState('');
-	const [tin, setTin] = useState('');
-	const [logo, setLogo] = useState('');
-	const [social, setSocial] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+
+	const [email, setEmail] = useState(producerInfo.email);
+	const [country, setCountry] = useState(producerInfo.country);
+	const [address, setAddress] = useState(producerInfo.address);
+	const [location, setLocation] = useState(producerInfo.location);
+	const [name, setName] = useState(producerInfo.name);
+	const [postalCode, setPostalCode] = useState(producerInfo.postal_code);
+	const [telephone, setTelephone] = useState(producerInfo.telephone);
+	const [tin, setTin] = useState(producerInfo.tin);
+	const [logo, setLogo] = useState(producerInfo.logo);
+	const [socialNetwork, setSocialNetwork] = useState(producerInfo.social_network);
+
+	const [showEditProducer, setShowEditProducer] = useState(false);
 
 	const togglePasswordVisiblity = () => {
 		setIsPasswordShown(!isPasswordShown);
@@ -54,7 +61,11 @@ export const EditProducer: React.FC = () => {
 	};
 
 	const handleTin = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setTin(e.target.value);
+		setTin(parseInt(e.target.value));
+	};
+
+	const handleSocialNetwork = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSocialNetwork(e.target.value);
 	};
 
 	const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,20 +76,20 @@ export const EditProducer: React.FC = () => {
 		setTelephone(e.target.value);
 	};
 
-	const handleStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setStreet(e.target.value);
+	const handleAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setAddress(e.target.value);
 	};
 
-	const handleLocality = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setLocality(e.target.value);
+	const handleLocation = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setLocation(e.target.value);
 	};
 
 	const handleCountry = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setCountry(e.target.value);
 	};
 
-	const handlePostal_code = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPostal_Code(e.target.value);
+	const handlePostalCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPostalCode(e.target.value);
 	};
 
 	const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,21 +100,23 @@ export const EditProducer: React.FC = () => {
 		setPassword(e.target.value);
 	};
 
-	const handleSocial = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSocial(e.target.value);
+	const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setConfirmPassword(e.target.value);
 	};
 
-	const handleState = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setState(e.target.value);
+	const showAlert = () => {
+		window.setTimeout(() => {
+			setShowEditProducer(false);
+		}, 5000);
 	};
 
-	const handleSubmit = async (item: ProducerList) => {
+	const handleSubmit = async () => {
 		try {
 			await fetch('http://127.0.0.1:5000/producer', {
 				method: 'PUT',
 				headers: {
-					/*         Authorization: "Bearer " + token,
-					 */ Accept: 'application/json',
+					Authorization: 'Bearer ' + token,
+					Accept: 'application/json',
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
@@ -112,37 +125,57 @@ export const EditProducer: React.FC = () => {
 					tin: tin,
 					logo: logo,
 					telephone: telephone,
-					street: street,
-					locality: locality,
-					postal_code: postal_Code,
+					address: address,
+					locality: location,
+					postal_code: postalCode,
 					country: country,
 					email: email,
 					password: password,
-					social: social,
-					state: state,
+					social: socialNetwork,
 				}),
 			});
-
-			alert('Produtor editado com sucesso!');
-			window.location.reload();
+			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+			setShowEditProducer(true);
+			showAlert();
 		} catch (e) {
 			console.log('Error to edit producer status: ');
 		}
-		history.push('/producer');
 	};
 
 	return (
 		<>
+			<Alert key={'success'} variant={'success'} show={showEditProducer} style={{ textAlign: 'center' }}>
+				As informações da sua conta foram alteradas com sucesso
+			</Alert>
+			<div>
+				<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+					<Breadcrumb.Item onClick={() => history.push('/')}>
+						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+					</Breadcrumb.Item>
+					<Breadcrumb.Item onClick={() => history.push('/profileProducer')}>
+						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Perfil</span>
+					</Breadcrumb.Item>
+					<Breadcrumb.Item active style={{ color: '#9B3939' }}>
+						<span style={{ fontFamily: 'artifika', color: 'black' }}>Editar Perfil</span>
+					</Breadcrumb.Item>
+				</Breadcrumb>
+			</div>
 			<Container>
 				<br />
-				<Row className="justify-content-md">
-					<Col xs lg="12">
-						<h3 style={{ color: '#8A3535', fontFamily: 'Artifika' }}>
-							Editar Informação da Conta do Produtor {name}
-						</h3>
-					</Col>
-				</Row>
+				<h3 style={{ color: '#8A3535', fontFamily: 'Artifika', textAlign: 'center' }}>
+					Editar Informação da Conta de {name}
+				</h3>
 				<br />
+				<br />
+				<Row>
+					<Row>
+						<Col sm={4} />
+						<Col sm={4}>
+							<Image src={logo} width={100} height={100} style={{ marginLeft: 300 }} roundedCircle />
+						</Col>
+						<Col sm={4} />
+					</Row>
+				</Row>
 				<br />
 				<Row>
 					<Col md={30}>
@@ -152,8 +185,8 @@ export const EditProducer: React.FC = () => {
 							Informação Pessoal
 						</h5>
 					</Col>
+					<Col md={{ span: 11, offset: 11 }}></Col>
 				</Row>
-
 				<br />
 				<Row>
 					<Col>
@@ -162,23 +195,19 @@ export const EditProducer: React.FC = () => {
 					</Col>
 
 					<Col>
-						<Form.Label style={{ fontFamily: 'Artifika' }}>País </Form.Label>
-						<Form.Control required onChange={handleCountry} as="select" defaultValue={country}>
-							<option>País</option>
-							<option>Portugal</option>
-							<option>Espanha</option>
-						</Form.Control>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Rede Social </Form.Label>
+						<Form.Control onChange={handleSocialNetwork} defaultValue={socialNetwork} />
 					</Col>
 				</Row>
 				<br />
 				<Row>
 					<Col>
 						<Form.Label style={{ fontFamily: 'Artifika' }}>Morada </Form.Label>
-						<Form.Control onChange={handleStreet} defaultValue={street} />
+						<Form.Control onChange={handleAddress} defaultValue={address} />
 					</Col>
 					<Col>
 						<Form.Label style={{ fontFamily: 'Artifika' }}>Código Postal </Form.Label>
-						<Form.Control onChange={handlePostal_code} defaultValue={postal_Code} />
+						<Form.Control onChange={handlePostalCode} defaultValue={postalCode} />
 					</Col>
 				</Row>
 				<br />
@@ -188,8 +217,8 @@ export const EditProducer: React.FC = () => {
 						<Form.Control onChange={handleTelephone} defaultValue={telephone} />
 					</Col>
 					<Col>
-						<Form.Label style={{ fontFamily: 'Artifika' }}>Localidade </Form.Label>
-						<Form.Control onChange={handleLocality} defaultValue={locality} />
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Região </Form.Label>
+						<Form.Control onChange={handleLocation} defaultValue={location} />
 					</Col>
 				</Row>
 				<br />
@@ -199,14 +228,14 @@ export const EditProducer: React.FC = () => {
 						<Form.Control onChange={handleTin} defaultValue={tin} />
 					</Col>
 					<Col>
-						<Form.Label style={{ fontFamily: 'Artifika' }}>Rede Social </Form.Label>
-						<Form.Control onChange={handleSocial} defaultValue={social} />
+						<Form.Label style={{ fontFamily: 'Artifika' }}>País </Form.Label>
+						<Form.Control required onChange={handleCountry} as="select" defaultValue={country}>
+							<option>Portugal</option>
+							<option>Espanha</option>
+						</Form.Control>
 					</Col>
 				</Row>
-				<br />
-				<Row>
-					<Col md={6}></Col>
-				</Row>
+
 				<br />
 				<Row>
 					<Col md={3}>
@@ -219,7 +248,7 @@ export const EditProducer: React.FC = () => {
 				<br />
 				<Row>
 					<Col md={6}>
-						<Form.Label>Email </Form.Label>
+						<Form.Label style={{ fontFamily: 'Artifika' }}>Email </Form.Label>
 						<Form.Control onChange={handleEmail} defaultValue={email} />
 					</Col>
 				</Row>
@@ -260,8 +289,8 @@ export const EditProducer: React.FC = () => {
 						<InputGroup className="mb-1">
 							<Form.Control
 								placeholder="Confirmar Palavra-Passe"
-								onChange={handlePassword}
-								defaultValue={password}
+								onChange={handleConfirmPassword}
+								defaultValue={confirmPassword}
 								name="password"
 								type={isPasswordShown ? 'text' : 'password'}
 								style={{ color: 'black', opacity: 1 }}
@@ -289,424 +318,30 @@ export const EditProducer: React.FC = () => {
 				<br />
 				<br />
 				<br />
-				<Row>
-					<Col md={6}></Col>
+				<Row
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						textAlign: 'center',
+					}}
+				>
+					<Button
+						variant="dark"
+						onClick={handleSubmit}
+						disabled={password !== confirmPassword || confirmPassword === '' || password === ''}
+						style={{
+							color: 'white',
+							backgroundColor: '#9B3939',
+							fontFamily: 'artifika',
+						}}
+					>
+						Submeter alterações
+					</Button>
 				</Row>
-				<Row>
-					<Col md={50}>
-						<Button
-							type="submit"
-							variant="dark"
-							style={{ backgroundColor: '#8A3535', marginLeft: '450px' }}
-						>
-							Submeter alterações
-						</Button>
-					</Col>
-
-					<Col md={4}>
-						<Button
-							href="/producerprofile"
-							variant="dark"
-							style={{ color: '#8A3535', backgroundColor: '#FFFFFF' }}
-						>
-							Voltar
-						</Button>
-					</Col>
-				</Row>
+				<br />
 				<br />
 				<br />
 			</Container>
 		</>
 	);
 };
-
-/* class Editproducer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      producer: [],
-      name: "",
-      tin: "",
-      logo: "",
-      telephone: "",
-      street: "",
-      locality: "",
-      country: "",
-      postal_code: "",
-      email: "",
-      password: "",
-      social: "",
-      state: "Ativo",
-      showModal: false,
-      isPasswordShown: false,
-      showPass: false,
-    };
-  }
-
-  togglePasswordVisiblity = () => {
-    const { isPasswordShown } = this.state;
-    this.setState({ isPasswordShown: !isPasswordShown });
-  };
-
-  async componentDidMount() {
-    try {
-      let token = await localStorage.getItem("token");
-      let type = await localStorage.getItem("type");
-      let userId = await localStorage.getItem("userId");
-      let name_producer = await localStorage.getItem("name");
-      if (token !== null) {
-        this.setState({
-          isLogged: true,
-          token,
-          type,
-          userId,
-          name_producer,
-        });
-        console.log(userId);
-      } else {
-        this.setState({
-          isLogged: false,
-        });
-      }
-    } catch (e) {
-      console.log("Error rending data: " + e);
-    }
-    const { token, userId } = this.state;
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    axios
-      .get(`http://127.0.0.1:5000/producer/${userId}`, config)
-      .then((res) => {
-        const producer = res.data;
-        this.setState({ producer });
-        this.setState({
-          name: producer.name,
-          tin: producer.tin,
-          logo: producer.logo,
-          telephone: producer.telephone,
-          street: producer.street,
-          locality: producer.locality,
-          country: producer.country,
-          postal_code: producer.postal_code,
-          email: producer.email,
-          password: producer.password,
-          social: producer.social,
-          state: producer.state,
-        });
-      });
-  }
-
-  handleName = (e) => {
-    this.setState({ name: e.target.value });
-  };
-
-  handleTin = (e) => {
-    this.setState({ tin: e.target.value });
-  };
-
-  handleLogo = (e) => {
-    this.setState({ logo: e.target.value });
-  };
-
-  handleTelephone = (e) => {
-    this.setState({ telephone: e.target.value });
-  };
-
-  handleStreet = (e) => {
-    this.setState({ street: e.target.value });
-  };
-
-  handleLocality = (e) => {
-    this.setState({ locality: e.target.value });
-  };
-
-  handleCountry = (e) => {
-    this.setState({ country: e.target.value });
-  };
-
-  handlePostal_code = (e) => {
-    this.setState({ postal_code: e.target.value });
-  };
-
-  handleEmail = (e) => {
-    this.setState({ email: e.target.value });
-  };
-
-  handlePassword = (e) => {
-    this.setState({ password: e.target.value });
-  };
-
-  handleSocial = (e) => {
-    this.setState({ social: e.target.value });
-  };
-
-  handleState = (e) => {
-    this.setState({ state: e.target.value });
-  };
-
-  handleSubmit = async () => {
-    const {
-      name,
-      tin,
-      logo,
-      telephone,
-      street,
-      locality,
-      postal_code,
-      country,
-      email,
-      password,
-      social,
-      state,
-      userId,
-      token,
-    } = this.state;
-    try {
-      await fetch("http://127.0.0.1:5000/producer", {
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: userId,
-          name: name,
-          tin: tin,
-          logo: logo,
-          telephone: telephone,
-          street: street,
-          locality: locality,
-          postal_code: postal_code,
-          country: country,
-          email: email,
-          password: password,
-          social: social,
-          state: state,
-        }),
-      });
-
-      alert("Produtor editado com sucesso!");
-      window.location.reload();
-    } catch (e) {
-      console.log("Error to edit producer status: ");
-    }
-  };
-
-  render() {
-    const { producer, name_producer, isPasswordShown } = this.state;
-    return (
-      <Container>
-        <br />
-        <Row className="justify-content-md-center">
-          <Col xs lg="5">
-            <h3 style={{ fontWeight: "bold" }}>
-              Editar Conta de {name_producer}{" "}
-            </h3>
-          </Col>
-        </Row>
-
-        <br />
-        <br />
-
-        <Form onSubmit={this.handleSubmit}>
-          <Row>
-            <Col md={30}>
-              <h5 style={{ marginTop: 25 }}>
-                <AiOutlineUser size="20" color="#000000" />
-                Informação Pessoal
-              </h5>
-            </Col>
-          </Row>
-
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Nome Completo </Form.Label>
-              <Form.Control
-                onChange={this.handleName}
-                defaultValue={producer.name}
-              />
-            </Col>
-
-            <Col>
-              <Form.Label>País </Form.Label>
-              <Form.Control
-                required
-                onChange={this.handleCountry}
-                as="select"
-                defaultValue={producer.country}
-              >
-                <option>País</option>
-                <option>Portugal</option>
-                <option>Espanha</option>
-              </Form.Control>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Morada </Form.Label>
-              <Form.Control
-                onChange={this.handleStreet}
-                defaultValue={producer.street}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Código Postal </Form.Label>
-              <Form.Control
-                onChange={this.handlePostal_code}
-                defaultValue={producer.postal_code}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Contacto </Form.Label>
-              <Form.Control
-                onChange={this.handleTelephone}
-                defaultValue={producer.telephone}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Localidade </Form.Label>
-              <Form.Control
-                onChange={this.handleLocality}
-                defaultValue={producer.locality}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}>
-              <Form.Label>Número de Contribuinte </Form.Label>
-              <Form.Control
-                onChange={this.handleTin}
-                defaultValue={producer.tin}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Rede Social </Form.Label>
-              <Form.Control
-                onChange={this.handleSocial}
-                defaultValue={producer.social}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}></Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={3}>
-              <h5 style={{ marginTop: 30 }}>
-                <AiTwotoneLock size="20" color="#000000" />
-                Informação de Login
-              </h5>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}>
-              <Form.Label>Email </Form.Label>
-              <Form.Control
-                onChange={this.handleEmail}
-                defaultValue={producer.email}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <Form.Label>Palavra-Passe </Form.Label>
-              <Form.Control
-                onChange={this.handlePassword}
-                defaultValue={producer.password}
-                name="password"
-                type={isPasswordShown ? "text" : "password"}
-                style={{ color: "black", opacity: 1 }}
-              />
-              <InputGroup.Append>
-                <InputGroup.Text id="inputGroupAppend">
-                  {isPasswordShown ? (
-                    <BsFillEyeFill
-                      onClick={this.togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  ) : (
-                    <BsFillEyeSlashFill
-                      onClick={this.togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  )}
-                </InputGroup.Text>
-              </InputGroup.Append>
-            </Col>
-            <Col>
-              <Form.Label>Confirmar Palavra-Passe</Form.Label>
-              <Form.Control
-                onChange={this.handlePassword}
-                defaultValue={producer.password}
-                name="password"
-                type={isPasswordShown ? "text" : "password"}
-                style={{ color: "black", opacity: 1 }}
-              />
-              <InputGroup.Append>
-                <InputGroup.Text id="inputGroupAppend">
-                  {isPasswordShown ? (
-                    <BsFillEyeFill
-                      onClick={this.togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  ) : (
-                    <BsFillEyeSlashFill
-                      onClick={this.togglePasswordVisiblity}
-                      size="20"
-                      style={{ color: "black" }}
-                    />
-                  )}
-                </InputGroup.Text>
-              </InputGroup.Append>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={6}></Col>
-          </Row>
-          <Row>
-            <Col md={50}>
-              <Button
-                type="submit"
-                variant="dark"
-                style={{ color: "white", backgroundColor: "#444903" }}
-              >
-                Submeter alterações
-              </Button>
-            </Col>
-
-            <Col md={4}>
-              <Button
-                href="/producerprofile"
-                variant="dark"
-                style={{ color: "white", backgroundColor: "#AAAA74" }}
-              >
-                Voltar
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-        <br />
-      </Container>
-    );
-  }
-}
-export default Editproducer;
- */
