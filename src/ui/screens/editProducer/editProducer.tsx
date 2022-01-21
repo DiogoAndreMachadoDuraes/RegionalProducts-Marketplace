@@ -35,7 +35,6 @@ export const EditProducer: React.FC = () => {
 	const [producer, setProducer] = useState<ProducerList[]>();
 	const [showModal, setShowModal] = useState(false);
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
-	const [showPass, setShowPass] = useState(false);
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 
