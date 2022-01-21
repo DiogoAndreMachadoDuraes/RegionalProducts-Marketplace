@@ -19,12 +19,23 @@ export const ProducerProfile: React.FC = () => {
 	const [producerAddress, setProducerAddress] = useState('');
 	const [producerTelephone, setProducerTelephone] = useState('');
 	const [producerlocation, setProducerlocation] = useState('');
+	const [showAlertDelete, setShowAlertDelete] = useState(false);
 
 	const history = useHistory();
 	const token = useSelector((state: StoreState) => state.common.user.token);
 
 	const handleCloseDelete = () => {
 		setShowModalDelete(false);
+	};
+
+	const showAlert = () => {
+		window.setTimeout(() => {
+			setShowAlertDelete(false);
+		}, 5000);
+	};
+
+	const handleEdit = () => {
+		history.push('/editProducer');
 	};
 
 	const handleShowDelete = () => {
@@ -37,14 +48,13 @@ export const ProducerProfile: React.FC = () => {
 				<Modal.Header closeButton>
 					<Modal.Title>Eliminar produtor</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Pretende eliminar a sua conta produtor de {producerName}?</Modal.Body>
+				<Modal.Body>Pretende eliminar a sua conta produtor de {producer.name}?</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleCloseDelete}>
 						Fechar
 					</Button>
 					<Button variant="primary" onClick={() => handleDelete()}>
-						{' '}
-						Eliminar{' '}
+						Eliminar
 					</Button>
 				</Modal.Footer>
 			</Modal>
@@ -52,7 +62,6 @@ export const ProducerProfile: React.FC = () => {
 	};
 
 	const handleDelete = async () => {
-		handleCloseDelete();
 		try {
 			await fetch('http://127.0.0.1:5000/producer', {
 				method: 'DELETE',
@@ -65,7 +74,10 @@ export const ProducerProfile: React.FC = () => {
 					_id: producer,
 				}),
 			});
-			alert('Produtor eliminado com sucesso!');
+			setShowAlertDelete(true);
+			showAlert();
+			history.push('/');
+			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 			window.location.reload();
 		} catch (e) {
 			console.log('Error to Delete Producer: ' + e);
@@ -74,149 +86,180 @@ export const ProducerProfile: React.FC = () => {
 
 	return (
 		<>
-			<div>
-				<Container>
-					<br />
-					<Row>
-						<Col xs lg="5">
-							<h3
-								style={{
-									fontSize: 30,
-									marginTop: 30,
-									marginLeft: 0,
-									color: '#8A3535',
-									fontFamily: 'Artifika',
-									fontWeight: 'bold',
-								}}
-							>
-								Perfil do Produtor {producer.name}
-							</h3>
-						</Col>
-					</Row>
+			<Container>
+				<br />
+				<Row>
+					<Col xs lg="5">
+						<h3
+							style={{
+								fontSize: 30,
+								marginTop: 30,
+								marginLeft: 0,
+								fontWeight: 'bold',
+								fontFamily: 'artifika',
+								color: '#9B3939',
+							}}
+						>
+							Acerca do Produtor
+						</h3>
+					</Col>
+				</Row>
 
-					<br />
-					<Row>
-						<Col md={30}></Col>
-					</Row>
+				<br />
+				<Row>
+					<Col md={30}></Col>
+				</Row>
 
-					<br />
-					<Row>
+				<br />
+				<Row>
+					<Col>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 30,
+								marginLeft: 40,
+								fontWeight: 'bold',
+								fontFamily: 'artifika',
+							}}
+						>
+							Nome do Produtor:
+						</h3>
+						<h4 style={{ fontSize: 16, marginTop: 20, marginLeft: 50, fontFamily: 'artifika' }}>
+							{producer.name}
+						</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 40,
+								marginLeft: 40,
+								fontWeight: 'bold',
+								fontFamily: 'artifika',
+							}}
+						>
+							Endereço principal:
+						</h3>
+						<h4 style={{ fontSize: 16, fontFamily: 'artifika', marginTop: 20, marginLeft: 50 }}>
+							{producer.address}
+						</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 40,
+								marginLeft: 40,
+								fontWeight: 'bold',
+								fontFamily: 'artifika',
+							}}
+						>
+							Número de Contribuinte:
+						</h3>
+						<h4 style={{ fontFamily: 'artifika', fontSize: 16, marginTop: 20, marginLeft: 50 }}>
+							{producer.tin}
+						</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 40,
+								marginLeft: 40,
+								fontWeight: 'bold',
+								fontFamily: 'artifika',
+							}}
+						>
+							Região:
+						</h3>
+						<h4 style={{ fontSize: 16, marginTop: 20, marginLeft: 50, fontFamily: 'artifika' }}>
+							{producer.location}
+						</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 40,
+								marginLeft: 40,
+								fontWeight: 'bold',
+								fontFamily: 'artifika',
+							}}
+						>
+							Código-Postal:
+						</h3>
+						<h4 style={{ fontSize: 16, marginTop: 20, marginLeft: 50, fontFamily: 'artifika' }}>
+							{producer.postal_code} {producer.country}
+						</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginTop: 40,
+								marginLeft: 40,
+								fontWeight: 'bold',
+								fontFamily: 'artifika',
+							}}
+						>
+							Contacto:
+						</h3>
+						<h4 style={{ fontFamily: 'artifika', fontSize: 16, marginTop: 20, marginLeft: 50 }}>
+							{producer.telephone}
+						</h4>
+						<h3
+							style={{
+								fontSize: 18,
+								marginLeft: 600,
+								marginTop: -70,
+								fontWeight: 'bold',
+								fontFamily: 'artifika',
+							}}
+						>
+							Redes Sociais: {producer.social_network}
+						</h3>
 						<Col>
-							<h3
-								style={{
-									fontSize: 18,
-									marginTop: 30,
-									marginLeft: 40,
-									fontWeight: 'bold',
-									fontFamily: 'Artifika',
-								}}
-							>
-								Nome do Produtor: {producer.name}
-							</h3>
-							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{producerName}</h4>
-							<h3
-								style={{
-									fontSize: 18,
-									marginTop: 40,
-									marginLeft: 40,
-									fontWeight: 'bold',
-									fontFamily: 'Artifika',
-								}}
-							>
-								Rua: {producer.address}
-							</h3>
-							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}> {producerAddress}</h4>
-							<h3
-								style={{
-									fontSize: 18,
-									marginTop: 40,
-									marginLeft: 40,
-									fontWeight: 'bold',
-									fontFamily: 'Artifika',
-								}}
-							>
-								Morada: {producer.address}
-							</h3>
-							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}> {producerLocation}</h4>
-							<h3
-								style={{
-									fontSize: 18,
-									marginTop: 40,
-									marginLeft: 40,
-									fontWeight: 'bold',
-									fontFamily: 'Artifika',
-								}}
-							>
-								Contacto:
-							</h3>
-							<h4 style={{ fontSize: 18, marginTop: 20, marginLeft: 50 }}>{producerTelephone}</h4>
-							<h3
-								style={{
-									fontSize: 18,
-									marginLeft: 600,
-									marginTop: -70,
-									fontWeight: 'bold',
-									fontFamily: 'Artifika',
-								}}
-							>
-								Redes Sociais: {producer.social_network}
-							</h3>
-							<Col>
-								<a style={{ marginLeft: 600 }} href="https://www.facebook.com/">
-									<FaFacebook color="blue" size="30" />
-								</a>
-								<a style={{ marginLeft: 30 }} href="https://www.instagram.com/">
-									<SiInstagram color="#E1306C" size="30" />
-								</a>
-							</Col>
+							<a style={{ marginLeft: 600 }} href="https://www.facebook.com/">
+								<FaFacebook color="blue" size="30" />
+							</a>
+							<a style={{ marginLeft: 30 }} href="https://www.instagram.com/">
+								<SiInstagram color="#E1306C" size="30" />
+							</a>
 						</Col>
+					</Col>
+				</Row>
+				<br />
+				<br />
+				<br />
+				<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+					<Row id="row" style={{ marginBottom: 80 }}>
+						<Col sm={2} />
+						<Col sm={2}>
+							<Button
+								variant="dark"
+								onClick={handleEdit}
+								size="lg"
+								style={{ color: '#9B3939', backgroundColor: 'white', fontFamily: 'artifika' }}
+							>
+								Editar dados
+							</Button>
+						</Col>
+						<Col sm={4} style={{ marginTop: 100 }} />
+						<Col sm={1}>
+							<Button
+								variant="dark"
+								onClick={handleShowDelete}
+								size="lg"
+								style={{ color: 'white', backgroundColor: '#9B3939', fontFamily: 'artifika' }}
+							>
+								Eliminar
+							</Button>
+							{showModalDelete && modalDelete()}
+						</Col>
+						<Col sm={1} />
 					</Row>
+				</Tab.Container>
 
-					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-						<Row id="row" style={{ marginBottom: 80 }}>
-							<Col sm={1} />
-							<Col sm={1}>
-								<Button
-									variant="dark"
-									href="/editclient"
-									size="lg"
-									style={{ color: 'white', backgroundColor: '#8A3535' }}
-								>
-									Editar
-								</Button>
+				<Card.ImgOverlay>
+					<Container>
+						<Row style={{ marginTop: 300, marginLeft: 700 }}>
+							<Col xs={12} md={8}>
+								<Image src={producer.logo} width="300" fluid />
 							</Col>
-							<Col sm={8} style={{ marginTop: 100 }} />
-							<Col sm={1}>
-								<Button
-									variant="dark"
-									onClick={handleShowDelete}
-									size="lg"
-									style={{ color: '#8A3535', backgroundColor: 'white' }}
-								>
-									Eliminar
-								</Button>
-								{showModalDelete ? modalDelete() : false}
-							</Col>
-							<Col sm={1} />
 						</Row>
-					</Tab.Container>
-
-					<Card.ImgOverlay>
-						<Container>
-							<Row style={{ marginTop: 300, marginLeft: 700 }}>
-								<Col xs={12} md={8}>
-									<Image
-										src="https://s3-sa-east-1.amazonaws.com/projetos-artes/fullsize%2F2018%2F08%2F06%2F21%2FLogo-243223_6769_212624417_626643767.jpg"
-										alt="Paris"
-										width="500"
-										fluid
-									/>
-								</Col>
-							</Row>
-						</Container>
-					</Card.ImgOverlay>
-				</Container>
-			</div>
+					</Container>
+				</Card.ImgOverlay>
+			</Container>
 		</>
 	);
 };
