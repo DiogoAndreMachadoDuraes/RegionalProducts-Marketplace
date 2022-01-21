@@ -35,6 +35,7 @@ import {
 	ProducerRegister,
 	CreateProduct,
 	ProductListProducer,
+	AdminProfile,
 	Favorites,
 	Home,
 	ProducerProfile,
@@ -42,7 +43,6 @@ import {
 	Payment,
 	Ship,
 	EditAdmin,
-	AdminProfile,
 } from 'ui';
 
 export const App: React.FC = () => {

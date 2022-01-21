@@ -29,7 +29,6 @@ export const adminReducer = (state: AdminState = adminInitialState, action: Admi
 				email: action.admin?.email,
 				location: action.admin?.location,
 				name: action.admin?.name,
-		
 				postal_code: action.admin?.postal_code,
 				state: action.admin?.state,
 				telephone: action.admin?.telephone,
