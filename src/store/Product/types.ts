@@ -11,7 +11,7 @@ export interface Product {
 	category: string;
 	email_producer: string;
 	harvest: string;
-	id_producer: number;
+	id_producer: string;
 	logo_producer: string;
 	name: string;
 	name_producer: string;

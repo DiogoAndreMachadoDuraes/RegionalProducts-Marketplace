@@ -1,39 +1,19 @@
 import React, { useState } from 'react';
-import './style.css';
 import { Col, Container, Form, Row, Button, Image, InputGroup, Alert, Breadcrumb } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
-import axios from 'axios';
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
 
-interface ProducerList {
-	_id: { $oid: string };
-	logo: string;
-	email: string;
-	password: string;
-	country: string;
-	locality: string;
-	name: string;
-	postal_Code: string;
-	social: string;
-	state: string;
-	street: string;
-	telephone: string;
-	tin: string;
-}
-
 export const EditProducer: React.FC = () => {
+	const history = useHistory();
 	const Spacer = require('react-spacer');
+
+	const userId = useSelector((state: StoreState) => state.common.user.id);
 	const producerInfo = useSelector((state: StoreState) => state.producer.producer);
 	const token = useSelector((state: StoreState) => state.common.user.token);
 
-	const history = useHistory();
-
-	const [producer, setProducer] = useState<ProducerList[]>();
-	const [showModal, setShowModal] = useState(false);
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -46,7 +26,7 @@ export const EditProducer: React.FC = () => {
 	const [postalCode, setPostalCode] = useState(producerInfo.postal_code);
 	const [telephone, setTelephone] = useState(producerInfo.telephone);
 	const [tin, setTin] = useState(producerInfo.tin);
-	const [logo, setLogo] = useState(producerInfo.logo);
+	const [logo /* , setLogo */] = useState(producerInfo.logo);
 	const [socialNetwork, setSocialNetwork] = useState(producerInfo.social_network);
 
 	const [showEditProducer, setShowEditProducer] = useState(false);
@@ -67,9 +47,9 @@ export const EditProducer: React.FC = () => {
 		setSocialNetwork(e.target.value);
 	};
 
-	const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
+	/* const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setLogo(e.target.value);
-	};
+	}; */
 
 	const handleTelephone = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTelephone(e.target.value);
@@ -119,25 +99,27 @@ export const EditProducer: React.FC = () => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					_id: producer,
-					name: name,
-					tin: tin,
-					logo: logo,
-					telephone: telephone,
-					address: address,
-					locality: location,
-					postal_code: postalCode,
-					country: country,
+					_id: userId,
 					email: email,
+					logo: logo,
 					password: password,
-					social: socialNetwork,
+					country: country,
+					location: location,
+					name: name,
+					postal_code: postalCode,
+					region: location,
+					social_network: socialNetwork,
+					state: producerInfo.state,
+					address: address,
+					telephone: telephone,
+					tin: tin,
 				}),
 			});
 			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 			setShowEditProducer(true);
 			showAlert();
 		} catch (e) {
-			console.log('Error to edit producer status: ');
+			console.log('Error to edit producer: ');
 		}
 	};
 
@@ -151,7 +133,7 @@ export const EditProducer: React.FC = () => {
 					<Breadcrumb.Item onClick={() => history.push('/')}>
 						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
 					</Breadcrumb.Item>
-					<Breadcrumb.Item onClick={() => history.push('/profileProducer')}>
+					<Breadcrumb.Item onClick={() => history.push('/producerProfile')}>
 						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Perfil</span>
 					</Breadcrumb.Item>
 					<Breadcrumb.Item active style={{ color: '#9B3939' }}>
