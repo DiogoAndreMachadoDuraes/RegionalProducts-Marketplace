@@ -145,7 +145,7 @@ export const CreateProduct: React.FC = () => {
 				</Breadcrumb>
 			</div>
 			<br />
-			<div style={{ display: 'flex', justifyContent: 'center' }}>
+			<div style={{ display: 'flex', justifyContent: 'center', fontFamily: 'artifika' }}>
 				<Card style={{ width: 800 }}>
 					<Card.Body>
 						<Container>
