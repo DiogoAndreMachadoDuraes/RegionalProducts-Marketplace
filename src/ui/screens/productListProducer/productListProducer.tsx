@@ -28,7 +28,8 @@ interface ProductList {
 }
 
 export const ProductListProducer: React.FC = () => {
-	const history = useHistory();
+	const [products, setProducts] = useState<ProductList[]>();
+
 	const userId = useSelector((state: StoreState) => state.common.user.id);
 	const token = useSelector((state: StoreState) => state.common.user.token);
 
@@ -55,8 +56,10 @@ export const ProductListProducer: React.FC = () => {
 	const [activeItemname_producer, setActiveItemname_producer] = useState('');
 	const [activeItemlogo_producer, setActiveItemlogo_producer] = useState('');
 	const [activeItemid_producer, setActiveItemid_producer] = useState('');
+
 	const [categoryfilter, setCategoryfilter] = useState('');
-	const [products, setProducts] = useState<ProductList[]>();
+
+	const history = useHistory();
 
 	const handleShowEdit = (item: ProductList) => {
 		setActiveItemName(item.name);

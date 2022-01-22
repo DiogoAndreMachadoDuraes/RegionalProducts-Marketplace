@@ -172,6 +172,6 @@ export const ClientList: React.FC = () => {
 			<Loader />
 		)
 	) : (
-		<Redirect to="/nopermissions" />
+		<Redirect to="/noPermissions" />
 	);
 };

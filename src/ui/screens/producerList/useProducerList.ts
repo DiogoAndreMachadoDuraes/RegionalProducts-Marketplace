@@ -48,8 +48,8 @@ export const useProducerList = (): ProducerListOutPut => {
 	const [showToastDelete, setShowToastDelete] = useState(false);
 	const [showModalEdit, setShowModalEdit] = useState(false);
 	const [showModalDelete, setShowModalDelete] = useState(false);
-	const [searched, setSearched] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
+
 	const [producerId, setProducerId] = useState('');
 	const [producerState, setProducerState] = useState('');
 	const [producerName, setProducerName] = useState('');
@@ -68,7 +68,6 @@ export const useProducerList = (): ProducerListOutPut => {
 
 	const type = useSelector((state: StoreState) => state.common.user.type);
 	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
-
 	const token = useSelector((state: StoreState) => state.common.user.token);
 
 
