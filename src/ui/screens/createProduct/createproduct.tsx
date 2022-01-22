@@ -1,58 +1,31 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Card, Accordion, Row, Col, Button, Container, Spinner, Form, Image, Modal } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import { Card, Row, Col, Button, Container, Form, Image, Modal, Breadcrumb } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
-
-interface ProductsList {
-	name: string;
-	type: string;
-	quantity: string;
-	validity: string;
-	harvest: string;
-	category: string;
-	acidity: string;
-	alcohol_content: string;
-	price: string;
-	photo: string;
-	stock: string;
-	id_producer: { $oid: string };
-	logo_producer: string;
-	name_producer: string;
-}
+import axios from 'axios';
 
 export const CreateProduct: React.FC = () => {
-	const Spacer = require('react-spacer');
+	const history = useHistory();
+	const idProducer = useSelector((state: StoreState) => state.common.user.id);
+	const token = useSelector((state: StoreState) => state.common.user.token);
+	const categories = useSelector((state: StoreState) => state.categories.categories);
+	const logoProducer = useSelector((state: StoreState) => state.producer.producer.logo);
+	const nameProducer = useSelector((state: StoreState) => state.producer.producer.name);
+	const emailProducer = useSelector((state: StoreState) => state.producer.producer.email);
 
-	const [isLoading, setIsLoading] = useState(false);
-	const [isLogged, setIsLogged] = useState(false);
 	const [showModalOptions, setShowModalOptions] = useState(false);
-	const [products, setProducts] = useState<ProductsList[]>();
 	const [price, setPrice] = useState('1,29');
-	const [logo_producer, setLogo_producer] = useState('');
 	const [name, setName] = useState('Alheira');
 	const [category, setCategory] = useState('Enchidos e carne');
 	const [harvest, setHarvest] = useState('');
 	const [validity, setValidity] = useState('10-12-2026');
 	const [quantity, setQuantity] = useState('500g');
-	const [id, setId] = useState(1);
 	const [photoURL, setPhotoURL] = useState('');
-	const [type, setType] = useState('');
-	const [acidity, setAcidity] = useState('');
 	const [stock, setStock] = useState('');
-	const [alcohol_content, setAlcohol_Content] = useState('');
-	const [name_producer, setName_producer] = useState('');
-
-	const token = useSelector((state: StoreState) => state.common.user.token);
-	const userId = useSelector((state: StoreState) => state.common.user.id);
 
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value);
-	};
-
-	const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setType(e.target.value);
 	};
 
 	const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,129 +44,56 @@ export const CreateProduct: React.FC = () => {
 		setCategory(e.target.value);
 	};
 
-	const handleAcidity = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setAcidity(e.target.value);
-	};
-
-	const handleAlcoholContent = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setAlcohol_Content(e.target.value);
+	const handleStock = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setStock(e.target.value);
 	};
 
 	const handlePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPrice(e.target.value);
 	};
 
-	const handlePhotoFruit = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const data = new FormData();
-		/*  data.append("file", uploadInput0.files[0]); */
-		data.append('filename', '');
+	const handlePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.currentTarget.files !== null) {
+			const data = new FormData();
+			data.append('file', e.currentTarget.files[0]);
+			data.append('filename', '');
 
-		fetch('http://127.0.0.1:5000/upload', {
-			method: 'POST',
-			body: data,
-		}).then((response) => {
-			response.json().then((fileurl) => {
-				setPhotoURL(`http://127.0.0.1:5000/${fileurl}`);
+			fetch('http://127.0.0.1:5000/upload', {
+				method: 'POST',
+				body: data,
+			}).then((response) => {
+				response.json().then((fileurl) => {
+					setPhotoURL(`http://127.0.0.1:5000/${fileurl}`);
+				});
 			});
-		});
+		}
 	};
 
-	const handlePhotoHoney = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const data = new FormData();
-		/*      data.append("file", uploadInput1.files[0]); */
-		data.append('filename', '');
-
-		fetch('http://127.0.0.1:5000/upload', {
-			method: 'POST',
-			body: data,
-		}).then((response) => {
-			response.json().then((fileurl) => {
-				setPhotoURL(`http://127.0.0.1:5000/${fileurl}`);
-			});
-		});
-	};
-
-	const handlePhotoJam = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const data = new FormData();
-		/* data.append("file", uploadInput2.files[0]); */
-		data.append('filename', '');
-
-		fetch('http://127.0.0.1:5000/upload', {
-			method: 'POST',
-			body: data,
-		}).then((response) => {
-			response.json().then((fileurl) => {
-				setPhotoURL(`http://127.0.0.1:5000/${fileurl}`);
-			});
-		});
-	};
-
-	const handlePhotoLicor = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const data = new FormData();
-		/*   data.append("file", this.uploadInput3.files[0]); */
-		data.append('filename', '');
-
-		fetch('http://127.0.0.1:5000/upload', {
-			method: 'POST',
-			body: data,
-		}).then((response) => {
-			response.json().then((fileurl) => {
-				setPhotoURL(`http://127.0.0.1:5000/${fileurl}`);
-			});
-		});
-	};
-
-	const handleStock = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setStock(e.target.value);
-	};
-
-	const handleCategoryHoney = (e: React.ChangeEvent<HTMLInputElement>) => {
-		handleModalOptions();
-		setCategory('Mel');
-	};
-
-	const handleCategoryJam = (e: React.ChangeEvent<HTMLInputElement>) => {
-		handleModalOptions();
-		setCategory('Comptas');
-	};
-
-	const handleCategoryFruit = (e: React.ChangeEvent<HTMLInputElement>) => {
-		handleModalOptions();
-		setCategory('Frutos Secos');
-	};
-
-	const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.preventDefault();
-		setShowModalOptions(true);
+	const handleClick = () => {
 		const config = {
 			headers: { Authorization: `Bearer ${token}` },
 		};
 
-		axios
-			.post(
-				`http://127.0.0.1:5000/products`,
-				{
-					name: name,
-					type: type,
-					quantity: quantity,
-					validity: validity,
-					harvest: harvest,
-					category: category,
-					acidity: acidity,
-					alcohol_content: alcohol_content,
-					price: price,
-					photo: photoURL,
-					stock: stock,
-					id_producer: id,
-					logo_producer: logo_producer,
-					name_producer: name_producer,
-				},
-				config
-			)
-			.then((res) => {
-				console.log(res);
-				console.log(res.data);
-			});
+		axios.post(
+			`http://127.0.0.1:5000/products`,
+			{
+				name: name,
+				quantity: quantity,
+				validity: validity,
+				harvest: harvest,
+				category: category,
+				price: price,
+				photo: photoURL,
+				stock: stock,
+				id_producer: idProducer,
+				logo_producer: logoProducer,
+				name_producer: nameProducer,
+				email_producer: emailProducer,
+			},
+			config
+		);
+		handleModalOptions();
+		modalOptions();
 	};
 
 	const handleModalOptions = () => {
@@ -204,51 +104,27 @@ export const CreateProduct: React.FC = () => {
 		setShowModalOptions(false);
 	};
 
-	const checkPermissions = () => {
-		if ((isLogged === false || type !== 'client') && isLoading === false) {
-			return <Redirect to="/noPermissions" />;
-		}
-	};
-
-	const load = () => {
-		if (isLoading === false) {
-			return (
-				<Spinner
-					animation="border"
-					variant="success"
-					style={{
-						marginTop: 25,
-						marginBottom: 108,
-						alignItems: 'center',
-						justifyContent: 'center',
-						display: 'flex',
-					}}
-				/>
-			);
-		}
-	};
-
 	const modalOptions = () => {
 		return (
-			<Modal size="lg" show={showModalOptions} animation={true}>
+			<Modal size="lg" show={showModalOptions} onHide={handleCloseEdit} animation={true}>
 				<Modal.Header>
-					<Modal.Title>O produto {name} foi adicionado com Sucesso!</Modal.Title>
+					<Modal.Title>Produto criado</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
+				<Modal.Body>O produto {name} foi adicionado com Sucesso!</Modal.Body>
+				<Modal.Footer>
 					<Row>
-						<Col md={6}>
-							<Button href="/productlistproducer" variant="secondary">
+						<Col>
+							<Button onClick={() => history.push('/productListProducer')} variant="secondary">
 								Voltar à lista de Produtos
 							</Button>
 						</Col>
-
-						<Col md={6}>
-							<Button href="/createproduct" variant="primary">
-								Adicionar outro Produto
+						<Col>
+							<Button onClick={() => history.push('/createProduct')} variant="primary">
+								Adicionar novo produto
 							</Button>
 						</Col>
 					</Row>
-				</Modal.Body>
+				</Modal.Footer>
 			</Modal>
 		);
 	};
@@ -256,1489 +132,138 @@ export const CreateProduct: React.FC = () => {
 	return (
 		<>
 			<div>
-				<Container
-					style={{
-						backgroundImage:
-							'url(https://images.pexels.com/photos/2954929/pexels-photo-2954929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)',
-					}}
-					fluid
-				>
-					<Accordion>
-						<Row>
-							<Col sm={2} />
-							<Col style={{ marginTop: 30, fontFamily: 'artifika' }}>
-								<Card>
-									<Card.Header style={{ backgroundColor: '#9B3939' }}>
-										<Accordion.Toggle
-											as={Button}
-											variant="link"
-											eventKey="0"
-											style={{ color: 'white' }}
-										>
-											<h2>Adicionar Mel</h2>
-										</Accordion.Toggle>
-									</Card.Header>
-									<Accordion.Collapse eventKey="0" style={{ color: 'black', fontFamily: 'artifika' }}>
-										<Card.Body>
-											<Container>
-												<Row>
-													<Col>
-														<h4>
-															Preencha os seguintes campos para adicionar o seu produto:
-														</h4>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col md={4}></Col>
-												</Row>
-
-												<Row>
-													<Col>
-														<Form.Label>Nome </Form.Label>
-														<Form.Control
-															id="nome"
-															required
-															onChange={handleName}
-															type="text"
-															placeholder="Nome"
-														/>
-													</Col>
-
-													<Col>
-														<Form.Label>Quantidade por garrafa (em ML )</Form.Label>
-														<Form.Control
-															required
-															onChange={handleQuantity}
-															id="quantidade"
-															type="number"
-															min="1"
-															placeholder="Quantidade por garrafa"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label> Validade </Form.Label>
-														<Form.Control
-															required
-															onChange={handleValidity}
-															id="validade"
-															min="2021"
-															type="number"
-															placeholder=" Validade"
-														/>
-													</Col>
-													<Col>
-														<Form.Label>Data de Colheita </Form.Label>
-														<Form.Control
-															required
-															onChange={handleHarvest}
-															id="data_colheita"
-															max="2021-05-03"
-															type="date"
-															placeholder="Data de Colheita"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Teor Alcóol </Form.Label>
-														<Form.Control
-															required
-															onChange={handleAlcoholContent}
-															id="teor"
-															min="0"
-															type="number"
-															placeholder="Teor de Alcóol"
-														/>
-													</Col>
-													<Col md={6}>
-														<Form.Label>Preço </Form.Label>
-														<Form.Control
-															required
-															onChange={handlePrice}
-															id="preco"
-															min="0.01"
-															type="number"
-															placeholder="Preço"
-															step=".01"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Quantidade de Stock </Form.Label>
-														<Form.Control
-															required
-															onChange={handleStock}
-															id="stock"
-															min="1"
-															type="number"
-															placeholder="Stock"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form>
-															<div>
-																<input
-																	ref={(ref) => {
-																		/*  uploadInput1 = ref; */
-																	}}
-																	type="file"
-																/>
-															</div>
-
-															<br />
-														</Form>
-													</Col>
-													<Col>
-														<Image
-															height="120"
-															width="80"
-															className="padding_image"
-															src={photoURL}
-														></Image>
-													</Col>
-												</Row>
-												<Row style={{ marginTop: 20 }}>
-													<Button
-														type="submit"
-														/* 	onClick={handleCategoryHoney} */
-														variant="primary"
-														size="lg"
-														block
-													>
-														Adicionar
-														{showModalOptions ? modalOptions() : false}
-													</Button>
-												</Row>
-											</Container>
-										</Card.Body>
-									</Accordion.Collapse>
-								</Card>
-								<Card>
-									<Card.Header style={{ backgroundColor: 'white' }}>
-										<Accordion.Toggle
-											as={Button}
-											variant="link"
-											eventKey="1"
-											style={{ color: '#9B3939' }}
-										>
-											<h2>Adicionar Compotas</h2>
-										</Accordion.Toggle>
-									</Card.Header>
-									<Accordion.Collapse eventKey="1" style={{ color: 'black' }}>
-										<Card.Body>
-											<Container>
-												<Row>
-													<Col>
-														<h4>
-															Preencha os seguintes campos para adicionar o seu produto :
-														</h4>
-													</Col>
-												</Row>
-												<br />
-
-												<Row>
-													<Col md={4}></Col>
-												</Row>
-
-												{/* <Form onSubmit={handleSubmit}> */}
-												<Row>
-													<Col>
-														<Form.Label>Nome </Form.Label>
-														<Form.Control
-															id="nome"
-															required
-															onChange={handleName}
-															type="text"
-															placeholder="Nome"
-														/>
-													</Col>
-
-													<Col>
-														<Form.Label>Quantidade por garrafa em (ml)</Form.Label>
-														<Form.Control
-															onChange={handleQuantity}
-															id="quantidade"
-															type="number"
-															min="1"
-															placeholder="Quantidade"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Validade </Form.Label>
-														<Form.Control
-															required
-															onChange={handleValidity}
-															id="validade"
-															min="2021"
-															type="number"
-															placeholder=" Validade"
-														/>
-													</Col>
-													<Col>
-														<Form.Label>Data de Colheita </Form.Label>
-														<Form.Control
-															required
-															onChange={handleHarvest}
-															id="data_colheita"
-															max="2021-05-03"
-															type="date"
-															placeholder="Data de Colheita"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Acidez </Form.Label>
-														<Form.Control
-															onChange={handleAcidity}
-															required
-															min="0"
-															id="acidez"
-															type="number"
-															placeholder="Acidez"
-														/>
-													</Col>
-													<Col md={6}>
-														<Form.Label>Preço </Form.Label>
-														<Form.Control
-															required
-															onChange={handlePrice}
-															id="preco"
-															min="0.01"
-															type="number"
-															placeholder="Preço"
-															step=".01"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Quantidade de Stock </Form.Label>
-														<Form.Control
-															required
-															onChange={handleStock}
-															id="stock"
-															min="1"
-															type="number"
-															placeholder="Stock"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form>
-															<div>
-																<input
-																	ref={(ref) => {
-																		/*  uploadInput2 = ref; */
-																	}}
-																	type="file"
-																/>
-															</div>
-
-															<br />
-														</Form>
-													</Col>
-													<Col>
-														<Image
-															height="120"
-															width="80"
-															className="padding_image"
-															src={photoURL}
-														></Image>
-													</Col>
-												</Row>
-												<Row style={{ marginTop: 20 }}>
-													<Button
-														type="submit"
-														/* 	onClick={handleCategoryJam} */
-														variant="primary"
-														size="lg"
-														block
-													>
-														Adicionar
-													</Button>
-												</Row>
-												{/*    </Form> */}
-											</Container>
-										</Card.Body>
-									</Accordion.Collapse>
-								</Card>
-								<Card>
-									<Card.Header style={{ backgroundColor: '#9B3939' }}>
-										<Accordion.Toggle
-											as={Button}
-											variant="link"
-											eventKey="2"
-											style={{ color: 'white' }}
-										>
-											<h2>Adicionar Frutos Secos</h2>
-										</Accordion.Toggle>
-									</Card.Header>
-									<Accordion.Collapse eventKey="2" style={{ color: 'black' }}>
-										<Card.Body>
-											<Container>
-												<Row>
-													<Col>
-														<h4>
-															Preencha os seguintes campos para adicionar o seu produto:
-														</h4>
-													</Col>
-												</Row>
-												<br />
-
-												<Row>
-													<Col md={4}></Col>
-												</Row>
-
-												{/* <Form onSubmit={handleSubmit}> */}
-												<Row>
-													<Col>
-														<Form.Label>Nome </Form.Label>
-														<Form.Control
-															id="nome"
-															required
-															onChange={handleName}
-															type="text"
-															placeholder="Nome"
-														/>
-													</Col>
-
-													<Col>
-														<Form.Label>Quantidade por garrafa (em ML) </Form.Label>
-														<Form.Control
-															onChange={handleQuantity}
-															id="quantidade"
-															type="number"
-															min="1"
-															placeholder="Quantidade"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Validade </Form.Label>
-														<Form.Control
-															required
-															onChange={handleValidity}
-															id="validade"
-															min="2021"
-															type="number"
-															placeholder=" Validade"
-														/>
-													</Col>
-													<Col>
-														<Form.Label>Data de Colheita </Form.Label>
-														<Form.Control
-															required
-															onChange={handleHarvest}
-															id="data_colheita"
-															max="2021-05-03"
-															type="date"
-															placeholder="Data de Colheita"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Teor Alcóol </Form.Label>
-														<Form.Control
-															required
-															onChange={handleAlcoholContent}
-															id="teor"
-															min="0"
-															type="number"
-															placeholder="Teor de Alcóol"
-														/>
-													</Col>
-													<Col md={6}>
-														<Form.Label>Preço </Form.Label>
-														<Form.Control
-															required
-															onChange={handlePrice}
-															id="preco"
-															min="0.01"
-															type="number"
-															placeholder="Preço"
-															step=".01"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form.Label>Quantidade de Stock </Form.Label>
-														<Form.Control
-															required
-															onChange={handleStock}
-															id="stock"
-															min="1"
-															type="number"
-															placeholder="Stock"
-														/>
-													</Col>
-												</Row>
-												<br />
-												<Row>
-													<Col>
-														<Form>
-															<div>
-																<input
-																	ref={(ref) => {
-																		/*  uploadInput0 = ref; */
-																	}}
-																	type="file"
-																/>
-															</div>
-
-															<br />
-														</Form>
-													</Col>
-													<Col>
-														<Image
-															height="120"
-															width="80"
-															className="padding_image"
-															src={photoURL}
-														></Image>
-													</Col>
-												</Row>
-												<Row style={{ marginTop: 20 }}>
-													<Button
-														type="submit"
-														/* 	onClick={handleCategoryFruit} */
-														variant="primary"
-														size="lg"
-														block
-													>
-														Adicionar
-													</Button>
-												</Row>
-												{/*   </Form> */}
-											</Container>
-										</Card.Body>
-									</Accordion.Collapse>
-								</Card>
-							</Col>
-							<Col sm={2} />
-						</Row>
-					</Accordion>
-					<br></br>
-				</Container>
+				<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+					<Breadcrumb.Item onClick={() => history.push('/dashboardProducer')}>
+						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+					</Breadcrumb.Item>
+					<Breadcrumb.Item onClick={() => history.push('/productListProducer')}>
+						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Produtos</span>
+					</Breadcrumb.Item>
+					<Breadcrumb.Item active style={{ color: '#9B3939' }}>
+						<span style={{ fontFamily: 'artifika', color: 'black' }}>Adicionar Produto</span>
+					</Breadcrumb.Item>
+				</Breadcrumb>
 			</div>
+			<br />
+			<div style={{ display: 'flex', justifyContent: 'center' }}>
+				<Card style={{ width: 800 }}>
+					<Card.Body>
+						<Container>
+							<Row>
+								<Col>
+									<h4>Preencha os seguintes campos para adicionar o seu produto :</h4>
+								</Col>
+							</Row>
+							<br />
+							<Row>
+								<Col>
+									<Form.Label>Nome</Form.Label>
+									<Form.Control
+										id="name"
+										required
+										onChange={handleName}
+										type="text"
+										placeholder="Nome"
+									/>
+								</Col>
+								<Col>
+									<Form.Label>Stock</Form.Label>
+									<Form.Control
+										required
+										onChange={handleStock}
+										id="stock"
+										min="1"
+										type="number"
+										placeholder="Quantidade de produtos"
+									/>
+								</Col>
+								<Col>
+									<Form.Label>Categoria</Form.Label>
+									<Form.Control as="select" required onChange={handleCategory}>
+										{categories.map((i, index) => (
+											<option value={i} key={index}>
+												{i}
+											</option>
+										))}
+									</Form.Control>
+								</Col>
+							</Row>
+							<br />
+							<Row>
+								<Col>
+									<Form.Label>Colheita</Form.Label>
+									<Form.Control
+										required
+										onChange={handleHarvest}
+										id="harvest"
+										placeholder="Zona de colheita"
+									/>
+								</Col>
+								<Col>
+									<Form.Label>Validade</Form.Label>
+									<Form.Control
+										required
+										onChange={handleValidity}
+										id="validity"
+										min="2022-05-03"
+										type="date"
+										placeholder="Validade"
+									/>
+								</Col>
+							</Row>
+							<br />
+							<Row>
+								<Col>
+									<Form.Label>Quantidade</Form.Label>
+									<Form.Control
+										required
+										onChange={handleQuantity}
+										id="quantity"
+										placeholder="Quantidade"
+									/>
+								</Col>
+								<Col>
+									<Form.Label>Preço </Form.Label>
+									<Form.Control
+										required
+										onChange={handlePrice}
+										id="price"
+										min="0.01"
+										type="number"
+										placeholder="Preço"
+										step=".01"
+									/>
+								</Col>
+							</Row>
+							<br />
+							<Row>
+								<Col style={{ marginTop: 40, marginLeft: 40 }}>
+									<input
+										type="file"
+										alt="image"
+										onChange={handlePhoto}
+										placeholder="Please insert an image file..."
+										accept="image/*"
+										required
+									/>
+								</Col>
+								<Col>
+									<Image height="120" width="120" className="padding_image" src={photoURL}></Image>
+								</Col>
+							</Row>
+							<Row style={{ marginTop: 20 }}>
+								<Button onClick={handleClick} variant="primary" size="lg" block>
+									Adicionar
+								</Button>
+								{showModalOptions && modalOptions()}
+							</Row>
+						</Container>
+					</Card.Body>
+				</Card>
+			</div>
+			<br />
+			<br />
+			<br />
 		</>
 	);
 };
-
-/* class CreateProduct extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      products: [],
-      name: "",
-      type: "",
-      quantity: "",
-      validity: "",
-      harvest: "",
-      category: "",
-      acidity: "",
-      alcohol_content: "",
-      price: "",
-      photo: null,
-      stock: "",
-      id_producer: "",
-      logo_producer: "",
-      name_producer: "",
-      showModalOptions: false,
-      photoURL: "",
-      isLoading: false,
-    };
-  }
-
-  async componentDidMount() {
-    let token = await localStorage.getItem("token");
-    let type_client = await localStorage.getItem("type");
-    let userId = await localStorage.getItem("userId");
-    let name_producer = await localStorage.getItem("name");
-
-    if (token !== null) {
-      this.setState({
-        isLogged: true,
-        token,
-        type_client,
-        userId,
-        name_producer,
-        isLoading: true,
-      });
-    }
-  }
-
-  handleName = (e) => {
-    this.setState({ name: e.target.value });
-  };
-
-  handleType = (e) => {
-    this.setState({ type: e.target.value });
-  };
-
-  handleQuantity = (e) => {
-    this.setState({ quantity: e.target.value });
-  };
-
-  handleValidity = (e) => {
-    this.setState({ validity: e.target.value });
-  };
-
-  handleHarvest = (e) => {
-    this.setState({ harvest: e.target.value });
-  };
-
-  handleCategory = (e) => {
-    this.setState({ category: e.target.value });
-  };
-
-  handleAcidity = (e) => {
-    this.setState({ acidity: e.target.value });
-  };
-
-  handleAlcoholContent = (e) => {
-    this.setState({ alcohol_content: e.target.value });
-  };
-
-  handlePrice = (e) => {
-    this.setState({ price: e.target.value });
-  };
-
-  handlePhotoFruit = (e) => {
-    const data = new FormData();
-    data.append("file", this.uploadInput0.files[0]);
-    data.append("filename", "");
-
-    fetch("http://127.0.0.1:5000/upload", {
-      method: "POST",
-      body: data,
-    }).then((response) => {
-      response.json().then((fileurl) => {
-        this.setState({ photoURL: `http://127.0.0.1:5000/${fileurl}` });
-      });
-    });
-  };
-
-  handlePhotoHoney = (e) => {
-    const data = new FormData();
-    data.append("file", this.uploadInput1.files[0]);
-    data.append("filename", "");
-
-    fetch("http://127.0.0.1:5000/upload", {
-      method: "POST",
-      body: data,
-    }).then((response) => {
-      response.json().then((fileurl) => {
-        this.setState({ photoURL: `http://127.0.0.1:5000/${fileurl}` });
-      });
-    });
-  };
-  handlePhotoJam = (e) => {
-    const data = new FormData();
-    data.append("file", this.uploadInput2.files[0]);
-    data.append("filename", "");
-
-    fetch("http://127.0.0.1:5000/upload", {
-      method: "POST",
-      body: data,
-    }).then((response) => {
-      response.json().then((fileurl) => {
-        this.setState({ photoURL: `http://127.0.0.1:5000/${fileurl}` });
-      });
-    });
-  };
-  handlePhotoLicor = (e) => {
-    const data = new FormData();
-    data.append("file", this.uploadInput3.files[0]);
-    data.append("filename", "");
-
-    fetch("http://127.0.0.1:5000/upload", {
-      method: "POST",
-      body: data,
-    }).then((response) => {
-      response.json().then((fileurl) => {
-        this.setState({ photoURL: `http://127.0.0.1:5000/${fileurl}` });
-      });
-    });
-  };
-
-  handleStock = (e) => {
-    this.setState({ stock: e.target.value });
-  };
-
-  handleCategoryHoney = (e) => {
-    this.setState({ category: "Vinho" });
-  };
-
-  handleCategoryJam = (e) => {
-    this.setState({ category: "Azeite" });
-  };
-
-  handleCategoryFruit = (e) => {
-    this.setState({ category: "Aguardente" });
-  };
-
-  handleCategoryLicor = (e) => {
-    this.setState({ category: "Licor" });
-  };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    this.setState({ showModalOptions: true });
-
-    const { token, userId, name_producer } = this.state;
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    axios
-      .post(
-        `http://127.0.0.1:5000/products`,
-        {
-          name: this.state.name,
-          type: this.state.type,
-          quantity: this.state.quantity,
-          validity: this.state.validity,
-          harvest: this.state.harvest,
-          category: this.state.category,
-          acidity: this.state.acidity,
-          alcohol_content: this.state.alcohol_content,
-          price: this.state.price,
-          photo: this.state.photoURL,
-          stock: this.state.stock,
-          id_producer: userId,
-          logo_producer: this.state.logo_producer,
-          name_producer: name_producer,
-        },
-        config
-      )
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-      });
-  };
-
-  handleModalOptions = () => {
-    this.setState({ showModalOptions: true });
-  };
-
-  handleCloseEdit = () => {
-    this.setState({ showModalOptions: false });
-  };
-
-  checkPermissions = () => {
-    const { isLogged, isLoading, type } = this.state;
-    if ((isLogged === false || type !== "client") && isLoading === false) {
-      return <Redirect to="/nopermissions" />;
-    }
-  };
-
-  load = () => {
-    const { isLoading } = this.state;
-    if (isLoading === false) {
-      return (
-        <Spinner
-          animation="border"
-          variant="success"
-          style={{
-            marginTop: 25,
-            marginBottom: 108,
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-          }}
-        />
-      );
-    }
-  };
-
-  modalOptions() {
-    const { showModalOptions, name } = this.state;
-    return (
-      <Modal size="md" show={showModalOptions} animation={true}>
-        <Modal.Header>
-          <Modal.Title>
-            O produto {name} foi adicionado com Sucesso!
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Row>
-            <Col md={6}>
-              <Button href="/productlistproducer" variant="secondary">
-                Voltar à lista de Produtos
-              </Button>
-            </Col>
-
-            <Col md={6}>
-              <Button href="/createproduct" variant="primary">
-                Adicionar outro Produto
-              </Button>
-            </Col>
-          </Row>
-        </Modal.Body>
-      </Modal>
-    );
-  }
-
-  render() {
-    const { showModalOptions, photoURL } = this.state;
-    this.load();
-    this.checkPermissions();
-
-    return (
-      <div>
-        <Container
-          style={{
-            backgroundImage:
-              "url(https://images.pexels.com/photos/2954929/pexels-photo-2954929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)",
-          }}
-          fluid
-        >
-          <Accordion>
-            <Row>
-              <Col sm={2} />
-              <Col style={{ marginTop: 30, fontFamily: "artifika" }}>
-                <Card>
-                  <Card.Header style={{ backgroundColor: "#AAAA74" }}>
-                    <Accordion.Toggle
-                      as={Button}
-                      variant="link"
-                      eventKey="0"
-                      style={{ color: "black" }}
-                    >
-                      <h2>Adicionar Vinho</h2>
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="0" style={{ color: "black" }}>
-                    <Card.Body>
-                      {" "}
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h4>
-                              Preencha os seguintes campos para adicionar um
-                              novo vinho :
-                            </h4>
-                          </Col>
-                        </Row>
-                        <br />
-
-                        <Row>
-                          <Col md={4}></Col>
-                        </Row>
-                        <form onSubmit={this.handleSubmit}>
-                          <Row>
-                            <Col>
-                              <Form.Label>Nome </Form.Label>
-                              <Form.Control
-                                id="nome"
-                                required
-                                onChange={this.handleName}
-                                type="text"
-                                placeholder="Nome"
-                              />
-                            </Col>
-
-                            <Col>
-                              <Form.Label>
-                                Quantidade por garrafa (em ML )
-                              </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleQuantity}
-                                id="quantidade"
-                                type="number"
-                                min="1"
-                                placeholder="Quantidade por garrafa"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label> Validade </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleValidity}
-                                id="validade"
-                                min="2021"
-                                type="number"
-                                placeholder=" Validade"
-                              />
-                            </Col>
-                            <Col>
-                              <Form.Label>Data de Colheita </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleHarvest}
-                                id="data_colheita"
-                                max="2021-05-03"
-                                type="date"
-                                placeholder="Data de Colheita"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Teor Alcóol </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleAlcoholContent}
-                                id="teor"
-                                min="0"
-                                type="number"
-                                placeholder="Teor de Alcóol"
-                              />
-                            </Col>
-                            <Col md={6}>
-                              <Form.Label>Preço </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handlePrice}
-                                id="preco"
-                                min="0.01"
-                                type="number"
-                                placeholder="Preço"
-                                step=".01"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Tipo de Vinho </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleType}
-                                as="select"
-                              >
-                                <option>Tinto</option>
-                                <option>Branco</option>
-                                <option>Rose</option>
-                                <option>Espumante</option>
-                              </Form.Control>
-                            </Col>
-                            <Col>
-                              <Form.Label>Quantidade de Stock </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleStock}
-                                id="stock"
-                                min="1"
-                                type="number"
-                                placeholder="Stock"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form>
-                                <form onChange={this.handlePhotoHoney}>
-                                  <div>
-                                    <input
-                                      ref={(ref) => {
-                                        this.uploadInput1 = ref;
-                                      }}
-                                      type="file"
-                                    />
-                                  </div>
-
-                                  <br />
-                                </form>
-                              </Form>
-                            </Col>
-                            <Col>
-                              <Image
-                                height="120"
-                                width="80"
-                                className="padding_image"
-                                src={photoURL}
-                              ></Image>
-                            </Col>
-                          </Row>
-                          <Row style={{ marginTop: 20 }}>
-                            {" "}
-                            <Button
-                              type="submit"
-                              onClick={() =>
-                                this.handleCategoryHoney() &&
-                                this.handleModalOptions
-                              }
-                              variant="primary"
-                              size="lg"
-                              block
-                            >
-                              Adicionar
-                              {showModalOptions ? this.modalOptions() : false}
-                            </Button>
-                          </Row>
-                        </form>
-                      </Container>{" "}
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-                <Card>
-                  <Card.Header style={{ backgroundColor: "#AAAA74" }}>
-                    <Accordion.Toggle
-                      as={Button}
-                      variant="link"
-                      eventKey="1"
-                      style={{ color: "black" }}
-                    >
-                      <h2>Adicionar Azeite</h2>
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="1" style={{ color: "black" }}>
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h4>
-                              Preencha os seguintes campos para adicionar um
-                              novo azeite :
-                            </h4>
-                          </Col>
-                        </Row>
-                        <br />
-
-                        <Row>
-                          <Col md={4}></Col>
-                        </Row>
-
-                        <Form onSubmit={this.handleSubmit}>
-                          <Row>
-                            <Col>
-                              <Form.Label>Nome </Form.Label>
-                              <Form.Control
-                                id="nome"
-                                required
-                                onChange={this.handleName}
-                                type="text"
-                                placeholder="Nome"
-                              />
-                            </Col>
-
-                            <Col>
-                              <Form.Label>
-                                Quantidade por garrafa em (ml)
-                              </Form.Label>
-                              <Form.Control
-                                onChange={this.handleQuantity}
-                                id="quantidade"
-                                type="number"
-                                min="1"
-                                placeholder="Quantidade"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Validade </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleValidity}
-                                id="validade"
-                                min="2021"
-                                type="number"
-                                placeholder=" Validade"
-                              />
-                            </Col>
-                            <Col>
-                              <Form.Label>Data de Colheita </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleHarvest}
-                                id="data_colheita"
-                                max="2021-05-03"
-                                type="date"
-                                placeholder="Data de Colheita"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Acidez </Form.Label>
-                              <Form.Control
-                                onChange={this.handleAcidity}
-                                required
-                                min="0"
-                                id="acidez"
-                                type="number"
-                                placeholder="Acidez"
-                              />
-                            </Col>
-                            <Col md={6}>
-                              <Form.Label>Preço </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handlePrice}
-                                id="preco"
-                                min="0.01"
-                                type="number"
-                                placeholder="Preço"
-                                step=".01"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Tipo de Azeite </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleType}
-                                as="select"
-                              >
-                                <option>Virgem</option>
-                                <option>Extra-Virgem</option>
-                                <option>Aromatizado</option>
-                              </Form.Control>
-                            </Col>
-                            <Col>
-                              <Form.Label>Quantidade de Stock </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleStock}
-                                id="stock"
-                                min="1"
-                                type="number"
-                                placeholder="Stock"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form>
-                                <form onChange={this.handlePhotoJam}>
-                                  <div>
-                                    <input
-                                      ref={(ref) => {
-                                        this.uploadInput2 = ref;
-                                      }}
-                                      type="file"
-                                    />
-                                  </div>
-
-                                  <br />
-                                </form>
-                              </Form>
-                            </Col>
-                            <Col>
-                              <Image
-                                height="120"
-                                width="80"
-                                className="padding_image"
-                                src={photoURL}
-                              ></Image>
-                            </Col>
-                          </Row>
-                          <Row style={{ marginTop: 20 }}>
-                            {" "}
-                            <Button
-                              type="submit"
-                              onClick={this.handleCategoryJam}
-                              variant="primary"
-                              size="lg"
-                              block
-                            >
-                              Adicionar
-                            </Button>
-                          </Row>
-                        </Form>
-                      </Container>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-                <Card>
-                  <Card.Header style={{ backgroundColor: "#AAAA74" }}>
-                    <Accordion.Toggle
-                      as={Button}
-                      variant="link"
-                      eventKey="2"
-                      style={{ color: "black" }}
-                    >
-                      <h2>Adicionar Aguardente</h2>
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="2" style={{ color: "black" }}>
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h4>
-                              Preencha os seguintes campos para adicionar uma
-                              nova Aguardente :
-                            </h4>
-                          </Col>
-                        </Row>
-                        <br />
-
-                        <Row>
-                          <Col md={4}></Col>
-                        </Row>
-
-                        <Form onSubmit={this.handleSubmit}>
-                          <Row>
-                            <Col>
-                              <Form.Label>Nome </Form.Label>
-                              <Form.Control
-                                id="nome"
-                                required
-                                onChange={this.handleName}
-                                type="text"
-                                placeholder="Nome"
-                              />
-                            </Col>
-
-                            <Col>
-                              <Form.Label>
-                                Quantidade por garrafa (em ML){" "}
-                              </Form.Label>
-                              <Form.Control
-                                onChange={this.handleQuantity}
-                                id="quantidade"
-                                type="number"
-                                min="1"
-                                placeholder="Quantidade"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Validade </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleValidity}
-                                id="validade"
-                                min="2021"
-                                type="number"
-                                placeholder=" Validade"
-                              />
-                            </Col>
-                            <Col>
-                              <Form.Label>Data de Colheita </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleHarvest}
-                                id="data_colheita"
-                                max="2021-05-03"
-                                type="date"
-                                placeholder="Data de Colheita"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Teor Alcóol </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleAlcoholContent}
-                                id="teor"
-                                min="0"
-                                type="number"
-                                placeholder="Teor de Alcóol"
-                              />
-                            </Col>
-                            <Col md={6}>
-                              <Form.Label>Preço </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handlePrice}
-                                id="preco"
-                                min="0.01"
-                                type="number"
-                                placeholder="Preço"
-                                step=".01"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Tipo de Aguardente </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleType}
-                                as="select"
-                              >
-                                <option>Medronho</option>
-                                <option>Ceriais</option>
-                                <option>Cana de Madeira</option>
-                                <option>Pera</option>
-                              </Form.Control>
-                            </Col>
-                            <Col>
-                              <Form.Label>Quantidade de Stock </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleStock}
-                                id="stock"
-                                min="1"
-                                type="number"
-                                placeholder="Stock"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form>
-                                <form onChange={this.handlePhotoFruit}>
-                                  <div>
-                                    <input
-                                      ref={(ref) => {
-                                        this.uploadInput0 = ref;
-                                      }}
-                                      type="file"
-                                    />
-                                  </div>
-
-                                  <br />
-                                </form>
-                              </Form>
-                            </Col>
-                            <Col>
-                              <Image
-                                height="120"
-                                width="80"
-                                className="padding_image"
-                                src={photoURL}
-                              ></Image>
-                            </Col>
-                          </Row>
-                          <Row style={{ marginTop: 20 }}>
-                            {" "}
-                            <Button
-                              type="submit"
-                              onClick={this.handleCategoryFruit}
-                              variant="primary"
-                              size="lg"
-                              block
-                            >
-                              Adicionar
-                            </Button>
-                          </Row>
-                        </Form>
-                      </Container>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-                <Card>
-                  <Card.Header style={{ backgroundColor: "#AAAA74" }}>
-                    <Accordion.Toggle
-                      as={Button}
-                      variant="link"
-                      eventKey="3"
-                      style={{ color: "black" }}
-                    >
-                      <h2>Adicionar Licor</h2>
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="3" style={{ color: "black" }}>
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h4>
-                              Preencha os seguintes campos para adicionar um
-                              novo licor :
-                            </h4>
-                          </Col>
-                        </Row>
-                        <br />
-
-                        <Row>
-                          <Col md={4}></Col>
-                        </Row>
-
-                        <Form onSubmit={this.handleSubmit}>
-                          <Row>
-                            <Col>
-                              <Form.Label>Nome </Form.Label>
-                              <Form.Control
-                                id="nome"
-                                required
-                                onChange={this.handleName}
-                                type="text"
-                                placeholder="Nome"
-                              />
-                            </Col>
-
-                            <Col>
-                              <Form.Label>
-                                Quantidade por garrafa (em ML){" "}
-                              </Form.Label>
-                              <Form.Control
-                                onChange={this.handleQuantity}
-                                id="quantidade"
-                                type="number"
-                                min="1"
-                                placeholder="Quantidade"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Validade </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleValidity}
-                                id="validade"
-                                min="2021"
-                                type="number"
-                                placeholder=" Validade"
-                              />
-                            </Col>
-                            <Col>
-                              <Form.Label>Data de Colheita </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleHarvest}
-                                id="data_colheita"
-                                max="2021-05-03"
-                                type="date"
-                                placeholder="Data de Colheita"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Teor Alcóol </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleAlcoholContent}
-                                id="teor"
-                                min="0"
-                                type="number"
-                                placeholder="Teor de Alcóol"
-                              />
-                            </Col>
-                            <Col md={6}>
-                              <Form.Label>Preço </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handlePrice}
-                                id="preco"
-                                min="0.01"
-                                type="number"
-                                placeholder="Preço"
-                                step=".01"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <Form.Label>Tipo de Licor </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleType}
-                                as="select"
-                              >
-                                <option>Limoncello</option>
-                                <option>Cafe</option>
-                                <option>Amendoa</option>
-                                <option>Chocolate</option>
-                              </Form.Control>
-                            </Col>
-                            <Col>
-                              <Form.Label>Quantidade de Stock </Form.Label>
-                              <Form.Control
-                                required
-                                onChange={this.handleStock}
-                                id="stock"
-                                min="1"
-                                type="number"
-                                placeholder="Stock"
-                              />
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col>
-                              <form onChange={this.handlePhotoLicor}>
-                                <div>
-                                  <input
-                                    ref={(ref) => {
-                                      this.uploadInput3 = ref;
-                                    }}
-                                    type="file"
-                                  />
-                                </div>
-
-                                <br />
-                              </form>
-                            </Col>
-                            <Col>
-                              <Image
-                                height="120"
-                                width="80"
-                                className="padding_image"
-                                src={photoURL}
-                              ></Image>
-                            </Col>
-                          </Row>
-                          <Row style={{ marginTop: 20 }}>
-                            {" "}
-                            <Button
-                              type="submit"
-                              onClick={this.handleCategoryLicor}
-                              variant="primary"
-                              size="lg"
-                              block
-                            >
-                              Adicionar
-                            </Button>
-                          </Row>
-                        </Form>
-                      </Container>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Col>
-              <Col sm={2} />
-            </Row>
-          </Accordion>
-          <br></br>
-        </Container>
-      </div>
-    );
-  }
-}
-export default CreateProduct;
- */

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Image, Breadcrumb } from 'react-bootstrap';
+import { Row, Col, Card, Image, Breadcrumb, Modal, Button, Container, Form, Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Order, Product, StoreState } from 'store';
 
 export const ProducerOrder: React.FC = () => {
@@ -10,8 +10,11 @@ export const ProducerOrder: React.FC = () => {
 	const producerId = useSelector((state: StoreState) => state.common.user.id);
 	const products = useSelector((state: StoreState) => state.products.products);
 	const token = useSelector((state: StoreState) => state.common.user.token);
-
+	const [item, setItem] = useState<Order>();
 	const [order, setOrder] = useState<Order[]>();
+	const [status, setStatus] = useState('Entregue');
+	const [showModalInfo, setShowModalInfo] = useState(false);
+	const [showAlert, setShowAlert] = useState(false);
 
 	const config = {
 		headers: { Authorization: `Bearer ${token}` },
@@ -34,8 +37,148 @@ export const ProducerOrder: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const handleCloseModal = () => {
+		setShowModalInfo(false);
+	};
+
+	const handleShowModal = (item: Order) => {
+		setShowModalInfo(true);
+		setItem(item);
+	};
+
+	const handleEditStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setStatus(e.target.value);
+	};
+
+	const showAlertStatus = () => {
+		window.setTimeout(() => {
+			setShowAlert(false);
+		}, 5000);
+	};
+
+	const handleEditOrder = (item: Order) => {
+		/* axios.put('http://127.0.0.1:5000/shop/' + item?._id.$oid, {
+			headers: { Authorization: `Bearer ${token}` },
+			param: {
+				...item,
+				status: status,
+			},
+		}); */
+		handleCloseModal();
+		setShowAlert(true);
+		showAlertStatus();
+	};
+
+	const modalInfo = () => {
+		return (
+			item && (
+				<Modal size="lg" show={showModalInfo} onHide={handleCloseModal} animation={false}>
+					<Modal.Header closeButton>
+						<Modal.Title>Fatura nº {item?._id.$oid}</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<Container style={{ marginLeft: 30, marginTop: 15, marginBottom: 25 }}>
+							<Row>
+								<Col />
+								<Col style={{ marginLeft: -5, marginBottom: 30 }}>
+									<Image src={item?.photo_product} width={180} height={180} />
+								</Col>
+								<Col />
+							</Row>
+							<Row>
+								<Col>
+									<p>
+										<span style={{ fontWeight: 600 }}>Data: </span>
+										{item?.date} {item?.hour}
+									</p>
+								</Col>
+								<Col>
+									{item?.avaliation === '' ? (
+										<p>
+											<span style={{ fontWeight: 600 }}>Avaliação: </span>Não avaliado
+										</p>
+									) : (
+										<p>
+											<span style={{ fontWeight: 600 }}>Avaliação: </span>
+											{item?.avaliation} Estrelas
+										</p>
+									)}
+								</Col>
+							</Row>
+							<Row>
+								<Col>
+									<p>
+										<span style={{ fontWeight: 600 }}>Nif: </span>
+										{item?.tin_client}
+									</p>
+									<p>
+										<span style={{ fontWeight: 600 }}>Email: </span>
+										{item?.email_client}
+									</p>
+								</Col>
+								<Col>
+									<p>
+										<span style={{ fontWeight: 600 }}>Morada: </span>
+										{item?.address_client}
+									</p>
+									<p>
+										<span style={{ fontWeight: 600 }}>Código Postal: </span>
+										{item?.postal_code} - {item?.location_client}, {item?.country_client}
+									</p>
+								</Col>
+							</Row>
+							<Row>
+								<Col>
+									<p>
+										<span style={{ fontWeight: 600 }}>Quantidade: </span>
+										{item?.quantity_final}
+									</p>
+								</Col>
+								<Col>
+									<p>
+										<span style={{ fontWeight: 600 }}>Preço: </span>
+										{item?.price_final}€
+									</p>
+								</Col>
+							</Row>
+							<Row style={{ marginTop: 20 }}>
+								<Col sm={3} />
+								<Col sm={6} style={{ marginLeft: -30 }}>
+									<Form.Label style={{ fontFamily: 'artifika' }}>Estado</Form.Label>
+									<Form.Control
+										title="Estado"
+										as="select"
+										required
+										value={status}
+										onChange={handleEditStatus}
+									>
+										<option value="Em processamento">Em processamento</option>
+										<option value="A caminho">A caminho</option>
+										<option value="Entregue">Entregue</option>
+									</Form.Control>
+								</Col>
+								<Col sm={3} />
+							</Row>
+						</Container>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleCloseModal}>
+							Fechar
+						</Button>
+						<Button variant="primary" onClick={() => handleEditOrder(item)}>
+							Guardar
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			)
+		);
+	};
+
 	return (
 		<>
+			<Alert key={'success'} variant={'success'} show={showAlert} style={{ textAlign: 'center' }}>
+				O estado da encomenda foi alterado com sucesso!
+			</Alert>
 			<div>
 				<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
 					<Breadcrumb.Item onClick={() => history.push('/dashboardProducer')}>
@@ -66,12 +209,12 @@ export const ProducerOrder: React.FC = () => {
 					<Col sm={2} />
 					<Col sm={8}>
 						{order?.length !== 0 &&
-							order?.map((item, index) => {
+							order?.map((item: Order, index) => {
 								return (
 									<>
 										<Card
 											border="dark"
-											style={{ width: 800, marginLeft: 81, padding: 10 }}
+											style={{ width: 800, marginLeft: 106, padding: 10 }}
 											key={index}
 										>
 											<div className="row gutters">
@@ -85,14 +228,14 @@ export const ProducerOrder: React.FC = () => {
 												<div className="col-md-8">
 													<Row style={{ marginTop: 15 }}>
 														<Col sm={7}>
-															<h4
+															<h5
 																style={{
 																	color: 'black',
 																	fontFamily: 'artifika',
 																}}
 															>
 																Nº {item._id.$oid}
-															</h4>
+															</h5>
 															<h6
 																style={{
 																	color: 'black',
@@ -100,7 +243,7 @@ export const ProducerOrder: React.FC = () => {
 																	marginTop: 30,
 																}}
 															>
-																Estado: Entregue
+																Estado: {status}
 															</h6>
 															<h6
 																style={{
@@ -112,32 +255,44 @@ export const ProducerOrder: React.FC = () => {
 																Data: {item.date}
 															</h6>
 														</Col>
-														<Col sm={4} style={{ textAlign: 'right', marginTop: 8 }}>
-															<Link
-																to={'/invoice/' + item._id.$oid}
-																style={{ fontFamily: 'artifika' }}
+														<Col sm={4} style={{ textAlign: 'right', marginTop: -7 }}>
+															<Button
+																variant="link"
+																style={{
+																	fontFamily: 'artifika',
+																	backgroundColor: 'transparent',
+																	color: '#9B3939',
+																}}
+																onClick={() => handleShowModal(item)}
 															>
 																Ver informações
-															</Link>
-															<h6
+															</Button>
+															{showModalInfo && modalInfo()}
+															<div
 																style={{
-																	color: 'black',
-																	fontFamily: 'artifika',
-																	marginLeft: 45,
-																	marginTop: 20,
+																	marginRight: 10,
 																}}
 															>
-																1 artigo
-															</h6>
-															<h6
-																style={{
-																	color: 'black',
-																	fontFamily: 'artifika',
-																	marginTop: 10,
-																}}
-															>
-																€ {item.price_final}
-															</h6>
+																<h6
+																	style={{
+																		color: 'black',
+																		fontFamily: 'artifika',
+																		marginLeft: 45,
+																		marginTop: 23,
+																	}}
+																>
+																	1 artigo
+																</h6>
+																<h6
+																	style={{
+																		color: 'black',
+																		fontFamily: 'artifika',
+																		marginTop: 10,
+																	}}
+																>
+																	€ {item.price_final}
+																</h6>
+															</div>
 														</Col>
 														<Col sm={1} />
 													</Row>
@@ -158,382 +313,3 @@ export const ProducerOrder: React.FC = () => {
 		</>
 	);
 };
-
-/* class ProducerOrder extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			producer: [],
-		};
-	} */
-
-/* async componentDidMount() {
-		console.log('Mounting screen Producer Order...');
-		let token = */
-/* 			'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMzY5MDM4MiwianRpIjoiMTdlMDM5NjAtNjNlZS00ODNjLTgyOTEtZjczZTQwN2RlMjhmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjYwYWU4ODkxMzBkZDA4ZTFhMWQyODQ4YSIsIm5iZiI6MTYyMzY5MDM4MiwiZXhwIjoxNjI0MTIyMzgyfQ.d-1g1y8-d8i686vxFIoiNZkC3iuvcvZ-ifuQnW_ASKE';
- */ /* let token= localStorage.getItem("token"); */
-/* try {
-			let response = await fetch('http://127.0.0.1:5000/producers', {
-				headers: {
-					Authorization: 'Bearer ' + token,
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-			});
-			let json = await response.json();
-			this.setState({
-				producer: json,
-			});
-			console.log(json);
-		} catch (e) {
-			console.log('Error to get data: ' + e);
-		}
-	} */
-
-/* render() { */
-/*   const { order} = this.state; */
-/* return (
-			<div>
-				<Row id="row">
-					<Col sm={2} />
-					<Col sm={7} style={{ color: '444903', fontFamily: 'artifika' }}>
-						<AiOutlineDropbox size="40" style={{ color: 'black', marginLeft: 20, marginTop: 50 }} />
-					</Col>
-					<Col sm={3} />
-				</Row>
-				<Row id="row">
-					<Col sm={1} />
-					<Col
-						sm={8}
-						style={{
-							color: '#AAAA74',
-							fontFamily: 'artifika',
-							marginTop: -35,
-							marginLeft: 40,
-						}}
-					>
-						<h3> Histórico de encomendas do produtor </h3>
-					</Col>
-					<Col sm={3} />
-				</Row>
-				<Row id="row" style={{ marginTop: 40, marginLeft: 60 }}>
-					<Col sm={2} />
-					<Col sm={7}>
-						<Card border="dark">
-							<div className="row gutters">
-								<div className="col-md-4">
-									<Col>
-										<Image
-											src={images.gallo}
-											thumbnail
-											style={{ marginTop: 10, width: 130, height: 120 }}
-										/>
-									</Col>
-								</div>
-								<div className="col-md-8">
-									<div className="card-body">
-										<h4
-											className="card-title"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: 0,
-											}}
-										>
-											Nº 123{' '}
-										</h4>
-										<Row
-											id="row"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: 250,
-												marginTop: -50,
-											}}
-										>
-											<Col sm={2} />
-											<Col sm={9}>
-												<Navbar.Text>
-													<a
-														style={{ color: '#444903', fontFamily: 'artifika' }}
-														href="/invoice"
-													>
-														Ver informações
-													</a>
-												</Navbar.Text>
-												<h6
-													className="card-text"
-													style={{
-														color: 'black',
-														fontFamily: 'artifika',
-														marginLeft: 45,
-														marginTop: 0,
-													}}
-												>
-													4 artigos{' '}
-												</h6>
-												<h6
-													className="card-text"
-													style={{
-														color: 'black',
-														fontFamily: 'artifika',
-														marginLeft: 45,
-														marginTop: 10,
-													}}
-												>
-													€ 123.75{' '}
-												</h6>
-											</Col>
-											<Col sm={1} />
-										</Row>
-										<h5
-											className="card-text"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: -40,
-											}}
-										>
-											{' '}
-											Entregue{' '}
-										</h5>
-										<p
-											className="card-text"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: 0,
-											}}
-										>
-											{' '}
-											<medium className="text"> 10/03/2021 </medium>{' '}
-										</p>
-									</div>
-								</div>
-							</div>
-						</Card>
-						<div className="mt-5"> </div>
-						<Card border="dark">
-							<div className="row gutters">
-								<div className="col-md-4">
-									<Col>
-										<Image
-											src={images.compota}
-											thumbnail
-											style={{ marginTop: 10, width: 130, height: 120 }}
-										/>
-									</Col>
-								</div>
-								<div className="col-md-8">
-									<div className="card-body">
-										<h4
-											className="card-title"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: 0,
-											}}
-										>
-											Nº 124{' '}
-										</h4>
-										<Row
-											id="row"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: 250,
-												marginTop: -50,
-											}}
-										>
-											<Col sm={2} />
-											<Col sm={9}>
-												<Navbar.Text>
-													<a
-														style={{ color: '#444903', fontFamily: 'artifika' }}
-														href="/invoice"
-													>
-														Ver informações
-													</a>
-												</Navbar.Text>
-												<h6
-													className="card-text"
-													style={{
-														color: 'black',
-														fontFamily: 'artifika',
-														marginLeft: 45,
-														marginTop: 0,
-													}}
-												>
-													6 artigos{' '}
-												</h6>
-												<h6
-													className="card-text"
-													style={{
-														color: 'black',
-														fontFamily: 'artifika',
-														marginLeft: 45,
-														marginTop: 10,
-													}}
-												>
-													€ 43.99{' '}
-												</h6>
-											</Col>
-											<Col sm={1} />
-										</Row>
-										<h5
-											className="card-text"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: -40,
-											}}
-										>
-											{' '}
-											Entregue
-										</h5>
-										<p
-											className="card-text"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: 0,
-											}}
-										>
-											{' '}
-											<medium className="text"> 03/03/2021 </medium>{' '}
-										</p>
-									</div>
-								</div>
-							</div>
-						</Card>
-						<div className="mt-5"> </div>
-						<Card border="dark">
-							<div className="row gutters">
-								<div className="col-md-4">
-									<Col>
-										<Image
-											src={images.mateus}
-											thumbnail
-											style={{ marginTop: 10, width: 130, height: 120 }}
-										/>
-									</Col>
-								</div>
-								<div className="col-md-8">
-									<div className="card-body">
-										<h4
-											className="card-title"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: 0,
-											}}
-										>
-											Nº 125{' '}
-										</h4>
-										<Row
-											id="row"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: 250,
-												marginTop: -50,
-											}}
-										>
-											<Col sm={2} />
-											<Col sm={9}>
-												<Navbar.Text>
-													<a
-														style={{ color: '#444903', fontFamily: 'artifika' }}
-														href="/invoice"
-													>
-														Ver informações
-													</a>
-												</Navbar.Text>
-												<h6
-													className="card-text"
-													style={{
-														color: 'black',
-														fontFamily: 'artifika',
-														marginLeft: 45,
-														marginTop: 0,
-													}}
-												>
-													2 artigos{' '}
-												</h6>
-												<h6
-													className="card-text"
-													style={{
-														color: 'black',
-														fontFamily: 'artifika',
-														marginLeft: 45,
-														marginTop: 10,
-													}}
-												>
-													€ 20.80{' '}
-												</h6>
-											</Col>
-											<Col sm={1} />
-										</Row>
-										<h5
-											className="card-text"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: -40,
-											}}
-										>
-											{' '}
-											Entregue
-										</h5>
-										<p
-											className="card-text"
-											style={{
-												color: 'black',
-												fontFamily: 'artifika',
-												marginLeft: -60,
-												marginTop: 0,
-											}}
-										>
-											{' '}
-											<medium className="text"> 18/03/2021 </medium>
-										</p>
-									</div>
-								</div>
-							</div>
-						</Card>
-					</Col>
-					<Col sm={3} />
-				</Row>
-				<div className="mt-5"> </div> */
-{
-	/* <Table  size="20" style={{color:"black", fontFamily:'artifika', alignItems:"center", justifyContent:"center", textAlign:"center" }}>
-                    <thead style={{ width:10 }}>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Rua</th>
-                            <th>Código-postal</th>
-                            <th>País</th>
-                            <th>Região</th>
-                            <th>Telefone</th>
-                            <th>Rede social</th>
-                            <th>Logótipo</th>
-                            <th>E-mail</th>
-                            <th>Estado</th>
-                            <th></th>    
-                        </tr>
-                    </thead>
-                </Table> */
-}
-/* </div>
-		);
-	}
-}
-export default ProducerOrder; */

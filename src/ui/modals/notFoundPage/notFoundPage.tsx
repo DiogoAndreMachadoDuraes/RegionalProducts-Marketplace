@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { MdError } from 'react-icons/md';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 export const NotFoundPage: React.FC = () => {
 	const history = useHistory();

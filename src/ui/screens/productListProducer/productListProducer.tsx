@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Image, Tab, Row, Col, Button, Table, Modal, Form, Container, InputGroup, FormControl } from 'react-bootstrap';
-import { Producer } from '..';
 import { AiFillEdit, AiFillDelete, AiOutlineSearch } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { Producer } from '..';
+import axios from 'axios';
 
 interface ProductList {
 	id: {
@@ -28,9 +28,9 @@ interface ProductList {
 }
 
 export const ProductListProducer: React.FC = () => {
-	const Spacer = require('react-spacer');
-
+	const history = useHistory();
 	const userId = useSelector((state: StoreState) => state.common.user.id);
+	const token = useSelector((state: StoreState) => state.common.user.token);
 
 	const [showModalEditHoney, setShowModalEditHoney] = useState(false);
 	const [showmodalEditJam, setShowmodalEditJam] = useState(false);
@@ -57,8 +57,6 @@ export const ProductListProducer: React.FC = () => {
 	const [activeItemid_producer, setActiveItemid_producer] = useState('');
 	const [categoryfilter, setCategoryfilter] = useState('');
 	const [products, setProducts] = useState<ProductList[]>();
-
-	const token = useSelector((state: StoreState) => state.common.user.token);
 
 	const handleShowEdit = (item: ProductList) => {
 		setActiveItemName(item.name);
@@ -790,7 +788,7 @@ export const ProductListProducer: React.FC = () => {
 								size="sm"
 								required
 								onChange={handleCategoryFilter}
-								/* 	onClick={() => getByCategory(categoryfilter)} */
+								/* onClick={getByCategory} */
 								as="select"
 							>
 								<option style={{ fontSize: 14, fontWeight: 'bold', color: 'black' }}>
@@ -834,7 +832,10 @@ export const ProductListProducer: React.FC = () => {
 										<th>Foto</th>
 										<th>Stock</th>
 										<th>
-											<Button href="/createproduct"> Adicionar Novo Produto</Button>{' '}
+											<Button onClick={() => history.push('/createproduct')}>
+												{' '}
+												Adicionar Novo Produto
+											</Button>
 										</th>
 									</tr>
 								</thead>

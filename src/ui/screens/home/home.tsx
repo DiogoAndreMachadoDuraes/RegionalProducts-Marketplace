@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Container, Row, Carousel, Col } from 'react-bootstrap';
 import { StoreState, productList, categoryList, Product } from 'store';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { images } from 'assets';
 import axios from 'axios';
 import { Link } from 'react-router-dom';

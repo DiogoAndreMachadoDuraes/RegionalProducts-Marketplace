@@ -25,6 +25,7 @@ export interface Order {
 	vat: string;
 	avaliation: string;
 	name_product: string;
+	status: string;
 }
 
 export type OrderState = {

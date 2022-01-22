@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
 import axios from 'axios';
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
 
