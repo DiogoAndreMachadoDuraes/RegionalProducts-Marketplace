@@ -1,19 +1,7 @@
-import React, { useState } from 'react';
-import {
-	Tab,
-	Row,
-	Col,
-	Button,
-	Table,
-	Modal,
-	Form,
-	Container,
-	InputGroup,
-	FormControl,
-	Toast,
-	Card,
-} from 'react-bootstrap';
+import React from 'react';
+import { Tab, Row, Col, Button, Table, Form, InputGroup, FormControl, Toast, Card } from 'react-bootstrap';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { GrAddCircle } from 'react-icons/gr';
 import { Redirect, useHistory } from 'react-router-dom';
 import { Product, useProductListProducer } from './useProductListProducer';
 import { TableShow, TableNoResults } from './components';
@@ -36,12 +24,11 @@ export const ProductListProducer: React.FC = () => {
 
 	const search = () => {
 		if (product !== undefined) {
-			/* const name = Object.values(product).filter((a) => a.name.toLowerCase().includes(searchTerm.toLowerCase())); */
-			/* const tin = Object.values(product)
-				// eslint-disable-next-line eqeqeq
-				.filter((a) => a.tin == searchTerm)
-				.map((a) => a); */
-			/* 	if (name.length === 0 && tin.length === 0) {
+			const name = Object.values(product).filter((a) => a.name.toLowerCase().includes(searchTerm.toLowerCase()));
+			const category = Object.values(product).filter((a) =>
+				a.category.toLowerCase().includes(searchTerm.toLowerCase())
+			);
+			if (name.length === 0 && category.length === 0) {
 				return <TableNoResults />;
 			}
 			if (name.length !== 0) {
@@ -49,17 +36,18 @@ export const ProductListProducer: React.FC = () => {
 					return <TableShow item={item} index={index} />;
 				});
 			}
-			if (tin.length !== 0) {
-				return tin.map((item, index) => {
+			if (category.length !== 0) {
+				return category.map((item, index) => {
 					return <TableShow item={item} index={index} />;
 				});
-			} */
+			}
 		}
 	};
 
 	return isLogged && type === 'producer' ? (
 		isLoading ? (
 			<>
+				<br />
 				<div>
 					{showToastEdit && (
 						<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
@@ -156,16 +144,28 @@ export const ProductListProducer: React.FC = () => {
 												<th>Categoria</th>
 												<th>Quantidade</th>
 												<th>Validade</th>
-												<th>Colheita</th>
+												<th>Local da Colheita</th>
 												<th>Preço</th>
 												<th>Foto</th>
 												<th>Stock</th>
-												<th>
-													<Button onClick={() => history.push('/createProduct')}>
-														Adicionar Novo Produto
+												<th colSpan={2}>
+													<Button
+														variant="link"
+														onClick={() => history.push('/createProduct')}
+														style={{ backgroundColor: 'transparent' }}
+													>
+														<GrAddCircle size={22} color="#9B3939" />
+														<span
+															style={{
+																color: '#9B3939',
+																marginLeft: 10,
+																fontWeight: 'bold',
+															}}
+														>
+															Novo Produto
+														</span>
 													</Button>
 												</th>
-												<th></th>
 												<th></th>
 											</tr>
 										</thead>

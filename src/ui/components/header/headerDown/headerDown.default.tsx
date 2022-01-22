@@ -27,6 +27,7 @@ export const HeaderDefault: React.FC = () => {
 								<Dropdown.Item
 									onClick={() => history.push('/product/' + item)}
 									eventKey={index.toString()}
+									key={index}
 								>
 									{item}
 								</Dropdown.Item>

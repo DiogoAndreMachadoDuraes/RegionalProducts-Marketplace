@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-bootstrap';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { Product, useProductListProducer } from '../useProductListProducer';
 import { ModalEdit, ModalDelete } from './index';
@@ -27,12 +28,14 @@ export const TableShow: React.FC<TableShowProps> = ({ item, index }) => {
 		<tr key={index}>
 			<td>{item.name}</td>
 			<td>{item.category}</td>
-			<td>{item.validity}</td>
 			<td>{item.quantity}</td>
+			<td>{item.validity}</td>
 			<td>{item.harvest}</td>
+			<td>{item.price} €</td>
+			<td>
+				<Image src={item.photo} width={80} height={80} />
+			</td>
 			<td>{item.stock}</td>
-			<td>{item.price}</td>
-			<td>{item.photo}</td>
 			<td>
 				<AiFillEdit size="25" onClick={() => handleShowEdit(item)} color="#9B3939" />
 				{showModalEdit && (

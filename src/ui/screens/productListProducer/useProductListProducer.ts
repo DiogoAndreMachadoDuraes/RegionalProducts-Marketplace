@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
 
-interface Product {
+export interface Product {
 	id: {
 		$oid: string;
 	};
@@ -55,7 +55,6 @@ export const useProductListProducer = (): ProductListProducerOutPut => {
 	const type = useSelector((state: StoreState) => state.common.user.type);
 	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
 
-
 	const [showModalEditHoney, setShowModalEditHoney] = useState(false);
 	const [showmodalEditJam, setShowmodalEditJam] = useState(false);
 	const [ShowModalEditFruit, setShowModalEditFruit] = useState(false);
@@ -84,6 +83,25 @@ export const useProductListProducer = (): ProductListProducerOutPut => {
 
 	const [categoryfilter, setCategoryfilter] = useState('');
 
+	const config = {
+		headers: {
+			Authorization: 'Bearer ' + token,
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+	};
+
+	useEffect(() => {
+		if (product === undefined || isLoading === false) {
+			axios.get(`http://127.0.0.1:5000/products/producer/` + userId, config).then((res) => {
+				const product = res.data;
+				setProduct(product.products);
+				setIsLoading(true);
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	const handleShowEdit = (item: Product) => {
 		setProductName(item.name);
 		setActiveItemID(item.id.$oid);
@@ -98,7 +116,7 @@ export const useProductListProducer = (): ProductListProducerOutPut => {
 		setActiveItemname_producer(item.name_producer);
 		setActiveItemlogo_producer(item.logo_producer);
 		setActiveItemid_producer(item.id_producer);
-		setProductState (item.state);
+		setProductState(item.state);
 
 		if (activeItemCategory === 'Mel') {
 			setShowModalEditHoney(true);
@@ -151,10 +169,6 @@ export const useProductListProducer = (): ProductListProducerOutPut => {
 	};
 
 	const getByCategory = (category: string, id: string) => {
-		const config = {
-			headers: { Authorization: `Bearer ${token}` },
-		};
-
 		if (category === 'Todos') {
 			axios.get(`http://127.0.0.1:5000/products/producer/${userId}`, config).then((res) => {
 				const product = res.data;
@@ -307,7 +321,7 @@ export const useProductListProducer = (): ProductListProducerOutPut => {
 		setShowModalDelete(false);
 		setShowToastDelete(true);
 	};
-	
+
 	const handleNotShowToastEdit = () => {
 		setShowToastEdit(false);
 	};
@@ -319,28 +333,6 @@ export const useProductListProducer = (): ProductListProducerOutPut => {
 	const editSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(e.target.value);
 	};
-
-	useEffect(() => {
-		const fetchApi = async () => {
-			if (product === undefined || isLoading) {
-				try {
-					let response = await fetch('http://127.0.0.1:5000/products', {
-						headers: {
-							Authorization: 'Bearer ' + token,
-							Accept: 'application/json',
-							'Content-Type': 'application/json',
-						},
-					});
-					let json = await response.json();
-					setProduct(json);
-					setIsLoading(true);
-				} catch (e) {
-					console.log('Error to get data: ' + e);
-				}
-			}
-		};
-		fetchApi();
-	}, [product, isLoading, token]);
 
 	return {
 		isLogged,

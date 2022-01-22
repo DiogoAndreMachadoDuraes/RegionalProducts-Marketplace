@@ -14,7 +14,6 @@ export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ name }) => {
 	const type = useSelector((state: StoreState) => state.common.user.type);
 	const clientPhoto = useSelector((state: StoreState) => state.common.client.photo);
 	const producerPhoto = useSelector((state: StoreState) => state.producer.producer.logo);
-	console.log(clientPhoto);
 
 	const [userPhoto, setUserPhoto] = useState<string | undefined>(images.imageProfileDefault);
 
@@ -26,6 +25,7 @@ export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ name }) => {
 		if (type === 'producer' && producerPhoto !== '') {
 			setUserPhoto(producerPhoto);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const history = useHistory();
@@ -52,16 +52,15 @@ export const HeaderTopWithSession: React.FC<HeaderTopProps> = ({ name }) => {
 							<Image src={userPhoto} width={37} height={37} roundedCircle />
 							<h3 style={{ fontSize: 14, color: 'black', marginLeft: 20 }}>
 								Bem vindo,
-								<h3
+								<br />
+								<span
 									style={{
-										fontSize: 14,
 										fontWeight: 'bold',
-										color: 'black',
 										textDecoration: 'underline',
 									}}
 								>
 									{name}
-								</h3>
+								</span>
 							</h3>
 						</Row>
 					</Nav.Link>

@@ -30,7 +30,6 @@ export const ProducerOrder: React.FC = () => {
 				const orderProducer = order
 					.filter((x: Order) => x.id_product === product._id.$oid)
 					.map((x: Order) => x);
-				console.log(orderProducer);
 				setOrder(orderProducer);
 			});
 		});
@@ -211,7 +210,7 @@ export const ProducerOrder: React.FC = () => {
 						{order?.length !== 0 &&
 							order?.map((item: Order, index) => {
 								return (
-									<>
+									<div key={index}>
 										<Card
 											border="dark"
 											style={{ width: 800, marginLeft: 106, padding: 10 }}
@@ -300,7 +299,7 @@ export const ProducerOrder: React.FC = () => {
 											</div>
 										</Card>
 										<br />
-									</>
+									</div>
 								);
 							})}
 					</Col>
