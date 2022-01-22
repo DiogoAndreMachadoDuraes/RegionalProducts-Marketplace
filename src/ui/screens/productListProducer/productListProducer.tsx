@@ -824,16 +824,12 @@ export const ProductListProducer: React.FC = () => {
 										<th>Categoria</th>
 										<th>Quantidade</th>
 										<th>Validade</th>
-										<th>Data de Colheita</th>
-										<th>Tipo</th>
-										<th>Teor de Alcóol</th>
-										<th>Acidez</th>
+										<th>Colheita</th>
 										<th>Preço</th>
 										<th>Foto</th>
 										<th>Stock</th>
 										<th>
-											<Button onClick={() => history.push('/createproduct')}>
-												{' '}
+											<Button onClick={() => history.push('/createProduct')}>
 												Adicionar Novo Produto
 											</Button>
 										</th>
@@ -854,9 +850,6 @@ export const ProductListProducer: React.FC = () => {
 														<td>{item.quantity}</td>
 														<td>{item.validity}</td>
 														<td>{item.harvest}</td>
-														<td>{item.type}</td>
-														<td>{item.alcohol_content}</td>
-														<td>{item.acidity}</td>
 														<td>{item.price}</td>
 														<td>
 															<Image height="60" width="50" src={item.photo}></Image>
