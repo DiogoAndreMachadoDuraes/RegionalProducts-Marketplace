@@ -17,7 +17,7 @@ import {
 import { AiFillDelete, AiFillEdit, AiOutlineSearch } from 'react-icons/ai';
 import { StoreState } from 'store';
 import { useSelector } from 'react-redux';
-/*import { Redirect } from "react-router-dom";*/
+import { Redirect } from 'react-router-dom';
 
 interface Product {
 	_id: {

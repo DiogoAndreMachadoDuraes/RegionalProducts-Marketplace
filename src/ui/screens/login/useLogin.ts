@@ -127,7 +127,6 @@ export const useLogin = (): LoginOutPut => {
 
 				await axios.get(`http://127.0.0.1:5000/admin`, config).then((res) => {
 					const admin = res.data;
-					console.log(admin)
 					dispatch(adminInfo(admin));
 				});
 			} catch (e) {
@@ -173,7 +172,8 @@ export const useLogin = (): LoginOutPut => {
 					if (type === 'producer') {
 						dispatch(userLogin(json));
 						history.push('/');
-					} else {
+					} 
+					else {
 						setIsInvalidCredentials(true);
 						showInvalidAlert();
 					}

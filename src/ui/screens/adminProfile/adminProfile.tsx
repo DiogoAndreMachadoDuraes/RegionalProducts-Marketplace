@@ -10,12 +10,12 @@ import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
 
 export const AdminProfile: React.FC = () => {
+	const userId = useSelector((state: StoreState) => state.common.user.id);
 	const admin = useSelector((state: StoreState) => state.admin.admin);
 	const token = useSelector((state: StoreState) => state.common.user.token);
 
 	const history = useHistory();
 	const [showModalDelete, setShowModalDelete] = useState(false);
-	const [showAlertDelete, setShowAlertDelete] = useState(false);
 
 	const handleCloseDelete = () => {
 		setShowModalDelete(false);
@@ -53,12 +53,6 @@ export const AdminProfile: React.FC = () => {
 		history.push('/editAdmin');
 	};
 
-	const showAlert = () => {
-		window.setTimeout(() => {
-			setShowAlertDelete(false);
-		}, 5000);
-	};
-
 	const handleDelete = async () => {
 		try {
 			await fetch('http://127.0.0.1:5000/admin', {
@@ -69,14 +63,12 @@ export const AdminProfile: React.FC = () => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					_id: admin,
+					_id: userId,
 				}),
 			});
-			setShowAlertDelete(true);
-			showAlert();
 			history.push('/');
-			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 			window.location.reload();
+			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 		} catch (e) {
 			console.log('Error to Delete Admin: ' + e);
 		}
@@ -84,9 +76,6 @@ export const AdminProfile: React.FC = () => {
 
 	return (
 		<>
-			<Alert key={'info'} variant={'info'} show={showAlertDelete} style={{ textAlign: 'center' }}>
-				A sua conta foi eliminada com sucesso, esperamos ve-lo novamente!
-			</Alert>
 			<Container
 				style={{
 					marginTop: 50,
@@ -96,7 +85,7 @@ export const AdminProfile: React.FC = () => {
 				<Row>
 					<Col sm={1} />
 					<Col sm={10}>
-						<h3 style={{ color: '#8A3535', fontFamily: 'artifika' }}>Informações da Conta</h3>
+						<h3 style={{ color: '#8A3535', fontFamily: 'artifika' }}>Sobre o Administrador {admin.name}</h3>
 					</Col>
 					<Col sm={1} />
 				</Row>

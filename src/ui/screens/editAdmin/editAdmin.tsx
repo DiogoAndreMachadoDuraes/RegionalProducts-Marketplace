@@ -9,30 +9,14 @@ import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
 
-interface ProducerList {
-	_id: { $oid: string };
-	logo: string;
-	email: string;
-	password: string;
-	country: string;
-	locality: string;
-	name: string;
-	postal_Code: string;
-	social: string;
-	state: string;
-	street: string;
-	telephone: string;
-	tin: string;
-}
-
 export const EditAdmin: React.FC = () => {
 	const Spacer = require('react-spacer');
+
+	const userId = useSelector((state: StoreState) => state.common.user.id);
 	const adminInfo = useSelector((state: StoreState) => state.admin.admin);
 	const token = useSelector((state: StoreState) => state.common.user.token);
-
 	const history = useHistory();
 
-	const [producer, setProducer] = useState<ProducerList[]>();
 	const [showModal, setShowModal] = useState(false);
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
 	const [password, setPassword] = useState('');
@@ -47,7 +31,7 @@ export const EditAdmin: React.FC = () => {
 	const [telephone, setTelephone] = useState(adminInfo.telephone);
 	const [tin, setTin] = useState(adminInfo.tin);
 
-	const [showEditProducer, setShowEditProducer] = useState(false);
+	const [showEditAdmin, setShowEditAdmin] = useState(false);
 
 	const togglePasswordVisiblity = () => {
 		setIsPasswordShown(!isPasswordShown);
@@ -95,13 +79,13 @@ export const EditAdmin: React.FC = () => {
 
 	const showAlert = () => {
 		window.setTimeout(() => {
-			setShowEditProducer(false);
+			setShowEditAdmin(false);
 		}, 5000);
 	};
 
 	const handleSubmit = async () => {
 		try {
-			await fetch('http://127.0.0.1:5000/producer', {
+			await fetch('http://127.0.0.1:5000/admin', {
 				method: 'PUT',
 				headers: {
 					Authorization: 'Bearer ' + token,
@@ -109,10 +93,9 @@ export const EditAdmin: React.FC = () => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					_id: producer,
+					_id: userId,
 					name: name,
 					tin: tin,
-
 					telephone: telephone,
 					address: address,
 					locality: location,
@@ -123,16 +106,16 @@ export const EditAdmin: React.FC = () => {
 				}),
 			});
 			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-			setShowEditProducer(true);
+			setShowEditAdmin(true);
 			showAlert();
 		} catch (e) {
-			console.log('Error to edit producer status: ');
+			console.log('Error to edit admin status: ');
 		}
 	};
 
 	return (
 		<>
-			<Alert key={'success'} variant={'success'} show={showEditProducer} style={{ textAlign: 'center' }}>
+			<Alert key={'success'} variant={'success'} show={showEditAdmin} style={{ textAlign: 'center' }}>
 				As informações da sua conta foram alteradas com sucesso
 			</Alert>
 			<div>
