@@ -4,9 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
 
-export const Order: React.FC = () => {
+export const Orders: React.FC = () => {
 	const history = useHistory();
-
 	const orderList = useSelector((state: StoreState) => state.orders.orders);
 
 	return (

@@ -24,7 +24,7 @@ import {
 	ProducerList,
 	ProductList,
 	ProductPage as Product,
-	Order,
+	Orders,
 	DashboardAdmin,
 	DashboardProducer,
 	EditClient,
@@ -70,7 +70,7 @@ export const App: React.FC = () => {
 							<Route exact path="/producerList" component={ProducerList} />
 							<Route exact path="/productList" component={ProductList} />
 							<Route exact path="/product/:category" component={Product} />
-							<Route exact path="/order" component={Order} />
+							<Route exact path="/order" component={Orders} />
 							<Route exact path="/dashboardAdmin" component={DashboardAdmin} />
 							<Route exact path="/dashboardProducer" component={DashboardProducer} />
 							<Route exact path="/ship" component={Ship} />

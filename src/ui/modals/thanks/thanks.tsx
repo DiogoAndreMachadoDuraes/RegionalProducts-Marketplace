@@ -56,6 +56,7 @@ export const Thanks: React.FC<ModalTanksProps> = ({ show, item, price, onHide })
 						vat: '23%',
 						avaliation: avaliation,
 						name_product: product.name_product,
+						status: 'Em processamento',
 					}),
 				});
 			} catch (e) {

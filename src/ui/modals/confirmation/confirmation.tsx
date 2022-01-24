@@ -131,7 +131,7 @@ export const Confirmation: React.FC<ModalConfirmationProps> = ({ show, onHide, h
 											marginTop: -32,
 										}}
 									>
-										{totalPrice} €
+										{totalPrice.toFixed(2)} €
 									</h4>
 								</div>
 							</Col>

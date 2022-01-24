@@ -140,7 +140,7 @@ export const useLogin = (): LoginOutPut => {
 						console.log('Error to get Admin: ' + e);
 					}
 					dispatch(userLogin(json));
-					history.push('/');
+					history.push('/dashboardAdmin');
 				} else {
 					if (type === 'producer') {
 						try {
@@ -152,7 +152,7 @@ export const useLogin = (): LoginOutPut => {
 							console.log('Error to get Producer: ' + e);
 						}
 						dispatch(userLogin(json));
-						history.push('/');
+						history.push('/dashboardProducer');
 					} else {
 						setIsInvalidCredentials(true);
 						showInvalidAlert();
