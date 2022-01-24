@@ -47,7 +47,9 @@ const data = [
 ];
 
 export const DashboardProducer: React.FC = () => {
-	const { isLogged, isLoading, type, order } = useDashboardProducerList();
+	const { isLogged, isLoading, type, orderList } = useDashboardProducerList();
+
+	console.log(orderList);
 
 	return isLogged && type === 'producer' ? (
 		isLoading ? (
@@ -82,7 +84,7 @@ export const DashboardProducer: React.FC = () => {
 						style={{
 							marginLeft: 450,
 
-							color: '#8A3535',
+							color: 'black',
 							fontFamily: 'Artifika',
 						}}
 					>
@@ -111,20 +113,19 @@ export const DashboardProducer: React.FC = () => {
 						<Line type="monotone" dataKey="EnchidoseCarne" stroke="#F4C10B" activeDot={{ r: 6 }} />
 						<Line type="monotone" dataKey="Frutossecos" stroke="#ACB9FF" activeDot={{ r: 6 }} />
 					</LineChart>
-
+					<br />
 					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
 						<Row
 							id="row"
 							style={{
 								fontFamily: 'artifika',
 								marginTop: -80,
-								marginBottom: 200,
+								marginBottom: 120,
 							}}
 						>
 							<Col sm={1} />
 							<Col sm={10}>
-								<h5 style={{ marginTop: 10, fontFamily: 'Artifika' }}>
-									<br />
+								<h5 style={{ marginTop: 10, fontFamily: 'Artifika', fontWeight: 'bold' }}>
 									Compras mensais mais recentes
 								</h5>
 								<Card
@@ -146,16 +147,15 @@ export const DashboardProducer: React.FC = () => {
 									>
 										<thead style={{ width: 10 }}>
 											<tr>
-												<th>Ordem</th>
-												<th>Quantidades</th>
+												<th>Número de Ordem</th>
+												<th>Quantidades Vendidas</th>
 												<th>Nome do Produto</th>
 												<th>Última Compra</th>
-												<th></th>
 											</tr>
 										</thead>
 										<tbody>
-											{order === undefined || order === null}
-											{order?.map((item: Order, index: number) => {
+											{orderList === undefined || orderList === null}
+											{orderList?.map((item: Order, index: number) => {
 												return <TableShow item={item} index={index} />;
 											})}
 										</tbody>

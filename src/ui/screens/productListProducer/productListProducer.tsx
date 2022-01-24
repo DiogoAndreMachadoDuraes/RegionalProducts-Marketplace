@@ -1,11 +1,25 @@
 import React from 'react';
-import { Tab, Row, Col, Button, Table, Form, InputGroup, FormControl, Toast, Card } from 'react-bootstrap';
+import {
+	Tab,
+	Row,
+	Col,
+	Button,
+	Table,
+	Form,
+	InputGroup,
+	FormControl,
+	Toast,
+	Card,
+	Breadcrumb,
+	Image,
+} from 'react-bootstrap';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { GrAddCircle } from 'react-icons/gr';
 import { Redirect, useHistory } from 'react-router-dom';
 import { Product, useProductListProducer } from './useProductListProducer';
 import { TableShow, TableNoResults } from './components';
 import { Loader } from 'ui';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 
 export const ProductListProducer: React.FC = () => {
 	const history = useHistory();
@@ -47,7 +61,16 @@ export const ProductListProducer: React.FC = () => {
 	return isLogged && type === 'producer' ? (
 		isLoading ? (
 			<>
-				<br />
+				<div>
+					<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+						<Breadcrumb.Item onClick={() => history.push('/')}>
+							<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+						</Breadcrumb.Item>
+						<Breadcrumb.Item active>
+							<span style={{ fontFamily: 'artifika', color: 'black' }}>Produtos</span>
+						</Breadcrumb.Item>
+					</Breadcrumb>
+				</div>
 				<div>
 					{showToastEdit && (
 						<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
@@ -166,14 +189,60 @@ export const ProductListProducer: React.FC = () => {
 														</span>
 													</Button>
 												</th>
-												<th></th>
 											</tr>
 										</thead>
 										<tbody>
 											{(product === undefined || product === null) && <TableNoResults />}
 											{searchTerm === '' && (product !== undefined || product !== null)
 												? product?.map((item: Product, index: number) => {
-														return <TableShow item={item} index={index} />;
+														return (
+															<tr key={index}>
+																<td>{item.name}</td>
+																<td>{item.category}</td>
+																<td>{item.quantity}</td>
+																<td>{item.validity}</td>
+																<td>{item.harvest}</td>
+																<td>{item.price} €</td>
+																<td>
+																	<Image src={item.photo} width={80} height={80} />
+																</td>
+																<td>{item.stock}</td>
+																<td>
+																	<AiFillEdit
+																		size="25"
+																		onClick={() =>
+																			history.push('/editProduct' + item.id.$oid)
+																		}
+																		color="#9B3939"
+																	/>
+																	{/* {showModalEdit && (
+                                                                    <ModalEdit
+                                                                        showModalEdit={showModalEdit}
+                                                                        handleCloseEdit={handleCloseEdit}
+                                                                        productName={productName}
+                                                                        handleType={handleType}
+                                                                        productState={productState}
+                                                                        handleEdit={handleEdit}
+                                                                    />
+                                                                )} */}
+																</td>
+																<td>
+																	<AiFillDelete
+																		size="25"
+																		/* onClick={() => handleShowDelete(item)} */
+																		color="#9B3939"
+																	/>
+																	{/* {showModalDelete && (
+																		<ModalDelete
+																			showModalDelete={showModalDelete}
+																			handleCloseDelete={handleCloseDelete}
+																			productName={productName}
+																			handleDelete={handleDelete}
+																		/>
+																	)} */}
+																</td>
+															</tr>
+														);
 												  })
 												: search()}
 										</tbody>

@@ -11,7 +11,8 @@ export interface Producer {
 	location: string;
 	name: string;
 	postal_code: string;
-	social: string;
+	social_network: string;
+	region: string;
 	state: string;
 	address: string;
 	telephone: string;
@@ -22,10 +23,8 @@ interface ProducerListOutPut {
 	isLogged?: boolean;
 	isLoading: boolean;
 	type?: string;
-	showToastEdit: boolean;
-	handleNotShowToastEdit: () => void;
-	showToastDelete: boolean;
-	handleNotShowToastDelete: () => void;
+	showEdit: boolean;
+	showDelete: boolean;
 	producer?: Producer[];
 	editSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	searchTerm: string;
@@ -44,8 +43,8 @@ interface ProducerListOutPut {
 
 export const useProducerList = (): ProducerListOutPut => {
 	const [producer, setProducer] = useState<Producer[]>();
-	const [showToastEdit, setShowToastEdit] = useState(false);
-	const [showToastDelete, setShowToastDelete] = useState(false);
+	const [showEdit, setShowEdit] = useState(false);
+	const [showDelete, setShowDelete] = useState(false);
 	const [showModalEdit, setShowModalEdit] = useState(false);
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
@@ -56,25 +55,41 @@ export const useProducerList = (): ProducerListOutPut => {
 	const [producerEmail, setProducerEmail] = useState('');
 	const [producerPassword, setProducerPassword] = useState('');
 	const [producerCountry, setProducerCountry] = useState('');
-	const [producerlocation, setProducerlocation] = useState('');
+	const [producerLocation, setProducerLocation] = useState('');
 	const [producerPostalCode, setProducerPostalCode] = useState('');
 	const [producerSocial, setProducerSocial] = useState('');
 	const [producerLogo, setProducerLogo] = useState('');
-	const [produceraddress, setProduceraddress] = useState('');
+	const [producerAddress, setProducerAddress] = useState('');
 	const [producerTin, setProducerTin] = useState('');
 	const [producerTelephone, setProducerTelephone] = useState('');
-
+	const [producerRegion, setProducerRegion] = useState('');
+	const [refreshKey, setRefreshKey] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const type = useSelector((state: StoreState) => state.common.user.type);
 	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
 	const token = useSelector((state: StoreState) => state.common.user.token);
 
-
-	const handleCloseEdit = () => {
-		setShowToastEdit(true);
-		setShowModalEdit(false);
-	};
+	useEffect(() => {
+		const fetchApi = async () => {
+			try {
+				let response = await fetch('http://127.0.0.1:5000/producers', {
+					headers: {
+						Authorization: 'Bearer ' + token,
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+					},
+				});
+				let json = await response.json();
+				setProducer(json);
+				setIsLoading(true);
+			} catch (e) {
+				console.log('Error to get data: ' + e);
+			}
+		};
+		fetchApi();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [refreshKey]);
 
 	const handleShowEdit = (item: Producer) => {
 		setProducerId(item._id.$oid);
@@ -83,31 +98,30 @@ export const useProducerList = (): ProducerListOutPut => {
 		setProducerEmail(item.email);
 		setProducerPassword(item.password);
 		setProducerCountry(item.country);
-		setProducerlocation(item.location);
+		setProducerLocation(item.location);
 		setProducerPostalCode(item.postal_code);
-		setProducerSocial(item.social);
+		setProducerRegion(item.region);
+		setProducerSocial(item.social_network);
 		setProducerLogo(item.logo);
-		setProduceraddress(item.address);
+		setProducerAddress(item.address);
 		setProducerTin(item.tin);
 		setProducerTelephone(item.telephone);
 		setShowModalEdit(true);
 	};
 
-	const handleCloseDelete = () => {
-		setShowModalDelete(false);
-		setShowToastDelete(true);
-	};
-
-	const handleShowDelete = (item: Producer) => {
-		setProducerId(item._id.$oid);
-		setProducerName(item.name);
-		setShowModalDelete(true);
+	const handleCloseEdit = () => {
+		setShowModalEdit(false);
 	};
 
 	const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setProducerState(e.target.value);
 	};
 
+	const showAlertEdit = () => {
+		window.setTimeout(() => {
+			setShowDelete(false);
+		}, 5000);
+	};
 
 	const handleEdit = async () => {
 		try {
@@ -120,25 +134,45 @@ export const useProducerList = (): ProducerListOutPut => {
 				},
 				body: JSON.stringify({
 					_id: producerId,
-					logo: producerLogo,
-					email: producerEmail,
-					password: producerPassword,
+					address: producerAddress,
 					country: producerCountry,
-					location: producerlocation,
+					email: producerEmail,
+					location: producerLocation,
+					logo: producerLogo,
 					name: producerName,
 					postal_code: producerPostalCode,
-					social: producerSocial,
+					region: producerRegion,
+					social_network: producerSocial,
 					state: producerState,
-					address: produceraddress,
 					telephone: producerTelephone,
+					password: producerPassword,
 					tin: producerTin,
 				}),
 			});
 			handleCloseEdit();
-			alert('Estado editado com sucesso!');
+			setShowEdit(true);
+			console.log(showEdit);
+			showAlertEdit();
+			setRefreshKey(refreshKey + 1);
 		} catch (e) {
 			console.log('Error to Edit Producer: ' + e);
 		}
+	};
+
+	const handleCloseDelete = () => {
+		setShowModalDelete(false);
+	};
+
+	const handleShowDelete = (item: Producer) => {
+		setProducerId(item._id.$oid);
+		setProducerName(item.name);
+		setShowModalDelete(true);
+	};
+
+	const showAlertDelete = () => {
+		window.setTimeout(() => {
+			setShowDelete(false);
+		}, 5000);
 	};
 
 	const handleDelete = async () => {
@@ -155,8 +189,9 @@ export const useProducerList = (): ProducerListOutPut => {
 				}),
 			});
 			handleCloseDelete();
-			alert('Produtor eliminado com sucesso!');
-			window.location.reload();
+			setShowDelete(true);
+			showAlertDelete();
+			setRefreshKey(refreshKey + 1);
 		} catch (e) {
 			console.log('Error to Delete Producer: ' + e);
 		}
@@ -166,45 +201,12 @@ export const useProducerList = (): ProducerListOutPut => {
 		setSearchTerm(e.target.value);
 	};
 
-	const handleNotShowToastEdit = () => {
-		setShowToastEdit(false);
-	};
-
-	const handleNotShowToastDelete = () => {
-		setShowToastDelete(false);
-	};
-
-	useEffect(() => {
-		const fetchApi = async () => {
-			if (producer === undefined || isLoading) {
-				try {
-					let response = await fetch('http://127.0.0.1:5000/producers', {
-						headers: {
-							Authorization: 'Bearer ' + token,
-							Accept: 'application/json',
-							'Content-Type': 'application/json',
-						},
-					});
-					let json = await response.json();
-					setProducer(json);
-					setIsLoading(true);
-				} catch (e) {
-					console.log('Error to get data: ' + e);
-				}
-			}
-		};
-		fetchApi();
-	}, [producer, isLoading, token]);
-
-
 	return {
 		isLogged,
 		isLoading,
 		type,
-		showToastEdit,
-		handleNotShowToastEdit,
-		showToastDelete,
-		handleNotShowToastDelete,
+		showEdit,
+		showDelete,
 		producer,
 		editSearch,
 		searchTerm,

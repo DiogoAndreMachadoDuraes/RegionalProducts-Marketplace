@@ -1,25 +1,15 @@
 import React from 'react';
 import './style.css';
-import { Tab, Row, Col, Table, Form, FormControl, InputGroup, Toast, Card } from 'react-bootstrap';
+import { Tab, Row, Col, Table, Form, FormControl, InputGroup, Card, Alert, Breadcrumb } from 'react-bootstrap';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { Client, useClientList } from './useClientList';
 import { TableShow, TableNoResults } from './components';
 import { Loader } from 'ui';
 
 export const ClientList: React.FC = () => {
-	const {
-		isLogged,
-		isLoading,
-		type,
-		showToastEdit,
-		handleNotShowToastEdit,
-		showToastDelete,
-		handleNotShowToastDelete,
-		client,
-		editSearch,
-		searchTerm,
-	} = useClientList();
+	const history = useHistory();
+	const { isLogged, isLoading, type, showEdit, showDelete, client, editSearch, searchTerm } = useClientList();
 
 	const search = () => {
 		if (client !== undefined) {
@@ -48,54 +38,23 @@ export const ClientList: React.FC = () => {
 	return isLogged && type === 'admin' ? (
 		isLoading ? (
 			<>
+				<Alert key={'successEdit'} variant={'success'} show={showEdit} style={{ textAlign: 'center' }}>
+					Cliente editado com sucesso!
+				</Alert>
+				<Alert key={'successDelete'} variant={'success'} show={showDelete} style={{ textAlign: 'center' }}>
+					Cliente eliminado com sucesso!
+				</Alert>
 				<div>
-					{showToastEdit && (
-						<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-							<Row id="row">
-								<Col sm={4} />
-								<Col sm={4}>
-									<Toast
-										onClose={handleNotShowToastEdit}
-										show={showToastEdit}
-										delay={3000}
-										autohide
-										style={{ marginTop: 20 }}
-									>
-										<Toast.Header style={{ backgroundColor: '#8A3535' }}>
-											<strong className="me-auto" style={{ color: 'white' }}>
-												Atenção! Cliente Editado!
-											</strong>
-										</Toast.Header>
-										<Toast.Body>Cliente editado com sucesso!</Toast.Body>
-									</Toast>
-								</Col>
-								<Col sm={4} />
-							</Row>
-						</Tab.Container>
-					)}
-					{showToastDelete && (
-						<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-							<Row id="row">
-								<Col sm={4} />
-								<Col sm={4}>
-									<Toast
-										onClose={handleNotShowToastDelete}
-										show={showToastDelete}
-										delay={3000}
-										autohide
-									>
-										<Toast.Header style={{ backgroundColor: '#8A3535' }}>
-											<strong className="me-auto" style={{ color: 'white' }}>
-												Atenção! Cliente Eliminado!
-											</strong>
-										</Toast.Header>
-										<Toast.Body>Cliente eliminado com sucesso!</Toast.Body>
-									</Toast>
-								</Col>
-								<Col sm={4} />
-							</Row>
-						</Tab.Container>
-					)}
+					<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+						<Breadcrumb.Item onClick={() => history.push('/dashboardAdmin')}>
+							<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+						</Breadcrumb.Item>
+						<Breadcrumb.Item active>
+							<span style={{ fontFamily: 'artifika', color: 'black' }}>Clientes</span>
+						</Breadcrumb.Item>
+					</Breadcrumb>
+				</div>
+				<div>
 					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
 						<Row id="row">
 							<Col sm={1} />
@@ -147,6 +106,7 @@ export const ClientList: React.FC = () => {
 												<th>Código-Postal</th>
 												<th>Telemóvel</th>
 												<th>Email</th>
+												<th>Foto</th>
 												<th>Estado</th>
 												<th></th>
 												<th></th>

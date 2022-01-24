@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-bootstrap';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { Client, useClientList } from '../useClientList';
 import { ModalEdit, ModalDelete } from './index';
@@ -34,6 +35,9 @@ export const TableShow: React.FC<TableShowProps> = ({ item, index }) => {
 			</td>
 			<td>{item.telephone}</td>
 			<td>{item.email}</td>
+			<td>
+				<Image src={item.photo} width={50} height={60} />
+			</td>
 			<td>{item.state}</td>
 			<td>
 				<AiFillEdit size="25" onClick={() => handleShowEdit(item)} color="#9B3939" />

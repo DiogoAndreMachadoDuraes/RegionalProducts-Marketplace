@@ -146,11 +146,11 @@ export const DashboardAdmin: React.FC = () => {
 									>
 										<thead style={{ width: 10 }}>
 											<tr>
-												<th>Ordem</th>
-												<th>Quantidades</th>
+												<th>Número de Ordem</th>
+												<th>Email do Cliente</th>
+												<th>Quantidades Vendidas</th>
 												<th>Nome do Produto</th>
 												<th>Última Compra</th>
-												<th></th>
 											</tr>
 										</thead>
 										<tbody>

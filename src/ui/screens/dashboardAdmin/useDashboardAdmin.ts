@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
+import axios from 'axios';
 
 export interface Order {
 	id: string;
@@ -36,50 +37,25 @@ interface DashboardAdminOutPut {
 }
 
 export const useDashboardAdminList = (): DashboardAdminOutPut => {
-	const [order, setOrder] = useState<Order[]>();
 	const [isLoading, setIsLoading] = useState(false);
 	const token = useSelector((state: StoreState) => state.common.user.token);
 	const type = useSelector((state: StoreState) => state.common.user.type);
 	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
 
-	const orderInfo = useSelector((state: StoreState) => state.orders.orders);
+	const [order, setOrder] = useState<Order[]>();
 
-	const [orderId, setOrderId] = useState('');
-	const [quantityFinal, setQuantityFinal] = useState('');
-	const [nameProduct, setNameProduct] = useState('');
-	const [date, setDate] = useState('');
-	const [hour, setHour] = useState('');
-	const [avaliation, setAvaliation] = useState('');
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
+	};
 
 	useEffect(() => {
-		const fetchApi = async () => {
-			if (order === undefined || isLoading) {
-				try {
-					let response = await fetch('http://127.0.0.1:5000/orders', {
-						headers: {
-							Authorization: 'Bearer ' + token,
-							Accept: 'application/json',
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							_id: orderId,
-							date: date,
-							hour: hour,
-							quantity_final: quantityFinal,
-							avaliation: avaliation,
-							name_product: nameProduct,
-						}),
-					});
-					let json = await response.json();
-					setOrder(json);
-					setIsLoading(true);
-				} catch (e) {
-					console.log('Error to get data: ' + e);
-				}
-			}
-		};
-		fetchApi();
-	}, [order, isLoading, token]);
+		axios.get(`http://127.0.0.1:5000/shoplist`, config).then((res) => {
+			const order = res.data;
+			setOrder(order);
+			setIsLoading(true);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return {
 		isLogged,

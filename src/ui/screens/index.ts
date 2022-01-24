@@ -28,3 +28,4 @@ export * from './termsConditions';
 export * from './login';
 export * from './editAdmin';
 export * from './adminProfile';
+export * from './editProduct';

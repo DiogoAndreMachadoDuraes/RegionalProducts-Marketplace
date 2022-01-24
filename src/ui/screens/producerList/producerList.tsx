@@ -1,25 +1,15 @@
 import React from 'react';
 import './style.css';
-import { Tab, Row, Col, Table, Form, FormControl, InputGroup, Toast, Card } from 'react-bootstrap';
+import { Tab, Row, Col, Table, Form, FormControl, InputGroup, Card, Alert, Breadcrumb } from 'react-bootstrap';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { TableShow, TableNoResults } from './components';
 import { Producer, useProducerList } from './useProducerList';
 import { Loader } from 'ui';
 
 export const ProducerList: React.FC = () => {
-	const {
-		isLogged,
-		isLoading,
-		type,
-		showToastEdit,
-		handleNotShowToastEdit,
-		showToastDelete,
-		handleNotShowToastDelete,
-		producer,
-		editSearch,
-		searchTerm,
-	} = useProducerList();
+	const history = useHistory();
+	const { isLogged, isLoading, type, showEdit, showDelete, producer, editSearch, searchTerm } = useProducerList();
 
 	const search = () => {
 		if (producer !== undefined) {
@@ -48,54 +38,23 @@ export const ProducerList: React.FC = () => {
 	return isLogged && type === 'admin' ? (
 		isLoading ? (
 			<>
+				<Alert key={'successEdit'} variant={'success'} show={showEdit} style={{ textAlign: 'center' }}>
+					Producer editado com sucesso!
+				</Alert>
+				<Alert key={'successDelete'} variant={'success'} show={showDelete} style={{ textAlign: 'center' }}>
+					Producer eliminado com sucesso!
+				</Alert>
 				<div>
-					{showToastEdit && (
-						<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-							<Row id="row">
-								<Col sm={4} />
-								<Col sm={4}>
-									<Toast
-										onClose={handleNotShowToastEdit}
-										show={showToastEdit}
-										delay={3000}
-										autohide
-										style={{ marginTop: 20 }}
-									>
-										<Toast.Header style={{ backgroundColor: '#8A3535' }}>
-											<strong className="me-auto" style={{ color: 'white' }}>
-												Atenção! Produtor Editado!
-											</strong>
-										</Toast.Header>
-										<Toast.Body>Produtor editado com sucesso!</Toast.Body>
-									</Toast>
-								</Col>
-								<Col sm={4} />
-							</Row>
-						</Tab.Container>
-					)}
-					{showToastDelete && (
-						<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-							<Row id="row">
-								<Col sm={4} />
-								<Col sm={4}>
-									<Toast
-										onClose={handleNotShowToastDelete}
-										show={showToastDelete}
-										delay={3000}
-										autohide
-									>
-										<Toast.Header style={{ backgroundColor: '#8A3535' }}>
-											<strong className="me-auto" style={{ color: 'white' }}>
-												Atenção! Produtor Eliminado!
-											</strong>
-										</Toast.Header>
-										<Toast.Body>Produtor eliminado com sucesso!</Toast.Body>
-									</Toast>
-								</Col>
-								<Col sm={4} />
-							</Row>
-						</Tab.Container>
-					)}
+					<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+						<Breadcrumb.Item onClick={() => history.push('/dashboardAdmin')}>
+							<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+						</Breadcrumb.Item>
+						<Breadcrumb.Item active>
+							<span style={{ fontFamily: 'artifika', color: 'black' }}>Produtores</span>
+						</Breadcrumb.Item>
+					</Breadcrumb>
+				</div>
+				<div>
 					<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
 						<Row id="row">
 							<Col sm={1} />
@@ -142,11 +101,11 @@ export const ProducerList: React.FC = () => {
 											<tr>
 												<th>Nome</th>
 												<th>Nif</th>
-												<th>Data de Nascimento</th>
 												<th>Morada</th>
 												<th>Código-Postal</th>
 												<th>Telemóvel</th>
 												<th>Email</th>
+												<th>Foto</th>
 												<th>Estado</th>
 												<th></th>
 												<th></th>

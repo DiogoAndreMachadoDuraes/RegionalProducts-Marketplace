@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'store';
+import axios from 'axios';
 
 export interface Client {
 	_id: { $oid: string };
@@ -22,10 +23,8 @@ interface ClientListOutPut {
 	isLogged?: boolean;
 	isLoading: boolean;
 	type?: string;
-	showToastEdit: boolean;
-	handleNotShowToastEdit: () => void;
-	showToastDelete: boolean;
-	handleNotShowToastDelete: () => void;
+	showEdit: boolean;
+	showDelete: boolean;
 	client?: Client[];
 	editSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	searchTerm: string;
@@ -50,10 +49,9 @@ export const useClientList = (): ClientListOutPut => {
 	const [clientName, setClientName] = useState('');
 	const [clientId, setClientId] = useState('');
 	const [clientState, setClientState] = useState('');
-	const [showToastEdit, setShowToastEdit] = useState(false);
-	const [showToastDelete, setShowToastDelete] = useState(false);
+	const [showEdit, setShowEdit] = useState(false);
+	const [showDelete, setShowDelete] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	//add other states for clientList
 	const [clientTin, setClientTin] = useState('');
 	const [clientBirthday, setClientBirthday] = useState('');
 	const [clientTelephone, setClientTelephone] = useState('');
@@ -64,15 +62,28 @@ export const useClientList = (): ClientListOutPut => {
 	const [clientEmail, setClientEmail] = useState('');
 	const [clientPassword, setClientPassword] = useState('');
 	const [clientPhoto, setClientPhoto] = useState('');
+	const [refreshKey, setRefreshKey] = useState(0);
 
 	const token = useSelector((state: StoreState) => state.common.user.token);
 	const type = useSelector((state: StoreState) => state.common.user.type);
 	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
 
-	const handleCloseEdit = () => {
-		setShowToastEdit(true);
-		setShowModalEdit(false);
+	const config = {
+		headers: {
+			Authorization: 'Bearer ' + token,
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
 	};
+
+	useEffect(() => {
+		axios.get(`http://127.0.0.1:5000/clients`, config).then((res) => {
+			const client = res.data;
+			setClient(client);
+			setIsLoading(true);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [refreshKey]);
 
 	const handleShowEdit = (item: Client) => {
 		setClientId(item._id.$oid);
@@ -95,15 +106,30 @@ export const useClientList = (): ClientListOutPut => {
 		setClientState(e.target.value);
 	};
 
-	const handleCloseDelete = () => {
-		setShowModalDelete(false);
-		setShowToastDelete(true);
-	};
-
 	const handleShowDelete = (item: Client) => {
 		setClientId(item._id.$oid);
 		setClientName(item.name);
 		setShowModalDelete(true);
+	};
+
+	const handleCloseEdit = () => {
+		setShowModalEdit(false);
+	};
+
+	const handleCloseDelete = () => {
+		setShowModalDelete(false);
+	};
+
+	const showAlertEdit = () => {
+		window.setTimeout(() => {
+			setShowEdit(false);
+		}, 5000);
+	};
+
+	const showAlertDelete = () => {
+		window.setTimeout(() => {
+			setShowDelete(false);
+		}, 5000);
 	};
 
 	const handleEdit = async () => {
@@ -132,7 +158,10 @@ export const useClientList = (): ClientListOutPut => {
 				}),
 			});
 			handleCloseEdit();
-			alert('Cliente modificado com sucesso!');
+			setShowEdit(true);
+			console.log(showEdit);
+			showAlertEdit();
+			setRefreshKey(refreshKey + 1);
 		} catch (e) {
 			console.log('Error to Edit Client Status: ' + e);
 		}
@@ -152,7 +181,9 @@ export const useClientList = (): ClientListOutPut => {
 				}),
 			});
 			handleCloseDelete();
-			alert('Cliente eliminado com sucesso!');
+			setShowDelete(true);
+			showAlertDelete();
+			setRefreshKey(refreshKey + 1);
 		} catch (e) {
 			console.log('Error to Delete Client: ' + e);
 		}
@@ -162,44 +193,12 @@ export const useClientList = (): ClientListOutPut => {
 		setSearchTerm(e.target.value);
 	};
 
-	const handleNotShowToastEdit = () => {
-		setShowToastEdit(false);
-	};
-
-	const handleNotShowToastDelete = () => {
-		setShowToastDelete(false);
-	};
-
-	useEffect(() => {
-		const fetchApi = async () => {
-			if (client === undefined || isLoading) {
-				try {
-					let response = await fetch('http://127.0.0.1:5000/clients', {
-						headers: {
-							Authorization: 'Bearer ' + token,
-							Accept: 'application/json',
-							'Content-Type': 'application/json',
-						},
-					});
-					let json = await response.json();
-					setClient(json);
-					setIsLoading(true);
-				} catch (e) {
-					console.log('Error to get data: ' + e);
-				}
-			}
-		};
-		fetchApi();
-	}, [client, isLoading, token]);
-
 	return {
 		isLogged,
 		isLoading,
 		type,
-		showToastEdit,
-		handleNotShowToastEdit,
-		showToastDelete,
-		handleNotShowToastDelete,
+		showEdit,
+		showDelete,
 		client,
 		editSearch,
 		searchTerm,

@@ -43,6 +43,7 @@ import {
 	Payment,
 	Ship,
 	EditAdmin,
+	EditProduct,
 } from 'ui';
 
 export const App: React.FC = () => {
@@ -83,6 +84,7 @@ export const App: React.FC = () => {
 							<Route exact path="/producerOrder" component={ProducerOrder} />
 							<Route exact path="/producerRegister" component={ProducerRegister} />
 							<Route exact path="/createProduct" component={CreateProduct} />
+							<Route exact path="/editProduct/:id" component={EditProduct} />
 							<Route exact path="/productListProducer" component={ProductListProducer} />
 							<Route exact path="/favorites" component={Favorites} />
 							<Route exact path="/producerProfile" component={ProducerProfile} />

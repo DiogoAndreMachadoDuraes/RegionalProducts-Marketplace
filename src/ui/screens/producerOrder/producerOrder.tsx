@@ -2,16 +2,20 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Image, Breadcrumb, Modal, Button, Container, Form, Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { Order, Product, StoreState } from 'store';
+import { Loader } from 'ui';
 
 export const ProducerOrder: React.FC = () => {
 	const history = useHistory();
 	const producerId = useSelector((state: StoreState) => state.common.user.id);
 	const products = useSelector((state: StoreState) => state.products.products);
 	const token = useSelector((state: StoreState) => state.common.user.token);
+	const type = useSelector((state: StoreState) => state.common.user.type);
+	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
+	const [isLoading, setIsLoading] = useState(false);
 	const [item, setItem] = useState<Order>();
-	const [order, setOrder] = useState<Order[]>();
+	const [orderList, setOrderList] = useState<Order[]>([]);
 	const [status, setStatus] = useState('Entregue');
 	const [showModalInfo, setShowModalInfo] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
@@ -27,11 +31,11 @@ export const ProducerOrder: React.FC = () => {
 				.filter((x: Product) => x.id_producer === producerId)
 				.map((x: Product) => x);
 			productProducer.forEach((product: Product) => {
-				const orderProducer = order
+				order
 					.filter((x: Order) => x.id_product === product._id.$oid)
-					.map((x: Order) => x);
-				setOrder(orderProducer);
+					.map((x: Order) => setOrderList([...orderList, x]));
 			});
+			setIsLoading(true);
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -173,114 +177,77 @@ export const ProducerOrder: React.FC = () => {
 		);
 	};
 
-	return (
-		<>
-			<Alert key={'success'} variant={'success'} show={showAlert} style={{ textAlign: 'center' }}>
-				O estado da encomenda foi alterado com sucesso!
-			</Alert>
-			<div>
-				<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
-					<Breadcrumb.Item onClick={() => history.push('/dashboardProducer')}>
-						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
-					</Breadcrumb.Item>
-					<Breadcrumb.Item active>
-						<span style={{ fontFamily: 'artifika', color: 'black' }}>Encomendas</span>
-					</Breadcrumb.Item>
-				</Breadcrumb>
-			</div>
-			<br />
-			<div>
-				<Row id="row">
-					<Col sm={2} />
-					<Col
-						sm={8}
-						style={{
-							color: '#9B3939',
-							fontFamily: 'artifika',
-						}}
-					>
-						<h1>Histórico de encomendas do produtor</h1>
-					</Col>
-					<Col sm={2} />
-				</Row>
+	return isLogged && type === 'producer' ? (
+		isLoading ? (
+			<>
+				<Alert key={'success'} variant={'success'} show={showAlert} style={{ textAlign: 'center' }}>
+					O estado da encomenda foi alterado com sucesso!
+				</Alert>
+				<div>
+					<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
+						<Breadcrumb.Item onClick={() => history.push('/dashboardProducer')}>
+							<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
+						</Breadcrumb.Item>
+						<Breadcrumb.Item active>
+							<span style={{ fontFamily: 'artifika', color: 'black' }}>Encomendas</span>
+						</Breadcrumb.Item>
+					</Breadcrumb>
+				</div>
 				<br />
-				<Row id="row" style={{ marginTop: 25 }}>
-					<Col sm={2} />
-					<Col sm={8}>
-						{order?.length !== 0 &&
-							order?.map((item: Order, index) => {
-								return (
-									<div key={index}>
-										<Card
-											border="dark"
-											style={{ width: 800, marginLeft: 106, padding: 10 }}
-											key={index}
-										>
-											<div className="row gutters">
-												<div className="col-md-4">
-													<Image
-														src={item.photo_product}
-														thumbnail
-														style={{ marginLeft: 20, width: 140, height: 140 }}
-													/>
-												</div>
-												<div className="col-md-8">
-													<Row style={{ marginTop: 15 }}>
-														<Col sm={7}>
-															<h5
-																style={{
-																	color: 'black',
-																	fontFamily: 'artifika',
-																}}
-															>
-																Nº {item._id.$oid}
-															</h5>
-															<h6
-																style={{
-																	color: 'black',
-																	fontFamily: 'artifika',
-																	marginTop: 30,
-																}}
-															>
-																Estado: {status}
-															</h6>
-															<h6
-																style={{
-																	color: 'black',
-																	fontFamily: 'artifika',
-																	marginTop: 10,
-																}}
-															>
-																Data: {item.date}
-															</h6>
-														</Col>
-														<Col sm={4} style={{ textAlign: 'right', marginTop: -7 }}>
-															<Button
-																variant="link"
-																style={{
-																	fontFamily: 'artifika',
-																	backgroundColor: 'transparent',
-																	color: '#9B3939',
-																}}
-																onClick={() => handleShowModal(item)}
-															>
-																Ver informações
-															</Button>
-															{showModalInfo && modalInfo()}
-															<div
-																style={{
-																	marginRight: 10,
-																}}
-															>
+				<div>
+					<Row id="row">
+						<Col sm={2} />
+						<Col
+							sm={8}
+							style={{
+								color: '#9B3939',
+								fontFamily: 'artifika',
+							}}
+						>
+							<h1>Histórico de encomendas do produtor</h1>
+						</Col>
+						<Col sm={2} />
+					</Row>
+					<br />
+					<Row id="row" style={{ marginTop: 25 }}>
+						<Col sm={2} />
+						<Col sm={8}>
+							{orderList?.length !== 0 &&
+								orderList?.map((item: Order, index: number) => {
+									return (
+										<div key={index}>
+											<Card
+												border="dark"
+												style={{ width: 800, marginLeft: 106, padding: 10 }}
+												key={index}
+											>
+												<div className="row gutters">
+													<div className="col-md-4">
+														<Image
+															src={item.photo_product}
+															thumbnail
+															style={{ marginLeft: 20, width: 140, height: 140 }}
+														/>
+													</div>
+													<div className="col-md-8">
+														<Row style={{ marginTop: 15 }}>
+															<Col sm={7}>
+																<h5
+																	style={{
+																		color: 'black',
+																		fontFamily: 'artifika',
+																	}}
+																>
+																	Nº {item._id.$oid}
+																</h5>
 																<h6
 																	style={{
 																		color: 'black',
 																		fontFamily: 'artifika',
-																		marginLeft: 45,
-																		marginTop: 23,
+																		marginTop: 30,
 																	}}
 																>
-																	1 artigo
+																	Estado: {status}
 																</h6>
 																<h6
 																	style={{
@@ -289,26 +256,69 @@ export const ProducerOrder: React.FC = () => {
 																		marginTop: 10,
 																	}}
 																>
-																	€ {item.price_final}
+																	Data: {item.date}
 																</h6>
-															</div>
-														</Col>
-														<Col sm={1} />
-													</Row>
+															</Col>
+															<Col sm={4} style={{ textAlign: 'right', marginTop: -7 }}>
+																<Button
+																	variant="link"
+																	style={{
+																		fontFamily: 'artifika',
+																		backgroundColor: 'transparent',
+																		color: '#9B3939',
+																	}}
+																	onClick={() => handleShowModal(item)}
+																>
+																	Ver informações
+																</Button>
+																{showModalInfo && modalInfo()}
+																<div
+																	style={{
+																		marginRight: 10,
+																	}}
+																>
+																	<h6
+																		style={{
+																			color: 'black',
+																			fontFamily: 'artifika',
+																			marginLeft: 45,
+																			marginTop: 23,
+																		}}
+																	>
+																		1 artigo
+																	</h6>
+																	<h6
+																		style={{
+																			color: 'black',
+																			fontFamily: 'artifika',
+																			marginTop: 10,
+																		}}
+																	>
+																		€ {item.price_final}
+																	</h6>
+																</div>
+															</Col>
+															<Col sm={1} />
+														</Row>
+													</div>
 												</div>
-											</div>
-										</Card>
-										<br />
-									</div>
-								);
-							})}
-					</Col>
-					<Col sm={2} />
-				</Row>
-				<br />
-				<br />
-				<br />
-			</div>
-		</>
+											</Card>
+											<br />
+										</div>
+									);
+								})}
+						</Col>
+						<Col sm={2} />
+					</Row>
+					<br />
+					<br />
+					<br />
+				</div>
+			</>
+		) : (
+			<Loader />
+		)
+	) : (
+		<Redirect to="/noPermissions" />
 	);
 };

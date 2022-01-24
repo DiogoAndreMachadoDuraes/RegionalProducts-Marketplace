@@ -33,7 +33,7 @@ export const ProductDetail: React.FC = () => {
 	const [harvest, setHarvest] = useState('');
 	const [validity, setValidity] = useState('');
 	const [producerName, setProducerName] = useState('');
-	const [quantity, setQuantity] = useState(0);
+	const [quantity, setQuantity] = useState('');
 	const [photo, setPhoto] = useState('');
 	const [photoProducer, setPhotoProducer] = useState('');
 	const [description /* , setDescription */] = useState(

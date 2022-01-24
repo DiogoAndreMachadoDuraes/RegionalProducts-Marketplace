@@ -17,7 +17,7 @@ export interface Product {
 	name_producer: string;
 	photo: string;
 	price: number;
-	quantity: number;
+	quantity: string;
 	stock: number;
 	validity: string;
 }

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { StoreState } from 'store';
+import { Product, StoreState } from 'store';
+import axios from 'axios';
 
 export interface Order {
 	id: string;
@@ -32,59 +33,42 @@ interface DashboardProducerOutPut {
 	isLogged?: boolean;
 	isLoading: boolean;
 	type?: string;
-	order?: Order[];
+	orderList?: Order[];
 }
 
 export const useDashboardProducerList = (): DashboardProducerOutPut => {
-	const [order, setOrder] = useState<Order[]>();
+	const [orderList, setOrderList] = useState<Order[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const producerId = useSelector((state: StoreState) => state.common.user.id);
+	const products = useSelector((state: StoreState) => state.products.products);
 	const token = useSelector((state: StoreState) => state.common.user.token);
 	const type = useSelector((state: StoreState) => state.common.user.type);
 	const isLogged = useSelector((state: StoreState) => state.common.user.isLogged);
 
-	const orderInfo = useSelector((state: StoreState) => state.orders.orders);
-
-	const [orderId, setOrderId] = useState('');
-	const [quantityFinal, setQuantityFinal] = useState('');
-	const [nameProduct, setNameProduct] = useState('');
-	const [date, setDate] = useState('');
-	const [hour, setHour] = useState('');
-	const [avaliation, setAvaliation] = useState('');
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
+	};
 
 	useEffect(() => {
-		const fetchApi = async () => {
-			if (order === undefined || isLoading) {
-				try {
-					let response = await fetch('http://127.0.0.1:5000/orders', {
-						headers: {
-							Authorization: 'Bearer ' + token,
-							Accept: 'application/json',
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							_id: orderId,
-							date: date,
-							hour: hour,
-							quantity_final: quantityFinal,
-							avaliation: avaliation,
-							name_product: nameProduct,
-						}),
-					});
-					let json = await response.json();
-					setOrder(json);
-					setIsLoading(true);
-				} catch (e) {
-					console.log('Error to get data: ' + e);
-				}
-			}
-		};
-		fetchApi();
-	}, [order, isLoading, token]);
+		axios.get(`http://127.0.0.1:5000/shoplist`, config).then((res) => {
+			const order = res.data;
+			const productProducer = products
+				.filter((x: Product) => x.id_producer === producerId)
+				.map((x: Product) => x);
+			productProducer.forEach((product: Product) => {
+				order
+					.filter((x: Order) => x.id_product === product._id.$oid)
+					.map((x: Order) => setOrderList([...orderList, x]));
+			});
+			setIsLoading(true);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return {
 		isLogged,
 		isLoading,
 		type,
-		order,
+		orderList,
 	};
 };
