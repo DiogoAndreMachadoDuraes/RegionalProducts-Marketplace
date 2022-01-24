@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './style.css';
-import { Col, Container, Form, Row, Button, Image, InputGroup, Alert, Breadcrumb } from 'react-bootstrap';
+import { Col, Container, Form, Row, Button, InputGroup, Alert, Breadcrumb } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AiOutlineUser, AiTwotoneLock } from 'react-icons/ai';
-import axios from 'axios';
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -17,7 +16,6 @@ export const EditAdmin: React.FC = () => {
 	const token = useSelector((state: StoreState) => state.common.user.token);
 	const history = useHistory();
 
-	const [showModal, setShowModal] = useState(false);
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -85,7 +83,7 @@ export const EditAdmin: React.FC = () => {
 
 	const handleSubmit = async () => {
 		try {
-			await fetch('http://127.0.0.1:5000/admin', {
+			await fetch('http://127.0.0.1:5000/admin/' + userId, {
 				method: 'PUT',
 				headers: {
 					Authorization: 'Bearer ' + token,
@@ -94,22 +92,22 @@ export const EditAdmin: React.FC = () => {
 				},
 				body: JSON.stringify({
 					_id: userId,
-					name: name,
-					tin: tin,
-					telephone: telephone,
 					address: address,
-					locality: location,
-					postal_code: postalCode,
 					country: country,
-					email: email,
+					location: location,
 					password: password,
+					postal_code: postalCode,
+					email: email,
+					name: name,
+					telephone: telephone,
+					tin: tin,
 				}),
 			});
 			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 			setShowEditAdmin(true);
 			showAlert();
 		} catch (e) {
-			console.log('Error to edit admin status: ');
+			console.log('Error to edit admin: ');
 		}
 	};
 
@@ -120,10 +118,10 @@ export const EditAdmin: React.FC = () => {
 			</Alert>
 			<div>
 				<Breadcrumb style={{ marginTop: 20, marginLeft: 38 }} id="breadcrumb">
-					<Breadcrumb.Item onClick={() => history.push('/')}>
+					<Breadcrumb.Item onClick={() => history.push('/dashboardAdmin')}>
 						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Home</span>
 					</Breadcrumb.Item>
-					<Breadcrumb.Item onClick={() => history.push('/profileAdmin')}>
+					<Breadcrumb.Item onClick={() => history.push('/adminProfile')}>
 						<span style={{ fontFamily: 'artifika', color: '#9B3939' }}>Perfil</span>
 					</Breadcrumb.Item>
 					<Breadcrumb.Item active style={{ color: '#9B3939' }}>

@@ -93,51 +93,11 @@ export const useLogin = (): LoginOutPut => {
 			const token: string = json.token;
 			const userId: string = json.id;
 
-			try {
-				const config = {
-					headers: { Authorization: `Bearer ${token}` },
-				};
-
-				await axios.get(`http://127.0.0.1:5000/client/${userId}`, config).then((res) => {
-					const client = res.data;
-					dispatch(userInfo(client));
-				});
-			} catch (e) {
-				console.log('Error to get Client: ' + e);
-			}
+			const config = {
+				headers: { Authorization: `Bearer ${token}` },
+			};
 
 			try {
-				const config = {
-					headers: { Authorization: `Bearer ${token}` },
-				};
-
-				await axios.get(`http://127.0.0.1:5000/producer/${userId}`, config).then((res) => {
-					const producer = res.data;
-					dispatch(producerInfo(producer));
-				});
-			} catch (e) {
-				console.log('Error to get Producer: ' + e);
-			}
-
-			try {
-				const config = {
-					headers: { Authorization: `Bearer ${token}` },
-					params:{_id:userId}
-				};
-
-				await axios.get(`http://127.0.0.1:5000/admin`, config).then((res) => {
-					const admin = res.data;
-					dispatch(adminInfo(admin));
-				});
-			} catch (e) {
-				console.log('Error to get Admin: ' + e);
-			} 
-
-			try {
-				const config = {
-					headers: { Authorization: `Bearer ${token}` },
-				};
-
 				await axios.get(`http://127.0.0.1:5000/shop/client/${userId}`, config).then((res) => {
 					const order = res.data.shops;
 					order.forEach((element: Order) => {
@@ -149,10 +109,6 @@ export const useLogin = (): LoginOutPut => {
 			}
 
 			try {
-				const config = {
-					headers: { Authorization: `Bearer ${token}` },
-				};
-
 				await axios.get(`http://127.0.0.1:5000/client/${userId}`, config).then((res) => {
 					const client = res.data;
 					dispatch(userInfo(client));
@@ -162,18 +118,42 @@ export const useLogin = (): LoginOutPut => {
 			}
 
 			if (type === 'client') {
+				try {
+					await axios.get(`http://127.0.0.1:5000/client/${userId}`, config).then((res) => {
+						const client = res.data;
+						dispatch(userInfo(client));
+					});
+				} catch (e) {
+					console.log('Error to get Client: ' + e);
+				}
 				dispatch(userLogin(json));
 				history.push('/');
 			} else {
 				if (type === 'admin') {
+					try {
+						await axios.get(`http://127.0.0.1:5000/admin/` + userId, config).then((res) => {
+							const admin = res.data;
+							console.log(admin);
+							dispatch(adminInfo(admin));
+						});
+					} catch (e) {
+						console.log('Error to get Admin: ' + e);
+					}
 					dispatch(userLogin(json));
 					history.push('/');
 				} else {
 					if (type === 'producer') {
+						try {
+							await axios.get(`http://127.0.0.1:5000/producer/${userId}`, config).then((res) => {
+								const producer = res.data;
+								dispatch(producerInfo(producer));
+							});
+						} catch (e) {
+							console.log('Error to get Producer: ' + e);
+						}
 						dispatch(userLogin(json));
 						history.push('/');
-					} 
-					else {
+					} else {
 						setIsInvalidCredentials(true);
 						showInvalidAlert();
 					}

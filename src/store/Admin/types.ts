@@ -9,16 +9,16 @@ export interface Admin {
 	country?: string;
 	email?: string;
 	location?: string;
-	name?: string;	
+	name?: string;
 	postal_code?: string;
 	state?: string;
 	telephone?: string;
 	tin?: number;
-
+	photo?: string;
 }
 
 export type AdminState = {
-	admin:Admin;
+	admin: Admin;
 };
 
 export type AdminAction = {
