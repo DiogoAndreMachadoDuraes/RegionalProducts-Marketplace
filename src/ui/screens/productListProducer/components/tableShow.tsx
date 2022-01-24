@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { Product, useProductListProducer } from '../useProductListProducer';
-import { ModalEdit, ModalDelete } from './index';
+import { ModalDelete } from './index';
 
 interface TableShowProps {
 	item: Product;
@@ -12,19 +12,8 @@ interface TableShowProps {
 
 export const TableShow: React.FC<TableShowProps> = ({ item, index }) => {
 	const history = useHistory();
-	const {
-		showModalEdit,
-		handleCloseEdit,
-		handleShowEdit,
-		showModalDelete,
-		handleCloseDelete,
-		productName,
-		handleType,
-		productState,
-		handleEdit,
-		handleDelete,
-		handleShowDelete,
-	} = useProductListProducer();
+	const { showModalDelete, handleCloseDelete, productName, handleDelete, handleShowDelete } =
+		useProductListProducer();
 
 	return (
 		<tr key={index}>
@@ -40,16 +29,6 @@ export const TableShow: React.FC<TableShowProps> = ({ item, index }) => {
 			<td>{item.stock}</td>
 			<td>
 				<AiFillEdit size="25" onClick={() => history.push('/editProduct' + item.id.$oid)} color="#9B3939" />
-				{/* {showModalEdit && (
-					<ModalEdit
-						showModalEdit={showModalEdit}
-						handleCloseEdit={handleCloseEdit}
-						productName={productName}
-						handleType={handleType}
-						productState={productState}
-						handleEdit={handleEdit}
-					/>
-				)} */}
 			</td>
 			<td>
 				<AiFillDelete size="25" onClick={() => handleShowDelete(item)} color="#9B3939" />
